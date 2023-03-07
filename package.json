@@ -1,0 +1,33 @@
+{
+  "name": "cosmicstrains",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BN0b13/cs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BN0b13/cs/issues"
+  },
+  "homepage": "https://github.com/BN0b13/cs#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "helmet": "^6.0.1",
+    "mongo": "^0.1.0",
+    "mongoose": "^7.0.1",
+    "node-fetch": "^3.3.0",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.21"
+  }
+}
