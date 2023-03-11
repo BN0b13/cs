@@ -9,6 +9,7 @@ const Welcome = ({ currentHomeDisplay, setCurrentHomeDisplay }) => {
     <div className='welcomeDiv'>
         <img src={logo} className='logo' />
         <h2>Preparing to launch 2023</h2>
+        <h5>Out of this world genetics</h5>
     </div>
   );
 };
