@@ -6,3 +6,5 @@ git pull origin main;
 npm run build;
 # Restart Nginx to reflect new changes 
 systemctl restart nginx;
+# Print completion message
+echo "CosmicStrains.com Frontend start-up script successfully completed."
