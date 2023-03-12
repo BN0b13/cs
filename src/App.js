@@ -93,10 +93,10 @@ function App() {
   return (
     <div className="App">
       <style type="text/css">{ theme }</style>
-      <Header 
+      {/* <Header 
         currentHomeDisplay={currentHomeDisplay}
         setCurrentHomeDisplay={setCurrentHomeDisplay}
-      />
+      /> */}
       <BrowserRouter>
         { routes() }
       </BrowserRouter>
