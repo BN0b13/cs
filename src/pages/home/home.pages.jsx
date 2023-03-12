@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Welcome from '../../components/welcome/welcome.component';
+
 import './home.styles.scss';
 
 const HomePage = ({ currentHomeDisplay }) => {
