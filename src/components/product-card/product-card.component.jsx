@@ -2,6 +2,8 @@
 
 // import { CartContext } from '../../contexts/cart.context';
 
+import logo from '../../assets/img/logo.png';
+
 import {
     ProductCartContainer,
     Footer,
@@ -19,7 +21,8 @@ const ProductCard = ({ product }) => {
 
     return (
         <ProductCartContainer>
-            <img src={imageUrl} alt={`${name}`} />
+            <img src={logo} alt={`${name}`} />
+            {/* <img src={imageUrl} alt={`${name}`} /> */}
             <Footer>
                 <Name as='span'>{ name }</Name>
                 <Price as='span'>{ price }</Price>
