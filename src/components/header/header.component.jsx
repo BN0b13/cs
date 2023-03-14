@@ -2,7 +2,7 @@ import React from 'react';
 import Nav from 'react-bootstrap/Nav';
 
 import { tokenName } from '../../assets/config';
-import logo from '../../assets/img/logo.png';
+import text from '../../assets/img/text.png';
 import './header.styles.scss';
 
 const loggedIn = ({ currentHomeDisplay, setCurrentHomeDisplay }) => {
@@ -49,9 +49,22 @@ const loggedIn = ({ currentHomeDisplay, setCurrentHomeDisplay }) => {
       </div>
     );
   } else {
+    let currentPath = (
+      <Nav.Link 
+          onClick={() => {
+            localStorage.removeItem(tokenName);
+            sessionStorage.removeItem(tokenName);
+            window.location = '/shop';
+          }}
+        >
+          Lines
+        </Nav.Link>
+    );
+
     return (
       <div className='logged-in-div'>
         <Nav defaultActiveKey="/" className="navbar-logged-in">
+          { currentPath }
           <Nav.Link 
             onClick={() => {
               window.location = '/login';
@@ -69,9 +82,9 @@ const Header = ({ currentHomeDisplay, setCurrentHomeDisplay }) => {
   return (
     <div className='header'>
       <div className='logo-container'>
-        <a onClick={() => setCurrentHomeDisplay('home')} >
-          {/* <img src={logo} className='logo' /> */}
-        </a>
+        {<a onClick={() => window.location = '/'} >
+          {<img src={text} className='logo' />}
+        </a>}
       </div>
       <div className='options'>
         {loggedIn({ currentHomeDisplay, setCurrentHomeDisplay })}

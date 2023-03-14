@@ -83,8 +83,6 @@ class SignUpForm extends React.Component{
 
       const res = await signUp.json();
 
-      console.log('Sign up res: ', res);
-
       if(res.status !== 201) {
         this.setState({ 
           loading: false,

@@ -12,6 +12,7 @@ import Header from './components/header/header.component';
 import Footer from './components/footer/footer.component';
 import HomePage from './pages/home/home.pages';
 import LoginPage from './pages/login/login.pages';
+import ShopPage from './pages/shop/shop.pages';
 
 import { userData } from './tools/user-data.tools';
 import { tokenName } from './assets/config';
@@ -84,6 +85,10 @@ function App() {
           <Route 
             path="/login" 
             element={<LoginPage />} 
+          />
+          <Route 
+            path="/shop/*" 
+            element={<ShopPage />} 
           />
         </Routes>
       );
