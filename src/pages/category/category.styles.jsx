@@ -7,6 +7,12 @@ export const CategoryContainer = styled.div`
     row-gap: 50px;
 `;
 
+export const CategoryContainerMobile = styled.div`
+    display: grid;
+    grid-template-row: repeat(1fr);
+    row-gap: 20px;
+`;
+
 export const CategoryTitle = styled.h2`
     font-size: 38px;
     margin-bottom: 25px;

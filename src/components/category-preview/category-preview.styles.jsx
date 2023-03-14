@@ -20,3 +20,9 @@ export const Preview = styled.div`
   grid-template-columns: repeat(4, 1fr);
   column-gap: 20px;
 `;
+
+export const PreviewMobile = styled.div`
+  display: grid;
+  grid-template-rows: repeat(4, 1fr);
+  row-gap: 10px;
+`;
