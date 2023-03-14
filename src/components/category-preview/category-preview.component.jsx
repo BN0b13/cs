@@ -3,7 +3,8 @@ import ProductCard from '../product-card/product-card.component';
 import {
     CategoryPreviewContainer,
     Title,
-    Preview
+    Preview,
+    PreviewMobile
 } from './category-preview.styles';
 
 const CategoryPreview = ({ title, products }) => {
@@ -12,13 +13,27 @@ const CategoryPreview = ({ title, products }) => {
             <h2>
                 <Title to={title}>{ title.toUpperCase() }</Title>
             </h2>
-            <Preview>
-                {
-                products.filter((_, idx) => idx < 4)
-                .map((product) => 
-                <ProductCard key={product.id} product={ product } />)
-                }
-            </Preview>
+            {
+                window.screen.width < 500 ? (
+                    <PreviewMobile>
+                        {
+                        products.filter((_, idx) => idx < 4)
+                        .map((product) => 
+                        <ProductCard key={product.id} product={ product } />)
+                        }
+                    </PreviewMobile>
+                )
+                : (
+                    <Preview>
+                        {
+                        products.filter((_, idx) => idx < 4)
+                        .map((product) => 
+                        <ProductCard key={product.id} product={ product } />)
+                        }
+                    </Preview>
+                )
+            }
+            
         </CategoryPreviewContainer>
     )
 

@@ -7,7 +7,7 @@ import ProductCard from '../../components/product-card/product-card.component';
 
 import { SHOP_DATA } from '../../assets/inventory/inventory';
 
-import { CategoryContainer, CategoryTitle } from './category.styles';
+import { CategoryContainer, CategoryContainerMobile, CategoryTitle } from './category.styles';
 
 const Category = () => {
     const { category } = useParams();
@@ -22,11 +22,22 @@ const Category = () => {
     return (
         <Fragment>
             <CategoryTitle>{ category.toUpperCase() }</CategoryTitle>
-            <CategoryContainer>
-                {products &&
-                    products.map((product) => <ProductCard key={product.id} product={product} />)
-                }
-            </CategoryContainer>
+            {
+                window.screen.width < 500 ? (
+                    <CategoryContainerMobile>
+                        {products &&
+                            products.map((product) => <ProductCard key={product.id} product={product} />)
+                        }
+                    </CategoryContainerMobile>
+                ) : (
+                    <CategoryContainer>
+                        {products &&
+                            products.map((product) => <ProductCard key={product.id} product={product} />)
+                        }
+                    </CategoryContainer>
+                )
+            }
+            
         </Fragment>
     )
 }

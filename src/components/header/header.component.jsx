@@ -3,6 +3,7 @@ import Nav from 'react-bootstrap/Nav';
 
 import { tokenName } from '../../assets/config';
 import text from '../../assets/img/text.png';
+import textMobile from '../../assets/img/textMobile.png';
 import './header.styles.scss';
 
 const loggedIn = ({ currentHomeDisplay, setCurrentHomeDisplay }) => {
@@ -79,14 +80,26 @@ const loggedIn = ({ currentHomeDisplay, setCurrentHomeDisplay }) => {
 }
 
 const Header = ({ currentHomeDisplay, setCurrentHomeDisplay }) => {
+  let imgSrc = text;
+  let logoContainerClass = 'logo-container';
+  let logoClass = 'logo';
+  let optionsClass = 'options';
+
+  if(window.screen.width < 500) {
+    imgSrc = textMobile;
+    logoContainerClass = 'logo-container-mobile';
+    logoClass = 'logo-mobile';
+    optionsClass = 'options-mobile';
+  }
+
   return (
     <div className='header'>
-      <div className='logo-container'>
+      <div className={logoContainerClass}>
         {<a onClick={() => window.location = '/'} >
-          {<img src={text} className='logo' />}
+          {<img src={imgSrc} className={logoClass} />}
         </a>}
       </div>
-      <div className='options'>
+      <div className='optionsClass'>
         {loggedIn({ currentHomeDisplay, setCurrentHomeDisplay })}
       </div>
     </div>
