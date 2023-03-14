@@ -73,8 +73,6 @@ class LoginForm extends React.Component{
       });
       
       const res = await login.json();
-
-      console.log('Login Res: ', res);
       
       if(res.status !== 200) {
         this.setState({ 
