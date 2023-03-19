@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Clear local git changes, if any
+git reset --hard
 # Pull new changes to frontend main
 git pull origin main;
 # Delete the node_modules dir
