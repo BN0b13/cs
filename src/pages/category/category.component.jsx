@@ -16,7 +16,8 @@ const Category = () => {
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
-        setProducts(categoriesMap[0].items)
+        const currentCategory = categoriesMap.filter(current => current.title === category);
+        setProducts(currentCategory[0].items);
     }, [category, categoriesMap]);
 
     return (

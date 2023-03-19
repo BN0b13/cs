@@ -6,8 +6,8 @@ const Welcome = ({ currentHomeDisplay, setCurrentHomeDisplay }) => {
 
   return (
     <div className='welcomeDiv'>
-        <img src={logo} className='logo' />
-        <h2>Preparing to launch late 2023</h2>
+        <img src={logo} className='logo' alt='Welcome to Cosmic Strains' />
+        <h2 className='welcomeTxt'>Preparing to launch late 2023</h2>
     </div>
   );
 };
