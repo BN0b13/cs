@@ -16,7 +16,7 @@ const AgeVerify = ({ ageVerifyTokenName, ageToken }) => {
         } else {
             setShow(false);
         }
-    }, []);
+    }, [ ageToken ]);
 
     const ageVerified = () => {
         localStorage.setItem(ageVerifyTokenName, true);
@@ -34,6 +34,8 @@ const AgeVerify = ({ ageVerifyTokenName, ageToken }) => {
             show={show} 
             onHide={handleClose}
             backdrop="static"
+            centered
+            dialogClassName="ageVerifyModal"
         >
           <Modal.Header>
             <Modal.Title>Cosmic Strains Age Check</Modal.Title>
