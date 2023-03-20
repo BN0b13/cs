@@ -8,6 +8,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import './App.scss';
 import { customReactTheme } from './assets/custom-theme';
 
+import AgeVerify from './components/age-verify/age-verify.component';
 import Header from './components/header/header.component';
 import Footer from './components/footer/footer.component';
 import HomePage from './pages/home/home.pages';
@@ -15,13 +16,17 @@ import LoginPage from './pages/login/login.pages';
 import ShopPage from './pages/shop/shop.pages';
 
 import { userData } from './tools/user-data.tools';
-import { tokenName } from './assets/config';
+import { 
+  tokenName, 
+  ageVerifyTokenName 
+} from './assets/config';
 
 const showLoading = false;
 
 function App() {
   const [ data, setData ] = useState(JSON.parse(sessionStorage.getItem(tokenName)));
   const [ token, setToken ] = useState(localStorage.getItem(tokenName));
+  const [ ageToken, setAgeToken ] = useState(localStorage.getItem(ageVerifyTokenName));
   const [reloadUserData, setReloadUserData] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const [theme, setTheme] = useState(customReactTheme(darkMode));
@@ -101,6 +106,10 @@ function App() {
       <Header 
         currentHomeDisplay={currentHomeDisplay}
         setCurrentHomeDisplay={setCurrentHomeDisplay}
+      />
+      <AgeVerify 
+        ageVerifyTokenName={ageVerifyTokenName}
+        ageToken={ageToken}
       />
       <BrowserRouter>
         { routes() }

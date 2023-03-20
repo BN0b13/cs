@@ -1,4 +1,5 @@
 export const tokenName = 'cosmicstrains-token';
+export const ageVerifyTokenName = 'cs-age-verified-token';
 export const recaptchaSiteKey = '';
 
 // Prod

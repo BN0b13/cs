@@ -16,7 +16,6 @@ const CategoriesPreview = () => {
         <Fragment>
             {
                 Object.keys(categoriesMap).map(title => {
-                    console.log('categories-preview map const: ', categoriesMap[title]);
                     const products = categoriesMap[title];
                     return <CategoryPreview key={title} title={products.title} products={products.items} />
                 })
