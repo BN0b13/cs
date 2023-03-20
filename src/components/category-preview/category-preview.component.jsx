@@ -1,8 +1,9 @@
 import ProductCard from '../product-card/product-card.component';
 
 import {
+    CategoryPreviewLink,
     CategoryPreviewContainer,
-    Title,
+    CategoryPreviewTitle,
     Preview,
     PreviewMobile
 } from './category-preview.styles';
@@ -10,16 +11,16 @@ import {
 const CategoryPreview = ({ title, products }) => {
     return (
         <CategoryPreviewContainer>
-            <h2>
-                <Title to={title}>{ title.toUpperCase() }</Title>
-            </h2>
+            <CategoryPreviewLink to={title}>
+                    <CategoryPreviewTitle >{ title.toUpperCase() }</CategoryPreviewTitle>
+            </CategoryPreviewLink>
             {
                 window.screen.width < 500 ? (
                     <PreviewMobile>
                         {
                         products.filter((_, idx) => idx < 4)
                         .map((product) => 
-                        <ProductCard key={product.id} product={ product } />)
+                        <CategoryPreviewLink to={`/shop/${title}/${product.name}`} key={product.id}><ProductCard key={product.id} product={ product } /></CategoryPreviewLink>)
                         }
                     </PreviewMobile>
                 )
@@ -28,7 +29,7 @@ const CategoryPreview = ({ title, products }) => {
                         {
                         products.filter((_, idx) => idx < 4)
                         .map((product) => 
-                        <ProductCard key={product.id} product={ product } />)
+                        <CategoryPreviewLink to={`/shop/${title}/${product.name}`} key={product.id}><ProductCard key={product.id} product={ product } /></CategoryPreviewLink>)
                         }
                     </Preview>
                 )
