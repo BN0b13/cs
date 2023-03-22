@@ -38,8 +38,8 @@ export const LoginFormLabel = styled.label`
 `;
 
 export const LoginFormLogo = styled.img`
-    height: 350px;
-    width: 350px;
+    height: 320px;
+    width: 320px;
 `;
 
 export const LoginFormTitle = styled.h1`
