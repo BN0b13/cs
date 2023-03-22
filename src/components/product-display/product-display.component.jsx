@@ -49,8 +49,22 @@ const ProductDisplay = ({ category, strain }) => {
 
     return (
         <ProductDisplayContainer>
-            <ProductTitle><CategoryLink to={`/shop/${category}`}>{category}</CategoryLink>{'  '}<BsArrowRight />{'  '}{name}</ProductTitle>
-                {productDisplayLayout()}
+            <ProductTitle>
+                <CategoryLink to={`/shop`}>
+                    Lines
+                </CategoryLink>
+                    {'  '}
+                <BsArrowRight />
+                    {'  '}
+                <CategoryLink to={`/shop/${category}`}>
+                    {category}
+                </CategoryLink>
+                    {'  '}
+                <BsArrowRight />
+                    {'  '}
+                {name}
+            </ProductTitle>
+            {productDisplayLayout()}
         </ProductDisplayContainer>
     )
 }
