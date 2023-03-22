@@ -1,4 +1,7 @@
 import React from 'react';
+
+import MobileNav from '../mobile-nav/mobile-nav.component';
+
 import {
   HeaderLink,
   HeaderNav,
@@ -6,8 +9,6 @@ import {
   Logo,
   LogoContainer,
   LogoLink,
-  MobileDropDownMenu,
-  MobileDropDownMenuItem,
   NavOptionsDiv,
   NavOptions,
   NavOptionsMobileDiv,
@@ -58,19 +59,6 @@ const optionsDisplay = () => {
   );
 }
 
-const mobileDropDownMenu = () => {
-  return (
-    <MobileDropDownMenu>
-      <MobileDropDownMenuItem>
-        <HeaderLink href={`/shop`}>
-          Lines
-        </HeaderLink>
-      </MobileDropDownMenuItem>
-      <MobileDropDownMenuItem>{ logInOptions() }</MobileDropDownMenuItem>
-    </MobileDropDownMenu>
-  );
-}
-
 const Header = () => {
   if(window.screen.width < 500) {
     return (
@@ -84,7 +72,7 @@ const Header = () => {
         {window.location.pathname === '/login' ?
           cancelOption()
         :
-          mobileDropDownMenu()
+          <MobileNav logInOptions={logInOptions} />
         }
         </NavOptionsMobileDiv>
       </HeaderNav>

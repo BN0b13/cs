@@ -61,11 +61,3 @@ export const NavOptionsMobileDiv = styled.div`
     align-items: center;
     justify-content: flex-end;
 `;
-
-export const MobileDropDownMenu = styled.ul`
-
-`;
-
-export const MobileDropDownMenuItem = styled.li`
-
-`;
