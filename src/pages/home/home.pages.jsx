@@ -2,11 +2,15 @@ import React from 'react';
 
 import Welcome from '../../components/welcome/welcome.component';
 
-import './home.styles.scss';
+import {
+    HomePageContainer
+} from './home.styles';
 
-const HomePage = ({ currentHomeDisplay }) => {
+const HomePage = () => {
     return (
-        <Welcome />
+        <HomePageContainer>
+            <Welcome />
+        </HomePageContainer>
     );
 };
 

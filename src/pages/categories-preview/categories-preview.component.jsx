@@ -4,13 +4,8 @@ import CategoryPreview from '../../components/category-preview/category-preview.
 
 import { SHOP_DATA } from '../../assets/inventory/inventory';
 
-// import { CategoriesContext } from '../../contexts/categories.context';
-
 const CategoriesPreview = () => {
-    // const { categoriesMap } = useContext(CategoriesContext);
     const categoriesMap = SHOP_DATA;
-
-
 
     return (
         <Fragment>
