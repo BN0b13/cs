@@ -1,8 +1,4 @@
-// import { useContext } from 'react';
-
-// import { CartContext } from '../../contexts/cart.context';
-
-import { ArrowRight } from 'react-bootstrap-icons';
+import { BsArrowRight } from 'react-icons/bs';
 
 import logo from '../../assets/img/logo.png';
 
@@ -19,9 +15,6 @@ import {
 
 const ProductDisplay = ({ category, strain }) => {
     const { name, time, type, mother, father } = strain;
-    // const { addItemToCart } = useContext(CartContext);
-
-    // const addProductToCart = () => addItemToCart(product);
 
     const productDisplayContents = () => {
         return (
@@ -56,7 +49,7 @@ const ProductDisplay = ({ category, strain }) => {
 
     return (
         <ProductDisplayContainer>
-            <ProductTitle><CategoryLink to={`/shop/${category}`}>{category}</CategoryLink>{'  '}<ArrowRight />{'  '}{name}</ProductTitle>
+            <ProductTitle><CategoryLink to={`/shop/${category}`}>{category}</CategoryLink>{'  '}<BsArrowRight />{'  '}{name}</ProductTitle>
                 {productDisplayLayout()}
         </ProductDisplayContainer>
     )

@@ -1,14 +1,18 @@
 import React from 'react';
-import Alert from 'react-bootstrap/Alert';
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import Form from 'react-bootstrap/Form';
-import Spinner from 'react-bootstrap/Spinner';
-// import ReCAPTCHA from "react-google-recaptcha";
 
-import { tokenName, api, recaptchaSiteKey } from '../../assets/config';
-import { recaptchaCheck } from '../../tools/recaptcha.tools';
-import './sign-up-form.styles.scss';
+import Button from '../button/button.component';
+
+import { tokenName, api } from '../../assets/config';
+
+import {
+  SignUpFormButtonContainer,
+  SignUpFormContainer,
+  SignUpFormForm,
+  SignUpFormErrorContainer,
+  SignUpFormInput,
+  SignUpFormLabel,
+  SignUpFormTitle
+} from './sign-up-form.styles';
 
 class SignUpForm extends React.Component{
   constructor(props){
@@ -18,11 +22,16 @@ class SignUpForm extends React.Component{
       loading: false,
       username: '',
       password: '',
+      firstName: '',
+      lastName: '',
       email: '',
+      address: '',
+      city: '',
+      state: '',
+      zipCode: '',
+      phone: '',
       errorVisible: false,
       errorMsg: 'There was an error. Please try again.',
-      recaptcha: true,
-      // recaptcha: false,
     }
   }
 
@@ -36,12 +45,6 @@ class SignUpForm extends React.Component{
       return true
     }
     return false
-  }
-
-  recaptchaCheck = async (recaptcha) => {
-    // const res = await recaptchaCheck(recaptcha);
-    // if(res) { this.setState({ recaptcha: true })}
-    return
   }
 
   handleSignUp = async (e) => {
@@ -110,61 +113,108 @@ class SignUpForm extends React.Component{
   render() {
     if(this.state.loading) {
       return (
-        <div className='spinnerDiv'>
-          <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
-        </div>
+        <SignUpFormContainer>
+          <SignUpFormTitle>LOADING...</SignUpFormTitle>
+        </SignUpFormContainer>
       )
     }
 
     return(
-      <Card className='sign-up-form-content'>
-        <Card.Body>
-        <Card.Title className='sign-up-form-title'>Sign Up</Card.Title>
+      <SignUpFormContainer>
+        <SignUpFormTitle>SIGN UP</SignUpFormTitle>
 
-        <Form className='sign-up-form'>
-          <Form.Label className={'input'}>Username: 
-            <Form.Control  
+        <SignUpFormForm>
+          <SignUpFormLabel>Username: 
+            <SignUpFormInput 
             name="username" 
             type="text" 
             value={this.state.username} 
             onChange={this.handleChange}
             required />
-          </Form.Label>
-          <Form.Label className={'input'}>Password: 
-            <Form.Control  
+          </SignUpFormLabel>
+          <SignUpFormLabel>Password: 
+            <SignUpFormInput 
             name="password" 
             type="password" 
             value={this.state.password} 
             onChange={this.handleChange}
             required />
-          </Form.Label>
-          <Form.Label className={'input'}>Email: 
-            <Form.Control 
+          </SignUpFormLabel>
+          <SignUpFormLabel>First Name: 
+            <SignUpFormInput 
+            name="firstName" 
+            type="text" 
+            value={this.state.firstName} 
+            onChange={this.handleChange}
+            required />
+          </SignUpFormLabel>
+          <SignUpFormLabel>Last Name: 
+            <SignUpFormInput 
+            name="lastName" 
+            type="text" 
+            value={this.state.lastName} 
+            onChange={this.handleChange}
+            required />
+          </SignUpFormLabel>
+          <SignUpFormLabel>Email: 
+            <SignUpFormInput
             name="email" 
             type="text" 
             value={this.state.email} 
             onChange={this.handleChange}
             required />
-          </Form.Label>
-          {/* <ReCAPTCHA
-            className='recaptcha'
-            sitekey={recaptchaSiteKey}
-            onChange={this.recaptchaCheck}
-          /> */}
+          </SignUpFormLabel>
+          <SignUpFormLabel>Address: 
+            <SignUpFormInput 
+            name="address" 
+            type="text" 
+            value={this.state.address} 
+            onChange={this.handleChange}
+            required />
+          </SignUpFormLabel>
+          <SignUpFormLabel>City: 
+            <SignUpFormInput 
+            name="city" 
+            type="text" 
+            value={this.state.city} 
+            onChange={this.handleChange}
+            required />
+          </SignUpFormLabel>
+          <SignUpFormLabel>State: 
+            <SignUpFormInput 
+            name="state" 
+            type="text" 
+            value={this.state.state} 
+            onChange={this.handleChange}
+            required />
+          </SignUpFormLabel>
+          <SignUpFormLabel>Zip Code: 
+            <SignUpFormInput 
+            name="zipCode" 
+            type="text" 
+            value={this.state.zipCode} 
+            onChange={this.handleChange}
+            required />
+          </SignUpFormLabel>
+          <SignUpFormLabel>Phone: 
+            <SignUpFormInput 
+            name="phone" 
+            type="text" 
+            value={this.state.phone} 
+            onChange={this.handleChange}
+            required />
+          </SignUpFormLabel>
           { this.state.errorVisible && 
-          <Alert variant={'danger'} onClose={() => this.setState({ errorVisible: false })} dismissible>
+          <SignUpFormErrorContainer onClose={() => this.setState({ errorVisible: false })}>
             {this.state.errorMsg}
-          </Alert>
+          </SignUpFormErrorContainer>
           }
-          <div className={'inlineBtn'}>
-            <Button className={'btn'} onClick={this.props.signUp}>Cancel</Button>
-            <Button className={'btn'} onClick={this.handleSignUp}>Sign Up</Button>
-          </div>
-        </Form>
-        </Card.Body>
-      </Card>
+          <SignUpFormButtonContainer>
+            <Button onClick={this.props.signUp}>Cancel</Button>
+            <Button onClick={this.handleSignUp}>Sign Up</Button>
+          </SignUpFormButtonContainer>
+        </SignUpFormForm>
+      </SignUpFormContainer>
     )
   }
 }

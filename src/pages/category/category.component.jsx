@@ -1,11 +1,9 @@
 import { useState, useEffect, Fragment } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { ArrowRight } from 'react-bootstrap-icons';
+import { BsArrowRight } from 'react-icons/bs';
 
 import ProductCard from '../../components/product-card/product-card.component';
-
-// import { CategoriesContext } from '../../contexts/categories.context';
 
 import { SHOP_DATA } from '../../assets/inventory/inventory';
 
@@ -17,7 +15,6 @@ import {CategoryContainer,
 
 const Category = () => {
     const { category } = useParams();
-    // const { categoriesMap } = useContext(CategoriesContext);
     const categoriesMap = SHOP_DATA;
     const [products, setProducts] = useState([]);
 
@@ -28,7 +25,7 @@ const Category = () => {
 
     return (
         <Fragment>
-            <CategoryTitle><CategoryLink to={`/shop`}>Lines</CategoryLink>{'  '}<ArrowRight />{'  '}{category.toUpperCase()}</CategoryTitle>
+            <CategoryTitle><CategoryLink to={`/shop`}>Lines</CategoryLink>{'  '}<BsArrowRight />{'  '}{category.toUpperCase()}</CategoryTitle>
             {/* <CategoryTitle>{ category.toUpperCase() }</CategoryTitle> */}
             {
                 window.screen.width < 500 ? (
