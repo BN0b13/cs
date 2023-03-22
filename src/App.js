@@ -29,23 +29,33 @@ function App() {
       <Routes>
         <Route 
           path="/" 
-          element={ <HomePage /> }
+          element={
+            <HomePage />
+          }
         />
         <Route 
           path="/about" 
-          element={ <AboutPage /> }
+          element={
+            <AboutPage />
+          }
         />
         <Route 
           path="/contact" 
-          element={ <ContactPage /> }
+          element={
+            <ContactPage />
+          }
         />
         <Route 
           path="/login" 
-          element={ <LoginPage /> } 
+          element={ 
+            <LoginPage /> 
+          } 
         />
         <Route 
           path="/shop/*" 
-          element={ <ShopPage /> } 
+          element={
+            <ShopPage />
+          } 
         />
       </Routes>
     );
