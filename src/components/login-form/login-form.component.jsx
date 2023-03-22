@@ -1,14 +1,20 @@
 import React from 'react';
-import Alert from 'react-bootstrap/Alert';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import Spinner from 'react-bootstrap/Spinner';
-// import ReCAPTCHA from "react-google-recaptcha";
 
-import { tokenName, api, recaptchaSiteKey } from '../../assets/config';
-import { recaptchaCheck } from '../../tools/recaptcha.tools';
+import Button from '../button/button.component';
+
 import logo from '../../assets/img/logo.png';
-import './login-form.styles.scss';
+import { tokenName, api } from '../../assets/config';
+
+import {
+  LoginFormButtonContainer,
+  LoginFormContainer,
+  LoginFormForm,
+  LoginFormErrorContainer,
+  LoginFormInput,
+  LoginFormLabel,
+  LoginFormLogo,
+  LoginFormTitle
+} from './login-form.styles';
 
 class LoginForm extends React.Component{
   constructor(props){
@@ -20,7 +26,6 @@ class LoginForm extends React.Component{
       password: '',
       errorVisible: false,
       errorMsg: 'There was an error. Please try again.',
-      recaptcha: true,
     }
   }
 
@@ -35,12 +40,6 @@ class LoginForm extends React.Component{
       return true
     }
     return false
-  }
-
-  recaptchaCheck = async (recaptcha) => {
-    // const res = await recaptchaCheck(recaptcha);
-    // if(res) { this.setState({ recaptcha: true })}
-    return
   }
 
   handleSubmit = async (e) => {
@@ -101,50 +100,46 @@ class LoginForm extends React.Component{
   render() {
     if(this.state.loading) {
       return (
-        <div className='spinnerDiv'>
-          <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
-        </div>
+        <LoginFormContainer>
+          <LoginFormTitle>LOADING...</LoginFormTitle>
+        </LoginFormContainer>
       )
     }
 
     return(
-      <div className='login-form-content'>
-        <img src={logo} className='logo' />
+      <LoginFormContainer>
+        <LoginFormTitle>LOGIN</LoginFormTitle>
 
-        <Form className='login-form'>
-          <Form.Label className={'input'}>Username: 
-            <Form.Control 
+        <LoginFormLogo src={logo} alt="Cosmic Strains Login" />
+
+        <LoginFormForm>
+          <LoginFormLabel>Username: 
+            <LoginFormInput 
             name="username" 
             type="text" 
             value={this.state.username} 
             onChange={this.handleChange}
             required />
-          </Form.Label>
-          <Form.Label className={'input'}>Password: 
-            <Form.Control 
+          </LoginFormLabel>
+          <LoginFormLabel>Password: 
+            <LoginFormInput 
             name="password" 
             type="password" 
             value={this.state.password} 
             onChange={this.handleChange}
             required />
-          </Form.Label>
-          {/* <ReCAPTCHA
-            sitekey={recaptchaSiteKey}
-            onChange={this.recaptchaCheck}
-          /> */}
+          </LoginFormLabel>
           { this.state.errorVisible && 
-            <Alert variant={'danger'} onClose={() => this.setState({ errorVisible: false })} dismissible>
+            <LoginFormErrorContainer onClose={() => this.setState({ errorVisible: false })}>
               {this.state.errorMsg}
-            </Alert>
+            </LoginFormErrorContainer>
           }
-          <div className={'inlineBtn'}>
-            {/* <Button className={'btn'} onClick={this.props.signUp}>Sign Up</Button> */}
-            <Button className={'btn'} onClick={this.handleSubmit}>Login</Button>
-          </div>
-        </Form>
-      </div>
+          <LoginFormButtonContainer>
+            {/* <Button onClick={this.props.signUp}>Sign Up</Button> */}
+            <Button onClick={this.handleSubmit}>Login</Button>
+          </LoginFormButtonContainer>
+        </LoginFormForm>
+      </LoginFormContainer>
     )
   }
 }

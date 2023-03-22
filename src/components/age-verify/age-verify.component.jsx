@@ -1,25 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React, { 
+  useState, 
+  useEffect 
+} from 'react';
 
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
+import {
+  AgeVerifyAccessButton,
+  AgeVerifyDenyButton,
+  AgeVerifyButtonDiv,
+  AgeVerifyDiv,
+  AgeVerifyTitle,
+  AgeVerifyText,
+  Modal
+} from './age-verify.styles';
 
-import './age-verify.styles.scss';
-
-const AgeVerify = ({ ageVerifyTokenName, ageToken }) => {
+const AgeVerify = ({ ageVerifyTokenName, ageToken, setAgeToken }) => {
     const [show, setShow] = useState(false);
 
-    const handleClose = () => setShow(false);
-
     useEffect(() => {
-        if(!ageToken) {
-            setShow(true);
-        } else {
+        if(ageToken) {
             setShow(false);
+        } else {
+            setShow(true);
         }
     }, [ ageToken ]);
 
     const ageVerified = () => {
-        localStorage.setItem(ageVerifyTokenName, true);
+        sessionStorage.setItem(ageVerifyTokenName, true);
+        setAgeToken(sessionStorage.getItem(ageVerifyTokenName));
         setShow(false);
     };
 
@@ -29,26 +36,19 @@ const AgeVerify = ({ ageVerifyTokenName, ageToken }) => {
   
     return (
       <>
-  
-        <Modal 
-            show={show} 
-            onHide={handleClose}
-            backdrop="static"
-            centered
-            dialogClassName="ageVerifyModal"
-        >
-          <Modal.Header>
-            <Modal.Title>Cosmic Strains Age Check</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>Please verify your age.</Modal.Body>
-          <Modal.Footer>
-            <Button variant="danger" onClick={accessDenied}>
-              I am under 21
-            </Button>
-            <Button variant="success" onClick={ageVerified}>
-              I am 21 or older
-            </Button>
-          </Modal.Footer>
+        <Modal show={show}>
+          <AgeVerifyDiv>
+            <AgeVerifyTitle>Cosmic Strains Age Check</AgeVerifyTitle>
+            <AgeVerifyText>Please verify your age to enter.</AgeVerifyText>
+            <AgeVerifyButtonDiv>
+              <AgeVerifyDenyButton onClick={accessDenied}>
+                I am under 21
+              </AgeVerifyDenyButton>
+              <AgeVerifyAccessButton onClick={ageVerified}>
+                I am 21 or older
+              </AgeVerifyAccessButton>
+            </AgeVerifyButtonDiv>
+          </AgeVerifyDiv>
         </Modal>
       </>
     );

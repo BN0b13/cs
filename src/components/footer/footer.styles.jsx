@@ -1,4 +1,6 @@
-.footer {
+import styled from 'styled-components';
+
+export const FooterContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -9,5 +11,8 @@
     position: static;
     left: 0;
     bottom: 0;
-}
+`;
 
+export const FooterText = styled.h4`
+    
+`;

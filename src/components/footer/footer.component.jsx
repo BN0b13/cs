@@ -1,11 +1,14 @@
 import React from 'react';
 
-import './footer.styles.scss';
+import {
+  FooterContainer,
+  FooterText
+} from './footer.styles';
 
 const Footer = () => (
-  <div className='footer'>
-    <h4>Copyright ©2023</h4>
-  </div>
+  <FooterContainer>
+    <FooterText>Copyright ©2023</FooterText>
+  </FooterContainer>
 );
 
 export default Footer;
