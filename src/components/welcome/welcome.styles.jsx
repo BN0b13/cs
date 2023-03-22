@@ -14,8 +14,8 @@ export const WelcomeLogo = styled.img`
 `;
 
 export const WelcomeLogoMobile = styled.img`
-    height: 350px;
-    width: 350px;
+    height: 320px;
+    width: 320px;
 `;
 
 export const WelcomeText = styled.h1`
