@@ -54,6 +54,9 @@ const optionsDisplay = () => {
       <HeaderLink href={`/shop`}>
         Lines
       </HeaderLink>
+      <HeaderLink href={`/contact`}>
+        Contact Us
+      </HeaderLink>
       { logInOptions() }
     </NavOptions>
   );
