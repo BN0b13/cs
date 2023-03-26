@@ -22,6 +22,7 @@ class ContactForm extends React.Component{
         phone: '',
         email: '',
         message: '',
+        hideButton: false,
         errorVisible: false,
         errorMsg: 'There was an error. Please try again.',
         }
@@ -59,7 +60,7 @@ class ContactForm extends React.Component{
         this.setState({ loading: true });
     
         try {
-          const login = await fetch(`${api}/contact`, {
+          const contact = await fetch(`${api}/contact`, {
             method: 'POST', // *GET, POST, PUT, DELETE, etc.
             mode: 'cors', // no-cors, cors, same-origin
             headers: {
@@ -75,9 +76,7 @@ class ContactForm extends React.Component{
             })
           });
           
-          const res = await login.json();
-
-          console.log('Res: ', res);
+          const res = await contact.json();
           
           if(res.status !== 201) {
             this.setState({ 
@@ -90,6 +89,12 @@ class ContactForm extends React.Component{
 
           this.setState({ 
             loading: false,
+            firstName: '',
+            lastName: '',
+            phone: '',
+            email: '',
+            message: '',
+            hideButton: true,
             errorVisible: true,
             errorMsg: 'Thank you for your message.',
           });
@@ -97,6 +102,7 @@ class ContactForm extends React.Component{
         } catch (err) {
           this.setState({ 
             loading: false,
+            
             errorVisible: true,
             errorMsg: 'There was an error. Please try again.',
           });
@@ -160,7 +166,9 @@ class ContactForm extends React.Component{
                 {this.state.errorMsg}
                 </ContactFormContainer>
             }
-            <Button onClick={this.handleSubmit}>Submit</Button>
+            { !this.state.hideButton && 
+              <Button onClick={this.handleSubmit}>Submit</Button>
+            }
         </ContactFormContainer>
     )
     }
