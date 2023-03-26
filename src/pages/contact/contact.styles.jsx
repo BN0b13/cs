@@ -7,5 +7,6 @@ export const ContactPageContainer = styled.div`
     align-items: center;
 `;
 export const ContactPageTitle = styled.h1`
-    
+    margin: 5px;
+    padding: 3px;
 `;

@@ -70,7 +70,7 @@ class SignUpForm extends React.Component{
     this.setState({ loading: true });
     
     try {
-      const signUp = await fetch(`${api}/api/users`, {
+      const signUp = await fetch(`${api}/users`, {
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
         mode: 'cors', // no-cors, *cors, same-origin
         headers: {

@@ -1,17 +1,12 @@
-#! /bin/bash
+#!/bin/bash
 
-echo "Pulling latest git branch"
+# Clear local git changes, if any
 git reset --hard
-git pull origin main
-echo "Building Backend"
-cd ./backend
-source ./build.sh
-cd ..
-echo "Building Frontend"
-cd ./frontend
-source ./build.sh $1
-cd ..
-echo "Building Admin"
-cd ./admin
-source ./build.sh $1
-cd ..
+# Pull new changes to frontend main
+git pull origin main;
+# Install any new npm packages
+npm install
+# Build React app with said copy
+npm run build;
+# Print completion message
+echo "CosmicStrains.com Frontend start-up script successfully completed."
