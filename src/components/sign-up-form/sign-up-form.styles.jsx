@@ -15,10 +15,6 @@ export const SignUpFormContainer = styled.div`
     padding: 1em;
 `;
 
-export const SignUpFormErrorContainer = styled.div`
-
-`;
-
 export const SignUpFormForm = styled.div`
     display: flex;
     flex-direction: column;

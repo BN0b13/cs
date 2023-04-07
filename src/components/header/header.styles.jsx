@@ -36,10 +36,6 @@ export const Logo = styled.img`
     height: 100%;
 `;
 
-export const LogOut = styled.button`
-
-`;
-
 export const NavOptionsDiv = styled.div`
     width: 50%;
     height: 100%;
