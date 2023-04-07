@@ -1,9 +1,10 @@
 import React from 'react';
 
 import Button from '../button/button.component';
+import Spinner from '../spinner/spinner.component';
 
 import logo from '../../assets/img/logo.png';
-import { tokenName, api } from '../../assets/config';
+import { tokenName, api } from '../../config';
 
 import {
   LoginFormButtonContainer,
@@ -22,7 +23,7 @@ class LoginForm extends React.Component{
 
     this.state = {
       loading: false,
-      username: '',
+      email: '',
       password: '',
       errorVisible: false,
       errorMsg: 'There was an error. Please try again.',
@@ -36,7 +37,7 @@ class LoginForm extends React.Component{
   }
 
   checkFields = () => {
-    if(this.state.username.length > 0 && this.state.password.length > 0 && this.state.recaptcha) {
+    if(this.state.email.length > 0 && this.state.password.length > 0) {
       return true
     }
     return false
@@ -65,7 +66,7 @@ class LoginForm extends React.Component{
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          username: this.state.username.toLowerCase(),
+          email: this.state.email.toLowerCase(),
           password: this.state.password,
           path: 'login',
         })
@@ -100,9 +101,7 @@ class LoginForm extends React.Component{
   render() {
     if(this.state.loading) {
       return (
-        <LoginFormContainer>
-          <LoginFormTitle>LOADING...</LoginFormTitle>
-        </LoginFormContainer>
+        <Spinner />
       )
     }
 
@@ -113,11 +112,11 @@ class LoginForm extends React.Component{
         <LoginFormLogo src={logo} alt="Cosmic Strains Login" />
 
         <LoginFormForm>
-          <LoginFormLabel>Username: 
+          <LoginFormLabel>Email: 
             <LoginFormInput 
-            name="username" 
+            name="email" 
             type="text" 
-            value={this.state.username} 
+            value={this.state.email} 
             onChange={this.handleChange}
             required />
           </LoginFormLabel>

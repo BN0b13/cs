@@ -1,14 +1,36 @@
-export const menuItems = [
+export const menuItemsPublic = [
     {
-      title: 'Lines',
+      title: 'Shop',
       path: '/shop',
     },
     // {
     //   title: 'About',
     //   path: '/about',
     // },
-    {
-      title: 'Contact',
-      path: '/contact',
-    },
+];
+
+export const menuItemsLoggedIn = [
+  {
+    title: 'Contact',
+    path: '/contact',
+  },
+  {
+    title: 'Account',
+    path: '/account',
+  },
+];
+
+export const accountSidebarMenu = [
+  {
+    title: 'Account Information',
+    option: 1,
+  },
+  {
+    title: 'Order History',
+    option: 2,
+  },
+  {
+    title: 'Settings',
+    option: 3,
+  },
 ];

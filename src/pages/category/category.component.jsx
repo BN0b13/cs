@@ -25,7 +25,7 @@ const Category = () => {
 
     return (
         <Fragment>
-            <CategoryTitle><CategoryLink to={`/shop`}>Lines</CategoryLink>{'  '}<BsArrowRight />{'  '}{category.toUpperCase()}</CategoryTitle>
+            <CategoryTitle><CategoryLink to={`/shop`}>Shop</CategoryLink>{'  '}<BsArrowRight />{'  '}{category.toUpperCase()}</CategoryTitle>
             {/* <CategoryTitle>{ category.toUpperCase() }</CategoryTitle> */}
             {
                 window.screen.width < 500 ? (

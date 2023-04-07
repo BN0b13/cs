@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 
 import { GrMenu, GrClose } from 'react-icons/gr';
 
-import { menuItems } from '../../assets/menu-items';
+import { 
+    menuItemsPublic,
+    menuItemsLoggedIn
+} from '../../assets/menu-items';
 
 import {
     MobileDropDownMenu,
@@ -13,7 +16,7 @@ import {
     MobileDropDownMenuOpenContainer
 } from './mobile-nav.styles';
 
-const MobileNav = ({ logInOptions }) => {
+const MobileNav = ({ loggedInStatus, logInOptions }) => {
     const [ show, setShow ] = useState(false);
 
     if(show) {
@@ -23,7 +26,16 @@ const MobileNav = ({ logInOptions }) => {
                     <GrClose onClick={() => setShow(false)}>Close</GrClose>
                 </MobileDropDownMenuCloseContainer>
                 <MobileDropDownMenu>
-                {menuItems.map((item, index) => {
+                {menuItemsPublic.map((item, index) => {
+                    return (
+                        <MobileDropDownMenuItem key={index}>
+                            <MobileDropDownMenuLink href={item.path}>
+                                {item.title}
+                            </MobileDropDownMenuLink>
+                        </MobileDropDownMenuItem>
+                    );
+                })}
+                {loggedInStatus && menuItemsLoggedIn.map((item, index) => {
                     return (
                         <MobileDropDownMenuItem key={index}>
                             <MobileDropDownMenuLink href={item.path}>

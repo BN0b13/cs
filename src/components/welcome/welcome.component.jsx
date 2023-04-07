@@ -18,7 +18,7 @@ const Welcome = () => {
         : 
         <WelcomeLogo src={logo} alt='Welcome to Cosmic Strains' />
       }
-        <WelcomeText>Preparing to launch late 2023</WelcomeText>
+        <WelcomeText>Preparing to launch July 2023</WelcomeText>
     </WelcomeContainer>
   );
 };
