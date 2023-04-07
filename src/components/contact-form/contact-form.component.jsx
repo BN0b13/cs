@@ -1,8 +1,9 @@
 import React from 'react';
 
 import Button from '../button/button.component';
+import Spinner from '../spinner/spinner.component';
 
-import { api } from '../../assets/config';
+import { api } from '../../config';
 
 import {
     ContactFormContainer,
@@ -110,6 +111,11 @@ class ContactForm extends React.Component{
       }
 
     render() {
+    if(this.state.loading) {
+      return (
+        <Spinner />
+      )
+    }
 
     return (
         <ContactFormContainer>

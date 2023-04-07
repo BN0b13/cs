@@ -5,7 +5,6 @@ import MobileNav from '../mobile-nav/mobile-nav.component';
 import {
   HeaderLink,
   HeaderNav,
-  LogOut,
   Logo,
   LogoContainer,
   LogoLink,
@@ -14,9 +13,15 @@ import {
   NavOptionsMobileDiv,
 } from './header.styles';
 
-import { tokenName } from '../../assets/config';
+import { tokenName } from '../../config';
+import { 
+  menuItemsPublic,
+  menuItemsLoggedIn
+} from '../../assets/menu-items';
 import text from '../../assets/img/text.png';
 import textMobile from '../../assets/img/textMobile.png';
+
+const loggedInStatus = localStorage.getItem(tokenName);
 
 const cancelOption = () => {
   return (
@@ -29,15 +34,15 @@ const cancelOption = () => {
 }
 
 const logInOptions = () => {
-  if(localStorage.getItem(tokenName)) {
+  if(loggedInStatus) {
     return (
-      <LogOut onClick={() => {
+      <HeaderLink onClick={() => {
         localStorage.removeItem(tokenName);
         sessionStorage.removeItem(tokenName);
         window.location = '/';
       }}>
         Log Out
-      </LogOut>
+      </HeaderLink>
     );
   }
 
@@ -49,14 +54,23 @@ const logInOptions = () => {
 }
 
 const optionsDisplay = () => {
+  // TODO add search bar
   return (
     <NavOptions>
-      <HeaderLink href={`/shop`}>
-        Lines
-      </HeaderLink>
-      <HeaderLink href={`/contact`}>
-        Contact Us
-      </HeaderLink>
+      {menuItemsPublic.map((item, index) => {
+          return (
+            <HeaderLink key={index} href={item.path}>
+            {item.title}
+        </HeaderLink>
+          );
+      })}
+      {loggedInStatus && menuItemsLoggedIn.map((item, index) => {
+          return (
+            <HeaderLink key={index} href={item.path}>
+            {item.title}
+        </HeaderLink>
+          );
+      })}
       { logInOptions() }
     </NavOptions>
   );
@@ -75,7 +89,10 @@ const Header = () => {
         {window.location.pathname === '/login' ?
           cancelOption()
         :
-          <MobileNav logInOptions={logInOptions} />
+          <MobileNav
+            loggedInStatus={loggedInStatus}
+            logInOptions={logInOptions}
+          />
         }
         </NavOptionsMobileDiv>
       </HeaderNav>

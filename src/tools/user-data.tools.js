@@ -62,7 +62,7 @@ export const updateUserData = async (data) => {
       }
     }
   } catch (err) {
-    console.log('There was an error trying to add purchase: ', err);
+    console.log('There was an error trying to update user: ', err);
   }
 }
 

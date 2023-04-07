@@ -11,14 +11,15 @@ import Header from './components/header/header.component';
 import Footer from './components/footer/footer.component';
 
 import AboutPage from './pages/about/about.pages';
+import AccountPage from './pages/account/account.pages';
 import ContactPage from './pages/contact/contact.pages';
 import HomePage from './pages/home/home.pages';
 import LoginPage from './pages/login/login.pages';
 import ShopPage from './pages/shop/shop.pages';
 
 import {
-  ageVerifyTokenName 
-} from './assets/config';
+  ageVerifyTokenName
+} from './config';
 
 function App() {
   const [ ageToken, setAgeToken ] = useState(sessionStorage.getItem(ageVerifyTokenName));
@@ -38,6 +39,12 @@ function App() {
           element={
             <AboutPage />
           }
+        />
+        <Route 
+          path="/account" 
+          element={
+            <AccountPage />
+          } 
         />
         <Route 
           path="/contact" 

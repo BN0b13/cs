@@ -51,7 +51,7 @@ const ProductDisplay = ({ category, strain }) => {
         <ProductDisplayContainer>
             <ProductTitle>
                 <CategoryLink to={`/shop`}>
-                    Lines
+                    Shop
                 </CategoryLink>
                     {'  '}
                 <BsArrowRight />
