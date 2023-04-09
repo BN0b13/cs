@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import ContactForm from '../../components/contact-form/contact-form.component';
-import ThankYou from '../../components/thank-you/thank-you.component';
 
 import {
     ContactPageContainer,
