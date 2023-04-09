@@ -40,7 +40,6 @@ export default class Client {
     }
 
     async addView() {
-        console.log('Add View fired off');
         const requestOptions = this.fetchOptions(this.fetchMethods.patch);
         const account = await fetch(`${api}/visits`, requestOptions);
         const res = await account.json();
