@@ -4,7 +4,8 @@ import { GrClose } from 'react-icons/gr';
 
 import {
   SnackbarContainer,
-  SnackbarHeader
+  SnackbarHeader,
+  SnackbarMessage
 } from './snackbar.styles';
 
 const Snackbar = ({ msg, type="err", show }) => {
@@ -14,7 +15,9 @@ const Snackbar = ({ msg, type="err", show }) => {
         <SnackbarHeader>
           <GrClose onClick={() => show()} />
         </SnackbarHeader>
-        { msg }
+        <SnackbarMessage>
+          { msg }
+        </SnackbarMessage>
       </SnackbarContainer>
     );
 }

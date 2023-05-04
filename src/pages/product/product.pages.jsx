@@ -3,30 +3,33 @@ import { React, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import ProductDisplay from '../../components/product-display/product-display.component';
+import Spinner from '../../components/spinner/spinner.component';
 
-import { SHOP_DATA } from '../../assets/inventory/inventory';
+import Client from '../../tools/client';
+
+const client = new Client();
 
 const Product = () => {
-    const { product } = useParams();
-
-    const categoriesMap = SHOP_DATA;
-    const [strain, setStrain] = useState([]);
-    const [category, setCategory] = useState([]);
+    const { item } = useParams();
+    const [product, setProduct] = useState(null);
 
     useEffect(() => {
-        categoriesMap.map(current => current.items.map(
-            item => {
-            if(item.name === product) {
-                setStrain(item);
-                setCategory(current.title);
-                return item;
-            }
-            return null;
-        }));
-    }, [product, categoriesMap]);
+        const getProduct = async () => {
+            const res = await client.getProducts();
+            const currentProduct = res.rows.filter(data => data.name === item);
+            setProduct(currentProduct[0]);
+        }
+        getProduct();
+    }, [item]);
     
     return (
-        <ProductDisplay category={category} strain={strain} />
+        <>
+            {!product ? 
+                <Spinner />
+            :
+            <ProductDisplay product={product} />
+            }
+        </>
     );
 };
 

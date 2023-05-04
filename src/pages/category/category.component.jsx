@@ -5,28 +5,32 @@ import { BsArrowRight } from 'react-icons/bs';
 
 import ProductCard from '../../components/product-card/product-card.component';
 
-import { SHOP_DATA } from '../../assets/inventory/inventory';
+import Client from '../../tools/client';
 
 import {CategoryContainer,
-        CategoryContainerMobile,
-        CategoryTitle,
-        CategoryLink
+    CategoryContainerMobile,
+    CategoryTitle,
+    CategoryLink
 } from './category.styles';
+
+const client = new Client();
 
 const Category = () => {
     const { category } = useParams();
-    const categoriesMap = SHOP_DATA;
-    const [products, setProducts] = useState([]);
+    const [products, setProducts] = useState(null);
 
     useEffect(() => {
-        const currentCategory = categoriesMap.filter(current => current.title === category);
-        setProducts(currentCategory[0].items);
-    }, [category, categoriesMap]);
+        const getCategories = async () => {
+            const res = await client.getCategories();
+            const currentCategory = res.rows.filter(current => current.name === category);
+            setProducts(currentCategory[0].Products);
+        }
+        getCategories();
+    }, [category]);
 
     return (
         <Fragment>
             <CategoryTitle><CategoryLink to={`/shop`}>Shop</CategoryLink>{'  '}<BsArrowRight />{'  '}{category.toUpperCase()}</CategoryTitle>
-            {/* <CategoryTitle>{ category.toUpperCase() }</CategoryTitle> */}
             {
                 window.screen.width < 500 ? (
                     <CategoryContainerMobile>

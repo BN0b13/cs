@@ -24,7 +24,7 @@ export const MobileDropDownMenuContainer = styled.div`
   background-color: #fff;
   border: .5px black solid;
   border-radius: 2px;
-  z-index: 1;
+  z-index: 3;
   transform: ${props => props.show ? 'translate(0, 0)' : 'translate(0)'};
   transition: width .5s ease-out;
 `;

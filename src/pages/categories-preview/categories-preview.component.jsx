@@ -1,18 +1,30 @@
-import { Fragment } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 
 import CategoryPreview from '../../components/category-preview/category-preview.component';
+import Spinner from '../../components/spinner/spinner.component';
 
-import { SHOP_DATA } from '../../assets/inventory/inventory';
+import Client from '../../tools/client';
+
+const client = new Client();
 
 const CategoriesPreview = () => {
-    const categoriesMap = SHOP_DATA;
+    const [ categories, setCategories ] = useState(null);
+
+    useEffect(() => {
+        const getCategories = async () => {
+            const res = await client.getCategories();
+            setCategories(res.rows);
+        }
+        getCategories();
+    }, []);
 
     return (
         <Fragment>
-            {
-                Object.keys(categoriesMap).map(title => {
-                    const products = categoriesMap[title];
-                    return <CategoryPreview key={title} title={products.title} products={products.items} />
+            {!categories ?
+                <Spinner />
+            :
+                categories.map((category, index) => {
+                    return <CategoryPreview key={index} title={category.name} products={category.Products} />
                 })
             }
         </Fragment>
