@@ -34,7 +34,6 @@ const CategoryPreview = ({ title, products }) => {
                     </Preview>
                 )
             }
-            
         </CategoryPreviewContainer>
     )
 

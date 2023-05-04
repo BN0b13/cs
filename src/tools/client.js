@@ -12,28 +12,32 @@ export default class Client {
         delete: 'DELETE'
     }
     
-    fetchOptions(method, body = '', withToken = false) {
-        const myHeaders = new Headers();
+    fetchOptions(method, body = null, withToken = false) {
+        const headers = new Headers();
         if(withToken) {
-            myHeaders.append("Authorization", `Bearer ${this.token}`);
+            headers.append("Authorization", `Bearer ${this.token}`);
         }
-        myHeaders.append("Accept", "Bearer application/json");
-        myHeaders.append("Content-Type", "application/json");
+        headers.append("Accept", "Bearer application/json");
+        headers.append("Content-Type", "application/json");
+
+        if(body) {
+            return {
+                method,
+                headers,
+                body: JSON.stringify(body)
+            };
+        }
 
         return {
-        method,
-        headers: this.myHeaders,
-        body
-        };
+            method,
+            headers
+        }   
     }
-
-
-    // Init client
     
     // Helper Functions
     async getAccount() {
         const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
-        const account = await fetch(`${api}/users`, requestOptions);
+        const account = await fetch(`${api}/user`, requestOptions);
         const res = await account.json();
 
         return res;
@@ -44,6 +48,41 @@ export default class Client {
         const account = await fetch(`${api}/visits`, requestOptions);
         const res = await account.json();
 
+        return res;
+    }
+
+    async getProducts() {
+        const requestOptions = this.fetchOptions(this.fetchMethods.get);
+        const products = await fetch(`${api}/products`, requestOptions);
+        const res = await products.json();
+        return res;
+    }
+
+    async getProductById(id) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.get);
+        const products = await fetch(`${api}/products/${id}`, requestOptions);
+        const res = await products.json();
+        return res;
+    }
+
+    async getCategories() {
+        const requestOptions = this.fetchOptions(this.fetchMethods.get);
+        const categories = await fetch(`${api}/categories`, requestOptions);
+        const res = await categories.json();
+        return res;
+    }
+
+    async getCart() {
+        const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
+        const cart = await fetch(`${api}/cart`, requestOptions);
+        const res = await cart.json();
+        return res;
+    }
+
+    async modifyCart(data) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.patch, data, true);
+        const cart = await fetch(`${api}/cart`, requestOptions);
+        const res = await cart.json();
         return res;
     }
 }

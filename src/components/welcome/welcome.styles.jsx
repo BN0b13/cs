@@ -21,3 +21,7 @@ export const WelcomeLogoMobile = styled.img`
 export const WelcomeText = styled.h1`
     text-align: center;
 `;
+
+export const WelcomeParagraph = styled.p`
+    text-align: center;
+`;

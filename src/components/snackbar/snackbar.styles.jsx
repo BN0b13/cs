@@ -7,7 +7,7 @@ export const SnackbarContainer = styled.div`
     justify-content: space-around;
     align-items: center;
     margin: 3px;
-    padding: 5px;
+    padding: 0 5px;
     width: 290px;
     background-color: ${({type}) => (type === 'success' ? '#D4EDD9' : '#F8D7D9')} !important;
     text: #145824${({type}) => (type === 'success' ? '#145824' : '#731C23')} !important;
@@ -21,6 +21,10 @@ export const SnackbarHeader = styled.div`
     justify-content: end;
     align-items: center;
     width: 290px;
-    margin: 5px;
-    padding: 2px;
+    margin-top: 5px;
+    padding-top: 2px;
+`;
+
+export const SnackbarMessage = styled.h5`
+    margin-top: 0;
 `;

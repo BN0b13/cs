@@ -10,7 +10,7 @@ const ShopPage = () => {
         <Routes>
             <Route index element={<CategoriesPreview />} />
             <Route path=":category" element={<Category />} />
-            <Route path="/:category/:product" element={<Product />} />
+            <Route path="/:category/:item" element={<Product />} />
         </Routes>
     )
 }
