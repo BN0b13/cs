@@ -95,7 +95,7 @@ const Header = () => {
             logInOptions={logInOptions}
           />
         }
-        <CartIcon />
+        <CartIcon loggedInStatus={loggedInStatus} />
         </NavOptionsMobileDiv>
       </HeaderNav>
     );
