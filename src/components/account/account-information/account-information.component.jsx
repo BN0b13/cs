@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+
+import { UserContext } from '../../../contexts/user.context';
 
 import Client from '../../../tools/client';
 
@@ -15,10 +17,13 @@ const client = new Client();
 const AccountInformation = () => {
     const [data, setData] = useState(null);
 
+    const { setCurrentUser } = useContext(UserContext);
+
     useEffect(() => {
         const getAccountInformation = async () => {
             const account = await client.getAccount();
             setData(account);
+            setCurrentUser(account);
         }
 
         getAccountInformation();

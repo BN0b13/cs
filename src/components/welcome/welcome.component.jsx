@@ -6,6 +6,7 @@ import {
   WelcomeContainer,
   WelcomeLogo,
   WelcomeLogoMobile,
+  WelcomeParagraph,
   WelcomeText
 } from './welcome.styles';
 
@@ -18,7 +19,8 @@ const Welcome = () => {
         : 
         <WelcomeLogo src={logo} alt='Welcome to Cosmic Strains' />
       }
-        <WelcomeText>Preparing to launch July 2023</WelcomeText>
+        <WelcomeText>Preparing to launch July 2023 with our Ghost line</WelcomeText>
+        <WelcomeParagraph>New user enrollment starts in June. Create an account and get ready for take off!</WelcomeParagraph>
     </WelcomeContainer>
   );
 };

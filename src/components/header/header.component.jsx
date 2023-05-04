@@ -1,6 +1,7 @@
 import React from 'react';
 
 import MobileNav from '../mobile-nav/mobile-nav.component';
+import CartIcon from '../cart-icon/cart-icon.component';
 
 import {
   HeaderLink,
@@ -67,8 +68,8 @@ const optionsDisplay = () => {
       {loggedInStatus && menuItemsLoggedIn.map((item, index) => {
           return (
             <HeaderLink key={index} href={item.path}>
-            {item.title}
-        </HeaderLink>
+                {item.title}
+            </HeaderLink>
           );
       })}
       { logInOptions() }
@@ -94,6 +95,7 @@ const Header = () => {
             logInOptions={logInOptions}
           />
         }
+        <CartIcon />
         </NavOptionsMobileDiv>
       </HeaderNav>
     );
@@ -112,6 +114,7 @@ const Header = () => {
         :
           optionsDisplay()
         }
+        <CartIcon loggedInStatus={loggedInStatus} />
       </NavOptionsDiv>
     </HeaderNav>
   );

@@ -7,12 +7,31 @@ export const CategoryLink = styled(Link)`
   text-decoration: none;
 `;
 
+export const ProductButtonContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const ProductContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
   column-gap: 10vw;
   margin-top: 10vh;
+`;
+
+export const ProductButtonCount = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const ProductCountInput = styled.input`
+  width: 20px;
+  margin: 10px;
 `;
 
 export const ProductMobileContainer = styled.div`
@@ -44,6 +63,13 @@ export const ProductInformation = styled.div`
   text-align: left;
   margin: 5px;
   padding: 2px
+`;
+
+export const ProductQuantityContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-right: 20px;
 `;
 
 export const ProductText = styled.h3`
