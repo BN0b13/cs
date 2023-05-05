@@ -12,7 +12,7 @@ import Footer from './components/footer/footer.component';
 
 import AboutPage from './pages/about/about.pages';
 import AccountPage from './pages/account/account.pages';
-import CartPage from './pages/cart/cart.pages';
+import CheckoutPage from './pages/checkout/checkout.pages';
 import ContactPage from './pages/contact/contact.pages';
 import HomePage from './pages/home/home.pages';
 import LoginPage from './pages/login/login.pages';
@@ -48,9 +48,9 @@ function App() {
           } 
         />
         <Route 
-          path="/cart" 
+          path="/checkout" 
           element={
-            <CartPage />
+            <CheckoutPage />
           } 
         />
         <Route 

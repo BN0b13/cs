@@ -10,10 +10,10 @@ export const menuItemsPublic = [
 ];
 
 export const menuItemsLoggedIn = [
-  {
-    title: 'Contact',
-    path: '/contact',
-  },
+  // {
+  //   title: 'Contact',
+  //   path: '/contact',
+  // },
   {
     title: 'Account',
     path: '/account',
