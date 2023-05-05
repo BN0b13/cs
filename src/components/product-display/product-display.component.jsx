@@ -11,7 +11,7 @@ import Snackbar from '../snackbar/snackbar.component';
 
 import { CartContext } from '../../contexts/cart.context';
 
-import { getProductInventory } from '../../tools/cart';
+import { getProductInventory, convertProductPrice } from '../../tools/cart';
 
 import logo from '../../assets/img/logo.png';
 
@@ -33,8 +33,10 @@ import {
 import { tokenName } from '../../config';
 
 const ProductDisplay = ({ product }) => {
-    const [showError, setShowError] = useState(false);
-    const [quantity, setQuantity] = useState(1);
+    const [messageType, setMessageType] = useState(null);
+    const [messageContents, setMessageContents] = useState('');
+    const [showMessage, setShowMessage] = useState(false);
+    const [quantity, setQuantity] = useState('');
     const [inventory, setInventory] = useState(null);
 
     const { addItemToCart } = useContext(CartContext);
@@ -43,26 +45,40 @@ const ProductDisplay = ({ product }) => {
         id,
         name, 
         time, 
-        type, 
+        price, 
         mother, 
-        father 
+        father,
+        sex
     } = product;
 
     useEffect(() => {
         const getInventory = async () => {
             const res = await getProductInventory(id);
+            const startingQuantity = res >= 1 ? 1 : 0;
+            setQuantity(startingQuantity);
             setInventory(res);
         }
         getInventory();
     }, []);
 
+    const message = (message, type = null) => {
+        setMessageType(type);
+        setMessageContents(message);
+        setShowMessage(true);
+    }
+
     const loggedIn = async (id, quantity) => {
         const loggedInStatus = localStorage.getItem(tokenName);
         if(!loggedInStatus) {
-            setShowError(true);
+            message('Please login to add to cart.');
+            return;
+        }
+        if(quantity === 0) {
+            message('This product is no longer available.');
             return;
         }
         addItemToCart({productId: id, quantity});
+        message('Product added to cart.', 'success')
     }
 
 
@@ -74,7 +90,7 @@ const ProductDisplay = ({ product }) => {
     }
 
     const decreaseQuantity = () => {
-        if(quantity === 1) {
+        if(quantity <= 1) {
             return
         }
         setQuantity(quantity - 1);
@@ -90,7 +106,8 @@ const ProductDisplay = ({ product }) => {
                     <ProductText>Name: {name}</ProductText>
                     <ProductText>Lineage: {mother} x {father}</ProductText>
                     <ProductText>Time: {time}</ProductText>
-                    <ProductText>Type: {type}</ProductText>
+                    <ProductText>Pack: 10+ {sex} seeds</ProductText>
+                    <ProductText>Price: {convertProductPrice(price)}</ProductText>
                     <ProductButtonContainer>
                         <ProductButtonCount>
                             <ProductQuantityContainer>
@@ -100,8 +117,8 @@ const ProductDisplay = ({ product }) => {
                             </ProductQuantityContainer>
                             <Button onClick={() => loggedIn(id, quantity)}>Add to Cart</Button>
                         </ProductButtonCount>
-                        {showError && 
-                            <Snackbar msg={'Please Log In To Add To Cart.'} show={() => setShowError(false)} />
+                        {showMessage && 
+                            <Snackbar type={messageType} msg={messageContents} show={() => setShowMessage(false)} />
                         }
                     </ProductButtonContainer>
                 </ProductInformation>
