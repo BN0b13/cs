@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const CartContainer = styled.div`
+export const CartItemContainer = styled.div`
     width: 100%;
     display: flex;
     min-height: 100px;
@@ -10,30 +10,32 @@ export const CartContainer = styled.div`
     align-items: center;
 `;
 
-export const CartText = styled.div`
+export const CartItemText = styled.div`
     font-size: 18px;
 `;
 
-export const CartQuantityContainer = styled.div`
+export const CartItemQuantityContainer = styled.div`
     display: flex;
     flex-direction: row;
     margin: 50px auto;
 `;
 
-export const CartTextContainer = styled.div`
+export const CartItemTextContainer = styled.div`
     display: flex;
     margin: auto;
     width: 150px;
+    cursor: pointer;
 `;
 
-export const CartQuantityText = styled.div`
+export const CartItemQuantityText = styled.div`
     font-size: 18px;
     margin: 0 15px;
 `;
 
 export const ProductImage = styled.div`
     margin: 25px auto;
-
+    cursor: pointer;
+    
     img {
     width: 100px;
     height: 100px;
@@ -42,4 +44,10 @@ export const ProductImage = styled.div`
 
 export const DeleteProductContainer = styled.div`
     margin-right: 40px;
+`;
+
+export const CartItemMobileView = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-text: center;
 `;

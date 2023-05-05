@@ -31,7 +31,7 @@ const CartIcon = ({ loggedInStatus }) => {
         if(!loggedInStatus) {
             return
         }
-        window.location = '/cart';
+        window.location = '/checkout';
     }
 
     return(
