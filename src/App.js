@@ -12,11 +12,13 @@ import Footer from './components/footer/footer.component';
 
 import AboutPage from './pages/about/about.pages';
 import AccountPage from './pages/account/account.pages';
+import CartPage from './pages/cart/cart.pages';
 import CheckoutPage from './pages/checkout/checkout.pages';
 import ContactPage from './pages/contact/contact.pages';
 import HomePage from './pages/home/home.pages';
 import LoginPage from './pages/login/login.pages';
 import ShopPage from './pages/shop/shop.pages';
+import ThankYou from './pages/thank-you/thank-you.pages';
 
 import {
   ageVerifyTokenName
@@ -48,6 +50,12 @@ function App() {
           } 
         />
         <Route 
+          path="/cart" 
+          element={
+            <CartPage />
+          } 
+        />
+        <Route 
           path="/checkout" 
           element={
             <CheckoutPage />
@@ -69,6 +77,12 @@ function App() {
           path="/shop/*" 
           element={
             <ShopPage />
+          } 
+        />
+        <Route 
+          path="/thankyou" 
+          element={
+            <ThankYou />
           } 
         />
       </Routes>

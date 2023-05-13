@@ -85,4 +85,25 @@ export default class Client {
         const res = await cart.json();
         return res;
     }
+
+    async getDeliveryInsuranceAmount() {
+        const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
+        const deliveryInsuranceAmount = await fetch(`${api}/orders/deliveryInsurance`, requestOptions);
+        const res = await deliveryInsuranceAmount.json();
+        return res;
+    }
+
+    async checkout(data) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.post, data, true);
+        const checkout = await fetch(`${api}/orders`, requestOptions);
+        const res = await checkout.json();
+        return res;
+    }
+
+    async getOrders() {
+        const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
+        const checkout = await fetch(`${api}/orders`, requestOptions);
+        const res = await checkout.json();
+        return res;
+    }
 }
