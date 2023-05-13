@@ -1,22 +1,12 @@
 import styled from 'styled-components';
 
-export const CheckoutPageContainer = styled.div`
+export const CartPageContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
 `;
 
-export const BackButtonContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: start;
-    align-items: center;
-    width: 100%;
-     margin-top: 20px;
-`;
-
-export const CheckoutPageTitle = styled.h1`
+export const CartPageTitle = styled.h1`
     
 `;
 
@@ -31,19 +21,19 @@ export const SubtotalText = styled.h2`
     margin: 20px;
 `;
 
-export const CheckoutCollapseButtonContainer = styled.div`
+export const CartCollapseButtonContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 20px 0;
 `;
 
-export const CheckoutInformation = styled.div`
+export const CartInformation = styled.div`
     display: flex;
     width: 70%;
     padding: 0;
 `;
 
-export const CheckoutPageEmpty = styled.h4`
+export const CartPageEmpty = styled.h4`
     
 `;
