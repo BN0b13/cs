@@ -106,4 +106,11 @@ export default class Client {
         const res = await checkout.json();
         return res;
     }
+
+    async getOrderByRef(refId) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
+        const checkout = await fetch(`${api}/orders/${refId}`, requestOptions);
+        const res = await checkout.json();
+        return res;
+    }
 }

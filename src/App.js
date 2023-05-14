@@ -44,7 +44,7 @@ function App() {
           }
         />
         <Route 
-          path="/account" 
+          path="/account/*" 
           element={
             <AccountPage />
           } 
@@ -80,7 +80,7 @@ function App() {
           } 
         />
         <Route 
-          path="/thankyou" 
+          path="/thankyou/*" 
           element={
             <ThankYou />
           } 

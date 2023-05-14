@@ -8,6 +8,7 @@ export const OrderItemContainer = styled.div`
     border: 1px solid black;
     width: 90%;
     margin: auto;
+    cursor: pointer;
 `;
 
 export const OrderItemText = styled.p`

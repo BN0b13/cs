@@ -1,10 +1,34 @@
 import styled from 'styled-components';
 
-export const CheckoutPageContainer = styled.div`
+export const DisplayContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
+`;
+
+export const ContentContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+`;
+
+export const CheckoutFormsContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    max-width: 60%;
+`;
+
+export const AddressContainer = styled.div`
+    
+`;
+
+export const ShippingContainer = styled.div`
+    
+`;
+
+export const PaymentContainer = styled.div`
+    
 `;
 
 export const BackButtonContainer = styled.div`
@@ -17,33 +41,5 @@ export const BackButtonContainer = styled.div`
 `;
 
 export const CheckoutPageTitle = styled.h1`
-    
-`;
-
-export const SubtotalContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: end;
-    width: 100%;
-`;
-
-export const SubtotalText = styled.h2`
-    margin: 20px;
-`;
-
-export const CheckoutCollapseButtonContainer = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 20px 0;
-`;
-
-export const CheckoutInformation = styled.div`
-    display: flex;
-    width: 70%;
-    padding: 0;
-`;
-
-export const CheckoutPageEmpty = styled.h4`
     
 `;
