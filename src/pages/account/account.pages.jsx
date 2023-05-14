@@ -1,23 +1,36 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
-import AccountDisplay from '../../components/account/account-display/account-display.component';
+import { Routes, Route } from 'react-router-dom';
+
+import AccountInformation from '../../components/account/account-information/account-information.component';
 import AccountSidebar from '../../components/account/account-sidebar/account-sidebar.component';
+import OrderHistory from '../../components/account/order-history/order-history.component';
+import OrderInformation from '../../components/account/order-information/order-information.component';
+import Settings from '../../components/account/settings/settings.component';
 
 import {
     AccountPageContainer,
-    AccountPageDisplay
+    RoutesContainer,
+    SidebarContainer
 } from './account.styles';
 
 const AccountPage = () => {
-    const [ accountView, setAccountView ] = useState(1);
 
     return (
         <AccountPageContainer>
-            <AccountPageDisplay>
-                <AccountSidebar setAccountView={setAccountView} />
-                <AccountDisplay accountView={accountView} />
-            </AccountPageDisplay>
+            <SidebarContainer>
+                <AccountSidebar />
+            </SidebarContainer>
+            <RoutesContainer>
+                <Routes>
+                    <Route index element={<AccountInformation />} />
+                    <Route path="/orders" element={<OrderHistory />} />
+                    <Route path="/orders/:refId" element={<OrderInformation />} />
+                    <Route path="/settings" element={<Settings />} />
+                </Routes>
+            </RoutesContainer>
         </AccountPageContainer>
+        
     );
 };
 

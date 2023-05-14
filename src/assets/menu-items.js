@@ -23,14 +23,14 @@ export const menuItemsLoggedIn = [
 export const accountSidebarMenu = [
   {
     title: 'Account Information',
-    option: 1,
+    path: '/account',
   },
   {
     title: 'Order History',
-    option: 2,
+    path: '/account/orders',
   },
   {
     title: 'Settings',
-    option: 3,
+    path: '/account/settings',
   },
 ];

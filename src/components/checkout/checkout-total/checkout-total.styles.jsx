@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
-export const CartTotalContainer = styled.div`
+export const CheckoutTotalContainer = styled.div`
     display: flex;
-    flex-direction: ${props => props.mobileView ? 'column' : 'row'};
-    justify-content: width: ${props => props.mobileView ? 'center' : 'space-between'};
+    flex-direction: column;
+    justify-content: width: center;
     width: 100%;
     margin-top: 0;
 `;
@@ -66,6 +66,6 @@ export const CartFinalTotalContainer = styled.div`
     justify-content: space-between;
 `;
 
-export const CartTotalText = styled.h2`
+export const CheckoutTotalText = styled.h2`
     margin: 20px;
 `;

@@ -27,7 +27,7 @@ const OrderHistory = () => {
             <OrderHistoryTitle>Order History</OrderHistoryTitle>
             {orders &&
                 orders.map((order, index) => (
-                    <OrderItem key={index} orderNumber={index + 1} order={order} />
+                    <OrderItem key={index} orderIndex={index + 1} order={order} />
                 ))
             }
         </OrderHistoryContainer>

@@ -5,14 +5,14 @@ import {
     OrderItemText
 } from './order-item.styles';
 
-const OrderItem = ({ orderNumber, order }) => {
+const OrderItem = ({ order, orderIndex }) => {
     console.log('Order: ', order);
 
     return (
-        <OrderItemContainer>
-            <OrderItemText>Order: {orderNumber}</OrderItemText>
-            <OrderItemText>Order Reference: {order.refId}</OrderItemText>
-            <OrderItemText>Date {order.createdAt}</OrderItemText>
+        <OrderItemContainer onClick={() => window.location = `/account/orders/${order.refId}`}>
+            <OrderItemText>Order: { orderIndex }</OrderItemText>
+            <OrderItemText>Reference: { order.refId }</OrderItemText>
+            <OrderItemText>Date: { order.createdAt } </OrderItemText>
         </OrderItemContainer>
     )
 }
