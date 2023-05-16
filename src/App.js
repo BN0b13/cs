@@ -17,7 +17,9 @@ import CheckoutPage from './pages/checkout/checkout.pages';
 import ContactPage from './pages/contact/contact.pages';
 import HomePage from './pages/home/home.pages';
 import LoginPage from './pages/login/login.pages';
+import PasswordResetPage from './pages/password-reset/password-reset.pages';
 import ShopPage from './pages/shop/shop.pages';
+import SignUpPage from './pages/sign-up/sign-up.pages';
 import ThankYou from './pages/thank-you/thank-you.pages';
 
 import {
@@ -74,9 +76,21 @@ function App() {
           } 
         />
         <Route 
+          path="/password-reset/*" 
+          element={ 
+            <PasswordResetPage />
+          } 
+        />
+        <Route 
           path="/shop/*" 
           element={
             <ShopPage />
+          } 
+        />
+        <Route 
+          path="/sign-up" 
+          element={ 
+            <SignUpPage /> 
           } 
         />
         <Route 

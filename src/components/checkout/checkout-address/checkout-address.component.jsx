@@ -14,10 +14,10 @@ import {
 
 const CheckoutAddress = ({ user }) => {
     const defaultAddress = {
-        address: user.address,
-        city: user.city,
-        state: user.state,
-        zipCode: user.zipCode
+        address: user.billingAddress.addressOne,
+        city: user.billingAddress.city,
+        state: user.billingAddress.state,
+        zipCode: user.billingAddress.zipCode
     };
     const [ mobileView, setMobileView ] = useState(false);
     const [ checkbox, setCheckbox ] = useState(false);
@@ -58,7 +58,7 @@ const CheckoutAddress = ({ user }) => {
         <CheckoutAddressContainer mobileView={mobileView}>
             <CheckoutAddressesContainer mobileView={mobileView}>
                 <CartAddressTitle>Billing Address</CartAddressTitle>
-                <Address user={user} updateAddress={updateBillingAddress} />
+                <Address address={user.billingAddress} updateAddress={updateBillingAddress} />
                 <CartAddressLabel>
                     <CartAddressCheckbox type={'checkbox'} value={checkbox} onClick={() => handleCheckbox()} />
                     Ship to a different address 
@@ -68,7 +68,7 @@ const CheckoutAddress = ({ user }) => {
                 {checkbox && 
                     <>
                         <CartAddressTitle>Shipping Address</CartAddressTitle>
-                        <Address user={user} updateAddress={updateShippingAddress} />
+                        <Address address={user.shippingAddress} updateAddress={updateShippingAddress} />
                     </>
                 }
             </CheckoutAddressesContainer>

@@ -1,9 +1,15 @@
-import { Fragment, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import CategoryPreview from '../../components/category-preview/category-preview.component';
 import Spinner from '../../components/spinner/spinner.component';
+import CategoryCard from './category-card/category-card.component';
 
 import Client from '../../tools/client';
+
+import {
+    CategoryCardContainer,
+    CategoriesPreviewContainer,
+    Preview
+} from './categories-preview.styles';
 
 const client = new Client();
 
@@ -19,15 +25,22 @@ const CategoriesPreview = () => {
     }, []);
 
     return (
-        <Fragment>
+        <CategoriesPreviewContainer>
             {!categories ?
                 <Spinner />
             :
-                categories.map((category, index) => {
-                    return <CategoryPreview key={index} title={category.name} products={category.Products} />
-                })
+                <Preview mobileView={window.screen.width > 500 ? false : true}>
+                    { categories.map((category, index) => {
+                        return(
+                            <CategoryCardContainer key={index} onClick={() => window.location = `/shop/${category.name}`}>
+                                <CategoryCard category={category} />
+                            </CategoryCardContainer>
+                        )
+                    }) }
+                </Preview>
+                
             }
-        </Fragment>
+        </CategoriesPreviewContainer>
     )
 }
 

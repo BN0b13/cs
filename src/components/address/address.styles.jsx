@@ -3,18 +3,46 @@ import styled from 'styled-components';
 export const AddressContainer = styled.div`
     display: flex;
     flex-direction: column;
-    padding: 10px;
+    width: 320px;
+`;
+
+export const AddressTopContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 100%;
 `;
 
-export const AddressInputContainer = styled.div`
-    padding-bottom: 10px;
+export const AddressBottomContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
 `;
 
 export const AddressInput = styled.input`
-    width: 50%;
+    width: 300px;
+    margin: 5px 0;
+    padding: 3px;
 `;
 
-export const AddressLabel = styled.label`
+export const AddressZipCodeInput = styled.input`
+    width: 60px;
+    margin: 5px 0;
+    padding: 3px;
+`;
+
+export const AddressCityInput = styled.input`
+    width: 160px;
+    margin: 5px 0;
+    padding: 3px;
+`;
+
+export const AddressDropdown = styled.select`
+    width: 50px;
+    margin: 5px 10px;
+`;
+
+export const AddressDropdownOption = styled.option`
 
 `;

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Button from '../button/button.component';
+import Snackbar from '../snackbar/snackbar.component';
 import Spinner from '../spinner/spinner.component';
 
 import logo from '../../assets/img/logo.png';
@@ -12,9 +13,8 @@ import {
   LoginFormForm,
   LoginFormErrorContainer,
   LoginFormInput,
-  LoginFormLabel,
   LoginFormLogo,
-  LoginFormTitle
+  LoginFormText
 } from './login-form.styles';
 
 class LoginForm extends React.Component{
@@ -34,6 +34,12 @@ class LoginForm extends React.Component{
     const { value, name } = e.target;
 
     this.setState({ [name]: value });
+  }
+
+  handleKeyDown = e => {
+    if(e.key === 'Enter') {
+      this.handleSubmit(e);
+    }
   }
 
   checkFields = () => {
@@ -107,36 +113,36 @@ class LoginForm extends React.Component{
 
     return(
       <LoginFormContainer>
-        <LoginFormTitle>LOGIN</LoginFormTitle>
 
         <LoginFormLogo src={logo} alt="Cosmic Strains Login" />
 
         <LoginFormForm>
-          <LoginFormLabel>Email: 
             <LoginFormInput 
-            name="email" 
-            type="text" 
-            value={this.state.email} 
-            onChange={this.handleChange}
-            required />
-          </LoginFormLabel>
-          <LoginFormLabel>Password: 
+              name="email" 
+              type="text" 
+              value={this.state.email} 
+              onChange={this.handleChange}
+              onKeyDown={(e) => this.handleKeyDown(e)}
+              placeholder={'Email'}
+              required 
+            />
             <LoginFormInput 
-            name="password" 
-            type="password" 
-            value={this.state.password} 
-            onChange={this.handleChange}
-            required />
-          </LoginFormLabel>
-          { this.state.errorVisible && 
-            <LoginFormErrorContainer onClose={() => this.setState({ errorVisible: false })}>
-              {this.state.errorMsg}
-            </LoginFormErrorContainer>
+              name="password" 
+              type="password" 
+              value={this.state.password} 
+              onChange={this.handleChange}
+              onKeyDown={(e) => this.handleKeyDown(e)}
+              placeholder={'Password'}
+              required 
+            />
+          {this.state.errorVisible &&
+              <Snackbar msg={this.state.errorMsg} show={() => this.setState({ errorVisible: false })} type={'error'} />
           }
           <LoginFormButtonContainer>
-            {/* <Button onClick={this.props.signUp}>Sign Up</Button> */}
+            <Button onClick={() => window.location = '/sign-up'}>Sign Up</Button>
             <Button onClick={this.handleSubmit}>Login</Button>
           </LoginFormButtonContainer>
+            <LoginFormText onClick={() => window.location = '/password-reset'}>Forgot Password</LoginFormText>
         </LoginFormForm>
       </LoginFormContainer>
     )
