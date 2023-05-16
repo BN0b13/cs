@@ -139,7 +139,7 @@ class LoginForm extends React.Component{
               <Snackbar msg={this.state.errorMsg} show={() => this.setState({ errorVisible: false })} type={'error'} />
           }
           <LoginFormButtonContainer>
-            <Button onClick={() => window.location = '/sign-up'}>Sign Up</Button>
+            {/* <Button onClick={() => window.location = '/sign-up'}>Sign Up</Button> */}
             <Button onClick={this.handleSubmit}>Login</Button>
           </LoginFormButtonContainer>
             <LoginFormText onClick={() => window.location = '/password-reset'}>Forgot Password</LoginFormText>
