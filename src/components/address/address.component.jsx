@@ -1,21 +1,37 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
+import { states } from '../../tools/helper.js';
 
 import {
+    AddressBottomContainer,
+    AddressCityInput,
     AddressContainer,
+    AddressDropdown,
+    AddressDropdownOption,
     AddressInput,
-    AddressInputContainer,
-    AddressLabel
+    AddressZipCodeInput,
+    AddressTopContainer
 } from './address.styles';
 
-const Address = ({ user, updateAddress }) => {
-    const [ address, setAddress ] = useState(user.address);
-    const [ city, setCity ] = useState(user.city);
-    const [ state, setState ] = useState(user.state);
-    const [ zipCode, setZipCode ] = useState(user.zipCode);
+const Address = ({ address, updateAddress }) => {
+    const [ addressOne, setAddressOne ] = useState(address.addressOne);
+    const [ addressTwo, setAddressTwo ] = useState(address.addressTwo);
+    const [ city, setCity ] = useState(address.city);
+    const [ state, setState ] = useState(address.state);
+    const [ zipCode, setZipCode ] = useState(address.zipCode);
 
-    const handleAddress = (data) => {
-        setAddress(data);
-        updateAddress({ address: data });
+    useEffect(() => {
+        updateAddress({ city: 'AL' });
+    }, []);
+
+    const handleAddressOne = (data) => {
+        setAddressOne(data);
+        updateAddress({ addressOne: data });
+    }
+
+    const handleAddressTwo = (data) => {
+        setAddressTwo(data);
+        updateAddress({ addressTwo: data });
     }
 
     const handleCity = (data) => {
@@ -29,36 +45,58 @@ const Address = ({ user, updateAddress }) => {
     }
 
     const handleZipCode = (data) => {
+        if(data.length > 5) {
+            return
+        }
         setZipCode(data);
         updateAddress({ zipCode: data });
     }
 
     return (
         <AddressContainer>
-            <AddressInputContainer>
-                <AddressLabel>
-                    Address:
-                    <AddressInput type={'input'} value={address} onChange={(e) => handleAddress(e.target.value)} />
-                </AddressLabel>
-            </AddressInputContainer>
-            <AddressInputContainer>
-                <AddressLabel>
-                    City:
-                    <AddressInput type={'input'} value={city} onChange={(e) => handleCity(e.target.value)} />
-                </AddressLabel>
-            </AddressInputContainer>
-            <AddressInputContainer>
-                <AddressLabel>
-                    State:
-                    <AddressInput type={'input'} value={state} onChange={(e) => handleState(e.target.value)} />
-                </AddressLabel>
-            </AddressInputContainer>
-            <AddressInputContainer>
-                <AddressLabel>
-                    Zip Code:
-                    <AddressInput type={'number'} value={zipCode} onChange={(e) => handleZipCode(e.target.value)} />
-                </AddressLabel>
-            </AddressInputContainer>
+            <AddressTopContainer>
+                <AddressInput
+                    type={'input'}
+                    value={addressOne}
+                    onChange={(e) => handleAddressOne(e.target.value)}
+                    placeholder={'Address Line One'}
+                    required
+                />
+                <AddressInput
+                    type={'input'}
+                    value={addressTwo}
+                    onChange={(e) => handleAddressTwo(e.target.value)}
+                    placeholder={'Address Line Two'}
+                />
+            </AddressTopContainer>
+            <AddressBottomContainer>
+                <AddressCityInput
+                    type={'input'}
+                    value={city}
+                    onChange={(e) => handleCity(e.target.value)}
+                    placeholder={'City'}
+                />
+                <AddressDropdown
+                    value={state}
+                    onChange={(e) => handleState(e.target.value)}
+                    placeholder={'State'}
+                >
+                    {states.map((state, index) => 
+                            <AddressDropdownOption
+                                key={index}
+                                value={state.abbreviation}
+                            >
+                                { state.abbreviation }
+                            </AddressDropdownOption>
+                    )}
+                </AddressDropdown>
+                <AddressZipCodeInput
+                    type={'number'}
+                    value={zipCode}
+                    onChange={(e) => handleZipCode(e.target.value)}
+                    placeholder={'Zip Code'}
+                />
+            </AddressBottomContainer>
         </AddressContainer>
     )
 }

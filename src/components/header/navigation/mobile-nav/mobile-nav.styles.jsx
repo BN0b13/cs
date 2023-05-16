@@ -35,5 +35,18 @@ export const MobileDropDownMenuItem = styled.li`
 `;
 
 export const MobileDropDownMenuOpenContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   margin-right: .4em;
-`; 
+`;
+
+export const HeaderLink = styled.a`
+  cursor: pointer;
+  text-decoration: none;
+  padding: 1em;
+`;
+
+export const NavOptions = styled.div`
+    
+`;

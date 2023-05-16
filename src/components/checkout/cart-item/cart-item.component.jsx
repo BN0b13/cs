@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from 'react';
 
 import {
-    BsFillCaretUpFill,
-    BsFillCaretDownFill,
-    BsX
-} from 'react-icons/bs';
+    VscChevronDown,
+    VscChevronUp,
+    VscChromeClose
+} from "react-icons/vsc";
 
 import { CartContext } from '../../../contexts/cart.context';
 
@@ -66,11 +66,11 @@ const CartItem = ({ quantity, product }) => {
                 </CartItemText>
             </CartItemTextContainer>
             <CartItemQuantityContainer>
-                <BsFillCaretUpFill onClick={() => increment()} />
+                <VscChevronUp onClick={() => increment()} />
                     <CartItemQuantityText>
                         { quantity }
                     </CartItemQuantityText>
-                <BsFillCaretDownFill onClick={() => decrement()} />
+                <VscChevronDown onClick={() => decrement()} />
             </CartItemQuantityContainer>
             <CartItemTextContainer>
                 <CartItemText>
@@ -78,7 +78,7 @@ const CartItem = ({ quantity, product }) => {
                 </CartItemText>
             </CartItemTextContainer>
             <DeleteProductContainer>
-                <BsX onClick={() => deleteItemFromCart({ productId: product.id })} />
+                <VscChromeClose onClick={() => deleteItemFromCart({ productId: product.id })} />
             </DeleteProductContainer>
         </CartItemContainer>
     )

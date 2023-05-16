@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from 'react';
 
 import {
-    BsArrowRight,
-    BsFillCaretUpFill,
-    BsFillCaretDownFill
-} from 'react-icons/bs';
+    VscArrowRight,
+    VscChevronDown,
+    VscChevronUp
+} from "react-icons/vsc";
 
 import Button from '../button/button.component';
 import Snackbar from '../snackbar/snackbar.component';
@@ -111,9 +111,9 @@ const ProductDisplay = ({ product }) => {
                     <ProductButtonContainer>
                         <ProductButtonCount>
                             <ProductQuantityContainer>
-                                <BsFillCaretUpFill onClick={() => increaseQuantity()} />
+                                <VscChevronUp onClick={() => increaseQuantity()} />
                                 <ProductCountInput onChange={(e) => console.log(e.target.value)} value={quantity} />
-                                <BsFillCaretDownFill onClick={() => decreaseQuantity()} />
+                                <VscChevronDown onClick={() => decreaseQuantity()} />
                             </ProductQuantityContainer>
                             <Button onClick={() => loggedIn(id, quantity)}>Add to Cart</Button>
                         </ProductButtonCount>
@@ -148,13 +148,13 @@ const ProductDisplay = ({ product }) => {
                     Shop
                 </CategoryLink>
                     {'  '}
-                <BsArrowRight />
+                <VscArrowRight />
                     {'  '}
                 <CategoryLink to={`/shop/${product.Category.name}`}>
                     {product.Category.name}
                 </CategoryLink>
                     {'  '}
-                <BsArrowRight />
+                <VscArrowRight />
                     {'  '}
                 {name}
             </ProductTitle>
