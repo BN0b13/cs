@@ -12,11 +12,15 @@ import Footer from './components/footer/footer.component';
 
 import AboutPage from './pages/about/about.pages';
 import AccountPage from './pages/account/account.pages';
+import CartPage from './pages/cart/cart.pages';
 import CheckoutPage from './pages/checkout/checkout.pages';
 import ContactPage from './pages/contact/contact.pages';
 import HomePage from './pages/home/home.pages';
 import LoginPage from './pages/login/login.pages';
+import PasswordResetPage from './pages/password-reset/password-reset.pages';
 import ShopPage from './pages/shop/shop.pages';
+import SignUpPage from './pages/sign-up/sign-up.pages';
+import ThankYou from './pages/thank-you/thank-you.pages';
 
 import {
   ageVerifyTokenName
@@ -42,9 +46,15 @@ function App() {
           }
         />
         <Route 
-          path="/account" 
+          path="/account/*" 
           element={
             <AccountPage />
+          } 
+        />
+        <Route 
+          path="/cart" 
+          element={
+            <CartPage />
           } 
         />
         <Route 
@@ -66,9 +76,27 @@ function App() {
           } 
         />
         <Route 
+          path="/password-reset/*" 
+          element={ 
+            <PasswordResetPage />
+          } 
+        />
+        <Route 
           path="/shop/*" 
           element={
             <ShopPage />
+          } 
+        />
+        <Route 
+          path="/sign-up" 
+          element={ 
+            <SignUpPage /> 
+          } 
+        />
+        <Route 
+          path="/thankyou/*" 
+          element={
+            <ThankYou />
           } 
         />
       </Routes>

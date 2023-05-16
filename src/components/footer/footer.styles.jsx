@@ -9,8 +9,7 @@ export const FooterContainer = styled.div`
     margin-top: 10vh;
     padding:20px;
     position: static;
-    left: 0;
-    bottom: 0;
+    
 `;
 
 export const FooterText = styled.h4`

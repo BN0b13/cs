@@ -10,20 +10,22 @@ export const SignUpFormContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 360px;
-    margin-top: 2em;
-    padding: 1em;
 `;
 
 export const SignUpFormForm = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
 `;
 
 export const SignUpFormInput = styled.input`
+    width: 300px;
+    margin: 5px 0;
+    padding: 3px;
+`;
 
+export const SignUpFormCheckbox = styled.input`
+    margin: 5px;
 `;
 
 export const SignUpFormLabel = styled.label`

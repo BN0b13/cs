@@ -14,8 +14,10 @@ const AccountSidebar = ({ setAccountView }) => {
             {accountSidebarMenu.map((item, index) => {
                 return <AccountSidebarOption
                             key={index} 
-                            onClick={() => setAccountView(item.option)}
+                            onClick={() => window.location = item.path}
                         >
+                            { item.icon }
+                            {'   '}
                             { item.title }
                         </AccountSidebarOption>
             })}

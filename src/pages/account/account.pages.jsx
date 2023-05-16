@@ -1,23 +1,36 @@
-import React, { useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
 
-import AccountDisplay from '../../components/account/account-display/account-display.component';
+import AccountInformation from '../../components/account/account-information/account-information.component';
 import AccountSidebar from '../../components/account/account-sidebar/account-sidebar.component';
+import Orders from '../../components/account/orders/orders.component';
+import OrderInformation from '../../components/account/order-information/order-information.component';
+import Settings from '../../components/account/settings/settings.component';
+import VerifyEmail from '../../components/account/verify-email/verify-email.component';
 
 import {
     AccountPageContainer,
-    AccountPageDisplay
+    RoutesContainer,
+    SidebarContainer
 } from './account.styles';
 
 const AccountPage = () => {
-    const [ accountView, setAccountView ] = useState(1);
 
     return (
         <AccountPageContainer>
-            <AccountPageDisplay>
-                <AccountSidebar setAccountView={setAccountView} />
-                <AccountDisplay accountView={accountView} />
-            </AccountPageDisplay>
+            <SidebarContainer>
+                <AccountSidebar />
+            </SidebarContainer>
+            <RoutesContainer>
+                <Routes>
+                    <Route index element={<AccountInformation />} />
+                    <Route path="/orders" element={<Orders />} />
+                    <Route path="/orders/:refId" element={<OrderInformation />} />
+                    <Route path="/settings" element={<Settings />} />
+                    <Route path="/verify-email/:emailToken" element={<VerifyEmail />} />
+                </Routes>
+            </RoutesContainer>
         </AccountPageContainer>
+        
     );
 };
 

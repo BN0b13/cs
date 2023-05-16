@@ -85,4 +85,60 @@ export default class Client {
         const res = await cart.json();
         return res;
     }
+
+    async getDeliveryInsuranceAmount() {
+        const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
+        const deliveryInsuranceAmount = await fetch(`${api}/orders/delivery-insurance`, requestOptions);
+        const res = await deliveryInsuranceAmount.json();
+        return res;
+    }
+
+    async checkout(data) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.post, data, true);
+        const checkout = await fetch(`${api}/orders`, requestOptions);
+        const res = await checkout.json();
+        return res;
+    }
+
+    async getOrders() {
+        const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
+        const getOrders = await fetch(`${api}/orders`, requestOptions);
+        const res = await getOrders.json();
+        return res;
+    }
+
+    async getOrderByRef(refId) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
+        const getOrderByRef = await fetch(`${api}/orders/${refId}`, requestOptions);
+        const res = await getOrderByRef.json();
+        return res;
+    }
+
+    async passwordResetEmail(data) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.post, data);
+        const passwordResetEmail = await fetch(`${api}/user/reset-password`, requestOptions);
+        const res = await passwordResetEmail.json();
+        return res;
+    }
+
+    async completePasswordReset(data) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.post, data);
+        const completePasswordReset = await fetch(`${api}/user/reset-password/token`, requestOptions);
+        const res = await completePasswordReset.json();
+        return res;
+    }
+
+    async completeEmailVerification({ emailToken }) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.get);
+        const completeEmailVerification = await fetch(`${api}/user/verify-email/${emailToken}`, requestOptions);
+        const res = await completeEmailVerification.json();
+        return res;
+    }
+
+    async createCustomer(data) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.post, data);
+        const completePasswordReset = await fetch(`${api}/user`, requestOptions);
+        const res = await completePasswordReset.json();
+        return res;
+    }
 }

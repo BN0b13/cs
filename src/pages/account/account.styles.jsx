@@ -2,12 +2,17 @@ import styled from 'styled-components';
 
 export const AccountPageContainer = styled.div`
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: row;
 `;
 
-export const AccountPageDisplay = styled.div`
+export const RoutesContainer = styled.div`
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    width: 90vh;
+`;
+
+export const SidebarContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 10vw;
 `;

@@ -39,10 +39,10 @@ const AccountInformation = () => {
                     <AccountInformationData>First Name: {data.firstName}</AccountInformationData>
                     <AccountInformationData>Last Name: {data.lastName}</AccountInformationData>
                     <AccountInformationData>Phone: {data.phone}</AccountInformationData>
-                    <AccountInformationData>Address: {data.address}</AccountInformationData>
-                    <AccountInformationData>City: {data.city}</AccountInformationData>
-                    <AccountInformationData>State: {data.state}</AccountInformationData>
-                    <AccountInformationData>Zip Code: {data.zipCode}</AccountInformationData>
+                    <AccountInformationData>Address: {data.billingAddress.addressOne}</AccountInformationData>
+                    <AccountInformationData>City: {data.billingAddress.city}</AccountInformationData>
+                    <AccountInformationData>State: {data.billingAddress.state}</AccountInformationData>
+                    <AccountInformationData>Zip Code: {data.billingAddress.zipCode}</AccountInformationData>
                     <AccountInformationData>Email List: {data.emailList}</AccountInformationData>
                 </>
             }

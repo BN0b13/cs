@@ -1,20 +1,27 @@
 import React from 'react';
 
-import AddressForm from '../address-form/address-form.component';
+import Address from '../address/address.component';
 import Button from '../button/button.component';
 import Snackbar from '../snackbar/snackbar.component';
 import Spinner from '../spinner/spinner.component';
 
+import { passwordHandler } from '../../tools/user.js';
+
 import { tokenName, api } from '../../config';
+
+import Client from '../../tools/client.js';
 
 import {
   SignUpFormButtonContainer,
+  SignUpFormCheckbox,
   SignUpFormContainer,
   SignUpFormForm,
   SignUpFormInput,
   SignUpFormLabel,
   SignUpFormTitle
 } from './sign-up-form.styles';
+
+const client = new Client();
 
 class SignUpForm extends React.Component{
   constructor(props){
@@ -26,10 +33,20 @@ class SignUpForm extends React.Component{
       password: '',
       firstName: '',
       lastName: '',
-      address: '',
-      city: '',
-      state: '',
-      zipCode: '',
+      billingAddress: {
+        addressOne: '',
+        addressTwo: '',
+        city: '',
+        state: '',
+        zipCode: '',
+      },
+      shippingAddress: {
+        addressOne: '',
+        addressTwo: '',
+        city: '',
+        state: '',
+        zipCode: '',
+      },
       phone: '',
       emailList: false,
       passwordErrVisible: false,
@@ -58,17 +75,13 @@ class SignUpForm extends React.Component{
     }
   }
 
-  passwordHandler = () => {
-    const newPassword = this.state.password;
-    const minNumChars = 8;
-    const maxNumChars = 30;
-    const regularExpression  = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,30}$/;
-    if(newPassword.length < minNumChars || 
-      newPassword.length > maxNumChars ||
-      !regularExpression.test(newPassword)){
-      return false;
-    }
-    return true;
+  updateBillingAddress = (data) => {
+    this.setState({
+      billingAddress: {
+        ...this.state.billingAddress,
+        ...data
+      }
+    });
   }
 
   checkFields = () => {
@@ -79,7 +92,7 @@ class SignUpForm extends React.Component{
       this.setState({ emailErrVisible: false });
     }
 
-    const checkPassword = this.passwordHandler();
+    const checkPassword = passwordHandler(this.state.password);
     if(!checkPassword) {
       this.setState({ passwordErrVisible: true });
       return false;
@@ -91,10 +104,10 @@ class SignUpForm extends React.Component{
       this.state.password.length === 0 ||  
       this.state.firstName.length === 0 || 
       this.state.lastName.length === 0 || 
-      this.state.address.length === 0 || 
-      this.state.city.length === 0 || 
-      this.state.state.length === 0 || 
-      this.state.zipCode.length === 0 ||
+      this.state.billingAddress.addressOne.length === 0 || 
+      this.state.billingAddress.city.length === 0 || 
+      this.state.billingAddress.state.length === 0 || 
+      this.state.billingAddress.zipCode.length === 0 ||
       this.state.phone.length === 0) {
       this.setState({ formErrVisible: true });
       return false;
@@ -107,37 +120,27 @@ class SignUpForm extends React.Component{
 
     const checkFields = this.checkFields();
     if(!checkFields) {
+      console.log('Check Fields Failed');
       return
     }
 
     this.setState({ loading: true });
     
     try {
-      const body = JSON.stringify({
+      const data = {
         email: this.state.email,
         password: this.state.password,
         firstName: this.state.firstName,
         lastName: this.state.lastName,
-        address: this.state.address,
-        city: this.state.city,
-        state: this.state.state,
-        zipCode: this.state.zipCode,
+        billingAddress: this.state.billingAddress,
+        shippingAddress: this.state.billingAddress,
         phone: this.state.phone,
         emailList: this.state.emailList
-      });
+      };
 
-      const signUp = await fetch(`${api}/users`, {
-        method: 'POST',
-        mode: 'cors',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body
-      });
+      const res = await client.createCustomer(data);
 
-      const res = await signUp.json();
-
-      if(res.status !== 201) {
+      if(res.err) {
         this.setState({ 
           loading: false,
           formErrVisible: true,
@@ -158,7 +161,7 @@ class SignUpForm extends React.Component{
   }
 
   render() {
-    if(!this.state.loading) {
+    if(this.state.loading) {
       return (
         <Spinner />
       )
@@ -169,60 +172,58 @@ class SignUpForm extends React.Component{
         <SignUpFormTitle>SIGN UP</SignUpFormTitle>
 
         <SignUpFormForm>
-          <SignUpFormLabel>Email: 
-            <SignUpFormInput
-              name="email" 
-              type="text" 
-              value={this.state.email} 
-              onChange={this.handleChange}
-              required />
-          </SignUpFormLabel>
+          <SignUpFormInput
+            name={'email'} 
+            type={'email'}
+            value={this.state.email} 
+            onChange={this.handleChange}
+            placeholder={'Email'}
+            required
+          />
           { this.state.emailErrVisible && 
           <Snackbar msg={this.state.emailErrMsg} show={() => this.setState({ emailErrVisible: false })} />
           }
-          <SignUpFormLabel>Password: 
-            <SignUpFormInput 
-            name="password" 
-            type="password" 
+          <SignUpFormInput 
+            name={'password'} 
+            type={'password'}
             value={this.state.password} 
             onChange={this.handleChange}
-            required />
-          </SignUpFormLabel>
+            placeholder={'Password'}
+            required
+          />
           { this.state.passwordErrVisible && 
           <Snackbar msg={this.state.passwordErrMsg} show={() => this.setState({ passwordErrVisible: false })} />
-          }
-          <SignUpFormLabel>First Name: 
-            <SignUpFormInput 
-            name="firstName" 
-            type="text" 
+          } 
+          <SignUpFormInput 
+            name={'firstName'}
+            type={'text'}
             value={this.state.firstName} 
             onChange={this.handleChange}
-            required />
-          </SignUpFormLabel>
-          <SignUpFormLabel>Last Name: 
-            <SignUpFormInput 
-            name="lastName" 
-            type="text" 
+            placeholder={'First Name'}
+            required
+          />
+          <SignUpFormInput 
+            name={'lastName'} 
+            type={'text'} 
             value={this.state.lastName} 
             onChange={this.handleChange}
-            required />
-          </SignUpFormLabel>
-          <AddressForm 
-            address={(address) => this.setState({ address })} 
-            city={(city) => this.setState({ city })} 
-            state={(state) => this.setState({ state })} 
-            zipCode={(zipCode) => this.setState({ zipCode })} 
+            placeholder={'Last Name'}
+            required
           />
-          <SignUpFormLabel>Phone: 
-            <SignUpFormInput 
-            name="phone" 
-            type="text" 
+          <SignUpFormInput 
+            name={'phone'}
+            type={'text'}
             value={this.state.phone} 
             onChange={this.handleChange}
-            required />
-          </SignUpFormLabel>
-          <SignUpFormLabel>Email List
-            <SignUpFormInput 
+            placeholder={'Phone'}
+            required 
+          />
+          <Address 
+            address={this.state.billingAddress}
+            updateAddress={(data) => this.updateBillingAddress(data)}
+          />
+          <SignUpFormLabel>Email List 
+            <SignUpFormCheckbox 
               name="emailList" 
               type="checkbox" 
               value={this.state.emailList}
@@ -234,7 +235,7 @@ class SignUpForm extends React.Component{
           <Snackbar msg={this.state.formErrMsg} show={() => this.setState({ formErrVisible: false })} />
           }
           <SignUpFormButtonContainer>
-            <Button onClick={this.props.signUp}>Cancel</Button>
+            <Button onClick={() => window.location ='/login'}>Cancel</Button>
             <Button onClick={this.handleSignUp}>Sign Up</Button>
           </SignUpFormButtonContainer>
         </SignUpFormForm>

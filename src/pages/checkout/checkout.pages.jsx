@@ -1,33 +1,45 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
+import Button from '../../components/button/button.component';
 import Spinner from '../../components/spinner/spinner.component';
-
-import CartItem from '../../components/checkout/cart-item/cart-item.component';
-import CartTotal from '../../components/checkout/cart-total/cart-total.component';
+import CheckoutAddress from '../../components/checkout/checkout-address/checkout-address.component';
+import CheckoutShipping from '../../components/checkout/checkout-shipping/checkout-shipping.component';
+import CheckoutTotal from '../../components/checkout/checkout-total/checkout-total.component';
 
 import { CartContext } from '../../contexts/cart.context';
+import { CheckoutContext } from '../../contexts/checkout.context';
 
 import {
-    CheckoutPageContainer,
-    CheckoutPageEmpty,
-    CheckoutPageTitle,
+    AddressContainer,
+    BackButtonContainer,
+    CheckoutFormsContainer,
+    ContentContainer,
+    DisplayContainer,
+    ShippingContainer,
+    PaymentContainer,
 } from './checkout.styles';
 
 import { shippingAndHandling } from '../../config';
 
-import { convertProductPrice } from '../../tools/cart';
 import Client from '../../tools/client';
 
 const client = new Client();
 
 const CheckoutPage = () => {
+
     const [cart, setCart] = useState(null);
-    const [products, setProducts] = useState(null);
+    const [user, setUser] = useState(null);
     const [subtotal, setSubtotal] = useState(null);
+
     const { cartItems } = useContext(CartContext);
+    const {
+        total
+    } = useContext(CheckoutContext);
 
     useEffect(() => {
         const getCart = async () => {
+            const getUser = await client.getAccount();
+            setUser(getUser);
             const getProducts = await client.getProducts();
             const res = await client.getCart();
             let total = 0;
@@ -36,34 +48,41 @@ const CheckoutPage = () => {
                 total = total + (item.quantity * product[0].price);
             });
             setSubtotal(total);
-            setProducts(getProducts.rows);
             setCart(res.rows[0].products);
         }
         getCart();
     }, [ cartItems ]);
-    
 
     return (
-        <CheckoutPageContainer>
-            <CheckoutPageTitle>Checkout</CheckoutPageTitle>
+        <DisplayContainer>
+            <BackButtonContainer>
+                <Button onClick={() => window.location = '/cart'}>Back To Cart</Button>
+            </BackButtonContainer>
             { !cart ?  
                 <Spinner />
-            :
-                <>
-                    {cart.length === 0 ?
-                        <CheckoutPageEmpty>Your Cart is Empty</CheckoutPageEmpty>
-                    :
-                     <>
-                        {cart.map((item, index) => {
-                        const product = products.filter(prod => prod.id === item.productId);
-                        return <CartItem key={index} quantity={item.quantity} product={product[0]} />
-                        })}
-                        <CartTotal subtotal={subtotal} shippingAndHandling={shippingAndHandling} />
-                     </>
-                    }
-                </>
+                :
+                <ContentContainer>
+                    <CheckoutFormsContainer>
+                        <AddressContainer>
+                            <CheckoutAddress
+                                user={user}
+                            />
+                        </AddressContainer>
+                        <ShippingContainer>
+                            <CheckoutShipping />
+                        </ShippingContainer>
+                    </CheckoutFormsContainer>
+                    <PaymentContainer>
+                        <CheckoutTotal
+                            cart={cart}
+                            user={user}
+                            subtotal={subtotal}
+                            shippingAndHandling={shippingAndHandling}
+                        />
+                    </PaymentContainer>
+                </ContentContainer>
             }
-        </CheckoutPageContainer>
+        </DisplayContainer>
     );
 };
 

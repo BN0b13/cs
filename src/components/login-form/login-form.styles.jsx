@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const LoginFormButtonContainer = styled.div`
     margin-top: 10px;
     display: flex;
-    flex-direction: row;
+    flex-direction: colum;
     justify-content: space-between;
 `;
 
@@ -26,15 +26,12 @@ export const LoginFormForm = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin: 10px;
 `;
 
 export const LoginFormInput = styled.input`
-
-`;
-
-export const LoginFormLabel = styled.label`
-    margin: 3px;
-    padding: 2px;
+    margin: 5px;
+    width: 250px;
 `;
 
 export const LoginFormLogo = styled.img`
@@ -42,6 +39,6 @@ export const LoginFormLogo = styled.img`
     width: 320px;
 `;
 
-export const LoginFormTitle = styled.h1`
-    text-align: center;
+export const LoginFormText = styled.h6`
+    cursor: pointer;
 `;
