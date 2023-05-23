@@ -1,17 +1,24 @@
-import React from 'react';
+import { convertProductPrice } from '../../../../tools/cart';
+import { setMobileView } from '../../../../tools/mobileView';
 
 import {
-    OrderItemContainer,
-    OrderItemText
+    OrderItemRow,
+    OrderItemData
 } from './order-item.styles';
 
-const OrderItem = () => {
-    console.log('Order: ', order);
+const OrderItem = ({ product }) => {
 
     return (
-        <OrderItemContainer>
-            <OrderItemText>Order Item</OrderItemText>
-        </OrderItemContainer>
+        <OrderItemRow>
+            <OrderItemData>{ product.name }</OrderItemData>
+            {setMobileView() ?
+                null
+            :
+                <OrderItemData>{ product.description }</OrderItemData>
+            }
+            <OrderItemData>{ product.quantity }</OrderItemData>
+            <OrderItemData>{ convertProductPrice(product.quantity * product.price) }</OrderItemData>
+        </OrderItemRow>
     )
 }
 

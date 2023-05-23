@@ -3,7 +3,8 @@ import { CreditCard, PaymentForm } from 'react-square-web-payments-sdk';
 
 const SquarePaymentForm = ({ checkout, buyerData }) => {
     const {
-        address,
+        addressOne,
+        addressTwo,
         total,
         city,
         givenName,
@@ -22,7 +23,7 @@ const SquarePaymentForm = ({ checkout, buyerData }) => {
             createVerificationDetails={() => ({
             amount,
             billingContact: {
-                addressLines: [ address ],
+                addressLines: [ addressOne, addressTwo ],
                 familyName,
                 givenName,
                 countryCode: 'US',

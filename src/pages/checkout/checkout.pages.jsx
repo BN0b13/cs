@@ -9,6 +9,11 @@ import CheckoutTotal from '../../components/checkout/checkout-total/checkout-tot
 import { CartContext } from '../../contexts/cart.context';
 import { CheckoutContext } from '../../contexts/checkout.context';
 
+import { shippingAndHandling } from '../../config';
+
+import { setMobileView } from '../../tools/mobileView';
+import Client from '../../tools/client';
+
 import {
     AddressContainer,
     BackButtonContainer,
@@ -19,14 +24,9 @@ import {
     PaymentContainer,
 } from './checkout.styles';
 
-import { shippingAndHandling } from '../../config';
-
-import Client from '../../tools/client';
-
 const client = new Client();
 
 const CheckoutPage = () => {
-
     const [cart, setCart] = useState(null);
     const [user, setUser] = useState(null);
     const [subtotal, setSubtotal] = useState(null);
@@ -61,7 +61,7 @@ const CheckoutPage = () => {
             { !cart ?  
                 <Spinner />
                 :
-                <ContentContainer>
+                <ContentContainer setMobileView={setMobileView()}>
                     <CheckoutFormsContainer>
                         <AddressContainer>
                             <CheckoutAddress

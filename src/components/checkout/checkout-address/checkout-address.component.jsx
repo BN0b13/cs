@@ -4,6 +4,8 @@ import Address from '../../address/address.component';
 
 import { CheckoutContext } from '../../../contexts/checkout.context';
 
+import { setMobileView } from '../../../tools/mobileView';
+
 import {
     CheckoutAddressContainer,
     CartAddressCheckbox,
@@ -14,21 +16,15 @@ import {
 
 const CheckoutAddress = ({ user }) => {
     const defaultAddress = {
-        address: user.billingAddress.addressOne,
+        addressOne: user.billingAddress.addressOne,
+        addressTwo: user.billingAddress.addressTwo,
         city: user.billingAddress.city,
         state: user.billingAddress.state,
         zipCode: user.billingAddress.zipCode
     };
-    const [ mobileView, setMobileView ] = useState(false);
     const [ checkbox, setCheckbox ] = useState(false);
 
     const { billingAddress, setBillingAddress, shippingAddress, setShippingAddress } = useContext(CheckoutContext);
-
-    useEffect(() => {
-        if(window.screen.width < 500) {
-            setMobileView(true);
-        }
-    }, []);
 
     useEffect(() => {
         setBillingAddress(defaultAddress);
@@ -55,8 +51,8 @@ const CheckoutAddress = ({ user }) => {
     }
 
     return (
-        <CheckoutAddressContainer mobileView={mobileView}>
-            <CheckoutAddressesContainer mobileView={mobileView}>
+        <CheckoutAddressContainer setMobileView={setMobileView()}>
+            <CheckoutAddressesContainer setMobileView={setMobileView()}>
                 <CartAddressTitle>Billing Address</CartAddressTitle>
                 <Address address={user.billingAddress} updateAddress={updateBillingAddress} />
                 <CartAddressLabel>
@@ -64,7 +60,7 @@ const CheckoutAddress = ({ user }) => {
                     Ship to a different address 
                 </CartAddressLabel>
             </CheckoutAddressesContainer>
-            <CheckoutAddressesContainer mobileView={mobileView}>
+            <CheckoutAddressesContainer setMobileView={setMobileView()}>
                 {checkbox && 
                     <>
                         <CartAddressTitle>Shipping Address</CartAddressTitle>

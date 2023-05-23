@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { setMobileView } from '../../tools/mobileView';
+
 import logo from '../../assets/img/logo.png';
 
 import {
@@ -14,7 +16,7 @@ const Welcome = () => {
 
   return (
     <WelcomeContainer>
-      {window.screen.width < 500 ? 
+      {setMobileView() ? 
         <WelcomeLogoMobile src={logo} alt='Welcome to Cosmic Strains' />
         : 
         <WelcomeLogo src={logo} alt='Welcome to Cosmic Strains' />

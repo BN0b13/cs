@@ -9,7 +9,8 @@ export const DisplayContainer = styled.div`
 
 export const ContentContainer = styled.div`
     display: flex;
-    flex-direction: row;
+    flex-direction: ${props => props.setMobileView ? 'column' : 'row'};
+    justify-content: center;
     width: 100%;
 `;
 

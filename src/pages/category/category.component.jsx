@@ -6,6 +6,7 @@ import { BsArrowRight } from 'react-icons/bs';
 import ProductCard from '../../components/product-card/product-card.component';
 
 import Client from '../../tools/client';
+import { setMobileView } from '../../tools/mobileView';
 
 import {CategoryContainer,
     CategoryContainerMobile,
@@ -32,7 +33,7 @@ const Category = () => {
         <Fragment>
             <CategoryTitle><CategoryLink to={`/shop`}>Shop</CategoryLink>{'  '}<BsArrowRight />{'  '}{category.toUpperCase()}</CategoryTitle>
             {
-                window.screen.width < 500 ? (
+                setMobileView() ? (
                     <CategoryContainerMobile>
                         {products &&
                             products.map((product) => <CategoryLink to={`/shop/${category}/${product.name}`} key={product.id}><ProductCard key={product.id} product={product} /></CategoryLink>)
