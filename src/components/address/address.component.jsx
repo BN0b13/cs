@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { states } from '../../tools/helper.js';
+import { states } from '../../tools/states.js';
 
 import {
     AddressBottomContainer,
@@ -21,7 +21,9 @@ const Address = ({ address, updateAddress }) => {
     const [ zipCode, setZipCode ] = useState(address.zipCode);
 
     useEffect(() => {
-        updateAddress({ city: 'AL' });
+        if(!address.state) {
+            updateAddress({ state: 'AL' });
+        }
     }, []);
 
     const handleAddressOne = (data) => {
@@ -77,6 +79,7 @@ const Address = ({ address, updateAddress }) => {
                     placeholder={'City'}
                 />
                 <AddressDropdown
+                    name={'state'}
                     value={state}
                     onChange={(e) => handleState(e.target.value)}
                     placeholder={'State'}

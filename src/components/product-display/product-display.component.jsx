@@ -12,6 +12,7 @@ import Snackbar from '../snackbar/snackbar.component';
 import { CartContext } from '../../contexts/cart.context';
 
 import { getProductInventory, convertProductPrice } from '../../tools/cart';
+import { setMobileView } from '../../tools/mobileView';
 
 import logo from '../../assets/img/logo.png';
 
@@ -127,7 +128,7 @@ const ProductDisplay = ({ product }) => {
     }
 
     const productDisplayLayout = () => {
-        if(window.screen.width < 500) {
+        if(setMobileView()) {
             return (
                 <ProductMobileContainer>
                     {productDisplayContents()}

@@ -2,6 +2,8 @@ import React from 'react';
 
 import { accountSidebarMenu } from '../../../assets/menu-items';
 
+import { setMobileView } from '../../../tools/mobileView';
+
 import {
     AccountSidebarContainer,
     AccountSidebarOption,
@@ -18,7 +20,7 @@ const AccountSidebar = ({ setAccountView }) => {
                         >
                             { item.icon }
                             {'   '}
-                            { item.title }
+                            { setMobileView() ? '' : item.title }
                         </AccountSidebarOption>
             })}
         </AccountSidebarContainer>

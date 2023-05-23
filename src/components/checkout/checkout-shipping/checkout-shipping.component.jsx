@@ -11,22 +11,15 @@ import {
 } from './checkout-shipping.styles';
 
 const CheckoutShipping = () => {
-    const [ mobileView, setMobileView ] = useState(false);
     const [ shippingOptionOne, setShippingOptionOne ] = useState(true);
     const { setShipping } = useContext(CheckoutContext);
-
-    useEffect(() => {
-        if(window.screen.width < 500) {
-            setMobileView(true);
-        }
-    }, []);
 
     useEffect(() => {
         setShipping(0);
     }, [ shippingOptionOne ]);
 
     return (
-        <CheckoutShippingContainer mobileView={mobileView}>
+        <CheckoutShippingContainer>
             <CheckoutShippingTitle>Shipping</CheckoutShippingTitle>
             <CheckoutShippingOptionsContainer>
                 <CheckoutShippingInput type={'radio'} checked={shippingOptionOne} onChange={() => setShippingOptionOne(true)} />

@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 
-import AccountInformation from '../../components/account/account-information/account-information.component';
+import AccountDetails from '../../components/account/account-details/account-details.component';
 import AccountSidebar from '../../components/account/account-sidebar/account-sidebar.component';
 import Orders from '../../components/account/orders/orders.component';
 import OrderInformation from '../../components/account/order-information/order-information.component';
@@ -22,7 +22,7 @@ const AccountPage = () => {
             </SidebarContainer>
             <RoutesContainer>
                 <Routes>
-                    <Route index element={<AccountInformation />} />
+                    <Route index element={<AccountDetails />} />
                     <Route path="/orders" element={<Orders />} />
                     <Route path="/orders/:refId" element={<OrderInformation />} />
                     <Route path="/settings" element={<Settings />} />

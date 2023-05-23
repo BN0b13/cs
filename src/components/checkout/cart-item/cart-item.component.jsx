@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 
 import {
     VscChevronDown,
@@ -8,14 +8,12 @@ import {
 
 import { CartContext } from '../../../contexts/cart.context';
 
-import {
-    convertProductPrice
-} from '../../../tools/cart';
+import { convertProductPrice } from '../../../tools/cart';
+// import { setMobileView } from '../../../tools/mobileView';
 
 import logo from '../../../assets/img/logo.png';
 
 import {
-    CartItemMobileView,
     CartItemContainer,
     CartItemQuantityContainer,
     CartItemQuantityText,
@@ -26,14 +24,7 @@ import {
 } from './cart-item.styles';
 
 const CartItem = ({ quantity, product }) => {
-    const [ mobileView, setMobileView ] = useState(false);
     const { addItemToCart, deleteItemFromCart, removeItemFromCart } = useContext(CartContext);
-
-    useEffect(() => {
-        if(window.screen.width < 500) {
-            setMobileView(true);
-        }
-    }, []);
 
     const increment = async () => {
         if(quantity >= product.Inventories.length) {

@@ -1,6 +1,8 @@
 import MobileNav from './navigation/mobile-nav/mobile-nav.component';
 import Navigation from './navigation/navigation.component';
 
+import { setMobileView } from '../../tools/mobileView';
+
 import {
   HeaderNav,
   Logo,
@@ -14,7 +16,7 @@ import navLogo from '../../assets/img/text.png';
 import navLogoMobile from '../../assets/img/textMobile.png';
 
 const Header = () => {
-  if(window.screen.width < 500) {
+  if(setMobileView()) {
     return (
       <HeaderNav>
         <LogoContainer>
