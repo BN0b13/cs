@@ -45,9 +45,3 @@ export const ProductImage = styled.div`
 export const DeleteProductContainer = styled.div`
     margin-right: 40px;
 `;
-
-export const CartItemMobileView = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-text: center;
-`;

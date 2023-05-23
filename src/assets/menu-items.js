@@ -40,9 +40,9 @@ export const accountSidebarMenu = [
     path: '/account/orders',
     icon: (<VscHistory />)
   },
-  {
-    title: 'Settings',
-    path: '/account/settings',
-    icon: (<VscSettingsGear />)
-  },
+  // {
+  //   title: 'Settings',
+  //   path: '/account/settings',
+  //   icon: (<VscSettingsGear />)
+  // },
 ];

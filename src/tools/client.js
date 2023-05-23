@@ -43,6 +43,14 @@ export default class Client {
         return res;
     }
 
+    async updateAccount(data) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.patch, data, true);
+        const account = await fetch(`${api}/user`, requestOptions);
+        const res = await account.json();
+
+        return res;
+    }
+
     async addView() {
         const requestOptions = this.fetchOptions(this.fetchMethods.patch);
         const account = await fetch(`${api}/visits`, requestOptions);
@@ -88,7 +96,7 @@ export default class Client {
 
     async getDeliveryInsuranceAmount() {
         const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
-        const deliveryInsuranceAmount = await fetch(`${api}/orders/delivery-insurance`, requestOptions);
+        const deliveryInsuranceAmount = await fetch(`${api}/orders/shipping/delivery-insurance`, requestOptions);
         const res = await deliveryInsuranceAmount.json();
         return res;
     }

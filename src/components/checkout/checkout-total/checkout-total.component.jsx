@@ -1,13 +1,14 @@
 import { useEffect, useContext, useState } from 'react';
 
+import { VscClose, VscInfo } from 'react-icons/vsc'
+
 import SquarePaymentForm from '../payment-form/payment-form.component';
 import Spinner from '../../spinner/spinner.component';
 
 import { CheckoutContext } from '../../../contexts/checkout.context';
 
-import {
-    convertProductPrice
-} from '../../../tools/cart';
+import { convertProductPrice } from '../../../tools/cart';
+import { setMobileView } from '../../../tools/mobileView';
 
 import Client from '../../../tools/client';
 
@@ -23,15 +24,18 @@ import {
     CartSubtotalText,
     CartShippingContainer,
     CartShippingText,
-    CheckoutTotalText
+    CheckoutTotalText,
+    InsuranceInfoText,
+    InsuranceInfoContainer,
+    InsuranceInfoCloseContainer
 } from './checkout-total.styles';
 
 const client = new Client();
 
 const CheckoutTotal = ({ cart, subtotal, shippingAndHandling, user }) => {
     const [ deliveryInsuranceAmount, setDeliveryInsuranceAmount ] = useState(null);
-    const [ mobileView, setMobileView ] = useState(false);
     const [ deliveryInsuranceSelection, setDeliveryInsuranceSelection ] = useState(false);
+    const [ showInsuranceInfo, setShowInsuranceInfo ] = useState(false);
     const {
         billingAddress,
         shippingAddress,
@@ -43,9 +47,6 @@ const CheckoutTotal = ({ cart, subtotal, shippingAndHandling, user }) => {
     } = useContext(CheckoutContext);
 
     useEffect(() => {
-        if(window.screen.width < 500) {
-            setMobileView(true);
-        }
         const getDeliveryInsuranceAmount = async () => {
             const res = await client.getDeliveryInsuranceAmount();
             setDeliveryInsuranceAmount(res.deliveryInsuranceAmount);
@@ -81,26 +82,33 @@ const CheckoutTotal = ({ cart, subtotal, shippingAndHandling, user }) => {
 
         const res = await client.checkout(data);
 
-        console.log('Payment result: ', res.status);
-
         if(res.status === 201) {
             window.location =`/thankyou/${res.refId}`;
         }
     }
 
     return (
-        <CheckoutTotalContainer mobileView={mobileView}>
+        <CheckoutTotalContainer setMobileView={setMobileView()}>
             {!total ?
                 <Spinner />
             :
             <>
-                <CartInsuranceContainer mobileView={mobileView}>
+                <CartInsuranceContainer setMobileView={setMobileView()}>
                     <CartInsuranceLabel>
                         <CartInsuranceInput type={'checkbox'} value={deliveryInsuranceSelection} onClick={() => deliveryInsuranceHandler()} />
-                        Delivery Insurance
+                        Delivery Insurance 
                     </CartInsuranceLabel>
+                    <VscInfo onClick={() => setShowInsuranceInfo(!showInsuranceInfo)} />
+                    {showInsuranceInfo &&
+                        <InsuranceInfoContainer>
+                            <InsuranceInfoCloseContainer>
+                                <VscClose onClick={() => setShowInsuranceInfo(false)} />
+                            </InsuranceInfoCloseContainer>
+                            <InsuranceInfoText>If your tracking has not been marked as received within 10 business days, we will send your order again at no charge. If the products in your order are no longer available, we will send seeds of equal or greater value.</InsuranceInfoText>
+                        </InsuranceInfoContainer>
+                    }
                 </CartInsuranceContainer>
-                <CartDetailsContainer mobileView={mobileView}>
+                <CartDetailsContainer setMobileView={setMobileView()}>
                     <CartSubtotalContainer>
                         <CartSubtotalText>
                                 Subtotal: 
@@ -138,7 +146,8 @@ const CheckoutTotal = ({ cart, subtotal, shippingAndHandling, user }) => {
                 </CartDetailsContainer>
                 <SquarePaymentForm
                     buyerData={{
-                        address: billingAddress.address,
+                        addressOne: billingAddress.addressOne,
+                        addressTwo: billingAddress.addressTwo,
                         total,
                         city: billingAddress.city,
                         givenName: user.firstName,

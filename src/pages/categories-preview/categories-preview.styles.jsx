@@ -6,12 +6,12 @@ export const CategoriesPreviewContainer = styled.div`
 
 export const Preview = styled.div`
   display: grid;
-  ${params => params.mobileView ? 
+  ${params => params.setMobileView ? 
     'grid-template-rows: repeat(4, 1fr);'
     :
     'grid-template-columns: repeat(4, 1fr);'
     }
-  ${params => params.mobileView ? 
+  ${params => params.setMobileView ? 
     'row-gap: 10px;'
     :
     'column-gap: 20px;'

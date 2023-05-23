@@ -6,12 +6,15 @@ export const CheckoutShippingContainer = styled.div`
     justify-content: center;
     width: 100%;
     margin-top: 0;
+    padding: 10px;
 `;
 
 export const CheckoutShippingOptionsContainer = styled.div`
     display: flex;
     flex-direction: row
     height: 200px;
+    max-width: 45vw;
+    margin: 10px;
 `;
 
 export const CheckoutShippingTitle = styled.h1`

@@ -3,17 +3,18 @@ import styled from 'styled-components';
 export const CheckoutTotalContainer = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: width: center;
+    justify-content: center;
+    align-items: center;
     width: 100%;
     margin-top: 0;
 `;
 
 export const CartInsuranceContainer = styled.div`
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
-    margin: ${props => props.mobileView ? '10px' : 'auto'};
+    margin-bottom: 20px;
     width: 100%;
 `;
 
@@ -21,16 +22,39 @@ export const CartInsuranceInput = styled.input`
 `;
 
 export const CartInsuranceLabel = styled.label`
+
+`;
+
+export const InsuranceInfoText = styled.small`
+    margin: 20px;
+`;
+
+export const InsuranceInfoContainer = styled.div`
+    width: 200px;
+    height: auto;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px;
+    z-index: 5;
+    position: absolute;
+    background-color: white;
+    margin-top: 150px;
+`;
+
+export const InsuranceInfoCloseContainer = styled.div`
+    display: flex;
+    justify-content: end;
+    padding: 5px;
 `;
 
 export const CartDetailsContainer = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: ${props => props.mobileView ? 'center' : 'end'};
-    width: 330px;
+    justify-content: ${props => props.setMobileView ? 'center' : 'end'};
+    width: ${props => props.setMobileView ? '100%' : '350px'};
     border: 1px solid darkgrey;
     padding: 0;
-    width: 100%;
+    margin-bottom: 20px;
 `;
 
 export const CartSubtotalContainer = styled.div`
