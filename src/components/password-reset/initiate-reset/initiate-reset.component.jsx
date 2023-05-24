@@ -34,8 +34,7 @@ const InitiateReset = () => {
         setType('success');
         setShow(true);
 
-        const res = await client.passwordResetEmail({ email });
-        console.log('Email request result: ', res);
+        await client.passwordResetEmail({ email });
     }
 
     return (

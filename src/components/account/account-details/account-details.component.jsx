@@ -98,7 +98,6 @@ const AccountDetails = () => {
 
     const updateUserDetails = async () => {
         if(!checkFields()) {
-            console.log('Please fill all fields');
             return
         }
         const data = {
@@ -111,6 +110,10 @@ const AccountDetails = () => {
         };
 
         await client.updateAccount(data);
+        
+        setMsgContent('Account Successfully Updated');
+        setMsgType('success');
+        setShowMsg(true);
     }
 
     return (
@@ -141,6 +144,9 @@ const AccountDetails = () => {
                         <EmailListInput type={'checkbox'} value={emailList} defaultChecked={user.emailList} onClick={() => setEmailList(!emailList)} />
                         Email List
                     </EmailListLabel>
+                    {showMsg &&
+                        <Snackbar msg={msgContent} type={msgType} show={setShowMsg} />
+                    }
                     <UpdateButtonContainer>
                         <Button onClick={() => updateUserDetails()}>Update</Button>
                     </UpdateButtonContainer>

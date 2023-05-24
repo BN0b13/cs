@@ -136,6 +136,20 @@ export default class Client {
         return res;
     }
 
+    async sendEmailVerificationEmail() {
+        const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
+        const sendEmailVerificationEmail = await fetch(`${api}/user/email-token`, requestOptions);
+        const res = await sendEmailVerificationEmail.json();
+        return res;
+    }
+
+    async isEmailTokenValid() {
+        const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
+        const isEmailTokenValid = await fetch(`${api}/user/email-token/verify`, requestOptions);
+        const res = await isEmailTokenValid.json();
+        return res;
+    }
+
     async completeEmailVerification({ emailToken }) {
         const requestOptions = this.fetchOptions(this.fetchMethods.get);
         const completeEmailVerification = await fetch(`${api}/user/verify-email/${emailToken}`, requestOptions);

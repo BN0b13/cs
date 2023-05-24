@@ -91,7 +91,6 @@ class LoginForm extends React.Component{
 
       if(res && res.token) {
         localStorage.setItem(tokenName, res.token);
-        sessionStorage.setItem(tokenName, JSON.stringify(res.data));
         window.location = '/';
       }
 

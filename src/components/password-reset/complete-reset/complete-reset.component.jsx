@@ -56,8 +56,7 @@ const CompleteReset = () => {
         setConfirmPassword('');
         setSuccess(true);
 
-        const res = await client.completePasswordReset({ passwordToken: token, password });
-        console.log('Email request result: ', res);
+        await client.completePasswordReset({ passwordToken: token, password });
     }
 
     return (

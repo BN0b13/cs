@@ -10,6 +10,7 @@ import Button from '../button/button.component';
 import Snackbar from '../snackbar/snackbar.component';
 
 import { CartContext } from '../../contexts/cart.context';
+import { UserContext } from '../../contexts/user.context';
 
 import { getProductInventory, convertProductPrice } from '../../tools/cart';
 import { setMobileView } from '../../tools/mobileView';
@@ -31,8 +32,6 @@ import {
     ProductText
 } from './product-display.styles';
 
-import { tokenName } from '../../config';
-
 const ProductDisplay = ({ product }) => {
     const [messageType, setMessageType] = useState(null);
     const [messageContents, setMessageContents] = useState('');
@@ -41,6 +40,7 @@ const ProductDisplay = ({ product }) => {
     const [inventory, setInventory] = useState(null);
 
     const { addItemToCart } = useContext(CartContext);
+    const { currentUser } = useContext(UserContext);
 
     const {
         id,
@@ -60,7 +60,7 @@ const ProductDisplay = ({ product }) => {
             setInventory(res);
         }
         getInventory();
-    }, []);
+    }, [ id ]);
 
     const message = (message, type = null) => {
         setMessageType(type);
@@ -69,9 +69,8 @@ const ProductDisplay = ({ product }) => {
     }
 
     const loggedIn = async (id, quantity) => {
-        const loggedInStatus = localStorage.getItem(tokenName);
-        if(!loggedInStatus) {
-            message('Please login to add to cart.');
+        if(!currentUser || !currentUser?.emailVerified) {
+            message('Please login with a verified account to add to cart.');
             return;
         }
         if(quantity === 0) {
