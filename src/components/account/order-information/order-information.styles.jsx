@@ -4,6 +4,7 @@ export const OrderInformationContainer = styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
+    max-width: 1000px;
     padding: 5px;
 `;
 

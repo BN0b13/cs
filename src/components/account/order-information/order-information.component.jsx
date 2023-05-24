@@ -56,7 +56,6 @@ const OrderInformation = () => {
                 });
             });
             const deliveryInsuranceRes = await client.getDeliveryInsuranceAmount();
-            console.log('Delivery Insurance: ', deliveryInsuranceRes);
             setAccount(getAccount);
             setProducts(productArr);
             setOrder(res.rows[0]);
