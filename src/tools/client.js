@@ -35,6 +35,14 @@ export default class Client {
     }
     
     // Helper Functions
+
+    async createCustomer(data) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.post, data);
+        const completePasswordReset = await fetch(`${api}/user`, requestOptions);
+        const res = await completePasswordReset.json();
+        return res;
+    }
+
     async getAccount() {
         const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
         const account = await fetch(`${api}/user`, requestOptions);
@@ -94,10 +102,10 @@ export default class Client {
         return res;
     }
 
-    async getDeliveryInsuranceAmount() {
+    async checkoutSetUp() {
         const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
-        const deliveryInsuranceAmount = await fetch(`${api}/orders/shipping/delivery-insurance`, requestOptions);
-        const res = await deliveryInsuranceAmount.json();
+        const checkoutSetUp = await fetch(`${api}/checkout/set-up`, requestOptions);
+        const res = await checkoutSetUp.json();
         return res;
     }
 
@@ -154,13 +162,6 @@ export default class Client {
         const requestOptions = this.fetchOptions(this.fetchMethods.get);
         const completeEmailVerification = await fetch(`${api}/user/verify-email/${emailToken}`, requestOptions);
         const res = await completeEmailVerification.json();
-        return res;
-    }
-
-    async createCustomer(data) {
-        const requestOptions = this.fetchOptions(this.fetchMethods.post, data);
-        const completePasswordReset = await fetch(`${api}/user`, requestOptions);
-        const res = await completePasswordReset.json();
         return res;
     }
 }

@@ -5,7 +5,9 @@ import { VscClose, VscInfo } from 'react-icons/vsc'
 import SquarePaymentForm from '../payment-form/payment-form.component';
 import Spinner from '../../spinner/spinner.component';
 
+import { CartContext } from '../../../contexts/cart.context';
 import { CheckoutContext } from '../../../contexts/checkout.context';
+import { UserContext } from '../../../contexts/user.context';
 
 import { convertProductPrice } from '../../../tools/cart';
 import { setMobileView } from '../../../tools/mobileView';
@@ -48,8 +50,9 @@ const CheckoutTotal = ({ cart, subtotal, shippingAndHandling, user }) => {
 
     useEffect(() => {
         const getDeliveryInsuranceAmount = async () => {
-            const res = await client.getDeliveryInsuranceAmount();
-            setDeliveryInsuranceAmount(res.deliveryInsuranceAmount);
+            const res = await client.checkoutSetUp();
+            console.log('Delivery Insurance: ', res);
+            setDeliveryInsuranceAmount(res.deliveryInsurance);
         }
         getDeliveryInsuranceAmount();
         
