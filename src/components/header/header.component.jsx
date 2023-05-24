@@ -29,6 +29,7 @@ const Header = () => {
 
   useEffect(() => {
     const getAccount = async () => {
+      console.log('Getting Account...');
       const res = await client.getAccount();
       setCurrentUser(res);
     }
