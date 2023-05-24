@@ -13,10 +13,16 @@ const VerifyEmail = () => {
     useEffect(() => {
         const verifyEmailRequest = async () => {
             await client.completeEmailVerification({ emailToken });
-            window.location = '/account';
+            const res = await client.getAccount();
+
+            if(res.error) {
+                window.location = '/login';
+            } else {
+                window.location = '/account';
+            }
         }
         verifyEmailRequest();
-    }, []);
+    }, [ emailToken ]);
 
     return (
         <Spinner />

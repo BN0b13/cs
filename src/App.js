@@ -21,6 +21,7 @@ import PasswordResetPage from './pages/password-reset/password-reset.pages';
 import ShopPage from './pages/shop/shop.pages';
 import SignUpPage from './pages/sign-up/sign-up.pages';
 import ThankYou from './pages/thank-you/thank-you.pages';
+import VerifyEmail from './components/account/verify-email/verify-email.component';
 
 import {
   ageVerifyTokenName
@@ -98,6 +99,10 @@ function App() {
           element={
             <ThankYou />
           } 
+        />
+        <Route 
+          path="/verify-email/:emailToken" 
+          element={<VerifyEmail />}
         />
       </Routes>
     );
