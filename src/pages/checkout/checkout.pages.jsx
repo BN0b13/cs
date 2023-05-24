@@ -8,6 +8,7 @@ import CheckoutTotal from '../../components/checkout/checkout-total/checkout-tot
 
 import { CartContext } from '../../contexts/cart.context';
 import { CheckoutContext } from '../../contexts/checkout.context';
+import { UserContext } from '../../contexts/user.context';
 
 import { shippingAndHandling } from '../../config';
 
@@ -33,32 +34,37 @@ const CheckoutPage = () => {
 
     const { cartItems } = useContext(CartContext);
     const {
-        total
+        setDeliveryInsurance,
+        setShippingAndHandling
     } = useContext(CheckoutContext);
+    const { currentUser } = useContext(UserContext);
 
     useEffect(() => {
-        const getCart = async () => {
-            const getUser = await client.getAccount();
-            setUser(getUser);
+        const checkoutSetUp = async () => {
+            const checkoutSetUp = await client.checkoutSetUp();
             const getProducts = await client.getProducts();
-            const res = await client.getCart();
-            let total = 0;
-            res.rows[0].products.map(item => {
+            let subtotal = 0;
+            currentUser.cart.products.map(item => {
                 const product = getProducts.rows.filter(prod => prod.id === item.productId);
-                total = total + (item.quantity * product[0].price);
+                subtotal = subtotal + (item.quantity * product[0].price);
             });
-            setSubtotal(total);
-            setCart(res.rows[0].products);
+            setSubtotal(subtotal);
+            setUser(currentUser);
+            setCart(currentUser.cart.products);
+            setDeliveryInsurance(checkoutSetUp.deliveryInsurance);
+            setShippingAndHandling(checkoutSetUp.shippingAndHandling);
         }
-        getCart();
-    }, [ cartItems ]);
+        if(currentUser) {
+            checkoutSetUp();
+        }
+    }, [ cartItems, currentUser ]);
 
     return (
         <DisplayContainer>
             <BackButtonContainer>
                 <Button onClick={() => window.location = '/cart'}>Back To Cart</Button>
             </BackButtonContainer>
-            { !cart ?  
+            { !cart || !user ?  
                 <Spinner />
                 :
                 <ContentContainer setMobileView={setMobileView()}>
