@@ -6,8 +6,10 @@ export const CheckoutContext = createContext({
     setBillingAddress: () => null,
     shippingAddress: null,
     setShippingAddress: () => null,
-    shipping: null,
-    setShipping: () => null,
+    shippingId: null,
+    setShippingId: () => null,
+    shippingTotal: null,
+    setShippingTotal: () => null,
     shippingAndHandling: null,
     setShippingAndHandling: () => null,
     deliveryInsurance: null,
@@ -21,7 +23,8 @@ export const CheckoutContext = createContext({
 export const CHECKOUT_ACTION_TYPES = {
     SET_BILLING_ADDRESS: 'SET_BILLING_ADDRESS',
     SET_SHIPPING_ADDRESS: 'SET_SHIPPING_ADDRESS',
-    SET_SHIPPING: 'SET_SHIPPING',
+    SET_SHIPPING_ID: 'SET_SHIPPING_ID',
+    SET_SHIPPING_TOTAL: 'SET_SHIPPING_TOTAL',
     SET_SHIPPING_AND_HANDLING: 'SET_SHIPPING_AND_HANDLING',
     SET_DELIVERY_INSURANCE: 'SET_DELIVERY_INSURANCE',
     SET_SUBTOTAL: 'SET_SUBTOTAL',
@@ -43,10 +46,15 @@ const checkoutReducer = (state, action) => {
                 ...state,
                 shippingAddress: payload
             }
-        case CHECKOUT_ACTION_TYPES.SET_SHIPPING:
+        case CHECKOUT_ACTION_TYPES.SET_SHIPPING_ID:
             return {
                 ...state,
-                shipping: payload
+                shippingId: payload
+            }
+        case CHECKOUT_ACTION_TYPES.SET_SHIPPING_TOTAL:
+            return {
+                ...state,
+                shippingTotal: payload
             }
         case CHECKOUT_ACTION_TYPES.SET_SHIPPING_AND_HANDLING:
             return {
@@ -76,7 +84,8 @@ const checkoutReducer = (state, action) => {
 const INITIAL_STATE = {
     billingAddress: null,
     shippingAddress: null,
-    shipping: null,
+    shippingId: null,
+    shippingTotal: null,
     shippingAndHandling: null,
     deliveryInsurance: null,
     subtotal: null,
@@ -84,7 +93,7 @@ const INITIAL_STATE = {
 }
 
 export const CheckoutProvider = ({ children }) => {
-    const [ { billingAddress, shippingAddress, shipping, shippingAndHandling, deliveryInsurance, subtotal, total }, dispatch ] = useReducer(checkoutReducer, INITIAL_STATE);
+    const [ { billingAddress, shippingAddress, shippingId, shippingTotal, shippingAndHandling, deliveryInsurance, subtotal, total }, dispatch ] = useReducer(checkoutReducer, INITIAL_STATE);
 
     const setBillingAddress = (billingAddress) => {
         dispatch({ type: CHECKOUT_ACTION_TYPES.SET_BILLING_ADDRESS, payload: billingAddress });
@@ -94,8 +103,12 @@ export const CheckoutProvider = ({ children }) => {
         dispatch({ type: CHECKOUT_ACTION_TYPES.SET_SHIPPING_ADDRESS, payload: shippingAddress });
     }
 
-    const setShipping = (shipping) => {
-        dispatch({ type: CHECKOUT_ACTION_TYPES.SET_SHIPPING, payload: shipping });
+    const setShippingId = (shippingId) => {
+        dispatch({ type: CHECKOUT_ACTION_TYPES.SET_SHIPPING_ID, payload: shippingId });
+    }
+
+    const setShippingTotal = (shippingTotal) => {
+        dispatch({ type: CHECKOUT_ACTION_TYPES.SET_SHIPPING_TOTAL, payload: shippingTotal });
     }
 
     const setShippingAndHandling = (shippingAndHandling) => {
@@ -119,7 +132,10 @@ export const CheckoutProvider = ({ children }) => {
         setBillingAddress, 
         shippingAddress, 
         setShippingAddress, 
-        shipping, setShipping, 
+        shippingId, 
+        setShippingId,
+        shippingTotal,
+        setShippingTotal,
         shippingAndHandling, 
         setShippingAndHandling, 
         deliveryInsurance, 

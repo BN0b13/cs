@@ -10,14 +10,14 @@ const OrderItem = ({ product }) => {
 
     return (
         <OrderItemRow>
-            <OrderItemData>{ product.name }</OrderItemData>
+            <OrderItemData>{ product.product[0].name }</OrderItemData>
             {setMobileView() ?
                 null
             :
-                <OrderItemData>{ product.description }</OrderItemData>
+                <OrderItemData>{ product.product[0].details.description }</OrderItemData>
             }
             <OrderItemData>{ product.quantity }</OrderItemData>
-            <OrderItemData>{ convertProductPrice(product.quantity * product.price) }</OrderItemData>
+            <OrderItemData>{ convertProductPrice(product.quantity * product.product[0].price) }</OrderItemData>
         </OrderItemRow>
     )
 }

@@ -41,9 +41,9 @@ const Orders = () => {
                     <OrderTable>
                         <OrderTableHead>
                             <OrderTableRow>
+                                <OrderTableHeading>Date</OrderTableHeading>
                                 <OrderTableHeading>Status</OrderTableHeading>
                                 <OrderTableHeading>Total</OrderTableHeading>
-                                <OrderTableHeading>Date</OrderTableHeading>
                             </OrderTableRow>
                         </OrderTableHead>
                         <OrderTableBody>

@@ -5,7 +5,6 @@ import { VscClose, VscInfo } from 'react-icons/vsc'
 import SquarePaymentForm from '../payment-form/payment-form.component';
 import Spinner from '../../spinner/spinner.component';
 
-import { CartContext } from '../../../contexts/cart.context';
 import { CheckoutContext } from '../../../contexts/checkout.context';
 import { UserContext } from '../../../contexts/user.context';
 
@@ -34,38 +33,29 @@ import {
 
 const client = new Client();
 
-const CheckoutTotal = ({ cart, subtotal, shippingAndHandling, user }) => {
-    const [ deliveryInsuranceAmount, setDeliveryInsuranceAmount ] = useState(null);
+const CheckoutTotal = () => {
     const [ deliveryInsuranceSelection, setDeliveryInsuranceSelection ] = useState(false);
     const [ showInsuranceInfo, setShowInsuranceInfo ] = useState(false);
     const {
         billingAddress,
         shippingAddress,
-        shipping,
         deliveryInsurance,
-        setDeliveryInsurance,
+        shippingId,
+        shippingTotal,
+        shippingAndHandling,
+        subtotal,
         total,
         setTotal
     } = useContext(CheckoutContext);
+    const { currentUser } = useContext(UserContext);
 
     useEffect(() => {
-        const getDeliveryInsuranceAmount = async () => {
-            const res = await client.checkoutSetUp();
-            console.log('Delivery Insurance: ', res);
-            setDeliveryInsuranceAmount(res.deliveryInsurance);
-        }
-        getDeliveryInsuranceAmount();
-        
-    }, []);
-
-    useEffect(() => {
-        let addDelivery = deliveryInsuranceSelection ? deliveryInsuranceAmount : 0;
-        setDeliveryInsurance(deliveryInsuranceSelection);
-        setTotal(subtotal + addDelivery + shippingAndHandling);
+        let deliveryInsuranceTotal = deliveryInsuranceSelection ? deliveryInsurance : 0;
+        setTotal(subtotal + deliveryInsuranceTotal + shippingTotal);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ subtotal, shippingAndHandling, deliveryInsuranceSelection ]);
 
     const deliveryInsuranceHandler = () => {
-        setDeliveryInsurance(!deliveryInsuranceSelection);
         setDeliveryInsuranceSelection(!deliveryInsuranceSelection);
     }
 
@@ -74,13 +64,15 @@ const CheckoutTotal = ({ cart, subtotal, shippingAndHandling, user }) => {
         const data = {
             token,
             buyer,
-            email: user.email,
-            products: cart,
+            email: currentUser.email,
+            products: currentUser.cart.products,
             total,
             billingAddress,
             shippingAddress,
-            shipping,
-            deliveryInsurance,
+            shippingId,
+            shippingTotal,
+            deliveryInsurance: deliveryInsuranceSelection,
+            deliveryInsuranceTotal: deliveryInsuranceSelection ? deliveryInsurance : 0
         };
 
         const res = await client.checkout(data);
@@ -126,7 +118,7 @@ const CheckoutTotal = ({ cart, subtotal, shippingAndHandling, user }) => {
                                         Delivery Insurance:
                                     </CartShippingText>
                                     <CartShippingText>
-                                            { convertProductPrice(deliveryInsuranceAmount) }
+                                            { convertProductPrice(deliveryInsurance) }
                                     </CartShippingText>
                                 </CartInsuranceTotalContainer>
                     }
@@ -135,7 +127,7 @@ const CheckoutTotal = ({ cart, subtotal, shippingAndHandling, user }) => {
                                 Shipping:
                         </CartShippingText>
                         <CartShippingText>
-                                { convertProductPrice(shippingAndHandling) }
+                                { convertProductPrice(shippingAndHandling.standard.price) }
                         </CartShippingText>
                     </CartShippingContainer>
                     <CartFinalTotalContainer>
@@ -153,8 +145,8 @@ const CheckoutTotal = ({ cart, subtotal, shippingAndHandling, user }) => {
                         addressTwo: billingAddress.addressTwo,
                         total,
                         city: billingAddress.city,
-                        givenName: user.firstName,
-                        familyName: user.lastName
+                        givenName: billingAddress.firstName,
+                        familyName: billingAddress.lastName
                     }}
                     checkout={checkout}
                 />

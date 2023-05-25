@@ -23,13 +23,15 @@ import {
     ProductButtonCount,
     ProductContainer,
     ProductCountInput,
+    ProductDescriptionText,
     ProductDisplayContainer,
     ProductMobileContainer,
     ProductImage,
     ProductInformation,
     ProductQuantityContainer,
     ProductTitle,
-    ProductText
+    ProductSubtext,
+    ProductText,
 } from './product-display.styles';
 
 const ProductDisplay = ({ product }) => {
@@ -45,11 +47,8 @@ const ProductDisplay = ({ product }) => {
     const {
         id,
         name, 
-        time, 
-        price, 
-        mother, 
-        father,
-        sex
+        details,
+        price
     } = product;
 
     useEffect(() => {
@@ -69,8 +68,8 @@ const ProductDisplay = ({ product }) => {
     }
 
     const loggedIn = async (id, quantity) => {
-        if(!currentUser || !currentUser?.emailVerified) {
-            message('Please login with a verified account to add to cart.');
+        if(!currentUser) {
+            message('Please login to add to cart.');
             return;
         }
         if(quantity === 0) {
@@ -78,7 +77,7 @@ const ProductDisplay = ({ product }) => {
             return;
         }
         addItemToCart({productId: id, quantity});
-        message('Product added to cart.', 'success')
+        message('Product added to cart.', 'success');
     }
 
 
@@ -103,11 +102,12 @@ const ProductDisplay = ({ product }) => {
                     <img src={logo} alt={`${name}`} />
                 </ProductImage>
                 <ProductInformation>
-                    <ProductText>Name: {name}</ProductText>
-                    <ProductText>Lineage: {mother} x {father}</ProductText>
-                    <ProductText>Time: {time}</ProductText>
-                    <ProductText>Pack: 10+ {sex} seeds</ProductText>
-                    <ProductText>Price: {convertProductPrice(price)}</ProductText>
+                    <ProductText>{name}</ProductText>
+                    <ProductDescriptionText>{details.description}</ProductDescriptionText>
+                    <ProductSubtext>Lineage: {details.mother} x {details.father}</ProductSubtext>
+                    <ProductSubtext>Time: {details.time}</ProductSubtext>
+                    <ProductSubtext>Pack: 10+ {details.sex} seeds</ProductSubtext>
+                    <ProductSubtext>Price: {convertProductPrice(price)}</ProductSubtext>
                     <ProductButtonContainer>
                         <ProductButtonCount>
                             <ProductQuantityContainer>
