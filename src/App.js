@@ -7,6 +7,7 @@ import {
 import './App.css';
 
 import AgeVerify from './components/age-verify/age-verify.component';
+import HamburgerMenu from './components/hamburger-menu/hamburger-menu.component';
 import Header from './components/header/header.component';
 import Footer from './components/footer/footer.component';
 
@@ -22,6 +23,8 @@ import ShopPage from './pages/shop/shop.pages';
 import SignUpPage from './pages/sign-up/sign-up.pages';
 import ThankYouPage from './pages/thank-you/thank-you.pages';
 import VerifyEmail from './components/account/verify-email/verify-email.component';
+
+import { setMobileView } from './tools/mobileView';
 
 import {
   ageVerifyTokenName
@@ -109,17 +112,22 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <Header />
-      <AgeVerify 
-        ageVerifyTokenName={ageVerifyTokenName}
-        ageToken={ageToken}
-        setAgeToken={setAgeToken}
-      />
-      <BrowserRouter>
-        { routes() }
-      </BrowserRouter>
-      <Footer />
+    <div className="App" id="outer-container">
+      {setMobileView() &&
+        <HamburgerMenu />
+      }
+      <div id="page-wrap">
+        <Header />
+        <AgeVerify 
+          ageVerifyTokenName={ageVerifyTokenName}
+          ageToken={ageToken}
+          setAgeToken={setAgeToken}
+        />
+        <BrowserRouter>
+          { routes() }
+        </BrowserRouter>
+        <Footer />
+      </div>
     </div>
   );
 }

@@ -8,6 +8,15 @@ export const HeaderNav = styled.div`
     border-bottom: 1px solid black;
 `;
 
+export const MobileHeaderNav = styled.div`
+    height: 80px;
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    border-bottom: 1px solid black;
+`;
+
 export const LogoContainer = styled.div`
     height: 100%;
     width: 80px;

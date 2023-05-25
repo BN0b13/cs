@@ -1,13 +1,13 @@
 import {
+  FaRegAddressCard,
+  FaStoreAlt
+} from 'react-icons/fa';
+
+import {
   VscAccount,
   VscHistory,
   VscSettingsGear
 } from 'react-icons/vsc';
-
-import {
-  FaRegAddressCard,
-  FaStoreAlt
-} from 'react-icons/fa'
 
 export const menuItemsPublic = [
     {
