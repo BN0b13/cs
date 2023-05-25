@@ -6,13 +6,17 @@ import { getCartCount } from '../../tools/cart';
 
 import { CartContext } from '../../contexts/cart.context';
 
+import { tokenName } from '../../config';
+
 import {
     CartIconContainer,
     Icon,
     ItemCount
 } from './cart-icon.styles';
 
-const CartIcon = ({ loggedInStatus }) => {
+const CartIcon = () => {
+    const loggedInStatus = localStorage.getItem(tokenName);
+
     const { cartItems } = useContext(CartContext);
 
     const [count, setCount] = useState(null);
