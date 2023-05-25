@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react';
 
-import MobileNav from './navigation/mobile-nav/mobile-nav.component';
+import CartIcon from '../cart-icon/cart-icon.component';
 import Navigation from './navigation/navigation.component';
 
 import Client from '../../tools/client';
@@ -11,15 +11,14 @@ import { UserContext } from '../../contexts/user.context';
 import { tokenName } from '../../config';
 
 import navLogo from '../../assets/img/text.png';
-import navLogoMobile from '../../assets/img/textMobile.png';
 
 import {
   HeaderNav,
+  MobileHeaderNav,
   Logo,
   LogoContainer,
   LogoLink,
-  NavOptionsDiv,
-  NavOptionsMobileDiv,
+  NavOptionsDiv
 } from './header.styles';
 
 const client = new Client();
@@ -42,16 +41,9 @@ const Header = () => {
 
   if(setMobileView()) {
     return (
-      <HeaderNav>
-        <LogoContainer>
-          <LogoLink onClick={() => window.location = '/'} >
-            <Logo src={navLogoMobile} />
-          </LogoLink>
-        </LogoContainer>
-          <NavOptionsMobileDiv>
-              <MobileNav />
-          </NavOptionsMobileDiv>
-      </HeaderNav>
+      <MobileHeaderNav>
+           <CartIcon />
+      </MobileHeaderNav>
     )
   }
 
