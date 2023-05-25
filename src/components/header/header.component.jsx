@@ -29,7 +29,6 @@ const Header = () => {
 
   useEffect(() => {
     const getAccount = async () => {
-      console.log('Getting Account...');
       const res = await client.getAccount();
       setCurrentUser(res);
     }
@@ -37,7 +36,7 @@ const Header = () => {
     if(token) {
       getAccount();
     } else {
-      console.log('Token is expired!');
+      localStorage.removeItem(tokenName);
     }
   }, []);
 

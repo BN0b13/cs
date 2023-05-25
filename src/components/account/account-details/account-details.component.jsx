@@ -15,8 +15,6 @@ import {
     AccountAddressContainer,
     AddressContainer,
     AccountDetailsInput,
-    EmailListInput,
-    EmailListLabel,
     UpdateButtonContainer
 } from './account-details.styles';
 
@@ -28,7 +26,6 @@ const AccountDetails = () => {
     const [ phone, setPhone ] = useState(null);
     const [ firstName, setFirstName ] = useState(null);
     const [ lastName, setLastName ] = useState(null);
-    const [ emailList, setEmailList ] = useState(null);
     const [ billingAddress, setBillingAddress ] = useState({});
     const [ shippingAddress, setShippingAddress ] = useState({});
     const [ showMsg, setShowMsg ] = useState(false);
@@ -44,7 +41,6 @@ const AccountDetails = () => {
             setLastName(account.lastName);
             setBillingAddress(account.billingAddress);
             setShippingAddress(account.shippingAddress);
-            setEmailList(account.emailList);
             setUser(account);
         }
 
@@ -105,8 +101,7 @@ const AccountDetails = () => {
             lastName,
             phone,
             billingAddress,
-            shippingAddress,
-            emailList
+            shippingAddress
         };
 
         await client.updateAccount(data);
@@ -140,10 +135,6 @@ const AccountDetails = () => {
                             <Address address={shippingAddress} updateAddress={updateShippingAddress} />
                         </AddressContainer>
                     </AccountAddressContainer>
-                    <EmailListLabel>
-                        <EmailListInput type={'checkbox'} value={emailList} defaultChecked={user.emailList} onClick={() => setEmailList(!emailList)} />
-                        Email List
-                    </EmailListLabel>
                     {showMsg &&
                         <Snackbar msg={msgContent} type={msgType} show={setShowMsg} />
                     }

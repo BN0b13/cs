@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { states } from '../../tools/states.js';
+import { states } from '../../../tools/states.js';
 
 import {
     AddressBottomContainer,
@@ -14,8 +14,6 @@ import {
 } from './address.styles';
 
 const Address = ({ address, updateAddress }) => {
-    const [ firstName, setFirstName ] = useState(address.firstName);
-    const [ lastName, setLastName ] = useState(address.lastName);
     const [ addressOne, setAddressOne ] = useState(address.addressOne);
     const [ addressTwo, setAddressTwo ] = useState(address.addressTwo);
     const [ city, setCity ] = useState(address.city);
@@ -27,16 +25,6 @@ const Address = ({ address, updateAddress }) => {
             updateAddress({ state: 'AL' });
         }
     }, []);
-
-    const handleFirstName = (data) => {
-        setFirstName(data);
-        updateAddress({ firstName: data });
-    }
-
-    const handleLastName = (data) => {
-        setLastName(data);
-        updateAddress({ lastName: data });
-    }
 
     const handleAddressOne = (data) => {
         setAddressOne(data);
@@ -69,20 +57,6 @@ const Address = ({ address, updateAddress }) => {
     return (
         <AddressContainer>
             <AddressTopContainer>
-                <AddressInput
-                    type={'input'}
-                    value={firstName}
-                    onChange={(e) => handleFirstName(e.target.value)}
-                    placeholder={'First Name'}
-                    required
-                />
-                <AddressInput
-                    type={'input'}
-                    value={lastName}
-                    onChange={(e) => handleLastName(e.target.value)}
-                    placeholder={'Last Name'}
-                    required
-                />
                 <AddressInput
                     type={'input'}
                     value={addressOne}

@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 
 import Button from '../../components/button/button.component';
 import Spinner from '../../components/spinner/spinner.component';
-import CartItem from '../../components/checkout/cart-item/cart-item.component';
+import CartItem from '../../components/cart-item/cart-item.component';
 
 import { CartContext } from '../../contexts/cart.context';
 
@@ -23,22 +23,16 @@ const client = new Client();
 const CartPage = () => {
 
     const [cart, setCart] = useState(null);
-    const [products, setProducts] = useState(null);
     const [subtotal, setSubtotal] = useState(null);
 
     const { cartItems } = useContext(CartContext);
 
     useEffect(() => {
         const getCart = async () => {
-            const getProducts = await client.getProducts();
-            const res = await client.getCart();
-            let total = 0;
-            res.rows[0].products.map(item => {
-                const product = getProducts.rows.filter(prod => prod.id === item.productId);
-                total = total + (item.quantity * product[0].price);
-            });
-            setSubtotal(total);
-            setProducts(getProducts.rows);
+            const res = await client.getCartContents();
+            let subtotal = 0;
+            res.rows[0].products.map(item => subtotal = subtotal + (item.quantity * item.product[0].price));
+            setSubtotal(subtotal);
             setCart(res.rows[0].products);
         }
         getCart();
@@ -56,16 +50,17 @@ const CartPage = () => {
                         <CartPageEmpty>Your Cart is Empty</CartPageEmpty>
                     :
                      <>
-                        {cart.map((item, index) => {
-                        const product = products.filter(prod => prod.id === item.productId);
-                        return <CartItem key={index} quantity={item.quantity} product={product[0]} />
-                        })}
+                        {
+                            cart.map((item, index) => 
+                                <CartItem key={index} quantity={item.quantity} product={item.product[0]} />
+                            )
+                        }
                         <SubtotalContainer>
                             <SubtotalText>
                                 Subtotal:
                             </SubtotalText>
                             <SubtotalText>
-                                {convertProductPrice(subtotal)}
+                                { convertProductPrice(subtotal) }
                             </SubtotalText>
                         </SubtotalContainer>
                         <CartCollapseButtonContainer>

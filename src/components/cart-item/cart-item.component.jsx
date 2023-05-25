@@ -6,12 +6,12 @@ import {
     VscChromeClose
 } from "react-icons/vsc";
 
-import { CartContext } from '../../../contexts/cart.context';
+import { CartContext } from '../../contexts/cart.context';
 
-import { convertProductPrice } from '../../../tools/cart';
+import { convertProductPrice } from '../../tools/cart';
 // import { setMobileView } from '../../../tools/mobileView';
 
-import logo from '../../../assets/img/logo.png';
+import logo from '../../assets/img/logo.png';
 
 import {
     CartItemContainer,

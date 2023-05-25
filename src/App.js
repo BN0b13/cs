@@ -20,7 +20,7 @@ import LoginPage from './pages/login/login.pages';
 import PasswordResetPage from './pages/password-reset/password-reset.pages';
 import ShopPage from './pages/shop/shop.pages';
 import SignUpPage from './pages/sign-up/sign-up.pages';
-import ThankYou from './pages/thank-you/thank-you.pages';
+import ThankYouPage from './pages/thank-you/thank-you.pages';
 import VerifyEmail from './components/account/verify-email/verify-email.component';
 
 import {
@@ -97,7 +97,7 @@ function App() {
         <Route 
           path="/thankyou/*" 
           element={
-            <ThankYou />
+            <ThankYouPage />
           } 
         />
         <Route 
