@@ -8,16 +8,12 @@ import {
     OrdersItemData
 } from './orders-item.styles';
 
-const OrderItem = ({ order }) => {
-    const readableDate = dayjs(order.createdAt).format('MM/DD/YY');
-
-    return (
+const OrderItem = ({ order }) => (
         <OrdersItemRow onClick={() => window.location = `/account/orders/${order.refId}`}>
+            <OrdersItemData>{ dayjs(order.createdAt).format('MM/DD/YY') }</OrdersItemData>
             <OrdersItemData>{ order.status.toUpperCase() }</OrdersItemData>
             <OrdersItemData>{ convertProductPrice(order.total) }</OrdersItemData>
-            <OrdersItemData>{ readableDate }</OrdersItemData>
         </OrdersItemRow>
-    )
-}
+);
 
 export default OrderItem;

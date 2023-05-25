@@ -95,6 +95,13 @@ export default class Client {
         return res;
     }
 
+    async getCartContents() {
+        const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
+        const cart = await fetch(`${api}/cart/contents`, requestOptions);
+        const res = await cart.json();
+        return res;
+    }
+
     async modifyCart(data) {
         const requestOptions = this.fetchOptions(this.fetchMethods.patch, data, true);
         const cart = await fetch(`${api}/cart`, requestOptions);

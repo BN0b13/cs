@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import dayjs from 'dayjs';
 
 import OrderItem from './order-item/order-item.component';
 import Spinner from '../../spinner/spinner.component';
@@ -8,7 +9,7 @@ import Client from '../../../tools/client';
 import { convertProductPrice } from '../../../tools/cart';
 import { setMobileView } from '../../../tools/mobileView';
 
-import { shippingAndHandling } from '../../../config';
+import { UserContext } from '../../../contexts/user.context';
 
 import {
     OrderInformationContainer,
@@ -32,42 +33,25 @@ const client = new Client();
 
 const OrderInformation = () => {
     const { refId } = useParams();
-    const [ account, setAccount ] = useState(null);
-    const [ order, setOrder ] = useState(null);
-    const [ products, setProducts ] = useState(null);
-    const [ deliveryInsurance, setDeliveryInsurance ] = useState(null);
     const [ subtotal, setSubtotal ] = useState(null);
+    const [ order, setOrder ] = useState(null);
+
+    const { currentUser } = useContext(UserContext);
 
     useEffect(() => {
         const getOrderByRef = async () => {
             const res = await client.getOrderByRef(refId);
-            const getAccount = await client.getAccount();
-            const getProducts = await client.getProducts();
-            let productArr = [];
             let subtotalCount = 0;
-            res.rows[0].products.map(item => {
-                const product = getProducts.rows.filter(prod => prod.id === item.productId);
-                subtotalCount = subtotalCount + (item.quantity * product[0].price);
-                productArr.push({
-                    name: product[0].name,
-                    description: product[0].description,
-                    quantity: item.quantity,
-                    price: product[0].price
-                });
-            });
-            const deliveryInsuranceRes = await client.getDeliveryInsuranceAmount();
-            setAccount(getAccount);
-            setProducts(productArr);
-            setOrder(res.rows[0]);
-            setDeliveryInsurance(deliveryInsuranceRes.deliveryInsuranceAmount);
+            res.rows[0].products.map(item => subtotalCount = subtotalCount + (item.quantity * item.product[0].price));
             setSubtotal(subtotalCount);
+            setOrder(res.rows[0]);
         }
         getOrderByRef();
-    }, []);
+    }, [ refId ]);
 
     return (
         <OrderInformationContainer>
-            {!order || !products ?
+            {!currentUser || !order ?
                 <Spinner />
             :
                 <>
@@ -77,18 +61,20 @@ const OrderInformation = () => {
                         
                         <OrderInformationDetailsContainer setMobileView={setMobileView()}>
                             <OrderInformationAddressContainer>
+                                <OrderInformationSubtitle>{ dayjs(order.createdAt).format('MM/DD/YY') }</OrderInformationSubtitle>
                                 <OrderInformationSubtitle>Status: { order.status.toUpperCase()}</OrderInformationSubtitle>
                                 <OrderInformationSubtitle>Reference ID: { refId }</OrderInformationSubtitle>
                             </OrderInformationAddressContainer>
                             <OrderInformationAddressContainer>
-                                <OrderInformationSubtitle>{ account.firstName } { account.lastName }</OrderInformationSubtitle>
-                                <OrderInformationSubtitle>{ account.email }</OrderInformationSubtitle>
-                                <OrderInformationSubtitle>{ account.phone }</OrderInformationSubtitle>
+                                <OrderInformationSubtitle>{ currentUser.firstName } { currentUser.lastName }</OrderInformationSubtitle>
+                                <OrderInformationSubtitle>{ currentUser.email }</OrderInformationSubtitle>
+                                <OrderInformationSubtitle>{ currentUser.phone }</OrderInformationSubtitle>
                             </OrderInformationAddressContainer>
                         </OrderInformationDetailsContainer>
                         <OrderInformationAddressesContainer setMobileView={setMobileView()}>
                             <OrderInformationAddressContainer>
-                                <OrderInformationSubtitle>Billing Address</OrderInformationSubtitle>
+                                <OrderInformationSubtitle>Billing</OrderInformationSubtitle>
+                                <OrderInformationText>{ `${order.billingAddress.firstName} ${order.billingAddress.lastName}` }</OrderInformationText>
                                 <OrderInformationText>{ order.billingAddress.addressOne }</OrderInformationText>
                                 <OrderInformationText>{ order.billingAddress.addressTwo }</OrderInformationText>
                                 <OrderInformationText>{ order.billingAddress.city }</OrderInformationText>
@@ -96,7 +82,8 @@ const OrderInformation = () => {
                                 <OrderInformationText>{ order.billingAddress.zipCode }</OrderInformationText>
                             </OrderInformationAddressContainer>
                             <OrderInformationAddressContainer>
-                            <OrderInformationSubtitle>Shipping Address</OrderInformationSubtitle>
+                            <OrderInformationSubtitle>Shipping</OrderInformationSubtitle>
+                                <OrderInformationText>{ `${order.shippingAddress.firstName} ${order.shippingAddress.lastName}` }</OrderInformationText>
                                 <OrderInformationText>{ order.shippingAddress.addressOne }</OrderInformationText>
                                 <OrderInformationText>{ order.shippingAddress.addressTwo }</OrderInformationText>
                                 <OrderInformationText>{ order.shippingAddress.city }</OrderInformationText>
@@ -119,7 +106,7 @@ const OrderInformation = () => {
                             </OrderInformationTableRow>
                         </OrderInformationTableHead>
                         <OrderInformationTableBody>
-                                {products.map((product, index) => (
+                                {order.products.map((product, index) => (
                                     <OrderItem key={index} product={product} />
                                 ))}
                         </OrderInformationTableBody>
@@ -132,12 +119,12 @@ const OrderInformation = () => {
                         {order.deliveryInsurance &&
                             <OrderInformationTotalItemContainer>
                                 <OrderInformationText>Delivery Insurance </OrderInformationText>
-                                <OrderInformationText>{ convertProductPrice(deliveryInsurance) }</OrderInformationText>
+                                <OrderInformationText>{ convertProductPrice(order.deliveryInsuranceTotal) }</OrderInformationText>
                             </OrderInformationTotalItemContainer>
                         }
                         <OrderInformationTotalItemContainer>
                             <OrderInformationText>Shipping </OrderInformationText>
-                            <OrderInformationText>{ convertProductPrice(shippingAndHandling) }</OrderInformationText>
+                            <OrderInformationText>{ convertProductPrice(order.shippingTotal) }</OrderInformationText>
                         </OrderInformationTotalItemContainer>
                         <OrderInformationTotalItemContainer>
                             <OrderInformationText>Total </OrderInformationText>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Address from '../address/address.component';
+import Address from './address/address.component';
 import Button from '../button/button.component';
 import Snackbar from '../snackbar/snackbar.component';
 import Spinner from '../spinner/spinner.component';
@@ -13,11 +13,9 @@ import Client from '../../tools/client.js';
 
 import {
   SignUpFormButtonContainer,
-  SignUpFormCheckbox,
   SignUpFormContainer,
   SignUpFormForm,
   SignUpFormInput,
-  SignUpFormLabel,
   SignUpFormTitle
 } from './sign-up-form.styles';
 
@@ -48,7 +46,6 @@ class SignUpForm extends React.Component{
         zipCode: '',
       },
       phone: '',
-      emailList: false,
       passwordErrVisible: false,
       passwordErrMsg: 'Password needs to be 8 characters in length or more with at least one number and one special character.',
       emailErrVisible: false,
@@ -68,11 +65,7 @@ class SignUpForm extends React.Component{
 
   handleChange = e => {
     const { value, name } = e.target;
-    if(name === 'emailList') {
-      this.setState({ emailList: !this.state.emailList });
-    } else {
-      this.setState({ [name]: value });
-    }
+    this.setState({ [name]: value });
   }
 
   updateBillingAddress = (data) => {
@@ -134,8 +127,7 @@ class SignUpForm extends React.Component{
         lastName: this.state.lastName,
         billingAddress: this.state.billingAddress,
         shippingAddress: this.state.billingAddress,
-        phone: this.state.phone,
-        emailList: this.state.emailList
+        phone: this.state.phone
       };
 
       const res = await client.createCustomer(data);
@@ -221,15 +213,6 @@ class SignUpForm extends React.Component{
             address={this.state.billingAddress}
             updateAddress={(data) => this.updateBillingAddress(data)}
           />
-          <SignUpFormLabel>Email List 
-            <SignUpFormCheckbox 
-              name="emailList" 
-              type="checkbox" 
-              value={this.state.emailList}
-              checked={this.state.emailList} 
-              onChange={this.handleChange}
-              required />
-          </SignUpFormLabel>
           { this.state.formErrVisible && 
           <Snackbar msg={this.state.formErrMsg} show={() => this.setState({ formErrVisible: false })} />
           }

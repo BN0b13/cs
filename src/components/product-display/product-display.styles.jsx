@@ -72,6 +72,14 @@ export const ProductQuantityContainer = styled.div`
   margin-right: 20px;
 `;
 
-export const ProductText = styled.h3`
+export const ProductText = styled.h2`
+  text-align: center;
+`;
+
+export const ProductSubtext = styled.h4`
+  
+`;
+
+export const ProductDescriptionText = styled.p`
   
 `;

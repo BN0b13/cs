@@ -24,15 +24,6 @@ export const SignUpFormInput = styled.input`
     padding: 3px;
 `;
 
-export const SignUpFormCheckbox = styled.input`
-    margin: 5px;
-`;
-
-export const SignUpFormLabel = styled.label`
-    margin: 3px;
-    padding: 2px;
-`;
-
 export const SignUpFormTitle = styled.h1`
     text-align: center;
 `;

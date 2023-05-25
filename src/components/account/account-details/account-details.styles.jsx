@@ -38,14 +38,6 @@ export const UpdateButtonContainer = styled.div`
     margin: 20px auto;
 `;
 
-export const EmailListLabel = styled.label`
-    margin: 20px;
-`;
-
-export const EmailListInput = styled.input`
-    
-`;
-
 export const AccountDetailsInput = styled.input`
     width: 300px;
     margin: 5px 0;

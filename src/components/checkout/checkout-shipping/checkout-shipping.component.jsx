@@ -1,4 +1,4 @@
-import { useEffect, useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { CheckoutContext } from '../../../contexts/checkout.context';
 
@@ -12,11 +12,14 @@ import {
 
 const CheckoutShipping = () => {
     const [ shippingOptionOne, setShippingOptionOne ] = useState(true);
-    const { setShipping } = useContext(CheckoutContext);
+    const { setShippingId, setShippingTotal, shippingAndHandling } = useContext(CheckoutContext);
+
 
     useEffect(() => {
-        setShipping(0);
-    }, [ shippingOptionOne ]);
+        setShippingId(0);
+        setShippingTotal(shippingAndHandling.standard.price);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <CheckoutShippingContainer>
@@ -24,7 +27,7 @@ const CheckoutShipping = () => {
             <CheckoutShippingOptionsContainer>
                 <CheckoutShippingInput type={'radio'} checked={shippingOptionOne} onChange={() => setShippingOptionOne(true)} />
                 <CheckoutShippingText>
-                    First Class 5-7 business days **USPS service subject to delays** Direct from USPS site: ALERT: As a result of the ongoing COVID-19 emergency, certain packages may take longer than usual to arrive.
+                    { shippingAndHandling.standard.description }
                 </CheckoutShippingText>
             </CheckoutShippingOptionsContainer>
         </CheckoutShippingContainer>
