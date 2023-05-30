@@ -137,6 +137,13 @@ export default class Client {
         return res;
     }
 
+    async updateAccountPassword(data) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.patch, data, true);
+        const updateAccountPassword = await fetch(`${api}/user/update-password`, requestOptions);
+        const res = await updateAccountPassword.json();
+        return res;
+    }
+
     async passwordResetEmail(data) {
         const requestOptions = this.fetchOptions(this.fetchMethods.post, data);
         const passwordResetEmail = await fetch(`${api}/user/reset-password`, requestOptions);

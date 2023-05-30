@@ -5,47 +5,53 @@ import Button from '../../button/button.component';
 import Snackbar from '../../snackbar/snackbar.component';
 import Spinner from '../../spinner/spinner.component';
 
+import { UserContext } from '../../../contexts/user.context';
+
 import Client from '../../../tools/client';
 import { setMobileView } from '../../../tools/mobileView';
 
 import {
     AccountDetailsContainer,
+    AccountDetailsTextContainer,
+    AccountEditContainer,
     AccountDetailsSubtitle,
+    AccountDetailsInlineTitle,
+    AccountDetailsText,
     AccountDetailsTitle,
     AccountAddressContainer,
     AddressContainer,
     AccountDetailsInput,
-    UpdateButtonContainer
+    TextRowContainer,
+    UpdateButtonContainer,
+    UpdatePasswordLink
 } from './account-details.styles';
 
 const client = new Client();
 
 const AccountDetails = () => {
-    const [ user, setUser ] = useState(null);
+    const [ showEdit, setShowEdit ] = useState(false);
     const [ email, setEmail ] = useState(null);
-    const [ phone, setPhone ] = useState(null);
     const [ firstName, setFirstName ] = useState(null);
     const [ lastName, setLastName ] = useState(null);
+    const [ phone, setPhone ] = useState(null);
     const [ billingAddress, setBillingAddress ] = useState({});
     const [ shippingAddress, setShippingAddress ] = useState({});
     const [ showMsg, setShowMsg ] = useState(false);
     const [ msgContent, setMsgContent ] = useState('');
     const [ msgType, setMsgType ] = useState('error');
 
-    useEffect(() => {
-        const getAccountDetails = async () => {
-            const account = await client.getAccount();
-            setEmail(account.email);
-            setPhone(account.phone);
-            setFirstName(account.firstName);
-            setLastName(account.lastName);
-            setBillingAddress(account.billingAddress);
-            setShippingAddress(account.shippingAddress);
-            setUser(account);
-        }
+    const { currentUser } = useContext(UserContext);
 
-        getAccountDetails();
-    }, []);
+    useEffect(() => {
+        if(currentUser) {
+            setEmail(currentUser.email);
+            setPhone(currentUser.phone);
+            setFirstName(currentUser.firstName);
+            setLastName(currentUser.lastName);
+            setBillingAddress(currentUser.billingAddress);
+            setShippingAddress(currentUser.shippingAddress);
+        }
+    }, [ currentUser ]);
 
     const handleFirstNameChange = (data) => {
         setFirstName(data.target.value);
@@ -106,42 +112,81 @@ const AccountDetails = () => {
 
         await client.updateAccount(data);
         
-        setMsgContent('Account Successfully Updated');
-        setMsgType('success');
-        setShowMsg(true);
+        window.location = '/account'
     }
 
     return (
         <>
-            {!user ?
+            {!currentUser ?
                 <Spinner />
                 :
-                <AccountDetailsContainer>
-                    <AccountDetailsTitle>
-                        Account Details
-                    </AccountDetailsTitle>
-                    <AccountDetailsSubtitle>Email: {email}</AccountDetailsSubtitle>
-                    {/* <AccountDetailsSubtitle>Password: </AccountDetailsSubtitle> */}
-                    <AccountDetailsInput type={'text'} name={'firstName'} value={firstName} onChange={(e) => handleFirstNameChange(e)} placeholder={'First Name'} />
-                    <AccountDetailsInput type={'text'} name={'lastName'} value={lastName} onChange={(e) => handleLastNameChange(e)}  placeholder={'Last Name'} />
-                    <AccountDetailsInput type={'number'} name={'phone'} value={phone} onChange={(e) => handlePhoneChange(e)} maxLength={10}  placeholder={'Phone'} />
-                    <AccountAddressContainer setMobileView={setMobileView()}>
-                        <AddressContainer setMobileView={setMobileView()}>
-                            <AccountDetailsSubtitle>Billing Address</AccountDetailsSubtitle>
-                            <Address address={billingAddress} updateAddress={updateBillingAddress} />
-                        </AddressContainer>
-                        <AddressContainer setMobileView={setMobileView()}>
-                            <AccountDetailsSubtitle>Shipping Address</AccountDetailsSubtitle>
-                            <Address address={shippingAddress} updateAddress={updateShippingAddress} />
-                        </AddressContainer>
-                    </AccountAddressContainer>
-                    {showMsg &&
-                        <Snackbar msg={msgContent} type={msgType} show={setShowMsg} />
-                    }
-                    <UpdateButtonContainer>
-                        <Button onClick={() => updateUserDetails()}>Update</Button>
-                    </UpdateButtonContainer>
-                </AccountDetailsContainer>
+                showEdit ?
+                    <AccountEditContainer>
+                        <AccountDetailsTitle>
+                            Edit Details
+                        </AccountDetailsTitle>
+                        <AccountDetailsInput type={'text'} name={'firstName'} value={firstName} onChange={(e) => handleFirstNameChange(e)} placeholder={'First Name'} />
+                        <AccountDetailsInput type={'text'} name={'lastName'} value={lastName} onChange={(e) => handleLastNameChange(e)}  placeholder={'Last Name'} />
+                        <AccountDetailsInput type={'number'} name={'phone'} value={phone} onChange={(e) => handlePhoneChange(e)} maxLength={10}  placeholder={'Phone'} />
+                        <AccountAddressContainer setMobileView={setMobileView()}>
+                            <AddressContainer setMobileView={setMobileView()}>
+                                <AccountDetailsSubtitle>Billing Address</AccountDetailsSubtitle>
+                                <Address address={billingAddress} updateAddress={updateBillingAddress} />
+                            </AddressContainer>
+                            <AddressContainer setMobileView={setMobileView()}>
+                                <AccountDetailsSubtitle>Shipping Address</AccountDetailsSubtitle>
+                                <Address address={shippingAddress} updateAddress={updateShippingAddress} />
+                            </AddressContainer>
+                        </AccountAddressContainer>
+                        {showMsg &&
+                            <Snackbar msg={msgContent} type={msgType} show={setShowMsg} />
+                        }
+                        <UpdateButtonContainer>
+                            <Button onClick={() => setShowEdit(false)}>Cancel</Button>
+                            <Button onClick={() => updateUserDetails()}>Update</Button>
+                        </UpdateButtonContainer>
+                        <UpdatePasswordLink onClick={() => window.location ='/account/update-password'}>Update Password</UpdatePasswordLink>
+                    </AccountEditContainer>
+                :
+                    <AccountDetailsContainer>
+                        <AccountDetailsTitle>
+                            Account Details
+                        </AccountDetailsTitle>
+                        <AccountDetailsTextContainer>
+                            <TextRowContainer>
+                                <AccountDetailsInlineTitle>Email: </AccountDetailsInlineTitle>
+                                <AccountDetailsText>{ email }</AccountDetailsText>
+                            </TextRowContainer>
+                            <TextRowContainer>
+                                <AccountDetailsInlineTitle>First Name: </AccountDetailsInlineTitle>
+                                <AccountDetailsText>{ firstName }</AccountDetailsText>
+                            </TextRowContainer>
+                            <TextRowContainer>
+                                <AccountDetailsInlineTitle>Last Name:</AccountDetailsInlineTitle>
+                                <AccountDetailsText>{ lastName }</AccountDetailsText>
+                            </TextRowContainer>
+                            <TextRowContainer>
+                                <AccountDetailsInlineTitle>Phone:</AccountDetailsInlineTitle>
+                                <AccountDetailsText>{ phone }</AccountDetailsText>
+                            </TextRowContainer>
+                            <AccountDetailsSubtitle>Billing Address:</AccountDetailsSubtitle>
+                            <AccountDetailsText>{ billingAddress.addressOne }</AccountDetailsText>
+                            {billingAddress.addressTwo &&
+                                <AccountDetailsText>{ billingAddress.addressTwo }</AccountDetailsText>
+                            }
+                            <AccountDetailsText>{ billingAddress.city }, { billingAddress.state } { billingAddress.zipCode }</AccountDetailsText>
+                            <AccountDetailsSubtitle>Shipping Address:</AccountDetailsSubtitle>
+                            <AccountDetailsText>{ shippingAddress.addressOne }</AccountDetailsText>
+                            { shippingAddress.addressTwo &&
+                                <AccountDetailsText>{ shippingAddress.addressTwo }</AccountDetailsText>
+                            }
+                            <AccountDetailsText>{ shippingAddress.city }, { shippingAddress.state } { shippingAddress.zipCode }</AccountDetailsText>
+                        </AccountDetailsTextContainer>
+                        <UpdateButtonContainer>
+                            <Button onClick={() => setShowEdit(true)}>Edit Details</Button>
+                        </UpdateButtonContainer>
+                    </AccountDetailsContainer>
+                
             }
         </>
     );

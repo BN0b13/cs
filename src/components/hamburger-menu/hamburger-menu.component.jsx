@@ -19,6 +19,7 @@ import {
     HeaderLink,
     MobileDropDownMenu,
     MobileDropDownMenuItem,
+    MobileDropDownMenuLastItem,
     MobileDropDownMenuLink,
     Logo,
     LogoContainer,
@@ -58,7 +59,7 @@ const HamburgerMenu = props => {
                         </MobileDropDownMenuItem>
                     );
                 })}
-                <MobileDropDownMenuItem>
+                <MobileDropDownMenuLastItem>
                     <style>
                         {`
                             svg path {
@@ -76,10 +77,10 @@ const HamburgerMenu = props => {
                     >
                         Log Out
                     </HeaderLink>
-                </MobileDropDownMenuItem>
+                </MobileDropDownMenuLastItem>
                 </>
             :
-            <MobileDropDownMenuItem>
+            <MobileDropDownMenuLastItem>
                 <style>
                     {`
                         svg path {
@@ -91,7 +92,7 @@ const HamburgerMenu = props => {
                 <HeaderLink href={`/login`}>
                     Log In
                 </HeaderLink>
-            </MobileDropDownMenuItem>
+            </MobileDropDownMenuLastItem>
             }
             
             </MobileDropDownMenu>
