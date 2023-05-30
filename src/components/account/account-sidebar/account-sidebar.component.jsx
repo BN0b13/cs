@@ -2,14 +2,12 @@ import React from 'react';
 
 import { accountSidebarMenu } from '../../../assets/menu-items';
 
-import { setMobileView } from '../../../tools/mobileView';
-
 import {
     AccountSidebarContainer,
     AccountSidebarOption,
 } from './account-sidebar.styles';
 
-const AccountSidebar = ({ setAccountView }) => {
+const AccountSidebar = () => {
 
     return (
         <AccountSidebarContainer>
@@ -19,8 +17,6 @@ const AccountSidebar = ({ setAccountView }) => {
                             onClick={() => window.location = item.path}
                         >
                             { item.icon }
-                            {'   '}
-                            { setMobileView() ? '' : item.title }
                         </AccountSidebarOption>
             })}
         </AccountSidebarContainer>

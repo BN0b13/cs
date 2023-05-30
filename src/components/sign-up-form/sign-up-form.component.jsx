@@ -5,9 +5,9 @@ import Button from '../button/button.component';
 import Snackbar from '../snackbar/snackbar.component';
 import Spinner from '../spinner/spinner.component';
 
-import { passwordHandler } from '../../tools/user.js';
+import { passwordValidation } from '../../tools/user.js';
 
-import { tokenName, api } from '../../config';
+import { tokenName } from '../../config';
 
 import Client from '../../tools/client.js';
 
@@ -85,7 +85,7 @@ class SignUpForm extends React.Component{
       this.setState({ emailErrVisible: false });
     }
 
-    const checkPassword = passwordHandler(this.state.password);
+    const checkPassword = passwordValidation(this.state.password);
     if(!checkPassword) {
       this.setState({ passwordErrVisible: true });
       return false;
