@@ -5,6 +5,7 @@ import Button from '../../button/button.component';
 import Snackbar from '../../snackbar/snackbar.component';
 
 import Client from '../../../tools/client';
+import { passwordValidation } from '../../../tools/user.js';
 
 import logo from '../../../assets/img/logo.png';
 
@@ -25,21 +26,17 @@ const CompleteReset = () => {
     const { token } = useParams();
     const [ password, setPassword ] = useState('');
     const [ confirmPassword, setConfirmPassword ] = useState('');
-    const [ msg, setMsg ] = useState('Password must be at least 8 characters in length, have one special character and one uppercase letter');
+    const [ msg, setMsg ] = useState('Password needs to be 8 characters in length or more with at least one number and one special character');
     const [ show, setShow ] = useState(false);
     const [ success, setSuccess ] = useState(false);
 
     const confirmPasswordInputs = () => {
-        if(password !== confirmPassword) {
-            setMsg('Password inputs must match');
+        if(!passwordValidation()) {
+            setMsg('Password needs to be 8 characters in length or more with at least one number and one special character');
             return false;
         }
-        // TODO more password validation: length, special characters and case sensitivity
-        if(
-            password === '' || 
-            password.length < 8
-        ) {
-            setMsg('Password must be at least 8 characters in length, have one special character and one uppercase letter');
+        if(password !== confirmPassword) {
+            setMsg('Password inputs must match');
             return false;
         }
 

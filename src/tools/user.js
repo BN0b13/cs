@@ -1,4 +1,4 @@
-export const passwordHandler = (password) => {
+export const passwordValidation = (password) => {
     const minNumChars = 8;
     const maxNumChars = 30;
     const regularExpression  = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,30}$/;

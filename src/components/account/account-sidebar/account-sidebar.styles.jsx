@@ -2,11 +2,8 @@ import styled from 'styled-components';
 
 export const AccountSidebarContainer = styled.div`
     display: flex;
-    flex-direction: column;
-    align-items: start;
-    width: 15vw;
-    height: 70vh;
-    border-right: 1px black solid;
+    flex-direction: row;
+    justify-content: space-around;
 `;
 
 export const AccountSidebarOption = styled.p`

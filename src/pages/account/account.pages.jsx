@@ -5,17 +5,16 @@ import AccountDetails from '../../components/account/account-details/account-det
 import AccountSidebar from '../../components/account/account-sidebar/account-sidebar.component';
 import Invoice from '../../components/invoice/invoice.component';
 import Orders from '../../components/account/orders/orders.component';
-import OrderInformation from '../../components/account/order-information/order-information.component';
 import Settings from '../../components/account/settings/settings.component';
 import Spinner from '../../components/spinner/spinner.component';
+import UpdatePassword from '../../components/account/update-password/update-password.component';
 import VerifyEmail from '../../components/account/verify-email/verify-email.component';
 
 import { UserContext } from '../../contexts/user.context';
 
 import {
     AccountPageContainer,
-    RoutesContainer,
-    SidebarContainer
+    RoutesContainer
 } from './account.styles';
 
 const AccountPage = () => {
@@ -27,15 +26,14 @@ const AccountPage = () => {
                 <Spinner />
             :
                 <>
-                    <SidebarContainer>
-                        <AccountSidebar />
-                    </SidebarContainer>
+                    <AccountSidebar />
                     <RoutesContainer>
                         <Routes>
                             <Route index element={<AccountDetails />} />
                             <Route path="/orders" element={<Orders />} />
                             <Route path="/orders/:refId" element={<Invoice />} />
                             <Route path="/settings" element={<Settings />} />
+                            <Route path="/update-password" element={<UpdatePassword />} />
                             <Route path="/verify-email/:emailToken" element={<VerifyEmail />} />
                         </Routes>
                     </RoutesContainer>
