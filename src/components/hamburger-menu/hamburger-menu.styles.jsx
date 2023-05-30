@@ -14,7 +14,14 @@ export const MobileDropDownMenu = styled.ul`
 
 export const MobileDropDownMenuItem = styled.li`
   list-style-type: none;
-  padding: .4em;
+  padding: 1em;
+  color: #fff;
+  border-bottom: 1px solid #f4f4f4;
+`;
+
+export const MobileDropDownMenuLastItem = styled.li`
+  list-style-type: none;
+  padding: 1em;
   color: #fff;
 `;
 
@@ -26,9 +33,10 @@ export const HeaderLink = styled.a`
 `;
 
 export const LogoContainer = styled.div`
+  display: flex;
+  justify-content: start;
   padding: auto;
-  text-align: center;
-  width: 290px;
+  width: 250px;
 `;
 
 export const LogoLink = styled.a`

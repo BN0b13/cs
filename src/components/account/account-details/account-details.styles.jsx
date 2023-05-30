@@ -3,27 +3,56 @@ import styled from 'styled-components';
 export const AccountDetailsContainer = styled.div`
     display: flex;
     flex-direction: column;
+    align-items: center;
+`;
+
+export const AccountDetailsTextContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    margin-bottom: 30px;
+`;
+
+export const TextRowContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+`;
+
+export const AccountEditContainer = styled.div`
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 `;
 
 export const AccountDetailsTitle = styled.h2`
     text-align: center;
+    
 `;
 
 export const AccountDetailsSubtitle = styled.h4`
-    text-align: center;
+    margin: 10px 5px;
 `;
 
-export const AccountDetailsData = styled.p`
-    text-align: center;
+export const UpdatePasswordLink = styled.h4`
+    margin: 30px 5px;
+    cursor: pointer;
+`;
+
+export const AccountDetailsInlineTitle = styled.h4`
+    margin: 5px;
+`;
+
+export const AccountDetailsText = styled.p`
+    margin: 5px;
 `;
 
 export const AccountAddressContainer = styled.div`
     display: flex;
-    flex-direction: ${props => props.setMobileView ? 'column' : 'row'};
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-bottom: 30px;
 `;
 
 export const AddressContainer = styled.div`
@@ -34,8 +63,8 @@ export const AddressContainer = styled.div`
 `;
 
 export const UpdateButtonContainer = styled.div`
-    width: 150px;
-    margin: 20px auto;
+    display: flex;
+    flex-direction: row;
 `;
 
 export const AccountDetailsInput = styled.input`
@@ -43,3 +72,47 @@ export const AccountDetailsInput = styled.input`
     margin: 5px 0;
     padding: 3px;
 `;
+
+// export const AccountDetailsContainer = styled.div`
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: center;
+//     align-items: center;
+// `;
+
+// export const AccountDetailsTitle = styled.h2`
+//     text-align: center;
+// `;
+
+// export const AccountDetailsSubtitle = styled.h4`
+//     margin: 5px;
+// `;
+
+// export const AccountDetailsData = styled.p`
+
+// `;
+
+// export const AccountAddressContainer = styled.div`
+//     display: flex;
+//     flex-direction: ${props => props.setMobileView ? 'column' : 'row'};
+//     justify-content: center;
+//     align-items: center;
+// `;
+
+// export const AddressContainer = styled.div`
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: center;
+//     align-items: center;
+// `;
+
+// export const UpdateButtonContainer = styled.div`
+//     width: 150px;
+//     margin: 20px auto;
+// `;
+
+// export const AccountDetailsInput = styled.input`
+//     width: 300px;
+//     margin: 5px 0;
+//     padding: 3px;
+// `;
