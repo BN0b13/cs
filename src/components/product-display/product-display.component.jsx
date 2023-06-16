@@ -3,7 +3,9 @@ import { useContext, useEffect, useState } from 'react';
 import {
     VscArrowRight,
     VscChevronDown,
-    VscChevronUp
+    VscChevronUp,
+    VscHeartFilled,
+    VscHeart
 } from "react-icons/vsc";
 
 import Button from '../button/button.component';
@@ -19,6 +21,7 @@ import logo from '../../assets/img/logo.png';
 
 import {
     CategoryLink,
+    FavoriteContainer,
     ProductButtonContainer,
     ProductButtonCount,
     ProductContainer,
@@ -54,6 +57,7 @@ const ProductDisplay = ({ product }) => {
     useEffect(() => {
         const getInventory = async () => {
             const res = await getProductInventory(id);
+            console.log('Get product inventory res: ', res);
             const startingQuantity = res >= 1 ? 1 : 0;
             setQuantity(startingQuantity);
             setInventory(res);
@@ -102,6 +106,9 @@ const ProductDisplay = ({ product }) => {
                     <img src={logo} alt={`${name}`} />
                 </ProductImage>
                 <ProductInformation>
+                    {/* <FavoriteContainer>
+                        <VscHeart />
+                    </FavoriteContainer> */}
                     <ProductText>{name}</ProductText>
                     <ProductDescriptionText>{details.description}</ProductDescriptionText>
                     <ProductSubtext>Lineage: {details.mother} x {details.father}</ProductSubtext>
@@ -109,7 +116,7 @@ const ProductDisplay = ({ product }) => {
                     <ProductSubtext>Pack: 10+ {details.sex} seeds</ProductSubtext>
                     <ProductSubtext>Price: {convertProductPrice(price)}</ProductSubtext>
                     <ProductButtonContainer>
-                        <ProductButtonCount>
+                        <ProductButtonCount setMobileView={setMobileView()}>
                             <ProductQuantityContainer>
                                 <VscChevronUp onClick={() => increaseQuantity()} />
                                 <ProductCountInput onChange={(e) => console.log(e.target.value)} value={quantity} />

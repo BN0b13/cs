@@ -10,11 +10,11 @@ import {
 } from 'react-icons/vsc';
 
 export const menuItemsPublic = [
-    {
-      title: 'Shop',
-      path: '/shop',
-      icon: (<FaStoreAlt />)
-    },
+    // {
+    //   title: 'Shop',
+    //   path: '/shop',
+    //   icon: (<FaStoreAlt />)
+    // },
     // {
     //   title: 'About',
     //   path: '/about',

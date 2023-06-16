@@ -16,13 +16,13 @@ const Welcome = () => {
 
   return (
     <WelcomeContainer>
-      {setMobileView() ? 
+      {/* {setMobileView() ? 
         <WelcomeLogoMobile src={logo} alt='Welcome to Cosmic Strains' />
         : 
         <WelcomeLogo src={logo} alt='Welcome to Cosmic Strains' />
-      }
-        <WelcomeText>Preparing to launch July 2023 with our Ghost line</WelcomeText>
-        <WelcomeParagraph>New user enrollment starts in June. Create an account and get ready for take off!</WelcomeParagraph>
+      } */}
+        <WelcomeText>Preparing to launch August 2023</WelcomeText>
+        <WelcomeParagraph>Welcome to Cosmic Strains! Your local source for collectible oddities and merchandise. Clothing store coming soon!</WelcomeParagraph>
     </WelcomeContainer>
   );
 };
