@@ -112,7 +112,7 @@ function App() {
   }
 
   return (
-    <div className="App" id="outer-container">
+    <div id="outer-container" className="App">
       {setMobileView() &&
         <HamburgerMenu />
       }

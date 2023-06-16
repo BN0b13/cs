@@ -4,8 +4,8 @@ const client = new Client();
 
 export const getProductInventory = async (id) => {
     const res = await client.getProductById(id);
-    const currentInventory = res.rows[0].Inventories.filter(item => item.available === true );
-    return currentInventory.length;
+    const currentInventory = res.rows[0].Inventories[0].quantity;
+    return currentInventory;
 }
 
 export const convertProductPrice = (price) => {

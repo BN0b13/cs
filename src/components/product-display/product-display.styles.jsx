@@ -24,9 +24,7 @@ export const ProductContainer = styled.div`
 
 export const ProductButtonCount = styled.div`
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+  flex-direction: ${props => props.setMobileView ? 'column' : 'row'};
 `;
 
 export const ProductCountInput = styled.input`
@@ -43,6 +41,12 @@ export const ProductMobileContainer = styled.div`
 
 export const ProductDisplayContainer = styled.div`
 
+`;
+
+export const FavoriteContainer = styled.div`
+  display: flex;
+  justify-content: end;
+  width: 100%;
 `;
 
 export const ProductTitle = styled.h5`
