@@ -7,7 +7,7 @@ import {
     // Price
 } from './product-card.styles';
 
-import Button, { BUTTON_TYPE_CLASSES } from '../button/button.component';
+import Button, { BUTTON_TYPE_CLASSES } from '../reusable/button/button.component';
 
 const ProductCard = ({ product }) => {
     const { name } = product;

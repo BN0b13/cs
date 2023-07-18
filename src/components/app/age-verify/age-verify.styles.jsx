@@ -8,31 +8,43 @@ export const AgeVerifyButtonDiv = styled.div`
 `;
 
 export const AgeVerifyAccessButton = styled.button`
+    font-family: 'Open Sans Condensed';
+    font-weight: bolder;
+    color: #fff;
+    background-color: #5cb85c;
+    border: none;
+    border-radius: 2px;
     margin: 10px;
     font-size: 20px;
-    width: 150px;
+    width: 170px;
     height: 75px;
     padding: 5px;
-    background: #5cb85c;
-    color: #fff;
-    outline: none;
-    border-radius: 4px;
-    border: 1px solid transparent;
-    transition: 0.5s;
+
+    &:hover {
+        color: #5cb85c;
+        background-color: #fff;
+        border: #5cb85c solid 1px;
+    }
 `;
 
 export const AgeVerifyDenyButton = styled.button`
+    font-family: 'Open Sans Condensed';
+    font-weight: bolder;
+    color: #fff;
+    background-color: red;
+    border: none;
+    border-radius: 2px;
     margin: 10px;
     font-size: 20px;
-    width: 150px;
+    width: 170px;
     height: 75px;
     padding: 5px;
-    background: #d9534f;
-    color: #fff;
-    outline: none;
-    border-radius: 4px;
-    border: 1px solid transparent;
-    transition: 0.5s;
+
+    &:hover {
+        color: red;
+        background-color: #fff;
+        border: red solid 1px;
+    }
 `;
 
 export const AgeVerifyDiv = styled.div`
@@ -50,7 +62,7 @@ export const AgeVerifyText = styled.h4`
 `;
 
 export const Modal = styled.div`
-    z-index: 1;
+    z-index: 100;
     display: ${({show}) => (show ? 'flex' : 'none')} !important;
     position: fixed;
     flex-direction: column;
@@ -60,5 +72,5 @@ export const Modal = styled.div`
     left: 0;
     height: 100vh;
     width: 100vw;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.9);
 `;

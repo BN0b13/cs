@@ -3,8 +3,8 @@ import CartIcon from '../../cart-icon/cart-icon.component';
 import { 
     menuItemsPublic,
     menuItemsLoggedIn
-  } from '../../../assets/menu-items';
-import { tokenName } from '../../../config';
+  } from '../../../../assets/menu-items';
+import { tokenName } from '../../../../config';
 
 import {
     NavigationContainer,

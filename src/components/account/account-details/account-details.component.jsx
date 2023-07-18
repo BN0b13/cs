@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useContext } from 'react';
 
-import Address from '../../address/address.component';
-import Button from '../../button/button.component';
-import Snackbar from '../../snackbar/snackbar.component';
-import Spinner from '../../spinner/spinner.component';
+import Address from '../../reusable/address/address.component';
+import Button from '../../reusable/button/button.component';
+import Snackbar from '../../reusable/snackbar/snackbar.component';
+import Spinner from '../../reusable/spinner/spinner.component';
 
 import { UserContext } from '../../../contexts/user.context';
 

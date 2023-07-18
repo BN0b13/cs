@@ -1,8 +1,8 @@
 import React from 'react';
 
-import Button from '../button/button.component';
-import Snackbar from '../snackbar/snackbar.component';
-import Spinner from '../spinner/spinner.component';
+import Button from '../reusable/button/button.component';
+import Snackbar from '../reusable/snackbar/snackbar.component';
+import Spinner from '../reusable/spinner/spinner.component';
 
 import logo from '../../assets/img/logo.png';
 import { tokenName, api } from '../../config';
@@ -113,7 +113,7 @@ class LoginForm extends React.Component{
     return(
       <LoginFormContainer>
 
-        {/* <LoginFormLogo src={logo} alt="Cosmic Strains Login" /> */}
+        <LoginFormLogo src={logo} alt="Cosmic Strains Login" />
 
         <LoginFormForm>
             <LoginFormInput 

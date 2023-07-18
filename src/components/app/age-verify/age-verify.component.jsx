@@ -13,7 +13,7 @@ import {
   Modal
 } from './age-verify.styles';
 
-import Client from '../../tools/client';
+import Client from '../../../tools/client';
 
 const client = new Client();
 

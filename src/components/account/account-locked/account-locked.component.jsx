@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import Button from '../../button/button.component';
-import Spinner from '../../spinner/spinner.component';
+import Button from '../../reusable/button/button.component';
+import Spinner from '../../reusable/spinner/spinner.component';
 
 import Client from '../../../tools/client';
 

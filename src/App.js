@@ -6,10 +6,10 @@ import {
 } from "react-router-dom";
 import './App.css';
 
-import AgeVerify from './components/age-verify/age-verify.component';
-import HamburgerMenu from './components/hamburger-menu/hamburger-menu.component';
-import Header from './components/header/header.component';
-import Footer from './components/footer/footer.component';
+import AgeVerify from './components/app/age-verify/age-verify.component';
+import HamburgerMenu from './components/app/hamburger-menu/hamburger-menu.component';
+import Header from './components/app/header/header.component';
+import Footer from './components/app/footer/footer.component';
 
 import AboutPage from './pages/about/about.pages';
 import AccountPage from './pages/account/account.pages';
