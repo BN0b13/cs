@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
+import { Slide } from 'react-slideshow-image';
 
 import {
     VscArrowRight,
@@ -9,11 +10,13 @@ import {
 } from "react-icons/vsc";
 
 import Button from '../button/button.component';
+import Spinner from '../spinner/spinner.component';
 import Snackbar from '../snackbar/snackbar.component';
 
 import { CartContext } from '../../contexts/cart.context';
 import { UserContext } from '../../contexts/user.context';
 
+import { api } from '../../config';
 import { getProductInventory, convertProductPrice } from '../../tools/cart';
 import { setMobileView } from '../../tools/mobileView';
 
@@ -22,6 +25,7 @@ import logo from '../../assets/img/logo.png';
 import {
     CategoryLink,
     FavoriteContainer,
+    SlideshowContainer,
     ProductButtonContainer,
     ProductButtonCount,
     ProductContainer,
@@ -36,11 +40,21 @@ import {
     ProductSubtext,
     ProductText,
 } from './product-display.styles';
+  
+const divStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundSize: 'cover',
+    height: '300px'
+};
 
 const ProductDisplay = ({ product }) => {
     const [messageType, setMessageType] = useState(null);
     const [messageContents, setMessageContents] = useState('');
     const [showMessage, setShowMessage] = useState(false);
+
+    const [ images, setImages ] = useState([]);
     const [quantity, setQuantity] = useState('');
     const [inventory, setInventory] = useState(null);
 
@@ -50,14 +64,23 @@ const ProductDisplay = ({ product }) => {
     const {
         id,
         name, 
-        details,
+        description,
+        time,
+        mother,
+        father,
+        profile,
+        sex,
         price
     } = product;
 
     useEffect(() => {
+
+        product.ProductImages.sort((a, b) => a.position - b.position);
+
+        setImages(product.ProductImages);
+
         const getInventory = async () => {
             const res = await getProductInventory(id);
-            console.log('Get product inventory res: ', res);
             const startingQuantity = res >= 1 ? 1 : 0;
             setQuantity(startingQuantity);
             setInventory(res);
@@ -103,17 +126,32 @@ const ProductDisplay = ({ product }) => {
         return (
             <>
                 <ProductImage>
-                    <img src={logo} alt={`${name}`} />
+                    {images.length === 0 ?
+                        <img src={logo} alt={`${name}`} height='300' width='300' />
+                        :
+                        <SlideshowContainer>
+                            <Slide autoplay={false}>
+                                {images.map((image, index)=> (
+                                        <div key={index}>
+                                            <a href={image.link}>
+                                                <div style={{ ...divStyle, "backgroundImage": `url(${api}${image.path})` }}>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    ))}
+                            </Slide>
+                        </SlideshowContainer>
+                    }
                 </ProductImage>
                 <ProductInformation>
                     {/* <FavoriteContainer>
                         <VscHeart />
                     </FavoriteContainer> */}
                     <ProductText>{name}</ProductText>
-                    <ProductDescriptionText>{details.description}</ProductDescriptionText>
-                    <ProductSubtext>Lineage: {details.mother} x {details.father}</ProductSubtext>
-                    <ProductSubtext>Time: {details.time}</ProductSubtext>
-                    <ProductSubtext>Pack: 10+ {details.sex} seeds</ProductSubtext>
+                    <ProductDescriptionText>{description}</ProductDescriptionText>
+                    <ProductSubtext>Lineage: {mother} x {father}</ProductSubtext>
+                    <ProductSubtext>Time: {time}</ProductSubtext>
+                    <ProductSubtext>Pack: 10+ {sex} seeds</ProductSubtext>
                     <ProductSubtext>Price: {convertProductPrice(price)}</ProductSubtext>
                     <ProductButtonContainer>
                         <ProductButtonCount setMobileView={setMobileView()}>
