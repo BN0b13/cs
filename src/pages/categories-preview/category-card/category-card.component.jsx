@@ -7,7 +7,7 @@ import {
     // Price
 } from './category-card.styles';
 
-import Button, { BUTTON_TYPE_CLASSES } from '../../../components/button/button.component';
+import Button, { BUTTON_TYPE_CLASSES } from '../../../components/reusable/button/button.component';
 
 const CategoryCard = ({ category }) => {
 

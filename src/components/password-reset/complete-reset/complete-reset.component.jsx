@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import Button from '../../button/button.component';
-import Snackbar from '../../snackbar/snackbar.component';
+import Button from '../../reusable/button/button.component';
+import Snackbar from '../../reusable/snackbar/snackbar.component';
 
 import Client from '../../../tools/client';
 import { passwordValidation } from '../../../tools/user.js';

@@ -9,9 +9,9 @@ import {
     VscHeart
 } from "react-icons/vsc";
 
-import Button from '../button/button.component';
-import Spinner from '../spinner/spinner.component';
-import Snackbar from '../snackbar/snackbar.component';
+import Button from '../reusable/button/button.component';
+import Spinner from '../reusable/spinner/spinner.component';
+import Snackbar from '../reusable/snackbar/snackbar.component';
 
 import { CartContext } from '../../contexts/cart.context';
 import { UserContext } from '../../contexts/user.context';

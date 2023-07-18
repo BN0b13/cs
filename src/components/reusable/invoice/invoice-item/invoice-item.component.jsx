@@ -1,5 +1,5 @@
-import { convertProductPrice } from '../../../tools/cart';
-import { setMobileView } from '../../../tools/mobileView';
+import { convertProductPrice } from '../../../../tools/cart';
+import { setMobileView } from '../../../../tools/mobileView';
 
 import {
     InvoiceItemRow,

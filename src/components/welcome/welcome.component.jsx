@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
-import Slideshow from '../slideshow/slideshow.component';
-import Spinner from '../spinner/spinner.component';
+import Slideshow from '../reusable/slideshow/slideshow.component';
+import Spinner from '../reusable/spinner/spinner.component';
 
 import Client from '../../tools/client';
 

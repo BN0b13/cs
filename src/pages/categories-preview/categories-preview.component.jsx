@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import Spinner from '../../components/spinner/spinner.component';
+import Spinner from '../../components/reusable/spinner/spinner.component';
 import CategoryCard from './category-card/category-card.component';
 
 import Client from '../../tools/client';
