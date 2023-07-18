@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 
-import Button from '../../components/button/button.component';
-import Spinner from '../../components/spinner/spinner.component';
+import Button from '../../components/reusable/button/button.component';
+import Spinner from '../../components/reusable/spinner/spinner.component';
 import CheckoutAddress from '../../components/checkout/checkout-address/checkout-address.component';
 import CheckoutShipping from '../../components/checkout/checkout-shipping/checkout-shipping.component';
 import CheckoutTotal from '../../components/checkout/checkout-total/checkout-total.component';

@@ -5,13 +5,13 @@ import {
     GrLogout 
   } from 'react-icons/gr';
 
-import navLogoMobile from '../../assets/img/logo-hamburger-menu.png';
+import navLogoMobile from '../../../assets/img/logo-hamburger-menu.png';
 
 import { 
     menuItemsPublic,
     menuItemsLoggedIn
-} from '../../assets/menu-items';
-import { tokenName } from '../../config';
+} from '../../../assets/menu-items';
+import { tokenName } from '../../../config';
 
 import './hamburger-menu.css';
 

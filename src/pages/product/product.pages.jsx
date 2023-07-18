@@ -1,9 +1,13 @@
 import { React, useState, useEffect } from 'react';
+import {
+    VscHeartFilled,
+    VscHeart
+  } from 'react-icons/vsc';
 
 import { useParams } from 'react-router-dom';
 
 import ProductDisplay from '../../components/product-display/product-display.component';
-import Spinner from '../../components/spinner/spinner.component';
+import Spinner from '../../components/reusable/spinner/spinner.component';
 
 import Client from '../../tools/client';
 

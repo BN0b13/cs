@@ -5,11 +5,11 @@ import dayjs from 'dayjs';
 import InvoiceItem from './invoice-item/invoice-item.component';
 import Spinner from '../spinner/spinner.component';
 
-import Client from '../../tools/client';
-import { convertProductPrice } from '../../tools/cart';
-import { setMobileView } from '../../tools/mobileView';
+import Client from '../../../tools/client';
+import { convertProductPrice } from '../../../tools/cart';
+import { setMobileView } from '../../../tools/mobileView';
 
-import { UserContext } from '../../contexts/user.context';
+import { UserContext } from '../../../contexts/user.context';
 
 import {
     InvoiceContainer,
