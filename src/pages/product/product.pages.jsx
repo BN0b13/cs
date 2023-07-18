@@ -7,7 +7,7 @@ import {
 import { useParams } from 'react-router-dom';
 
 import ProductDisplay from '../../components/product-display/product-display.component';
-import Spinner from '../../components/spinner/spinner.component';
+import Spinner from '../../components/reusable/spinner/spinner.component';
 
 import Client from '../../tools/client';
 

@@ -3,7 +3,7 @@ import { useEffect, useContext, useState } from 'react';
 import { VscClose, VscInfo } from 'react-icons/vsc'
 
 import SquarePaymentForm from '../payment-form/payment-form.component';
-import Spinner from '../../spinner/spinner.component';
+import Spinner from '../../reusable/spinner/spinner.component';
 
 import { CheckoutContext } from '../../../contexts/checkout.context';
 import { UserContext } from '../../../contexts/user.context';

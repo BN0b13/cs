@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 
-import Button from '../../components/button/button.component';
-import Spinner from '../../components/spinner/spinner.component';
+import Button from '../../components/reusable/button/button.component';
+import Spinner from '../../components/reusable/spinner/spinner.component';
 import CartItem from '../../components/cart-item/cart-item.component';
 
 import { CartContext } from '../../contexts/cart.context';

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import Spinner from "../../spinner/spinner.component";
+import Spinner from "../../reusable/spinner/spinner.component";
 
 import Client from '../../../tools/client';
 

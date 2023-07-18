@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 
-import Address from '../../address/address.component';
-import Spinner from '../../spinner/spinner.component';
+import Address from '../../reusable/address/address.component';
+import Spinner from '../../reusable/spinner/spinner.component';
 
 import { CheckoutContext } from '../../../contexts/checkout.context';
 import { UserContext } from '../../../contexts/user.context';

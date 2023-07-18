@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 
 import OrderItem from './order-item/order-item.component';
-import Spinner from '../../spinner/spinner.component';
+import Spinner from '../../reusable/spinner/spinner.component';
 
 import Client from '../../../tools/client';
 import { convertProductPrice } from '../../../tools/cart';

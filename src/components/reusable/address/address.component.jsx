@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { states } from '../../tools/states.js';
+import { states } from '../../../tools/states.js';
 
 import {
     AddressBottomContainer,

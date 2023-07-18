@@ -3,14 +3,14 @@ import { useContext, useEffect } from 'react';
 import CartIcon from '../cart-icon/cart-icon.component';
 import Navigation from './navigation/navigation.component';
 
-import Client from '../../tools/client';
-import { setMobileView } from '../../tools/mobileView';
+import Client from '../../../tools/client';
+import { setMobileView } from '../../../tools/mobileView';
 
-import { UserContext } from '../../contexts/user.context';
+import { UserContext } from '../../../contexts/user.context';
 
-import { tokenName } from '../../config';
+import { tokenName } from '../../../config';
 
-import navLogo from '../../assets/img/text.png';
+import navLogo from '../../../assets/img/text.png';
 
 import {
   HeaderNav,

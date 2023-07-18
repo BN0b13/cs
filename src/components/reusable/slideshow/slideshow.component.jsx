@@ -1,7 +1,7 @@
 import React from 'react';
 import { Slide } from 'react-slideshow-image';
 
-import { api } from '../../config';
+import { api } from '../../../config';
 
 import 'react-slideshow-image/dist/styles.css';
 
