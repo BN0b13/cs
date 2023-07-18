@@ -113,7 +113,7 @@ class LoginForm extends React.Component{
     return(
       <LoginFormContainer>
 
-        {/* <LoginFormLogo src={logo} alt="Cosmic Strains Login" /> */}
+        <LoginFormLogo src={logo} alt="Cosmic Strains Login" />
 
         <LoginFormForm>
             <LoginFormInput 

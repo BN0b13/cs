@@ -22,6 +22,10 @@ export const ProductContainer = styled.div`
   margin-top: 10vh;
 `;
 
+export const SlideshowContainer = styled.div`
+  width: 300px;
+`;
+
 export const ProductButtonCount = styled.div`
   display: flex;
   flex-direction: ${props => props.setMobileView ? 'column' : 'row'};
