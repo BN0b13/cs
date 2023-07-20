@@ -1,3 +1,5 @@
+import { setMobileView } from "../tools/mobileView";
+
 // Text Color
 
 export const textColorLight = '#fff';
@@ -18,3 +20,8 @@ export const svgColorLight = 'filter: invert(99%) sepia(14%) saturate(5%) hue-ro
 export const headerHeight = '8vh';
 export const bodyHeight = '80vh';
 export const footerHeight = '12vh';
+
+// Slideshow
+
+export const slideshowDimensions = setMobileView() ? '200px' : '600px';
+export const slideshowSpanText = setMobileView() ? '15px' : '25px';
