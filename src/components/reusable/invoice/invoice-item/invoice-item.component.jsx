@@ -14,7 +14,7 @@ const InvoiceItem = ({ product }) => {
             {setMobileView() ?
                 null
             :
-                <InvoiceItemData>{ product.product[0].details.description }</InvoiceItemData>
+                <InvoiceItemData>{ product.product[0].description }</InvoiceItemData>
             }
             <InvoiceItemData>{ product.quantity }</InvoiceItemData>
             <InvoiceItemData>{ convertProductPrice(product.quantity * product.product[0].price) }</InvoiceItemData>

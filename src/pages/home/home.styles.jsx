@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import {
-    backgroundOpacityLight,
+    headerHeight,
 } from '../../styles/theme';
 
 export const HomePageContainer = styled.div`

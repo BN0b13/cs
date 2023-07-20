@@ -51,9 +51,12 @@ const CheckoutTotal = () => {
 
     useEffect(() => {
         let deliveryInsuranceTotal = deliveryInsuranceSelection ? deliveryInsurance : 0;
+        console.log('Subtotal: ', subtotal);
+        console.log('shipping and handling: ', shippingTotal);
+        console.log('Delivery Insurance: ', subtotal);
         setTotal(subtotal + deliveryInsuranceTotal + shippingTotal);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ subtotal, shippingAndHandling, deliveryInsuranceSelection ]);
+    }, [ subtotal, shippingTotal, deliveryInsuranceSelection ]);
 
     const deliveryInsuranceHandler = () => {
         setDeliveryInsuranceSelection(!deliveryInsuranceSelection);
