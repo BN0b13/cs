@@ -23,12 +23,14 @@ export const CategoryContainer = styled.div`
     grid-template-columns: repeat(4, 1fr);
     column-gap: 20px;
     row-gap: 50px;
+    padding: 10px;
 `;
 
 export const CategoryContainerMobile = styled.div`
     display: grid;
     grid-template-row: repeat(1fr);
     row-gap: 20px;
+    padding: 10px;
 `;
 
 export const CategoryTitle = styled.h2`

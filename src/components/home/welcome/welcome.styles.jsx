@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import {
     backgroundOpacityLight,
     backgroundOpacityDark,
+    slideshowDimensions,
     textColorLight
 } from '../../../styles/theme';
 
@@ -25,7 +26,7 @@ export const WelcomeOpacity = styled.div`
 `;
 
 export const WelcomeImageContainer = styled.div`
-    min-height: 600px;
+    min-height: ${slideshowDimensions};
 `;
 
 export const WelcomeTextContainer = styled.div`

@@ -5,13 +5,19 @@ import { api } from '../../../config';
 
 import 'react-slideshow-image/dist/styles.css';
 
+import {
+  slideshowDimensions,
+  slideshowSpanText
+} from '../../../styles/theme';
+
+
 const spanStyle = {
   padding: '20px',
   background: 'rgba(0,0,0,0.4)',
   color: '#fff',
   width: '100%',
   textAlign: 'center',
-  fontSize: '25px'
+  fontSize: slideshowSpanText
 };
 
 const divStyle = {
@@ -19,13 +25,13 @@ const divStyle = {
   alignItems: 'center',
   justifyContent: 'center',
   backgroundSize: 'cover',
-  height: '600px'
+  height: slideshowDimensions
 };
 
 const Slideshow = ({ images }) => {
 
     return (
-      <div style={{ 'width': '600px'}}>
+      <div style={{ 'width': slideshowDimensions }}>
         <Slide>
             {images.map((image, index)=> (
                     <div key={index}>

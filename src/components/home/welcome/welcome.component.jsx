@@ -49,7 +49,7 @@ const Welcome = () => {
           }
         </WelcomeImageContainer>
         <WelcomeTextContainer>
-          <WelcomeTitle>Welcome to Cosmic Strains</WelcomeTitle>
+          <WelcomeTitle>Cosmic Strains</WelcomeTitle>
           <WelcomeSubtitle>Preparing to launch August 2023</WelcomeSubtitle>
           <WelcomeText>Your local source for collectible cannabis seeds. We have an extremely large assortment of F1 lines created with some of the most popular and rarest strains around.</WelcomeText>
         </WelcomeTextContainer>

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import {
     backgroundOpacityLight,
     bodyHeight,
-    textColorLight
+    textColorDark
 } from '../../styles/theme';
 
 export const LoginPageContainer = styled.div`
@@ -11,6 +11,6 @@ export const LoginPageContainer = styled.div`
     justify-content: space-around;
     align-items: center;
     background-color: ${backgroundOpacityLight};
-    color: ${textColorLight};
+    color: ${textColorDark};
     min-height: ${bodyHeight};
 `;
