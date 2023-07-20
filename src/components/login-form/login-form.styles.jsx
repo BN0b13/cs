@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+import {
+    slideshowDimensions
+} from '../../styles/theme';
+
 export const LoginFormButtonContainer = styled.div`
     margin-top: 10px;
     display: flex;
@@ -35,8 +39,8 @@ export const LoginFormInput = styled.input`
 `;
 
 export const LoginFormLogo = styled.img`
-    height: 320px;
-    width: 320px;
+    height: ${slideshowDimensions};
+    width: ${slideshowDimensions};
 `;
 
 export const LoginFormText = styled.h6`
