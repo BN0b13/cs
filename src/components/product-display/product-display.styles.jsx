@@ -2,9 +2,16 @@ import styled from 'styled-components';
 
 import { Link } from 'react-router-dom';
 
+import {
+  backgroundOpacityDark,
+  bodyHeight,
+  textColorLight
+} from '../../styles/theme';
+
 export const CategoryLink = styled(Link)`
   cursor: pointer;
   text-decoration: none;
+  color: ${textColorLight};
 `;
 
 export const ProductButtonContainer = styled.div`

@@ -26,9 +26,13 @@ import VerifyEmail from './components/account/verify-email/verify-email.componen
 
 import { setMobileView } from './tools/mobileView';
 
+import { ageVerifyTokenName } from './config';
+
+import backgroundImage from './assets/img/stars.jpeg';
+
 import {
-  ageVerifyTokenName
-} from './config';
+  BackgroundImageContainer
+} from './App.styles';
 
 function App() {
   const [ ageToken, setAgeToken ] = useState(sessionStorage.getItem(ageVerifyTokenName));
@@ -116,7 +120,7 @@ function App() {
       {setMobileView() &&
         <HamburgerMenu />
       }
-      <div id="page-wrap">
+      <BackgroundImageContainer id="page-wrap" backgroundImage={backgroundImage}>
         <Header />
         <AgeVerify 
           ageVerifyTokenName={ageVerifyTokenName}
@@ -127,7 +131,7 @@ function App() {
           { routes() }
         </BrowserRouter>
         <Footer />
-      </div>
+      </BackgroundImageContainer>
     </div>
   );
 }

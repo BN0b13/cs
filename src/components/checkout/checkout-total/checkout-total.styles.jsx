@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+import {
+    textColorDark
+} from '../../../styles/theme';
+
 export const CheckoutTotalContainer = styled.div`
     display: flex;
     flex-direction: column;
@@ -39,6 +43,7 @@ export const InsuranceInfoContainer = styled.div`
     position: absolute;
     background-color: white;
     margin-top: 150px;
+    color: ${textColorDark};
 `;
 
 export const InsuranceInfoCloseContainer = styled.div`
