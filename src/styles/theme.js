@@ -7,7 +7,8 @@ export const textColorDark = '#000';
 
 // Background Color
 
-export const backgroundOpacityPages = 'rgba(255,255,255, 0.3)';
+export const backgroundOpacityPages = '#000';
+// export const backgroundOpacityPages = 'rgba(0,0,0, 0.9)';
 export const backgroundOpacityLight = 'rgba(255,255,255, 0.6)';
 export const backgroundOpacityDark = 'rgba(0,0,0, 0.6)';
 
