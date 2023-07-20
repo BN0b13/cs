@@ -2,14 +2,20 @@ import styled from 'styled-components';
 
 import { Link } from 'react-router-dom';
 
+import {
+    textColorLight
+} from '../../styles/theme';
+
 export const ShopLink = styled(Link)`
-  cursor: pointer;
-  text-decoration: none;
+    cursor: pointer;
+    text-decoration: none;
+    color: ${textColorLight};
 `;
 
 export const CategoryLink = styled(Link)`
-cursor: pointer;
-text-decoration: none;
+    cursor: pointer;
+    text-decoration: none;
+    color: ${textColorLight};
 `;
 
 export const CategoryContainer = styled.div`

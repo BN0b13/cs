@@ -4,14 +4,20 @@ import CategoriesPreview from '../categories-preview/categories-preview.componen
 import Category from '../category/category.component';
 import Product from '../product/product.pages';
 
+import {
+    MainContainer
+} from './shop.styles';
+
 const ShopPage = () => {
 
     return (
-        <Routes>
-            <Route index element={<CategoriesPreview />} />
-            <Route path=":category" element={<Category />} />
-            <Route path="/:category/:item" element={<Product />} />
-        </Routes>
+        <MainContainer>
+            <Routes>
+                <Route index element={<CategoriesPreview />} />
+                <Route path=":category" element={<Category />} />
+                <Route path="/:category/:item" element={<Product />} />
+            </Routes>
+        </MainContainer>
     )
 }
 
