@@ -1,9 +1,18 @@
 import styled from 'styled-components';
 
+import {
+    backgroundOpacityDark,
+    bodyHeight,
+    textColorLight
+} from '../../styles/theme';
+
 export const CartPageContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: ${backgroundOpacityDark};
+    color: ${textColorLight};
+    min-height: ${bodyHeight};
 `;
 
 export const CartPageTitle = styled.h1`

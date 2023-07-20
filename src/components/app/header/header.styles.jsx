@@ -1,20 +1,31 @@
 import styled from 'styled-components';
 
+import {
+    backgroundOpacityPages,
+    headerHeight,
+    svgColorLight,
+    textColorLight
+} from '../../../styles/theme';
+
 export const HeaderNav = styled.div`
-    height: 80px;
+    height: ${headerHeight};
     width: 100%;
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid black;
+    background-color: ${backgroundOpacityPages};
+    color: ${textColorLight};
 `;
 
 export const MobileHeaderNav = styled.div`
-    height: 80px;
+    height: ${headerHeight};
     width: 100%;
     display: flex;
     justify-content: end;
     align-items: center;
     border-bottom: 1px solid black;
+    background-color: ${backgroundOpacityPages};
+    color: ${textColorLight};
 `;
 
 export const LogoContainer = styled.div`
@@ -30,6 +41,7 @@ export const LogoLink = styled.a`
 
 export const Logo = styled.img`
     height: 100%;
+    ${svgColorLight};
 `;
 
 export const NavOptionsDiv = styled.div`

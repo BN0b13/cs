@@ -6,12 +6,9 @@ import {
     textColorLight
 } from '../../styles/theme';
 
-export const SignUpPageContainer = styled.div`
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+export const MainContainer = styled.div`
+    padding: 10px;
     background-color: ${backgroundOpacityDark};
     color: ${textColorLight};
-    padding: 10px;
     min-height: ${bodyHeight};
 `;

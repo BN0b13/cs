@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+import {
+    svgColorLight
+} from '../../../styles/theme';
+
 
 export const CartIconContainer = styled.div`
     width: 45px;
@@ -14,6 +18,7 @@ export const CartIconContainer = styled.div`
 export const Icon = styled.div`
     width: 24px;
     height: 24px;
+    ${svgColorLight};
 `;
 
 export const ItemCount = styled.span`

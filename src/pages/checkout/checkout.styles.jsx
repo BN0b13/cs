@@ -1,10 +1,19 @@
 import styled from 'styled-components';
 
+import {
+    backgroundOpacityDark,
+    bodyHeight,
+    textColorLight
+} from '../../styles/theme';
+
 export const DisplayContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
+    background-color: ${backgroundOpacityDark};
+    color: ${textColorLight};
+    min-height: ${bodyHeight};
 `;
 
 export const ContentContainer = styled.div`
