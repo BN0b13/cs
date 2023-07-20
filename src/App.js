@@ -31,7 +31,8 @@ import { ageVerifyTokenName } from './config';
 import backgroundImage from './assets/img/stars.jpeg';
 
 import {
-  BackgroundImageContainer
+  BackgroundImageContainer,
+  ContentContainer
 } from './App.styles';
 
 function App() {
@@ -120,18 +121,20 @@ function App() {
       {setMobileView() &&
         <HamburgerMenu />
       }
-      <BackgroundImageContainer id="page-wrap" backgroundImage={backgroundImage}>
         <Header />
+      <BackgroundImageContainer id="page-wrap" backgroundImage={backgroundImage}>
         <AgeVerify 
           ageVerifyTokenName={ageVerifyTokenName}
           ageToken={ageToken}
           setAgeToken={setAgeToken}
         />
-        <BrowserRouter>
-          { routes() }
-        </BrowserRouter>
-        <Footer />
+        <ContentContainer>
+          <BrowserRouter>
+            { routes() }
+          </BrowserRouter>
+        </ContentContainer>
       </BackgroundImageContainer>
+        <Footer />
     </div>
   );
 }

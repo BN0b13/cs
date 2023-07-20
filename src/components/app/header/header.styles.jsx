@@ -8,13 +8,15 @@ import {
 } from '../../../styles/theme';
 
 export const HeaderNav = styled.div`
-    height: ${headerHeight};
-    width: 100%;
     display: flex;
     justify-content: space-between;
+    height: ${headerHeight};
+    width: 100%;
     border-bottom: 1px solid black;
     background-color: ${backgroundOpacityPages};
     color: ${textColorLight};
+    position: fixed;
+    z-index: 500;
 `;
 
 export const MobileHeaderNav = styled.div`
@@ -32,6 +34,7 @@ export const LogoContainer = styled.div`
     height: 100%;
     width: 80px;
     padding: auto;
+    padding-left: 30px;
     text-align: center;
 `;
 
@@ -51,6 +54,7 @@ export const NavOptionsDiv = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: flex-end;
+    padding-right: 30px;
 `;
 
 export const NavOptionsMobileDiv = styled.div`
