@@ -6,8 +6,7 @@ import Invoice from '../reusable/invoice/invoice.component';
 import {
     ThankYouContainer,
     ThankYouText,
-    ThankYouTitle,
-    ThankYouSubtitle
+    ThankYouTitle
 } from './thank-you.styles';
 
 const ThankYou = () => {
