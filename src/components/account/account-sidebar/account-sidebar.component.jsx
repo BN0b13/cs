@@ -16,7 +16,7 @@ const AccountSidebar = () => {
                             key={index} 
                             onClick={() => window.location = item.path}
                         >
-                            { item.icon }
+                            { item.icon } { item.title }
                         </AccountSidebarOption>
             })}
         </AccountSidebarContainer>

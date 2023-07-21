@@ -73,46 +73,9 @@ export const AccountDetailsInput = styled.input`
     padding: 3px;
 `;
 
-// export const AccountDetailsContainer = styled.div`
-//     display: flex;
-//     flex-direction: column;
-//     justify-content: center;
-//     align-items: center;
-// `;
-
-// export const AccountDetailsTitle = styled.h2`
-//     text-align: center;
-// `;
-
-// export const AccountDetailsSubtitle = styled.h4`
-//     margin: 5px;
-// `;
-
-// export const AccountDetailsData = styled.p`
-
-// `;
-
-// export const AccountAddressContainer = styled.div`
-//     display: flex;
-//     flex-direction: ${props => props.setMobileView ? 'column' : 'row'};
-//     justify-content: center;
-//     align-items: center;
-// `;
-
-// export const AddressContainer = styled.div`
-//     display: flex;
-//     flex-direction: column;
-//     justify-content: center;
-//     align-items: center;
-// `;
-
-// export const UpdateButtonContainer = styled.div`
-//     width: 150px;
-//     margin: 20px auto;
-// `;
-
-// export const AccountDetailsInput = styled.input`
-//     width: 300px;
-//     margin: 5px 0;
-//     padding: 3px;
-// `;
+export const AddressBottomContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+`;
