@@ -5,6 +5,7 @@ export const AgeVerifyButtonDiv = styled.div`
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
+    z-index: 5000;
 `;
 
 export const AgeVerifyAccessButton = styled.button`
@@ -62,7 +63,7 @@ export const AgeVerifyText = styled.h4`
 `;
 
 export const Modal = styled.div`
-    z-index: 100;
+    z-index: 4500;
     display: ${({show}) => (show ? 'flex' : 'none')} !important;
     position: fixed;
     flex-direction: column;

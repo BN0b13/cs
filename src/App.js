@@ -118,16 +118,16 @@ function App() {
 
   return (
     <div id="outer-container" className="App">
+      <AgeVerify 
+        ageVerifyTokenName={ageVerifyTokenName}
+        ageToken={ageToken}
+        setAgeToken={setAgeToken}
+      />
       {setMobileView() &&
         <HamburgerMenu />
       }
         <Header />
       <BackgroundImageContainer id="page-wrap" backgroundImage={backgroundImage}>
-        <AgeVerify 
-          ageVerifyTokenName={ageVerifyTokenName}
-          ageToken={ageToken}
-          setAgeToken={setAgeToken}
-        />
         <ContentContainer>
           <BrowserRouter>
             { routes() }
