@@ -16,7 +16,7 @@ export const HeaderNav = styled.div`
     background-color: ${backgroundOpacityPages};
     color: ${textColorLight};
     position: fixed;
-    z-index: 500;
+    z-index: 20;
 `;
 
 export const MobileHeaderNav = styled.div`
