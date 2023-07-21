@@ -19,6 +19,7 @@ import {
     AccountDetailsText,
     AccountDetailsTitle,
     AccountAddressContainer,
+    AddressBottomContainer,
     AddressContainer,
     AccountDetailsInput,
     TextRowContainer,
@@ -123,7 +124,7 @@ const AccountDetails = () => {
                 showEdit ?
                     <AccountEditContainer>
                         <AccountDetailsTitle>
-                            Edit Details
+                            Update Account
                         </AccountDetailsTitle>
                         <AccountDetailsInput type={'text'} name={'firstName'} value={firstName} onChange={(e) => handleFirstNameChange(e)} placeholder={'First Name'} />
                         <AccountDetailsInput type={'text'} name={'lastName'} value={lastName} onChange={(e) => handleLastNameChange(e)}  placeholder={'Last Name'} />
@@ -155,35 +156,43 @@ const AccountDetails = () => {
                         <AccountDetailsTextContainer>
                             <TextRowContainer>
                                 <AccountDetailsInlineTitle>Email: </AccountDetailsInlineTitle>
-                                <AccountDetailsText>{ email }</AccountDetailsText>
+                                <AccountDetailsText id='accountEmail'>{ email }</AccountDetailsText>
                             </TextRowContainer>
                             <TextRowContainer>
                                 <AccountDetailsInlineTitle>First Name: </AccountDetailsInlineTitle>
-                                <AccountDetailsText>{ firstName }</AccountDetailsText>
+                                <AccountDetailsText id='accountFirstName'>{ firstName }</AccountDetailsText>
                             </TextRowContainer>
                             <TextRowContainer>
                                 <AccountDetailsInlineTitle>Last Name:</AccountDetailsInlineTitle>
-                                <AccountDetailsText>{ lastName }</AccountDetailsText>
+                                <AccountDetailsText id='accountLastName'>{ lastName }</AccountDetailsText>
                             </TextRowContainer>
                             <TextRowContainer>
                                 <AccountDetailsInlineTitle>Phone:</AccountDetailsInlineTitle>
-                                <AccountDetailsText>{ phone }</AccountDetailsText>
+                                <AccountDetailsText id='accountPhone'>{ phone }</AccountDetailsText>
                             </TextRowContainer>
                             <AccountDetailsSubtitle>Billing Address:</AccountDetailsSubtitle>
-                            <AccountDetailsText>{ billingAddress.addressOne }</AccountDetailsText>
+                            <AccountDetailsText id='billingAddressOne'>{ billingAddress.addressOne }</AccountDetailsText>
                             {billingAddress.addressTwo &&
-                                <AccountDetailsText>{ billingAddress.addressTwo }</AccountDetailsText>
+                                <AccountDetailsText id='billingAddressTwo'>{ billingAddress.addressTwo }</AccountDetailsText>
                             }
-                            <AccountDetailsText>{ billingAddress.city }, { billingAddress.state } { billingAddress.zipCode }</AccountDetailsText>
+                            <AddressBottomContainer>
+                                <AccountDetailsText id='billingAddressCity'>{ billingAddress.city }, </AccountDetailsText>
+                                <AccountDetailsText id='billingAddressState'>{ billingAddress.state } </AccountDetailsText>
+                                <AccountDetailsText id='billingAddressZipCode'>{ billingAddress.zipCode }</AccountDetailsText>
+                            </AddressBottomContainer>
                             <AccountDetailsSubtitle>Shipping Address:</AccountDetailsSubtitle>
-                            <AccountDetailsText>{ shippingAddress.addressOne }</AccountDetailsText>
+                            <AccountDetailsText id='shippingAddressOne'>{ shippingAddress.addressOne }</AccountDetailsText>
                             { shippingAddress.addressTwo &&
-                                <AccountDetailsText>{ shippingAddress.addressTwo }</AccountDetailsText>
+                                <AccountDetailsText id='shippingAddressTwo'>{ shippingAddress.addressTwo }</AccountDetailsText>
                             }
-                            <AccountDetailsText>{ shippingAddress.city }, { shippingAddress.state } { shippingAddress.zipCode }</AccountDetailsText>
+                            <AddressBottomContainer>
+                                <AccountDetailsText id='shippingAddressCity'>{ shippingAddress.city }, </AccountDetailsText>
+                                <AccountDetailsText id='shippingAddressState'>{ shippingAddress.state } </AccountDetailsText>
+                                <AccountDetailsText id='shippingAddressZipCode'>{ shippingAddress.zipCode }</AccountDetailsText>
+                            </AddressBottomContainer>
                         </AccountDetailsTextContainer>
                         <UpdateButtonContainer>
-                            <Button onClick={() => setShowEdit(true)}>Edit Details</Button>
+                            <Button onClick={() => setShowEdit(true)}>Update Account</Button>
                         </UpdateButtonContainer>
                     </AccountDetailsContainer>
                 
