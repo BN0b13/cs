@@ -17,8 +17,6 @@ export const LoginFormContainer = styled.div`
     justify-content: center;
     align-items: center;
     width: 360px;
-    margin-top: 2em;
-    padding: 1em;
 `;
 
 export const LoginFormErrorContainer = styled.div`
@@ -39,8 +37,8 @@ export const LoginFormInput = styled.input`
 `;
 
 export const LoginFormLogo = styled.img`
-    height: ${slideshowDimensions};
-    width: ${slideshowDimensions};
+    height: 300px;
+    width: 300px;
 `;
 
 export const LoginFormText = styled.h6`

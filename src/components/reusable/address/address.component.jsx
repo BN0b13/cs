@@ -13,7 +13,7 @@ import {
     AddressTopContainer
 } from './address.styles';
 
-const Address = ({ address, updateAddress }) => {
+const Address = ({ address, updateAddress, customSelector = null }) => {
     const [ firstName, setFirstName ] = useState(address.firstName);
     const [ lastName, setLastName ] = useState(address.lastName);
     const [ addressOne, setAddressOne ] = useState(address.addressOne);
@@ -21,10 +21,14 @@ const Address = ({ address, updateAddress }) => {
     const [ city, setCity ] = useState(address.city);
     const [ state, setState ] = useState(address.state);
     const [ zipCode, setZipCode ] = useState(address.zipCode);
+    const [ selector, setSelector ] = useState('address');
 
     useEffect(() => {
         if(!address.state) {
             updateAddress({ state: 'AL' });
+        }
+        if(customSelector) {
+            setSelector(customSelector);
         }
     }, []);
 
@@ -59,7 +63,7 @@ const Address = ({ address, updateAddress }) => {
     }
 
     const handleZipCode = (data) => {
-        if(data.length > 5) {
+        if(data.length > 10) {
             return
         }
         setZipCode(data);
@@ -71,7 +75,7 @@ const Address = ({ address, updateAddress }) => {
             <AddressTopContainer>
                 <AddressInput
                     type={'input'}
-                    name={'addressFirstName'}
+                    name={`${selector}FirstName`}
                     value={firstName}
                     onChange={(e) => handleFirstName(e.target.value)}
                     placeholder={'First Name'}
@@ -79,7 +83,7 @@ const Address = ({ address, updateAddress }) => {
                 />
                 <AddressInput
                     type={'input'}
-                    name={'addressLastName'}
+                    name={`${selector}LastName`}
                     value={lastName}
                     onChange={(e) => handleLastName(e.target.value)}
                     placeholder={'Last Name'}
@@ -87,7 +91,7 @@ const Address = ({ address, updateAddress }) => {
                 />
                 <AddressInput
                     type={'input'}
-                    name={'addressAddressOne'}
+                    name={`${selector}One`}
                     value={addressOne}
                     onChange={(e) => handleAddressOne(e.target.value)}
                     placeholder={'Address Line One'}
@@ -95,7 +99,7 @@ const Address = ({ address, updateAddress }) => {
                 />
                 <AddressInput
                     type={'input'}
-                    name={'addressAddressTwo'}
+                    name={`${selector}Two`}
                     value={addressTwo}
                     onChange={(e) => handleAddressTwo(e.target.value)}
                     placeholder={'Address Line Two'}
@@ -104,20 +108,23 @@ const Address = ({ address, updateAddress }) => {
             <AddressBottomContainer>
                 <AddressCityInput
                     type={'input'}
-                    name={'addressCity'}
+                    name={`${selector}City`}
                     value={city}
                     onChange={(e) => handleCity(e.target.value)}
                     placeholder={'City'}
                 />
                 <AddressDropdown
-                    name={'addressState'}
+                    name={`${selector}State`}
+                    id={`${selector}State`}
                     value={state}
                     onChange={(e) => handleState(e.target.value)}
                     placeholder={'State'}
                 >
+                    <AddressDropdownOption key={0}  disabled value={''}> -- select an option -- </AddressDropdownOption>
                     {states.map((state, index) => 
                             <AddressDropdownOption
-                                key={index}
+                                key={index + 1}
+                                id={state.abbreviation}
                                 value={state.abbreviation}
                             >
                                 { state.abbreviation }
@@ -125,8 +132,8 @@ const Address = ({ address, updateAddress }) => {
                     )}
                 </AddressDropdown>
                 <AddressZipCodeInput
-                    type={'number'}
-                    name={'addressZipCode'}
+                    type={'string'}
+                    name={`${selector}ZipCode`}
                     value={zipCode}
                     onChange={(e) => handleZipCode(e.target.value)}
                     placeholder={'Zip Code'}
