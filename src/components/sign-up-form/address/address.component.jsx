@@ -84,9 +84,10 @@ const Address = ({ address, updateAddress }) => {
                     onChange={(e) => handleState(e.target.value)}
                     placeholder={'State'}
                 >
+                    <AddressDropdownOption key={0}  disabled value={''}> -- select an option -- </AddressDropdownOption>
                     {states.map((state, index) => 
                             <AddressDropdownOption
-                                key={index}
+                                key={index + 1}
                                 value={state.abbreviation}
                             >
                                 { state.abbreviation }

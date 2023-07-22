@@ -43,10 +43,22 @@ class LoginForm extends React.Component{
   }
 
   checkFields = () => {
-    if(this.state.email.length > 0 && this.state.password.length > 0) {
-      return true
+    if(this.state.email.length === 0 ||
+      this.state.password.length === 0) {
+      this.setState({
+        errorVisible: true,
+        errorMsg: 'Please complete all fields',
+      });
+      return false;
+    } else if (!this.state.email.includes('@') ||
+              !this.state.email.includes('.')) {
+      this.setState({
+        errorVisible: true,
+        errorMsg: 'Please enter a valid email',
+      });
+      return false;
     }
-    return false
+    return true;
   }
 
   handleSubmit = async (e) => {
@@ -54,10 +66,6 @@ class LoginForm extends React.Component{
 
     const checkFields = this.checkFields();
     if(!checkFields){
-      this.setState({
-        errorVisible: true,
-        errorMsg: 'Please complete all fields',
-      });
       return
     }
 
@@ -139,7 +147,7 @@ class LoginForm extends React.Component{
           }
           <LoginFormButtonContainer>
             {/* <Button onClick={() => window.location = '/sign-up'}>Sign Up</Button> */}
-            <Button onClick={this.handleSubmit}>Login</Button>
+            <Button onClick={this.handleSubmit}>Log In</Button>
           </LoginFormButtonContainer>
             <LoginFormText onClick={() => window.location = '/password-reset'}>Forgot Password</LoginFormText>
         </LoginFormForm>

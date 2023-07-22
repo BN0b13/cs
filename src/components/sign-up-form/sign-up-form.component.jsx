@@ -68,6 +68,22 @@ class SignUpForm extends React.Component{
     this.setState({ [name]: value });
   }
 
+  handlePhoneChange = e => {
+    const { name, value } = e.target;
+    const reg = /^\d+$/;
+    if(value === '' || (reg.test(value) && value.length <= 10)) {
+      this.setState({ [name]: value });
+    } else {
+        return
+    }
+  }
+
+  handleKeyDown = e => {
+    if(e.key === 'Enter') {
+      this.handleSignUp(e);
+    }
+  }
+
   updateBillingAddress = (data) => {
     this.setState({
       billingAddress: {
@@ -113,7 +129,6 @@ class SignUpForm extends React.Component{
 
     const checkFields = this.checkFields();
     if(!checkFields) {
-      console.log('Check Fields Failed');
       return
     }
 
@@ -162,7 +177,7 @@ class SignUpForm extends React.Component{
       <SignUpFormContainer>
         <SignUpFormTitle>SIGN UP</SignUpFormTitle>
 
-        <SignUpFormForm>
+        <SignUpFormForm onKeyDown={(e) => this.handleKeyDown(e)}>
           <SignUpFormInput
             name={'email'} 
             type={'email'}
@@ -205,7 +220,7 @@ class SignUpForm extends React.Component{
             name={'phone'}
             type={'text'}
             value={this.state.phone} 
-            onChange={this.handleChange}
+            onChange={this.handlePhoneChange}
             placeholder={'Phone'}
             required 
           />

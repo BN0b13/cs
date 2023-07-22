@@ -54,16 +54,13 @@ const AccountDetails = () => {
         }
     }, [ currentUser ]);
 
-    const handleFirstNameChange = (data) => {
-        setFirstName(data.target.value);
-    }
-
-    const handleLastNameChange = (data) => {
-        setLastName(data.target.value);
-    }
-
     const handlePhoneChange = (data) => {
-        setPhone(data.target.value);
+        const reg = /^\d+$/;
+        if(data === '' || (reg.test(data) && data.length <= 10)) {
+            setPhone(data);
+        } else {
+            return
+        }
     }
 
     const updateBillingAddress = (data) => {
@@ -126,17 +123,17 @@ const AccountDetails = () => {
                         <AccountDetailsTitle>
                             Update Account
                         </AccountDetailsTitle>
-                        <AccountDetailsInput type={'text'} name={'firstName'} value={firstName} onChange={(e) => handleFirstNameChange(e)} placeholder={'First Name'} />
-                        <AccountDetailsInput type={'text'} name={'lastName'} value={lastName} onChange={(e) => handleLastNameChange(e)}  placeholder={'Last Name'} />
-                        <AccountDetailsInput type={'number'} name={'phone'} value={phone} onChange={(e) => handlePhoneChange(e)} maxLength={10}  placeholder={'Phone'} />
+                        <AccountDetailsInput type={'text'} name={'firstName'} value={firstName} onChange={(e) => setFirstName(e.target.value)} placeholder={'First Name'} />
+                        <AccountDetailsInput type={'text'} name={'lastName'} value={lastName} onChange={(e) => setLastName(e.target.value)}  placeholder={'Last Name'} />
+                        <AccountDetailsInput type={'text'} name={'phone'} value={phone} onChange={(e) => handlePhoneChange(e.target.value)} maxLength={12}  placeholder={'Phone'} />
                         <AccountAddressContainer setMobileView={setMobileView()}>
                             <AddressContainer setMobileView={setMobileView()}>
                                 <AccountDetailsSubtitle>Billing Address</AccountDetailsSubtitle>
-                                <Address address={billingAddress} updateAddress={updateBillingAddress} />
+                                <Address address={billingAddress} updateAddress={updateBillingAddress} customSelector={'billingAddress'} />
                             </AddressContainer>
                             <AddressContainer setMobileView={setMobileView()}>
                                 <AccountDetailsSubtitle>Shipping Address</AccountDetailsSubtitle>
-                                <Address address={shippingAddress} updateAddress={updateShippingAddress} />
+                                <Address address={shippingAddress} updateAddress={updateShippingAddress} customSelector={'shippingAddress'} />
                             </AddressContainer>
                         </AccountAddressContainer>
                         {showMsg &&
