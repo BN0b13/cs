@@ -14,6 +14,7 @@ text-transform: uppercase;
 font-family: 'Open Sans Condensed';
 font-weight: bolder;
 border: 1px solid white;
+border-radius: 1px;
 cursor: pointer;
 display: flex;
 justify-content: center;

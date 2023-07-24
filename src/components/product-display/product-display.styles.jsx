@@ -1,5 +1,8 @@
 import styled from 'styled-components';
 
+import { setMobileView } from '../../tools/mobileView';
+import { api } from '../../config';
+
 import { Link } from 'react-router-dom';
 
 import {
@@ -30,12 +33,21 @@ export const ProductContainer = styled.div`
 `;
 
 export const SlideshowContainer = styled.div`
-  width: 300px;
+  width: ${setMobileView() ? '220px' : '300px'};
+`;
+
+export const DivStyle = styled.div`
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  backgroundSize: 'cover',
+  height: ${setMobileView() ? '220px' : '320px'};
+  backgroundImage: ${props => console.log(`url(${api}${props.image})`)};
 `;
 
 export const ProductButtonCount = styled.div`
   display: flex;
-  flex-direction: ${props => props.setMobileView ? 'column' : 'row'};
+  flex-direction: ${setMobileView() ? 'column' : 'row'};
 `;
 
 export const ProductCountInput = styled.input`
@@ -66,12 +78,10 @@ export const ProductTitle = styled.h5`
 `;
 
 export const ProductImage = styled.div`
-  img {
-    width: 300px;
-    height: 300px;
-    margin: 5px;
-    padding: 2px;
-  }
+  display: flex;
+  justify-content: center;
+  margin: 5px;
+  padding: 2px;
 `;
 
 export const ProductInformation = styled.div`

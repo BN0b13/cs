@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import {
+    backgroundOpacityDark,
     textColorLight
 } from '../../styles/theme';
 
@@ -10,6 +11,10 @@ export const ThankYouContainer = styled.div`
     justify-content: center;
     align-items: center;
     color: ${textColorLight};
+    background-color: ${backgroundOpacityDark};
+    max-width: 1000px;
+    margin: auto;
+    padding: 20px;
 `;
 
 export const ThankYouTitle = styled.h1`

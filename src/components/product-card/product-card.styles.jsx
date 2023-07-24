@@ -6,9 +6,11 @@ export const ProductCartContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  height: ${setMobileView() ? '200px' : '350px'};
+  height: ${setMobileView() ? '220px' : '350px'};
   align-items: center;
   position: relative;
+  background-color: rgba(0,0,0,.9);
+  padding-bottom: 10px;
 
   img {
     width: 100%;
@@ -42,11 +44,13 @@ export const Footer = styled.div`
   height: 5%;
   display: flex;
   justify-content: space-between;
-  font-size: 18px;
+  font-size: ${ setMobileView() ? '10px' : '18px'};
+  text-align: center;
 `;
 
 export const Name = styled.div`
   width: 90%;
+  margin: auto;
   margin-bottom: 15px;
 `;
 

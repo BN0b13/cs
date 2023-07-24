@@ -73,7 +73,7 @@ const Invoice = () => {
                                     { order.tracking ? 
                                         <TrackingText>{ order.tracking }</TrackingText>
                                     : 
-                                        <TrackingText>Available once order has been shipped</TrackingText>
+                                        <TrackingText>Available once order has shipped</TrackingText>
                                     }
                                 </TrackingContainer>
                             </InvoiceAddressContainer>
