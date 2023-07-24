@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import {
     backgroundOpacityLight,
     backgroundOpacityDark,
+    headerHeight,
     slideshowDimensions,
     textColorLight
 } from '../../../styles/theme';
@@ -30,7 +31,7 @@ export const WelcomeImageContainer = styled.div`
 `;
 
 export const WelcomeTextContainer = styled.div`
-    margin-top: 5vh;
+    margin-top: ${headerHeight};
     padding: 10px;
     background-color: ${backgroundOpacityDark};
     width: 80%;

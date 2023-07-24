@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { setMobileView } from '../../tools/mobileView';
+
 import {
     backgroundOpacityDark,
     bodyHeight,
@@ -10,8 +12,7 @@ export const SignUpPageContainer = styled.div`
     display: flex;
     justify-content: space-around;
     align-items: center;
-    background-color: ${backgroundOpacityDark};
+    background-color: ${setMobileView() ? '' : backgroundOpacityDark};
     color: ${textColorLight};
-    padding: 10px;
     min-height: ${bodyHeight};
 `;

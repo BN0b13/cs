@@ -10,6 +10,7 @@ import {
 } from "react-icons/vsc";
 
 import Button from '../reusable/button/button.component';
+import Slideshow from '../reusable/slideshow/slideshow.component';
 import Spinner from '../reusable/spinner/spinner.component';
 import Snackbar from '../reusable/snackbar/snackbar.component';
 
@@ -46,7 +47,7 @@ const divStyle = {
     alignItems: 'center',
     justifyContent: 'center',
     backgroundSize: 'cover',
-    height: '300px'
+    height: setMobileView() ? '220px' : '320px'
 };
 
 const ProductDisplay = ({ product }) => {
@@ -130,7 +131,7 @@ const ProductDisplay = ({ product }) => {
                         <img src={logo} alt={`${name}`} height='300' width='300' />
                         :
                         <SlideshowContainer>
-                            <Slide autoplay={false}>
+                            <Slide autoplay={false} arrows={false}>
                                 {images.map((image, index)=> (
                                         <div key={index}>
                                             <a href={image.link}>
