@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import {
-    backgroundOpacityLight,
+    backgroundOpacityDark,
     bodyHeight,
     textColorLight
 } from '../../styles/theme';
@@ -11,9 +11,10 @@ export const ThankYouContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: ${backgroundOpacityLight};
+    background-color: ${backgroundOpacityDark};
     color: ${textColorLight};
     min-height: ${bodyHeight};
+    max-width: 1000px;
 `;
 
 export const ThankYouTitle = styled.h1`

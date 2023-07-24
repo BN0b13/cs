@@ -2,6 +2,7 @@ import React from 'react';
 
 import Address from './address/address.component';
 import Button from '../reusable/button/button.component';
+import Countdown from '../reusable/countdown/countdown.component';
 import Snackbar from '../reusable/snackbar/snackbar.component';
 import Spinner from '../reusable/spinner/spinner.component';
 
@@ -52,6 +53,7 @@ class SignUpForm extends React.Component{
       emailErrMsg: 'Please use a valid email address',
       formErrVisible: false,
       formErrMsg: 'Please complete all fields to submit',
+      countdown: ''
     }
   }
 
@@ -166,7 +168,26 @@ class SignUpForm extends React.Component{
     }
   }
 
+  releaseDate = () => {
+    const today = new Date();
+    const releaseDay = new Date(2023, 7, 1);
+
+    if(today.getDate() >= releaseDay.getDate() &&
+    today.getMonth() >= releaseDay.getMonth() &&
+    today.getFullYear() >= releaseDay.getFullYear()) {
+      return true;
+    }
+
+    return false;
+  }
+
   render() {
+    if(!this.releaseDate()) {
+      return (
+        <Countdown />
+      )
+    }
+
     if(this.state.loading) {
       return (
         <Spinner />

@@ -4,6 +4,10 @@ import {
 } from 'react-icons/fa';
 
 import {
+  SlPresent
+} from 'react-icons/sl';
+
+import {
   VscAccount,
   VscHistory,
   VscSettingsGear
@@ -15,10 +19,11 @@ export const menuItemsPublic = [
       path: '/shop',
       icon: (<FaStoreAlt />)
     },
-    // {
-    //   title: 'About',
-    //   path: '/about',
-    // },
+    {
+      title: 'Freebies',
+      path: '/about',
+      icon: (<SlPresent />)
+    },
 ];
 
 export const menuItemsLoggedIn = [

@@ -23,7 +23,7 @@ const ProductCard = ({ product }) => {
             <Button 
                 buttonType={BUTTON_TYPE_CLASSES.inverted}
             >
-                STATS
+                CHECK IT OUT
             </Button>
         </ProductCartContainer>
     )
