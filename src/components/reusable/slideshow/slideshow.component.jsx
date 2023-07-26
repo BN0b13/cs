@@ -10,6 +10,8 @@ import {
   slideshowSpanText
 } from '../../../styles/theme';
 
+import icon from '../../../assets/img/icon.png';
+
 
 const spanStyle = {
   padding: '20px',

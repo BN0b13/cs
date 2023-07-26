@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import About from '../../components/home/about/about.component';
+import Freebies from '../../components/home/freebies/freebies.component';
 import ComponentSlideshow from '../../components/reusable/component-slideshow/component-slideshow.component';
 import InfoLinks from '../../components/home/info-links/info-links.components';
 import Spinner from '../../components/reusable/spinner/spinner.component';
@@ -42,7 +42,7 @@ const HomePage = () => {
             :
                 <ComponentSlideshow products={products} categories={categories} />
             }
-            <About />
+            <Freebies />
         </HomePageContainer>
     );
 };

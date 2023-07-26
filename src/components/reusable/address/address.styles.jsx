@@ -1,9 +1,11 @@
 import styled from 'styled-components';
 
+import { setMobileView } from '../../../tools/mobileView';
+
 export const AddressContainer = styled.div`
     display: flex;
     flex-direction: column;
-    width: 320px;
+    width: ${setMobileView() ? '280px' : '320px'};
 `;
 
 export const AddressTopContainer = styled.div`
@@ -21,25 +23,25 @@ export const AddressBottomContainer = styled.div`
 `;
 
 export const AddressInput = styled.input`
-    width: 300px;
+    width:  ${setMobileView() ? '260px' : '300px'};
     margin: 5px 0;
     padding: 3px;
 `;
 
 export const AddressZipCodeInput = styled.input`
-    width: 60px;
+    width:  ${setMobileView() ? '45px' : '55px'};
     margin: 5px 0;
     padding: 3px;
 `;
 
 export const AddressCityInput = styled.input`
-    width: 160px;
+    width:  ${setMobileView() ? '145px' : '160px'};
     margin: 5px 0;
     padding: 3px;
 `;
 
 export const AddressDropdown = styled.select`
-    width: 50px;
+    width:  ${setMobileView() ? '40px' : '50px'};
     margin: 5px 10px;
 `;
 

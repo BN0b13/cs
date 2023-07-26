@@ -1,11 +1,14 @@
 import styled from 'styled-components';
 
+import { setMobileView } from '../../../tools/mobileView';
+
 export const InvoiceContainer = styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
     max-width: 1000px;
     padding: 5px;
+    margin: auto;
 `;
 
 export const InvoiceDetailsContainer = styled.div`
@@ -35,7 +38,7 @@ export const InvoiceHeaderContainer = styled.div`
 export const InvoiceTotalContainer = styled.div`
     display: flex;
     flex-direction: column;
-    align-items: end;
+    align-items: ${setMobileView() ? 'center' : 'end'};
     margin-top: 40px;
 `;
 
@@ -81,7 +84,7 @@ export const InvoiceTable = styled.table`
 `;
 
 export const InvoiceTableHead = styled.thead`
-
+    font-size: 18px;
 `;
 
 export const InvoiceTableBody = styled.tbody`

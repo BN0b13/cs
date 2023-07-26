@@ -9,8 +9,8 @@ const InfoLinks = () => {
 
     return (
         <MainContainer>
-            <InfoLinksButton onClick={() => window.location.href = '/about'}>Freebies</InfoLinksButton>
             <InfoLinksButton onClick={() => window.location.href = '/sign-up'}>Sign Up</InfoLinksButton>
+            <InfoLinksButton onClick={() => window.location.href = '/about'}>About Us</InfoLinksButton>
         </MainContainer>
     )
 }
