@@ -20,7 +20,10 @@ const CategoriesPreview = () => {
     useEffect(() => {
         const getCategories = async () => {
             const res = await client.getCategories();
-            setCategories(res.rows);
+
+            const availableCategories = res.rows.filter(category => category.status);
+
+            setCategories(availableCategories);
         }
         getCategories();
     }, []);

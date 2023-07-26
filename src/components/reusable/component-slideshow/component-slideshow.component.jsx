@@ -60,7 +60,7 @@ const ComponentSlideshow = ({ products, categories }) => {
 
     return (
       <MainContainer>
-        <Slide autoplay={autoPlay} arrows={autoPlay} duration={7000}>
+        <Slide autoplay={autoPlay} arrows={autoPlay} duration={5000}>
             {productArray.map((productGroup, index)=> (
             <ContentContainer key={index}>
               {productGroup.current.map((product, index) => (

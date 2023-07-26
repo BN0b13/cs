@@ -4,7 +4,6 @@ export const OrdersContainer = styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
-    
 `;
 
 export const OrdersTitle = styled.h2`

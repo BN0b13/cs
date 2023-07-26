@@ -1,7 +1,10 @@
 import styled from 'styled-components';
 
+import { setMobileView } from '../../../tools/mobileView';
+
 import {
-    textColorDark
+    textColorDark,
+    textColorLight
 } from '../../../styles/theme';
 
 export const CheckoutTotalContainer = styled.div`
@@ -10,7 +13,8 @@ export const CheckoutTotalContainer = styled.div`
     justify-content: center;
     align-items: center;
     width: 100%;
-    margin-top: 0;
+    margin-top: ${setMobileView() ? '10px' : '40px'};
+    color: ${textColorLight}
 `;
 
 export const CartInsuranceContainer = styled.div`

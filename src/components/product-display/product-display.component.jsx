@@ -104,6 +104,7 @@ const ProductDisplay = ({ product }) => {
             message('This product is no longer available.');
             return;
         }
+        
         addItemToCart({productId: id, quantity});
         message('Product added to cart.', 'success');
     }
@@ -152,7 +153,7 @@ const ProductDisplay = ({ product }) => {
                     <ProductDescriptionText>{description}</ProductDescriptionText>
                     <ProductSubtext>Lineage: {mother} x {father}</ProductSubtext>
                     <ProductSubtext>Time: {time}</ProductSubtext>
-                    <ProductSubtext>Pack: 10+ {sex} seeds</ProductSubtext>
+                    <ProductSubtext>{product.Inventories[0].size} - {sex}</ProductSubtext>
                     <ProductSubtext>Price: {convertProductPrice(price)}</ProductSubtext>
                     <ProductButtonContainer>
                         <ProductButtonCount setMobileView={setMobileView()}>

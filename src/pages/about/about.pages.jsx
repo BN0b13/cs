@@ -1,12 +1,15 @@
 import React from 'react';
 
-import freebies from '../../assets/img/about.jpg';
+import Button from '../../components/reusable/button/button.component';
+
+import logo from '../../assets/img/logo.png';
 
 import {
     AboutPageContainer,
     AboutPageImage,
     AboutPageText,
     AboutPageTitle,
+    ButtonContainer,
     ContentContainer
 } from './about.styles';
 
@@ -14,10 +17,13 @@ const AboutPage = () => {
     return (
         <AboutPageContainer>
             <ContentContainer>
-                <AboutPageImage src={freebies} />
-                <AboutPageTitle>Freebies</AboutPageTitle>
-                <AboutPageText>Free seeds with every pack of collectible seeds ordered! Here at Cosmic Strains we wanted to make creating your cannabis seed collection as fun as possible. And who doesn't get excited about freebies?! We are offering a free quarter pack of regular seeds with every full pack of seeds purchased. That's 3 additional seeds with every pack! And the best part - All freebies are UNRELEASED STRAINS!</AboutPageText>
+                <AboutPageImage src={logo} />
+                <AboutPageTitle>About Us</AboutPageTitle>
+                <AboutPageText>Our mission is to create the most stable and potent genetics around. Our journey will result in more F1's than we can ever get to which means our customers end up with strains no one else has. We pride ourselves in our collection of the rarest and most sought after strains. Please join us on our journey and browse our shop. You never know what you will come across.</AboutPageText>
             </ContentContainer>
+            <ButtonContainer>
+                <Button onClick={() => window.location.href = '/shop'}>SHOP NOW</Button>
+            </ButtonContainer>
         </AboutPageContainer>
     );
 };
