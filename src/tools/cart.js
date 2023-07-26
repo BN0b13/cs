@@ -38,6 +38,8 @@ export const addCartItem = async (productToAdd) => {
 
     let cart = [...cartItems, { ...productToAdd }];
 
+    console.log('Cart, what are you? ', cart);
+
     if(existingCartItem) {
         cart = cartItems.map(
             (cartItem) => cartItem.productId === productToAdd.productId ? 
@@ -86,6 +88,7 @@ export const removeCartItem = async (cartItemToRemove) => {
 }
 
 export const modifyCart = async (data) => {
+    console.log('Data: ', data);
     await client.modifyCart({products: data});
     const res = await client.getCart();
     return res.rows[0].products;

@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { setMobileView } from '../../tools/mobileView';
+
 import {
     backgroundOpacityDark,
     bodyHeight,
@@ -9,16 +11,19 @@ import {
 export const DisplayContainer = styled.div`
     display: flex;
     flex-direction: column;
-    align-items: center;
-    width: 100%;
+    align-items: 'center';
+    justify-content: ${setMobileView() ? 'center' : ''};
+    width: '100%';
     background-color: ${backgroundOpacityDark};
     color: ${textColorLight};
     min-height: ${bodyHeight};
+    padding: 10px;
 `;
 
 export const ContentContainer = styled.div`
     display: flex;
-    flex-direction: ${props => props.setMobileView ? 'column' : 'row'};
+    flex-direction: ${setMobileView() ? 'column' : 'row'};
+    align-items: ${setMobileView() ? 'center' : ''};
     justify-content: center;
     width: 100%;
 `;
@@ -26,7 +31,7 @@ export const ContentContainer = styled.div`
 export const CheckoutFormsContainer = styled.div`
     display: flex;
     flex-direction: column;
-    max-width: 60%;
+    max-width: ${setMobileView() ? '100%' : '60%'};
 `;
 
 export const AddressContainer = styled.div`
@@ -47,7 +52,6 @@ export const BackButtonContainer = styled.div`
     justify-content: start;
     align-items: center;
     width: 100%;
-     margin-top: 20px;
 `;
 
 export const CheckoutPageTitle = styled.h1`

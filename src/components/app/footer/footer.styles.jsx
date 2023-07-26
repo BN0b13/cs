@@ -6,8 +6,9 @@ import {
     textColorLight
 } from '../../../styles/theme';
 
-export const FooterContainer = styled.div`
+export const MainContainer = styled.div`
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 2.5rem;
@@ -18,6 +19,43 @@ export const FooterContainer = styled.div`
     min-height: ${footerHeight};
 `;
 
+export const FooterContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    
+`;
+
+export const IconContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    width: 50px;
+    cursor: pointer;
+    margin-top: 5px;
+`;
+
+export const DisclaimerContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+`;
+
 export const FooterText = styled.h4`
     
+`;
+
+export const DisclaimerText = styled.p`
+    padding: 0px;
+    margin: 2px;
+    font-size: 8px;
+    width: 50%;
 `;

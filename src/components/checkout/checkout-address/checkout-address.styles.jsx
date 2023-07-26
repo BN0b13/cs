@@ -1,17 +1,21 @@
 import styled from 'styled-components';
 
+import { setMobileView } from '../../../tools/mobileView';
+
 export const CheckoutAddressContainer = styled.div`
     display: flex;
-    flex-direction: ${params => params.setMobileView ? 'column' : 'row'};
+    flex-direction: ${setMobileView() ? 'column' : 'row'};
     justify-content: center;
+    align-items: ${setMobileView() ? 'center' : ''};
     width: 100%;
-    padding: 10px;
+    padding: ${setMobileView() ? '0px' : '10px'};
 `;
 
 export const CheckoutAddressesContainer = styled.div`
     display: flex;
     flex-direction: column;
-    width: ${params => params.setMobileView ? '100%' : '50%'};
+    align-items: ${setMobileView() ? 'center' : ''};
+    width: ${setMobileView() ? '100%' : '50%'};
     margin: 10px;
 `;
 

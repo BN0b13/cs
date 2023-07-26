@@ -1,11 +1,8 @@
 import {
   FaRegAddressCard,
+  FaPeopleArrows,
   FaStoreAlt
 } from 'react-icons/fa';
-
-import {
-  SlPresent
-} from 'react-icons/sl';
 
 import {
   VscAccount,
@@ -20,9 +17,9 @@ export const menuItemsPublic = [
       icon: (<FaStoreAlt />)
     },
     {
-      title: 'Freebies',
+      title: 'About',
       path: '/about',
-      icon: (<SlPresent />)
+      icon: (<FaPeopleArrows />)
     },
 ];
 

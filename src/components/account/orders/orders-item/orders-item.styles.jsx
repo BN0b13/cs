@@ -1,8 +1,12 @@
 import styled from 'styled-components';
 
+import {
+    textColorLight
+} from '../../../../styles/theme';
+
 export const OrdersItemRow = styled.tr`
     cursor: pointer;
-    background-color: #f4f4f4;
+    color: ${textColorLight};
 `;
 
 export const OrdersItemData = styled.td`

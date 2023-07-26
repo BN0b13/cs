@@ -12,6 +12,7 @@ export const AboutPageContainer = styled.div`
     background-color: ${backgroundOpacityDark};
     color: ${textColorLight};
     min-height: ${bodyHeight};
+    padding-bottom: 40px;
 `;
 
 export const ContentContainer = styled.div`
@@ -20,6 +21,15 @@ export const ContentContainer = styled.div`
     justify-content: space-around;
     align-items: center;
     padding: 10px;
+`;
+
+export const ButtonContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    margin: 30px;
 `;
 
 export const AboutPageTitle = styled.h2`
