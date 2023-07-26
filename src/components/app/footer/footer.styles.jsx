@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { setMobileView } from '../../../tools/mobileView';
+
 import {
     backgroundOpacityPages,
     footerHeight,
@@ -11,7 +13,6 @@ export const MainContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 2.5rem;
     padding:20px;
     position: static;
     background-color: ${backgroundOpacityPages};
@@ -24,7 +25,6 @@ export const FooterContainer = styled.div`
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    
 `;
 
 export const IconContainer = styled.div`
@@ -32,10 +32,7 @@ export const IconContainer = styled.div`
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    height: 50px;
-    width: 50px;
     cursor: pointer;
-    margin-top: 5px;
 `;
 
 export const DisclaimerContainer = styled.div`
@@ -50,7 +47,7 @@ export const DisclaimerContainer = styled.div`
 `;
 
 export const FooterText = styled.h4`
-    
+    font-size: ${setMobileView() ? '12px' : ''}
 `;
 
 export const DisclaimerText = styled.p`
