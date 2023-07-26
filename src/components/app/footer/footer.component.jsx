@@ -3,6 +3,7 @@ import React from 'react';
 import {
   FaInstagram
 } from 'react-icons/fa';
+import { setMobileView } from '../../../tools/mobileView';
 
 import {
   DisclaimerContainer,
@@ -16,7 +17,7 @@ import {
 const Footer = () => (
   <MainContainer>
     <IconContainer onClick={() => window.location.href = 'https://www.instagram.com/cosmicstrainsofficial'}>
-      <FaInstagram size='28px' />
+      <FaInstagram size={setMobileView() ? '14' : '28'} />
     </IconContainer>
     <FooterContainer>
       <FooterText>Copyright ©2023 Cosmic Strains</FooterText>
