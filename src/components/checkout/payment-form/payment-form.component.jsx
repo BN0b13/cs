@@ -1,6 +1,11 @@
 import * as React from 'react';
 import { CreditCard, PaymentForm } from 'react-square-web-payments-sdk';
 
+import {
+    applicationId,
+    locationId
+} from '../../../config';
+
 const SquarePaymentForm = ({ checkout, buyerData }) => {
     const {
         addressOne,
@@ -15,8 +20,8 @@ const SquarePaymentForm = ({ checkout, buyerData }) => {
     
     return (
         <PaymentForm
-            applicationId="sandbox-sq0idb-wAAZDz9Xx5Beoj5k-pouZw"
-            locationId="LDWV9E78P568R"
+            applicationId={applicationId}
+            locationId={locationId}
             cardTokenizeResponseReceived={async (token, buyer) => {
                 await checkout({ token, buyer });
             }}
