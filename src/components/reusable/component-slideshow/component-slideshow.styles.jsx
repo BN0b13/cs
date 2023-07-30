@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import { setMobileView } from '../../../tools/mobileView';
 
 import {
-    componentSlideshowDimensions
+    componentSlideshowHeight,
+    componentSlideshowWidth
 } from '../../../styles/theme';
 
 export const MainContainer = styled.div`
@@ -13,7 +14,7 @@ export const MainContainer = styled.div`
     padding: auto;
     width: 90%;
     color: #fff;
-    height: ${setMobileView() ? '340px' : '550px'};
+    height: ${setMobileView() ? '360px' : '550px'};
 `;
 
 export const MainTitle = styled.h2`
@@ -31,8 +32,8 @@ export const ContentContainer = styled.div`
 `;
 
 export const Content = styled.div`
-    height: ${componentSlideshowDimensions};
-    width: ${componentSlideshowDimensions};
+    height: ${componentSlideshowHeight};
+    width: ${componentSlideshowWidth};
     margin: 0 20px;
 `;
 

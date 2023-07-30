@@ -25,5 +25,6 @@ export const footerHeight = '12vh';
 // Slideshow
 
 export const slideshowDimensions = setMobileView() ? '200px' : setTabletView() ? '300px' : '600px';
-export const componentSlideshowDimensions = setMobileView() ? '220px' : setTabletView() ? '240px' : '300px';
+export const componentSlideshowHeight = setMobileView() ? '260px' : setTabletView() ? '280px' : '350px';
+export const componentSlideshowWidth = setMobileView() ? '200px' : setTabletView() ? '200px' : '230px';
 export const slideshowSpanText = setMobileView() ? '15px' : '25px';
