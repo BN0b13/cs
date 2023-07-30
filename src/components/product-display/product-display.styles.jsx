@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import { setMobileView } from '../../tools/mobileView';
+
 import { api } from '../../config';
 
 import { Link } from 'react-router-dom';
@@ -36,15 +37,6 @@ export const SlideshowContainer = styled.div`
   width: ${setMobileView() ? '220px' : '300px'};
 `;
 
-export const DivStyle = styled.div`
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  backgroundSize: 'cover',
-  height: ${setMobileView() ? '220px' : '320px'};
-  backgroundImage: ${props => console.log(`url(${api}${props.image})`)};
-`;
-
 export const ProductButtonCount = styled.div`
   display: flex;
   flex-direction: ${setMobileView() ? 'column' : 'row'};
@@ -72,7 +64,7 @@ export const FavoriteContainer = styled.div`
   width: 100%;
 `;
 
-export const ProductTitle = styled.h5`
+export const ProductTitle = styled.h4`
   text-align: start;
   margin-top: 10px;
 `;
@@ -86,15 +78,16 @@ export const ProductImage = styled.div`
 
 export const ProductInformation = styled.div`
   text-align: left;
-  margin: 5px;
+  margin: ${setMobileView() ? '5px 5px 30px 5px' : '5px'};
   padding: 2px
 `;
 
 export const ProductQuantityContainer = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: center;
   align-items: center;
-  margin-right: 20px;
+  margin: ${setMobileView() ? '10px 30px 30px 30px' : '0 20px 0 0'};
 `;
 
 export const ProductText = styled.h2`

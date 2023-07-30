@@ -6,6 +6,10 @@ import {
     textColorLight
 } from '../../styles/theme';
 
+export const MainContainer = styled.div`
+    
+`;
+
 export const ShopLink = styled(Link)`
     cursor: pointer;
     text-decoration: none;
@@ -16,14 +20,17 @@ export const CategoryLink = styled(Link)`
     cursor: pointer;
     text-decoration: none;
     color: ${textColorLight};
+    margin: auto;
 `;
 
 export const CategoryContainer = styled.div`
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fill, 300px);
     column-gap: 20px;
     row-gap: 50px;
-    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
 `;
 
 export const CategoryContainerMobile = styled.div`
@@ -33,7 +40,7 @@ export const CategoryContainerMobile = styled.div`
     padding: 10px;
 `;
 
-export const CategoryTitle = styled.h2`
+export const CategoryTitle = styled.h4`
     text-align: start;
-    margin: 2vh 0;
+    margin-top: 10px;
 `;

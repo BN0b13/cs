@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+import {
+    textColorLight
+} from '../../../styles/theme';
+
 export const OrdersContainer = styled.div`
     display: flex;
     flex-direction: column;
@@ -8,6 +12,7 @@ export const OrdersContainer = styled.div`
 
 export const OrdersTitle = styled.h2`
     text-align: center;
+    margin: 30px 0;
 `;
 
 export const OrdersText = styled.h4`
@@ -16,12 +21,14 @@ export const OrdersText = styled.h4`
 `;
 
 export const OrderTable = styled.table`
+    border: 1px solid ${textColorLight};
+    border-collapse: collapse;
     text-align: center;
-    
 `;
 
 export const OrderTableHead = styled.thead`
-    text-align: center;
+    padding: 12px 8px;
+    border: 1px solid ${textColorLight};
 `;
 
 export const OrderTableBody = styled.tbody`
@@ -29,9 +36,11 @@ export const OrderTableBody = styled.tbody`
 `;
 
 export const OrderTableRow = styled.tr`
-    text-align: center;
+    padding: 12px 8px;
+    border: 1px solid ${textColorLight};
 `;
 
 export const OrderTableHeading = styled.th`
-    text-align: center;
+    padding: 12px 8px;
+    border: 1px solid ${textColorLight};
 `;

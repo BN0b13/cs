@@ -28,7 +28,8 @@ import {
     CheckoutTotalText,
     InsuranceInfoText,
     InsuranceInfoContainer,
-    InsuranceInfoCloseContainer
+    InsuranceInfoCloseContainer,
+    SquareContainer
 } from './checkout-total.styles';
 
 const client = new Client();
@@ -140,17 +141,19 @@ const CheckoutTotal = () => {
                         </CheckoutTotalText>
                     </CartFinalTotalContainer>
                 </CartDetailsContainer>
-                <SquarePaymentForm
-                    buyerData={{
-                        addressOne: billingAddress.addressOne,
-                        addressTwo: billingAddress.addressTwo,
-                        total,
-                        city: billingAddress.city,
-                        givenName: billingAddress.firstName,
-                        familyName: billingAddress.lastName
-                    }}
-                    checkout={checkout}
-                />
+                <SquareContainer>
+                    <SquarePaymentForm
+                        buyerData={{
+                            addressOne: billingAddress.addressOne,
+                            addressTwo: billingAddress.addressTwo,
+                            total,
+                            city: billingAddress.city,
+                            givenName: billingAddress.firstName,
+                            familyName: billingAddress.lastName
+                        }}
+                        checkout={checkout}
+                    />
+                </SquareContainer>
             </>
             }
         </CheckoutTotalContainer>

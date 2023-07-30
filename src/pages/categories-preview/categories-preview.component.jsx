@@ -4,7 +4,6 @@ import Spinner from '../../components/reusable/spinner/spinner.component';
 import CategoryCard from './category-card/category-card.component';
 
 import Client from '../../tools/client';
-import { setMobileView } from '../../tools/mobileView';
 
 import {
     CategoryCardContainer,
@@ -33,7 +32,7 @@ const CategoriesPreview = () => {
             {!categories ?
                 <Spinner />
             :
-                <Preview setMobileView={setMobileView()}>
+                <Preview>
                     { categories.map((category, index) => {
                         return(
                             <CategoryCardContainer key={index} onClick={() => window.location = `/shop/${category.name}`}>

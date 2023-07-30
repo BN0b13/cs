@@ -8,6 +8,7 @@ import { CartContext } from '../../contexts/cart.context';
 
 import {
     CartCollapseButtonContainer,
+    CartItemsContainer,
     CartPageContainer,
     CartPageEmpty,
     CartPageTitle,
@@ -45,16 +46,17 @@ const CartPage = () => {
             { !cart ?  
                 <Spinner />
             :
-                <>
-                    {cart.length === 0 ?
-                        <CartPageEmpty>Your Cart is Empty</CartPageEmpty>
-                    :
-                     <>
-                        {
-                            cart.map((item, index) => 
-                                <CartItem key={index} quantity={item.quantity} product={item.product[0]} />
-                            )
-                        }
+                cart.length === 0 ?
+                    <CartPageEmpty>Your Cart is Empty</CartPageEmpty>
+                :
+                    <>
+                        <CartItemsContainer>
+                            {
+                                cart.map((item, index) => 
+                                    <CartItem key={index} quantity={item.quantity} product={item.product[0]} />
+                                )
+                            }
+                        </CartItemsContainer>
                         <SubtotalContainer>
                             <SubtotalText>
                                 Subtotal:
@@ -66,9 +68,7 @@ const CartPage = () => {
                         <CartCollapseButtonContainer>
                             <Button onClick={() => window.location = '/checkout'}>Checkout</Button>
                         </CartCollapseButtonContainer>
-                     </>
-                    }
-                </>
+                    </>
             }
         </CartPageContainer>
     );
