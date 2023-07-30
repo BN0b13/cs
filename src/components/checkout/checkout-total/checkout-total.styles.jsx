@@ -4,7 +4,8 @@ import { setMobileView } from '../../../tools/mobileView';
 
 import {
     textColorDark,
-    textColorLight
+    textColorLight,
+    backgroundOpacityLight
 } from '../../../styles/theme';
 
 export const CheckoutTotalContainer = styled.div`
@@ -24,6 +25,10 @@ export const CartInsuranceContainer = styled.div`
     align-items: center;
     margin-bottom: 20px;
     width: 100%;
+`;
+
+export const SquareContainer = styled.div`
+    margin: 20px;
 `;
 
 export const CartInsuranceInput = styled.input`

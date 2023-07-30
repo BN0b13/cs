@@ -1,30 +1,33 @@
 import logo from '../../assets/img/logo.png';
 
+import { api } from '../../config';
+
 import {
     ProductCartContainer,
     Footer,
     Name,
-    // Price
+    Price,
+    ProductImage
 } from './product-card.styles';
 
-import Button, { BUTTON_TYPE_CLASSES } from '../reusable/button/button.component';
-
 const ProductCard = ({ product }) => {
+    let imageUrl = '';
+    if(product.ProductImages.length > 0) {
+        imageUrl = `${api}${product.ProductImages[0].path}`;
+    }
     const { name } = product;
 
     return (
         <ProductCartContainer>
-            <img src={logo} alt={`${name}`} />
-            {/* <img src={imageUrl} alt={`${name}`} /> */}
+            {imageUrl.length > 0 ?
+                <ProductImage src={imageUrl} alt={`${name}`} />
+            :
+                <ProductImage src={logo} alt={`${name}`} />
+            }
             <Footer>
                 <Name as='span'>{ name }</Name>
                 {/* <Price as='span'>{ price }</Price> */}
             </Footer>
-            <Button 
-                buttonType={BUTTON_TYPE_CLASSES.inverted}
-            >
-                CHECK IT OUT
-            </Button>
         </ProductCartContainer>
     )
 }

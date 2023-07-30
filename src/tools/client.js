@@ -88,6 +88,13 @@ export default class Client {
         return res;
     }
 
+    async getCategoryByName(category) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.get);
+        const categoryRes = await fetch(`${api}/categories/name/${category}`, requestOptions);
+        const res = await categoryRes.json();
+        return res;
+    }
+
     async getCart() {
         const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
         const cart = await fetch(`${api}/cart`, requestOptions);
@@ -168,6 +175,13 @@ export default class Client {
     async isEmailTokenValid() {
         const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
         const isEmailTokenValid = await fetch(`${api}/user/email-token/verify`, requestOptions);
+        const res = await isEmailTokenValid.json();
+        return res;
+    }
+
+    async isPasswordRestTokenValid(token) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
+        const isEmailTokenValid = await fetch(`${api}/user/reset-password-token/verify/${token}`, requestOptions);
         const res = await isEmailTokenValid.json();
         return res;
     }

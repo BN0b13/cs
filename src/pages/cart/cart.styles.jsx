@@ -13,6 +13,12 @@ export const CartPageContainer = styled.div`
     background-color: ${backgroundOpacityDark};
     color: ${textColorLight};
     min-height: ${bodyHeight};
+    padding: 0;
+`;
+
+export const CartItemsContainer = styled.div`
+    margin: 30px 0;
+    width: 100%;
 `;
 
 export const CartPageTitle = styled.h1`
@@ -23,7 +29,7 @@ export const SubtotalContainer = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: end;
-    width: 100%;
+    width: 70%;
 `;
 
 export const SubtotalText = styled.h2`

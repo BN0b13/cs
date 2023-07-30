@@ -12,7 +12,7 @@ export const SignUpPageContainer = styled.div`
     display: flex;
     justify-content: space-around;
     align-items: center;
-    background-color: ${setMobileView() ? '' : backgroundOpacityDark};
+    background-color: ${backgroundOpacityDark};
     color: ${textColorLight};
     min-height: ${bodyHeight};
 `;

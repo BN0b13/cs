@@ -1,16 +1,20 @@
 import styled from 'styled-components';
 
+import { setMobileView } from '../../../tools/mobileView';
+
 export const CategoryCardContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  height: 350px;
-  align-items: center;
-  position: relative;
+width: 100%;
+display: flex;
+flex-direction: column;
+height: ${setMobileView() ? '260px' : '350px'};
+align-items: center;
+position: relative;
+background-color: rgba(0,0,0,.9);
+padding-bottom: 10px;
 
   img {
     width: 100%;
-    height: 95%;
+    height: 90%;
     object-fit: cover;
     margin-bottom: 5px;
   }
@@ -37,7 +41,7 @@ export const CategoryCardContainer = styled.div`
 
 export const Footer = styled.div`
   width: 100%;
-  height: 5%;
+  height: 10%;
   display: flex;
   justify-content: space-between;
   font-size: 18px;
@@ -45,10 +49,6 @@ export const Footer = styled.div`
 `;
 
 export const Name = styled.div`
-  width: 90%;
+  width: 100%;
   margin-bottom: 15px;
-`;
-
-export const Price = styled.div`
-  width: 10%;
 `;
