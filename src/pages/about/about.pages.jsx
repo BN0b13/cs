@@ -36,10 +36,6 @@ const AboutPage = () => {
                 </ContentTextContainer>
                 <ContentTextContainer>
                     <AboutPageTextBold>PHASE 0</AboutPageTextBold>
-                    <AboutPageText> Phase 0 will last until some time in 2025. During which we will be launching a number of different and interesting lines. Each line will represent one of the terpene or plant characteristics we are after.</AboutPageText>
-                </ContentTextContainer>
-                <ContentTextContainer>
-                    <AboutPageTextBold>PHASE 0</AboutPageTextBold>
                     <AboutPageText>Phase 0 will last until some time in 2025. During which we will be launching a number of different and interesting lines. Each line will represent one of the terpene or plant characteristics we are after.</AboutPageText>
                 </ContentTextContainer>
                 <ContentTextContainer>
