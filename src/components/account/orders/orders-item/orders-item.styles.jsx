@@ -10,5 +10,9 @@ export const OrdersItemRow = styled.tr`
 `;
 
 export const OrdersItemData = styled.td`
-    
+    border: 1px solid ${textColorLight};
+`;
+
+export const DataText = styled.h5`
+
 `;

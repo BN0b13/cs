@@ -32,7 +32,6 @@ export const CHECKOUT_ACTION_TYPES = {
 }
 
 const checkoutReducer = (state, action) => {
-    // console.log('Action: ', action);
     const { type, payload } = action;
 
     switch(type) {

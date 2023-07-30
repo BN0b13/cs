@@ -11,6 +11,18 @@ export const InvoiceContainer = styled.div`
     margin: auto;
 `;
 
+export const PrintButtonContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+`;
+
+export const PrintContent = styled.div`
+    padding: 40px;
+`;
+
 export const InvoiceDetailsContainer = styled.div`
     display: flex;
     flex-direction: ${props => props.setMobileView ? 'column' : 'row'};
@@ -97,4 +109,8 @@ export const InvoiceTableRow = styled.tr`
 
 export const InvoiceTableHeading = styled.th`
     
+`;
+
+export const PageBackLink = styled.h4`
+    cursor: pointer;
 `;

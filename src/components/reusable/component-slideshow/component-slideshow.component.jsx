@@ -4,7 +4,7 @@ import 'react-slideshow-image/dist/styles.css';
 
 import ProductCard from '../../product-card/product-card.component';
 
-import { setMobileView } from '../../../tools/mobileView';
+import { setMobileView, setTabletView } from '../../../tools/mobileView';
 
 import {
   Content,
@@ -14,7 +14,8 @@ import {
 } from './component-slideshow.styles';
 
 const ComponentSlideshow = ({ products, categories }) => {
-  const amountDisplayed = setMobileView() ? 1 : 3;
+  const mainViewAmount = setTabletView() ? 2 : 3;
+  const amountDisplayed = setMobileView() ? 1 : mainViewAmount;
   const [ autoPlay, setAutoPlay ] = useState(true);
   const [ productArray, setProductArray ] = useState([]);
   

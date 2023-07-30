@@ -37,6 +37,7 @@ const SquarePaymentForm = ({ checkout, buyerData }) => {
             currencyCode: 'USD',
             intent: 'CHARGE',
             })}
+            style={{color: '#fff !important'}}
         >
             <CreditCard />
         </PaymentForm>

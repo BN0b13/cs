@@ -31,7 +31,7 @@ const Orders = () => {
 
     return (
         <OrdersContainer>
-            <OrdersTitle>Orders</OrdersTitle>
+            <OrdersTitle>Order History</OrdersTitle>
             {!orders ?
                 <Spinner />
             :

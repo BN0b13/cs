@@ -4,10 +4,7 @@ import {
     CategoryCardContainer,
     Footer,
     Name
-    // Price
 } from './category-card.styles';
-
-import Button, { BUTTON_TYPE_CLASSES } from '../../../components/reusable/button/button.component';
 
 const CategoryCard = ({ category }) => {
 
@@ -18,11 +15,6 @@ const CategoryCard = ({ category }) => {
             <Footer>
                 <Name>{ category.name }</Name>
             </Footer>
-            <Button 
-                buttonType={BUTTON_TYPE_CLASSES.inverted}
-            >
-                FULL LINE
-            </Button>
         </CategoryCardContainer>
     )
 }

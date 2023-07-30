@@ -1,14 +1,22 @@
 import styled from 'styled-components';
 
+import { setMobileView } from '../../tools/mobileView';
+
 export const SignUpFormContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    max-width: 600px;
+    padding: 20px 0;
+`;
+
+export const TextContainer = styled.div`
+    padding: ${setMobileView() ? '0 5px' : ''};
 `;
 
 export const SignUpFormButtonContainer = styled.div`
-    margin-top: 10px;
+    margin: 20px 0;
     display: flex;
 `;
 
@@ -24,6 +32,10 @@ export const SignUpFormInput = styled.input`
     padding: 3px;
 `;
 
-export const SignUpFormTitle = styled.h1`
+export const SignUpFormTitle = styled.h2`
+    text-align: center;
+`;
+
+export const SignUpFormText = styled.p`
     text-align: center;
 `;

@@ -10,8 +10,10 @@ export const MainContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
+    padding: auto;
     width: 90%;
     color: #fff;
+    height: ${setMobileView() ? '340px' : '550px'};
 `;
 
 export const MainTitle = styled.h2`
@@ -25,7 +27,7 @@ export const ContentContainer = styled.div`
     justify-content: space-around;
     align-items: center;
     padding: 0 30px;
-    height: ${setMobileView() ? '320px' : '550px'};
+    height: 100%;
 `;
 
 export const Content = styled.div`

@@ -23,6 +23,15 @@ export const ContentContainer = styled.div`
     padding: 10px;
 `;
 
+export const ContentTextContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: ${ props => props.topContainer ? '0' : '40px'};
+    width: ${setMobileView() ? '100%' : '60%'};
+`;
+
 export const ButtonContainer = styled.div`
     display: flex;
     flex-direction: column;
@@ -36,8 +45,14 @@ export const AboutPageTitle = styled.h2`
     
 `;
 
+export const AboutPageTextBold = styled.span`
+    font-weight: bold;
+    font-size: ${setMobileView() ? '22px' : '28px'};
+    margin-right: 5px;
+`;
+
 export const AboutPageText = styled.h4`
-    width: ${setMobileView() ? '100%' : '60%'};
+    
 `;
 
 export const AboutPageImage = styled.img`

@@ -1,23 +1,16 @@
 import styled from 'styled-components';
 
-import { setMobileView } from '../../tools/mobileView';
+import { setMobileView, setTabletView } from '../../tools/mobileView';
 
 export const ProductCartContainer = styled.div`
-  width: 100%;
+  width: ${setTabletView() ? '100%' : '230px'};
   display: flex;
   flex-direction: column;
-  height: ${setMobileView() ? '220px' : '350px'};
+  height: ${setMobileView() ? '260px' : '350px'};
   align-items: center;
   position: relative;
   background-color: rgba(0,0,0,.9);
   padding-bottom: 10px;
-
-  img {
-    width: 100%;
-    height: 95%;
-    object-fit: cover;
-    margin-bottom: 5px;
-  }
 
   button {
     width: 80%;
@@ -41,19 +34,31 @@ export const ProductCartContainer = styled.div`
 
 export const Footer = styled.div`
   width: 100%;
-  height: 5%;
+  height: 10%;
   display: flex;
   justify-content: space-between;
-  font-size: ${ setMobileView() ? '10px' : '18px'};
+  font-size: '18px';
   text-align: center;
+  padding: 5px;
 `;
 
 export const Name = styled.div`
-  width: 90%;
+  width: 100%;
   margin: auto;
   margin-bottom: 15px;
 `;
 
 export const Price = styled.div`
   width: 10%;
+`;
+
+export const ProductImage = styled.img`
+  width: 100%;
+  height: 90%;
+  object-fit: cover;
+  margin-bottom: 5px;
+
+  &:hover {
+    opacity: 0.8;
+  }
 `;

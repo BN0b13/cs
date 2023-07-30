@@ -1,30 +1,75 @@
 import styled from 'styled-components';
 
+import { setMobileView } from '../../tools/mobileView';
+
 export const CartItemContainer = styled.div`
+    display: flex;  
+    justify-content: center;
+    align-items: center;
     width: 100%;
-    display: flex;
+    margin: 0;
     min-height: 100px;
     border-bottom: 1px solid darkgrey;
-    padding: 15px 0;
-    font-size: 20px;
+    padding: ${setMobileView() ? '5px 0' : '30px 0'};
+`;
+
+export const MainContentContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: ${setMobileView() ? '100%' : '70%'};
+`;
+
+export const ImageContainer = styled.div`
+    margin: auto;
+`;
+
+export const MobileInformationContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+`;
+
+export const MobileTopContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align
+    margin: 20px 0;
+`;
+
+export const MobileBottomContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
     align-items: center;
 `;
 
 export const CartItemText = styled.div`
+    margin: ${setMobileView() ? '0 60% 0 10px' : ''};
+    font-size: 18px;
+`;
+
+export const TotalText = styled.div`
+    margin: 0 20px;
     font-size: 18px;
 `;
 
 export const CartItemQuantityContainer = styled.div`
     display: flex;
     flex-direction: row;
-    margin: 50px auto;
+    margin: ${setMobileView() ? '10px auto' : '50px auto'};
 `;
 
 export const CartItemTextContainer = styled.div`
     display: flex;
-    margin: auto;
-    width: 150px;
+    text-align: center;
     cursor: pointer;
+    margin: auto;
 `;
 
 export const CartItemQuantityText = styled.div`
@@ -43,5 +88,6 @@ export const ProductImage = styled.div`
 `;
 
 export const DeleteProductContainer = styled.div`
-    margin-right: 40px;
+    margin-left: ${setMobileView() ? '' : 'auto'};
+    width: ${setMobileView() ? '50%' : ''};
 `;

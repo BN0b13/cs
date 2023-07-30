@@ -9,7 +9,9 @@ import {
 import { CartContext } from '../../contexts/cart.context';
 
 import { convertProductPrice } from '../../tools/cart';
-// import { setMobileView } from '../../../tools/mobileView';
+import { setMobileView } from '../../tools/mobileView';
+
+import { api } from '../../config';
 
 import logo from '../../assets/img/logo.png';
 
@@ -20,7 +22,13 @@ import {
     CartItemText,
     CartItemTextContainer,
     DeleteProductContainer,
-    ProductImage
+    ImageContainer,
+    MainContentContainer,
+    MobileBottomContainer,
+    MobileInformationContainer,
+    MobileTopContainer,
+    ProductImage,
+    TotalText
 } from './cart-item.styles';
 
 const CartItem = ({ quantity, product }) => {
@@ -40,37 +48,79 @@ const CartItem = ({ quantity, product }) => {
         removeItemFromCart({ productId: product.id });
     }
 
+    const informationDisplay = () => {
+        if(setMobileView()) {
+            return (
+                <MobileInformationContainer>
+                    <MobileTopContainer>
+                        <CartItemText onClick={() => window.location=`shop/${product.Category.name}/${product.name}`}>
+                            { product.name }
+                        </CartItemText>
+                        <DeleteProductContainer>
+                            <VscChromeClose onClick={() => deleteItemFromCart({ productId: product.id })} />
+                        </DeleteProductContainer>
+                    </MobileTopContainer>
+                    <MobileBottomContainer>
+                        <CartItemQuantityContainer>
+                            <VscChevronUp onClick={() => increment()} />
+                                <CartItemQuantityText>
+                                    { quantity }
+                                </CartItemQuantityText>
+                            <VscChevronDown onClick={() => decrement()} />
+                        </CartItemQuantityContainer>
+                        <CartItemTextContainer>
+                            <TotalText>
+                                { convertProductPrice(product.price * quantity) }
+                            </TotalText>
+                        </CartItemTextContainer>
+                        
+                    </MobileBottomContainer>
+                </MobileInformationContainer>
+            )
+        }
+
+        return (
+            <>
+                <CartItemTextContainer onClick={() => window.location=`shop/${product.Category.name}/${product.name}`}>
+                    <CartItemText >
+                        { product.name }
+                    </CartItemText>
+                </CartItemTextContainer>
+                <CartItemQuantityContainer>
+                    <VscChevronUp onClick={() => increment()} />
+                        <CartItemQuantityText>
+                            { quantity }
+                        </CartItemQuantityText>
+                    <VscChevronDown onClick={() => decrement()} />
+                </CartItemQuantityContainer>
+                <CartItemTextContainer>
+                    <CartItemText>
+                        { convertProductPrice(product.price * quantity) }
+                    </CartItemText>
+                </CartItemTextContainer>
+                <DeleteProductContainer>
+                    <VscChromeClose onClick={() => deleteItemFromCart({ productId: product.id })} />
+                </DeleteProductContainer>
+            </>
+        )
+    }
+
     return (
         <CartItemContainer>
-            {product.image ? 
-            <ProductImage onClick={() => window.location=`shop/${product.Category.name}/${product.name}`}>
-                <img src={product.image} alt={`${product.name}`} />
-            </ProductImage> 
-            : 
-            <ProductImage onClick={() => window.location=`shop/${product.Category.name}/${product.name}`}>
-                <img src={logo} alt={`${product.name}`} />
-            </ProductImage> 
-            }
-            <CartItemTextContainer onClick={() => window.location=`shop/${product.Category.name}/${product.name}`}>
-                <CartItemText >
-                    { product.name }
-                </CartItemText>
-            </CartItemTextContainer>
-            <CartItemQuantityContainer>
-                <VscChevronUp onClick={() => increment()} />
-                    <CartItemQuantityText>
-                        { quantity }
-                    </CartItemQuantityText>
-                <VscChevronDown onClick={() => decrement()} />
-            </CartItemQuantityContainer>
-            <CartItemTextContainer>
-                <CartItemText>
-                    { convertProductPrice(product.price * quantity) }
-                </CartItemText>
-            </CartItemTextContainer>
-            <DeleteProductContainer>
-                <VscChromeClose onClick={() => deleteItemFromCart({ productId: product.id })} />
-            </DeleteProductContainer>
+            <MainContentContainer>
+                <ImageContainer>
+                    {product.ProductImages.length > 0 ? 
+                        <ProductImage onClick={() => window.location=`shop/${product.Category.name}/${product.name}`}>
+                            <img src={api + product.ProductImages[0].path} alt={`${product.name}`} />
+                        </ProductImage> 
+                    : 
+                        <ProductImage onClick={() => window.location=`shop/${product.Category.name}/${product.name}`}>
+                            <img src={logo} alt={`${product.name}`} />
+                        </ProductImage> 
+                    }
+                </ImageContainer>
+                { informationDisplay() }
+            </MainContentContainer>
         </CartItemContainer>
     )
 }

@@ -20,6 +20,7 @@ const AccountLocked = () => {
     useEffect(() => {
         const getEmailTokenStatus = async () => {
             const res = await client.isEmailTokenValid();
+            
             if(res.status === 200) {
                 setShowButton(false);
             } else {

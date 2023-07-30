@@ -40,8 +40,8 @@ const InitiateReset = () => {
     return (
         <InitiateResetContainer>
             <InitiateResetTitle>Reset Password</InitiateResetTitle>
-            <InitiateResetForm>
-                <InitiateResetInput type={'email'} value={email} onChange={(e) => setEmail(e.target.value)} placeholder={'Email'} />
+            <InitiateResetForm onKeyDown={(e) => e.key === 'Enter' ? submitEmail() : ''}>
+                <InitiateResetInput type='email' value={email} onChange={(e) => setEmail(e.target.value)} placeholder={'Email'} />
                 {show &&
                     <Snackbar 
                         msg={msg}

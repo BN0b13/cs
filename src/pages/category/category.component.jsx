@@ -1,7 +1,9 @@
 import { useState, useEffect, Fragment } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { BsArrowRight } from 'react-icons/bs';
+import {
+    VscArrowRight
+} from "react-icons/vsc";
 
 import ProductCard from '../../components/product-card/product-card.component';
 
@@ -11,7 +13,8 @@ import { setMobileView } from '../../tools/mobileView';
 import {CategoryContainer,
     CategoryContainerMobile,
     CategoryTitle,
-    CategoryLink
+    CategoryLink,
+    MainContainer
 } from './category.styles';
 
 const client = new Client();
@@ -22,16 +25,19 @@ const Category = () => {
 
     useEffect(() => {
         const getCategories = async () => {
-            const res = await client.getCategories();
-            const currentCategory = res.rows.filter(current => current.name === category);
-            setProducts(currentCategory[0].Products);
+            const res = await client.getCategoryByName(category);
+            if(res.count === 0) {
+                return window.location.href = '/shop';
+            }
+
+            setProducts(res.rows[0].Products);
         }
         getCategories();
     }, [category]);
 
     return (
-        <Fragment>
-            <CategoryTitle><CategoryLink to={`/shop`}>Shop</CategoryLink>{'  '}<BsArrowRight />{'  '}{category.toUpperCase()}</CategoryTitle>
+        <MainContainer>
+            <CategoryTitle><CategoryLink to={`/shop`}>Shop</CategoryLink>{'  '}<VscArrowRight />{'  '}{category}</CategoryTitle>
             {
                 setMobileView() ? (
                     <CategoryContainerMobile>
@@ -48,7 +54,7 @@ const Category = () => {
                 )
             }
             
-        </Fragment>
+        </MainContainer>
     )
 }
 

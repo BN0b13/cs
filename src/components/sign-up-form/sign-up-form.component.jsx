@@ -17,7 +17,9 @@ import {
   SignUpFormContainer,
   SignUpFormForm,
   SignUpFormInput,
-  SignUpFormTitle
+  SignUpFormText,
+  SignUpFormTitle,
+  TextContainer
 } from './sign-up-form.styles';
 
 const client = new Client();
@@ -48,7 +50,7 @@ class SignUpForm extends React.Component{
       },
       phone: '',
       passwordErrVisible: false,
-      passwordErrMsg: 'Password needs to be 8 characters in length or more with at least one number and one special character.',
+      passwordErrMsg: 'Password needs to be between 8 and 30 characters long with at least one number and one special character.',
       emailErrVisible: false,
       emailErrMsg: 'Please use a valid email address',
       formErrVisible: false,
@@ -182,11 +184,11 @@ class SignUpForm extends React.Component{
   }
 
   render() {
-    if(!this.releaseDate()) {
-      return (
-        <Countdown />
-      )
-    }
+    // if(!this.releaseDate()) {
+    //   return (
+    //     <Countdown />
+    //   )
+    // }
 
     if(this.state.loading) {
       return (
@@ -197,6 +199,9 @@ class SignUpForm extends React.Component{
     return(
       <SignUpFormContainer>
         <SignUpFormTitle>SIGN UP</SignUpFormTitle>
+        <TextContainer>
+          <SignUpFormText>We can't wait for you to join us! Just a heads up before you sign up - Please use a valid email address. All communication is done through email and if you forget your password, you will not be able to reset it without one. Once your account has been created, YOU WILL NOT BE ABLE TO UPDATE YOUR EMAIL ADDRESS.</SignUpFormText>
+        </TextContainer>
 
         <SignUpFormForm onKeyDown={(e) => this.handleKeyDown(e)}>
           <SignUpFormInput
