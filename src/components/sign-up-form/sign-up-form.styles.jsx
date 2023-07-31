@@ -11,10 +11,6 @@ export const SignUpFormContainer = styled.div`
     padding: 20px 0;
 `;
 
-export const TextContainer = styled.div`
-    padding: ${setMobileView() ? '0 5px' : ''};
-`;
-
 export const SignUpFormButtonContainer = styled.div`
     margin: 20px 0;
     display: flex;
@@ -32,10 +28,26 @@ export const SignUpFormInput = styled.input`
     padding: 3px;
 `;
 
+export const SignUpFormLabel = styled.label`
+    font-size: 12px;
+`;
+
 export const SignUpFormTitle = styled.h2`
     text-align: center;
 `;
 
-export const SignUpFormText = styled.p`
-    text-align: center;
+export const TermsContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    max-width: 280px;
+    margin: 20px 0;
+`;
+
+export const TermsText = styled.span`
+    cursor: pointer;
+`;
+
+export const TermsCheckbox = styled.input`
+    cursor: pointer;
+    margin: 0 10px;
 `;

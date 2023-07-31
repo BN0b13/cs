@@ -5,6 +5,7 @@ import Button from '../reusable/button/button.component';
 import Countdown from '../reusable/countdown/countdown.component';
 import Snackbar from '../reusable/snackbar/snackbar.component';
 import Spinner from '../reusable/spinner/spinner.component';
+import TermsAndConditions from '../reusable/terms-and-conditions/terms-and-conditions.component';
 
 import { passwordValidation } from '../../tools/user.js';
 
@@ -17,9 +18,11 @@ import {
   SignUpFormContainer,
   SignUpFormForm,
   SignUpFormInput,
-  SignUpFormText,
+  SignUpFormLabel,
   SignUpFormTitle,
-  TextContainer
+  TermsCheckbox,
+  TermsContainer,
+  TermsText
 } from './sign-up-form.styles';
 
 const client = new Client();
@@ -49,13 +52,15 @@ class SignUpForm extends React.Component{
         zipCode: '',
       },
       phone: '',
+      eula: false,
       passwordErrVisible: false,
       passwordErrMsg: 'Password needs to be between 8 and 30 characters long with at least one number and one special character.',
       emailErrVisible: false,
       emailErrMsg: 'Please use a valid email address',
       formErrVisible: false,
       formErrMsg: 'Please complete all fields to submit',
-      countdown: ''
+      countdown: '',
+      showTermsAndConditions: false
     }
   }
 
@@ -121,11 +126,16 @@ class SignUpForm extends React.Component{
       this.state.billingAddress.city.length === 0 || 
       this.state.billingAddress.state.length === 0 || 
       this.state.billingAddress.zipCode.length === 0 ||
-      this.state.phone.length === 0) {
+      this.state.phone.length === 0 ||
+      this.state.eula === false) {
       this.setState({ formErrVisible: true });
       return false;
     }
     return true;
+  }
+
+  setShowTermsAndConditions = () => {
+    this.setState({ showTermsAndConditions: !this.state.showTermsAndConditions });
   }
 
   handleSignUp = async (e) => {
@@ -146,7 +156,8 @@ class SignUpForm extends React.Component{
         lastName: this.state.lastName,
         billingAddress: this.state.billingAddress,
         shippingAddress: this.state.billingAddress,
-        phone: this.state.phone
+        phone: this.state.phone,
+        eula: this.state.eula
       };
 
       const res = await client.createCustomer(data);
@@ -184,11 +195,11 @@ class SignUpForm extends React.Component{
   }
 
   render() {
-    if(!this.releaseDate()) {
-      return (
-        <Countdown />
-      )
-    }
+    // if(!this.releaseDate()) {
+    //   return (
+    //     <Countdown />
+    //   )
+    // }
 
     if(this.state.loading) {
       return (
@@ -198,10 +209,8 @@ class SignUpForm extends React.Component{
 
     return(
       <SignUpFormContainer>
+        <TermsAndConditions show={this.state.showTermsAndConditions} setShow={this.setShowTermsAndConditions} />
         <SignUpFormTitle>SIGN UP</SignUpFormTitle>
-        <TextContainer>
-          <SignUpFormText>We can't wait for you to join us! Just a heads up before you sign up - Please use a valid email address. All communication is done through email and if you forget your password, you will not be able to reset it without one. Once your account has been created, YOU WILL NOT BE ABLE TO UPDATE YOUR EMAIL ADDRESS.</SignUpFormText>
-        </TextContainer>
 
         <SignUpFormForm onKeyDown={(e) => this.handleKeyDown(e)}>
           <SignUpFormInput
@@ -254,6 +263,11 @@ class SignUpForm extends React.Component{
             address={this.state.billingAddress}
             updateAddress={(data) => this.updateBillingAddress(data)}
           />
+          <TermsContainer>
+            <TermsCheckbox type='checkbox' value={this.state.eula} onChange={() => this.setState({ eula: !this.state.eula })} />
+            <SignUpFormLabel>I am 21 years of age or older and I accept the <TermsText onClick={() => this.setState({ showTermsAndConditions: true })}pan>Terms and Conditions</TermsText></SignUpFormLabel>
+          </TermsContainer>
+          
           { this.state.formErrVisible && 
           <Snackbar msg={this.state.formErrMsg} show={() => this.setState({ formErrVisible: false })} />
           }
