@@ -63,14 +63,14 @@ const ComponentSlideshow = ({ products, categories }) => {
       <MainContainer>
         <Slide autoplay={autoPlay} arrows={autoPlay} duration={5000}>
             {productArray.map((productGroup, index)=> (
-            <ContentContainer key={index}>
-              {productGroup.current.map((product, index) => (
-                <ContentLink key={index} href={`/shop/${product.category}/${product.name}`}>
+              <ContentContainer key={index}>
+                {productGroup.current.map((product, index) => (
                   <Content>
+                    <ContentLink key={index} href={`/shop/${product.category}/${product.name}`}>
                       <ProductCard product={product} />
+                    </ContentLink>
                   </Content>
-                </ContentLink>
-              ))}
+                ))}
             </ContentContainer>
             ))}
         </Slide>
