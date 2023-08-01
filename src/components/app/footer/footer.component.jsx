@@ -24,7 +24,7 @@ const Footer = () => (
     </FooterContainer>
     <DisclaimerContainer>
       <DisclaimerText>Ages 21+ USA only</DisclaimerText>
-      <DisclaimerText>All products that appear on this site have 0.03% THC or less and are considered hemp by federal law. Seeds are sold as collectible adult souvenirs only and are not intended for any use that does not comply with local laws. We do not respond to any messages regarding germination seeds or growing cannabis. Please collect responsibly.</DisclaimerText>
+      <DisclaimerText>All products that appear on this site have 0.03% THC or less and are considered hemp by federal law. Seeds are sold as collectible adult souvenirs only and are not intended for any use that does not comply with local laws. We do not respond to any messages regarding germinating seeds or growing cannabis. Please collect responsibly.</DisclaimerText>
     </DisclaimerContainer>
   </MainContainer>
 );

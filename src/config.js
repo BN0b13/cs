@@ -11,10 +11,10 @@ export const locationId = 'LVK4RPEB2DNA6';
 // export const api = 'https://api.dev.cosmicstrains.com';
 // export const url = 'https://dev.cosmicstrains.com';
 // export const applicationId = 'sandbox-sq0idb-wAAZDz9Xx5Beoj5k-pouZw';
-// export const locationId = 'LVK4RPEB2DNA6';
+// export const locationId = 'LDWV9E78P568R';
 
 // Local
 // export const api = 'http://localhost:8050';
 // export const url = 'http://localhost:3000';
 // export const applicationId = 'sandbox-sq0idb-wAAZDz9Xx5Beoj5k-pouZw';
-// export const locationId = 'LVK4RPEB2DNA6';
+// export const locationId = 'LDWV9E78P568R';

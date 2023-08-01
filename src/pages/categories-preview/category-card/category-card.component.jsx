@@ -6,12 +6,17 @@ import {
     Name
 } from './category-card.styles';
 
+import { api } from '../../../config';
+
 const CategoryCard = ({ category }) => {
 
     return (
         <CategoryCardContainer>
-            <img src={logo} alt={`${category.name}`} />
-            {/* <img src={imageUrl} alt={`${name}`} /> */}
+            {category.thumbnailPath ?
+                <img src={api + category.thumbnailPath} alt={`${category.name}`} />
+            :
+                <img src={logo} alt={`${category.name}`} />
+            }
             <Footer>
                 <Name>{ category.name }</Name>
             </Footer>
