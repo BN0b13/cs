@@ -50,8 +50,9 @@ const Welcome = () => {
         </WelcomeImageContainer>
         <WelcomeTextContainer>
           <WelcomeTitle>Cosmic Strains</WelcomeTitle>
-          <WelcomeSubtitle>Collectible Oddities From Out Of This World</WelcomeSubtitle>
-          <WelcomeText>Your local source for collectible cannabis seeds. We have an extremely large assortment of F1 lines created with some of the most popular and rarest strains around.</WelcomeText>
+          <WelcomeSubtitle>Grand Opening Coming Soon</WelcomeSubtitle>
+          <WelcomeText>Thank you for your patience. We are sorting out our payment system. We can't wait to serve you!</WelcomeText>
+          {/* <WelcomeText>Your local source for collectible cannabis seeds. We have an extremely large assortment of F1 lines created with some of the most popular and rarest strains around.</WelcomeText> */}
         </WelcomeTextContainer>
       </WelcomeOpacity>
     </WelcomeContainer>
