@@ -201,6 +201,10 @@ class SignUpForm extends React.Component{
     //   )
     // }
 
+    return (
+      <SignUpFormTitle>COMING SOON</SignUpFormTitle>
+    );
+
     if(this.state.loading) {
       return (
         <Spinner />
