@@ -12,7 +12,7 @@ export const MainContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     padding: auto;
-    width: 90%;
+    width: ${setMobileView() ? '100%' : '80%'};
     color: #fff;
     height: ${setMobileView() ? '360px' : '550px'};
 `;
@@ -27,14 +27,18 @@ export const ContentContainer = styled.div`
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    padding: 0 30px;
+    padding: ${setMobileView ? '' : '0 30px'};
     height: 100%;
 `;
 
 export const Content = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     height: ${componentSlideshowHeight};
     width: ${componentSlideshowWidth};
-    margin: 0 20px;
+    margin: ${setMobileView ? '' : '0 20px'};
 `;
 
 export const ContentLink = styled.a`
