@@ -32,7 +32,7 @@ const CartPage = () => {
         const getCart = async () => {
             const res = await client.getCartContents();
             let subtotal = 0;
-            res.rows[0].products.map(item => subtotal = subtotal + (item.quantity * item.product[0].price));
+            res.rows[0].products.map(item => subtotal = subtotal + (item.quantity * item.product[0].Inventories[0].price));
             setSubtotal(subtotal);
             setCart(res.rows[0].products);
         }

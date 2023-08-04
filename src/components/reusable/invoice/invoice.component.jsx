@@ -58,7 +58,7 @@ const Invoice = () => {
         const getOrderByRef = async () => {
             const res = await client.getOrderByRef(refId);
             let subtotalCount = 0;
-            res.rows[0].products.map(item => subtotalCount = subtotalCount + (item.quantity * item.product[0].price));
+            res.rows[0].products.map(item => subtotalCount = subtotalCount + (item.quantity * item.product[0].Inventories[0].price));
             setSubtotal(subtotalCount);
             setOrder(res.rows[0]);
         }
@@ -79,7 +79,7 @@ const Invoice = () => {
                         />
                     </PrintButtonContainer>
                     <PrintContent ref={componentRef}>
-                        <InvoiceTitle>INVOICE PAID</InvoiceTitle>
+                        <InvoiceTitle>INVOICE</InvoiceTitle>
                         <InvoiceHeaderContainer>
                             
                             
