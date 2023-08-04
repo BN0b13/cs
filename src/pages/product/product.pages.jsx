@@ -15,7 +15,7 @@ const client = new Client();
 
 const Product = () => {
     const { item } = useParams();
-    const [product, setProduct] = useState(null);
+    const [product, setProduct] = useState('');
 
     useEffect(() => {
         const getProduct = async () => {
@@ -28,7 +28,7 @@ const Product = () => {
     
     return (
         <>
-            {!product ? 
+            {product.length === 0 ? 
                 <Spinner />
             :
             <ProductDisplay product={product} />
