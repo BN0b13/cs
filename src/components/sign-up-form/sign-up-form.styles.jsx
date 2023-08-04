@@ -51,3 +51,8 @@ export const TermsCheckbox = styled.input`
     cursor: pointer;
     margin: 0 10px;
 `;
+
+export const Disclaimer = styled.p`
+    font-size: 10px;
+    max-width: 280px;
+`;

@@ -53,6 +53,6 @@ export const FooterText = styled.h4`
 export const DisclaimerText = styled.p`
     padding: 0px;
     margin: 2px;
-    font-size: 8px;
-    width: 50%;
+    font-size: 10px;
+    width: ${setMobileView() ? '80%' : '40%'}
 `;
