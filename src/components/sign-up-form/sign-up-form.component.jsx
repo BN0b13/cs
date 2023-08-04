@@ -195,15 +195,11 @@ class SignUpForm extends React.Component{
   }
 
   render() {
-    // if(!this.releaseDate()) {
-    //   return (
-    //     <Countdown />
-    //   )
-    // }
-
-    return (
-      <SignUpFormTitle>COMING SOON</SignUpFormTitle>
-    );
+    if(!this.releaseDate()) {
+      return (
+        <Countdown />
+      )
+    }
 
     if(this.state.loading) {
       return (

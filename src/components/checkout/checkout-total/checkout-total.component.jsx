@@ -2,7 +2,9 @@ import { useEffect, useContext, useState } from 'react';
 
 import { VscClose, VscInfo } from 'react-icons/vsc'
 
-import SquarePaymentForm from '../payment-form/payment-form.component';
+// import SquarePaymentForm from '../payment-form/payment-form.component';
+import Button from '../../reusable/button/button.component';
+import ClientModal from '../../reusable/client-modal/client-modal.component';
 import Spinner from '../../reusable/spinner/spinner.component';
 
 import { CheckoutContext } from '../../../contexts/checkout.context';
@@ -37,6 +39,8 @@ const client = new Client();
 const CheckoutTotal = () => {
     const [ deliveryInsuranceSelection, setDeliveryInsuranceSelection ] = useState(false);
     const [ showInsuranceInfo, setShowInsuranceInfo ] = useState(false);
+    const [ showModal, setShowModal ] = useState(false);
+    const [ showCheckoutButton, setShowCheckoutButton ] = useState(true);
     const {
         billingAddress,
         shippingAddress,
@@ -61,11 +65,14 @@ const CheckoutTotal = () => {
         setDeliveryInsuranceSelection(!deliveryInsuranceSelection);
     }
 
-    const checkout = async ({ token, buyer }) => {
+    const confirmCheckout = () => {
+        setShowModal(true);
+    }
 
+    const checkout = async () => {
+        setShowModal(false);
+        setShowCheckoutButton(false);
         const data = {
-            token,
-            buyer,
             email: currentUser.email,
             products: currentUser.cart.products,
             total,
@@ -84,8 +91,39 @@ const CheckoutTotal = () => {
         }
     }
 
+    // const checkout = async ({ token, buyer }) => {
+    //     const data = {
+    //         token,
+    //         buyer,
+    //         email: currentUser.email,
+    //         products: currentUser.cart.products,
+    //         total,
+    //         billingAddress,
+    //         shippingAddress,
+    //         shippingId,
+    //         shippingTotal,
+    //         deliveryInsurance: deliveryInsuranceSelection,
+    //         deliveryInsuranceTotal: deliveryInsuranceSelection ? deliveryInsurance : 0
+    //     };
+
+    //     const res = await client.checkout(data);
+
+    //     if(res.status === 201) {
+    //         window.location =`/thankyou/${res.refId}`;
+    //     }
+    // }
+
     return (
         <CheckoutTotalContainer setMobileView={setMobileView()}>
+            <ClientModal 
+                show={showModal}
+                setShow={setShowModal}
+                title={'Confirm Order'} 
+                image={''}
+                message={`We will email an invoice for $${total/100} within 24 hours with a payment link. Please pay the invoice within 72 hours of receiving, or the order will be canceled. Once payment has been received, your order will be shipped.`} 
+                action={checkout} 
+                actionText={'Confirm'}
+            />
             {!total ?
                 <Spinner />
             :
@@ -142,7 +180,7 @@ const CheckoutTotal = () => {
                     </CartFinalTotalContainer>
                 </CartDetailsContainer>
                 <SquareContainer>
-                    <SquarePaymentForm
+                    {/* <SquarePaymentForm
                         buyerData={{
                             addressOne: billingAddress.addressOne,
                             addressTwo: billingAddress.addressTwo,
@@ -152,7 +190,10 @@ const CheckoutTotal = () => {
                             familyName: billingAddress.lastName
                         }}
                         checkout={checkout}
-                    />
+                    /> */}
+                    {showCheckoutButton &&
+                        <Button onClick={() => confirmCheckout()}>Place Order</Button>
+                    }
                 </SquareContainer>
             </>
             }

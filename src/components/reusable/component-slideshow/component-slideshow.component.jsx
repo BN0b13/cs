@@ -65,8 +65,8 @@ const ComponentSlideshow = ({ products, categories }) => {
             {productArray.map((productGroup, index)=> (
               <ContentContainer key={index}>
                 {productGroup.current.map((product, index) => (
-                  <Content>
-                    <ContentLink key={index} href={`/shop/${product.category}/${product.name}`}>
+                  <Content key={index}>
+                    <ContentLink href={`/shop/${product.category}/${product.name}`}>
                       <ProductCard product={product} />
                     </ContentLink>
                   </Content>

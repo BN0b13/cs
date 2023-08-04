@@ -70,7 +70,7 @@ const CartItem = ({ quantity, product }) => {
                         </CartItemQuantityContainer>
                         <CartItemTextContainer>
                             <TotalText>
-                                { convertProductPrice(product.price * quantity) }
+                                { convertProductPrice(product.Inventories[0].price * quantity) }
                             </TotalText>
                         </CartItemTextContainer>
                         
@@ -95,7 +95,7 @@ const CartItem = ({ quantity, product }) => {
                 </CartItemQuantityContainer>
                 <CartItemTextContainer>
                     <CartItemText>
-                        { convertProductPrice(product.price * quantity) }
+                        { convertProductPrice(product.Inventories[0].price * quantity) }
                     </CartItemText>
                 </CartItemTextContainer>
                 <DeleteProductContainer>

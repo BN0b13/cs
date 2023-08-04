@@ -70,8 +70,6 @@ const ProductDisplay = ({ product }) => {
         mother,
         father,
         profile,
-        sex,
-        price
     } = product;
 
     useEffect(() => {
@@ -153,8 +151,9 @@ const ProductDisplay = ({ product }) => {
                     <ProductDescriptionText>{description}</ProductDescriptionText>
                     <ProductSubtext>Lineage: {mother} x {father}</ProductSubtext>
                     <ProductSubtext>Time: {time}</ProductSubtext>
-                    <ProductSubtext>{product.Inventories[0].size} - {sex}</ProductSubtext>
-                    <ProductSubtext>Price: {convertProductPrice(price)}</ProductSubtext>
+                    <ProductSubtext>Type: {product.Inventories[0].type}</ProductSubtext>
+                    <ProductSubtext>{product.Inventories[0].size} - {product.Inventories[0].sizeDescription}</ProductSubtext>
+                    <ProductSubtext>Price: {convertProductPrice(product.Inventories[0].price)}</ProductSubtext>
                     <ProductButtonContainer>
                         <ProductButtonCount setMobileView={setMobileView()}>
                             <ProductQuantityContainer>

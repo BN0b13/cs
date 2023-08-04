@@ -40,8 +40,9 @@ const CheckoutPage = () => {
         const checkoutSetUp = async () => {
             const checkoutSetUp = await client.checkoutSetUp();
             const cartContents = await client.getCartContents();
+            const price = cartContents.rows[0].products[0].product[0].Inventories[0].price;
             let subtotalCount = 0;
-            currentUser.cart.products.map(item => subtotalCount = subtotalCount + (item.quantity * cartContents.rows[0].products[0].product[0].price));
+            currentUser.cart.products.map(item => subtotalCount = subtotalCount + (item.quantity * price));
     
             setSubtotal(subtotalCount);
             setBillingAddress(currentUser.billingAddress);
