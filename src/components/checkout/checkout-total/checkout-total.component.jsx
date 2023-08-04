@@ -120,7 +120,7 @@ const CheckoutTotal = () => {
                 setShow={setShowModal}
                 title={'Confirm Order'} 
                 image={''}
-                message={`We will email a payment link for $${total/100} before August 14th. Please pay the invoice within 72 hours of receiving, or the order will be canceled. Once payment has been received, your order will be shipped.`} 
+                message={`We will email a payment link for $${total/100} within the next business day. Please pay the invoice within 72 hours of receiving, or the order will be canceled. Once payment has been received, your order will be shipped. This information will also be accessible in your account's order history in case you do not see the email.`} 
                 action={checkout} 
                 actionText={'Confirm'}
             />

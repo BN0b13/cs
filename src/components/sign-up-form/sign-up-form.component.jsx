@@ -14,6 +14,7 @@ import { tokenName } from '../../config';
 import Client from '../../tools/client.js';
 
 import {
+  Disclaimer,
   SignUpFormButtonContainer,
   SignUpFormContainer,
   SignUpFormForm,
@@ -60,7 +61,8 @@ class SignUpForm extends React.Component{
       formErrVisible: false,
       formErrMsg: 'Please complete all fields to submit',
       countdown: '',
-      showTermsAndConditions: false
+      showTermsAndConditions: false,
+      showEmailDisclaimer: false
     }
   }
 
@@ -74,6 +76,17 @@ class SignUpForm extends React.Component{
 
   handleChange = e => {
     const { value, name } = e.target;
+    console.log('Name: ', name);
+    console.log('Value: ', value);
+    if(name === 'email' && value.toLowerCase().includes('hotmail') ||
+    name === 'email' && value.toLowerCase().includes('ymail') ||
+    name === 'email' && value.toLowerCase().includes('yahoo')) {
+      console.log('True');
+      this.setState({ showEmailDisclaimer: true });
+    } else {
+      console.log('False');
+      this.setState({ showEmailDisclaimer: false });
+    }
     this.setState({ [name]: value });
   }
 
@@ -221,6 +234,9 @@ class SignUpForm extends React.Component{
             placeholder={'Email'}
             required
           />
+          { this.state.showEmailDisclaimer &&
+            <Disclaimer>Please note that accounts created with a Hotmail or Yahoo/Ymail email address may not get the emails from our automated email service. All order information including payment links and tracking can be viewed in your account's Order History. You may not be able to reset your password if you forget it.</Disclaimer>
+          }
           { this.state.emailErrVisible && 
           <Snackbar msg={this.state.emailErrMsg} show={() => this.setState({ emailErrVisible: false })} />
           }
