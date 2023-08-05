@@ -63,18 +63,20 @@ const Address = ({ address, updateAddress, customSelector = null }) => {
     }
 
     const handleZipCode = (data) => {
-        if(data.length > 10) {
+        const reg = /^\d+$/;
+        if(data === '' || (reg.test(data) && data.length <= 5)) {
+            setZipCode(data);
+            updateAddress({ zipCode: data });
+        } else {
             return
         }
-        setZipCode(data);
-        updateAddress({ zipCode: data });
     }
 
     return (
         <AddressContainer>
             <AddressTopContainer>
                 <AddressInput
-                    type={'input'}
+                    type='text'
                     name={`${selector}FirstName`}
                     value={firstName}
                     onChange={(e) => handleFirstName(e.target.value)}
@@ -82,7 +84,7 @@ const Address = ({ address, updateAddress, customSelector = null }) => {
                     required
                 />
                 <AddressInput
-                    type={'input'}
+                    type='text'
                     name={`${selector}LastName`}
                     value={lastName}
                     onChange={(e) => handleLastName(e.target.value)}
@@ -90,7 +92,7 @@ const Address = ({ address, updateAddress, customSelector = null }) => {
                     required
                 />
                 <AddressInput
-                    type={'input'}
+                    type='text'
                     name={`${selector}One`}
                     value={addressOne}
                     onChange={(e) => handleAddressOne(e.target.value)}
@@ -98,7 +100,7 @@ const Address = ({ address, updateAddress, customSelector = null }) => {
                     required
                 />
                 <AddressInput
-                    type={'input'}
+                    type='text'
                     name={`${selector}Two`}
                     value={addressTwo}
                     onChange={(e) => handleAddressTwo(e.target.value)}
@@ -107,7 +109,7 @@ const Address = ({ address, updateAddress, customSelector = null }) => {
             </AddressTopContainer>
             <AddressBottomContainer>
                 <AddressCityInput
-                    type={'input'}
+                    type='text'
                     name={`${selector}City`}
                     value={city}
                     onChange={(e) => handleCity(e.target.value)}
@@ -132,7 +134,7 @@ const Address = ({ address, updateAddress, customSelector = null }) => {
                     )}
                 </AddressDropdown>
                 <AddressZipCodeInput
-                    type={'string'}
+                    type='text'
                     name={`${selector}ZipCode`}
                     value={zipCode}
                     onChange={(e) => handleZipCode(e.target.value)}
