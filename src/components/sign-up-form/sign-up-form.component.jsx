@@ -76,15 +76,11 @@ class SignUpForm extends React.Component{
 
   handleChange = e => {
     const { value, name } = e.target;
-    console.log('Name: ', name);
-    console.log('Value: ', value);
     if(name === 'email' && value.toLowerCase().includes('hotmail') ||
     name === 'email' && value.toLowerCase().includes('ymail') ||
     name === 'email' && value.toLowerCase().includes('yahoo')) {
-      console.log('True');
       this.setState({ showEmailDisclaimer: true });
     } else {
-      console.log('False');
       this.setState({ showEmailDisclaimer: false });
     }
     this.setState({ [name]: value });
