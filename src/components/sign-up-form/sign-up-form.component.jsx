@@ -169,6 +169,11 @@ class SignUpForm extends React.Component{
         eula: this.state.eula
       };
 
+      data.billingAddress.firstName = this.state.firstName;
+      data.billingAddress.lastName = this.state.lastName;
+      data.shippingAddress.firstName = this.state.firstName;
+      data.shippingAddress.lastName = this.state.lastName;
+
       const res = await client.createCustomer(data);
 
       if(res.err) {
