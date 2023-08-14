@@ -206,4 +206,11 @@ export default class Client {
         const res = await welcomeContent.json();
         return res;
     }
+
+    async deleteAccount() {
+        const requestOptions = this.fetchOptions(this.fetchMethods.patch, '', true);
+        const deleteAccountRes = await fetch(`${api}/user/delete-account`, requestOptions);
+        const res = await deleteAccountRes.json();
+        return res;
+    }
 }

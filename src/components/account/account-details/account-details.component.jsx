@@ -2,10 +2,13 @@ import React, { useEffect, useState, useContext } from 'react';
 
 import Address from '../../reusable/address/address.component';
 import Button from '../../reusable/button/button.component';
+import ClientModal from '../../reusable/client-modal/client-modal.component';
 import Snackbar from '../../reusable/snackbar/snackbar.component';
 import Spinner from '../../reusable/spinner/spinner.component';
 
 import { UserContext } from '../../../contexts/user.context';
+
+import { tokenName } from '../../../config';
 
 import Client from '../../../tools/client';
 import { setMobileView } from '../../../tools/mobileView';
@@ -22,6 +25,7 @@ import {
     AddressBottomContainer,
     AddressContainer,
     AccountDetailsInput,
+    DeleteButton,
     TextRowContainer,
     UpdateButtonContainer,
     UpdatePasswordLink
@@ -30,6 +34,7 @@ import {
 const client = new Client();
 
 const AccountDetails = () => {
+    const [ loading, setLoading ] = useState(false);
     const [ showEdit, setShowEdit ] = useState(false);
     const [ email, setEmail ] = useState(null);
     const [ firstName, setFirstName ] = useState(null);
@@ -37,6 +42,8 @@ const AccountDetails = () => {
     const [ phone, setPhone ] = useState(null);
     const [ billingAddress, setBillingAddress ] = useState({});
     const [ shippingAddress, setShippingAddress ] = useState({});
+    const [ showModal, setShowModal ] = useState(false);
+    const [ input, setInput ] = useState('');
     const [ showMsg, setShowMsg ] = useState(false);
     const [ msgContent, setMsgContent ] = useState('');
     const [ msgType, setMsgType ] = useState('error');
@@ -113,9 +120,43 @@ const AccountDetails = () => {
         window.location = '/account'
     }
 
+    const confirmDelete = () => {
+        setShowModal(true);
+    }
+
+    const closeDeleteModal = () => {
+        setInput('');
+        setShowModal(false);
+        
+    }
+
+    const deleteAccount = async () => {
+        if(input.toLowerCase() !== email.toLowerCase()) {
+            return;
+        }
+        await client.deleteAccount();
+        setLoading(true);
+        setShowModal(false);
+        localStorage.removeItem(tokenName);
+        sessionStorage.removeItem(tokenName);
+        window.location.href = '/';
+    }
+
     return (
         <>
-            {!currentUser ?
+            <ClientModal 
+                show={showModal}
+                setShow={closeDeleteModal}
+                title={'Delete Account'} 
+                image={''}
+                input={input}
+                inputPlaceholder={'Email'}
+                setInput={setInput}
+                message={`Are you sure you want to delete your account forever? This action can not be undone. Please enter the account email to confirm.`}
+                action={deleteAccount} 
+                actionText={'Confirm'}
+            />
+            {!currentUser || loading ?
                 <Spinner />
                 :
                 showEdit ?
@@ -144,6 +185,7 @@ const AccountDetails = () => {
                             <Button onClick={() => updateUserDetails()}>Update</Button>
                         </UpdateButtonContainer>
                         <UpdatePasswordLink onClick={() => window.location ='/account/update-password'}>Update Password</UpdatePasswordLink>
+                        <DeleteButton onClick={() => confirmDelete()}>Delete Account</DeleteButton>
                     </AccountEditContainer>
                 :
                     <AccountDetailsContainer>

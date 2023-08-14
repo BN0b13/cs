@@ -5,21 +5,25 @@ import {
   ModalDenyButton,
   ModalButtonDiv,
   ModalDiv,
+  ModalInput,
   ModalTitle,
   ModalText,
   Modal
 } from './client-modal.styles';
 
-const ClientModal = ({ show = false, setShow, title = 'Warning', image = null, message = 'Error', action = null, actionText = 'Accept' }) => {
+const ClientModal = ({ show = false, setShow, title = 'Warning', image = null, input = null, inputPlaceholder = null, setInput = null, message = 'Error', action = null, actionText = 'Accept' }) => {
   
     return (
       <Modal show={show}>
         <ModalDiv>
           <ModalTitle>{ title }</ModalTitle>
-          { image &&
+          {image &&
             <img src={image}  width='200px' height='200px' />
           }
           <ModalText>{ message }</ModalText>
+          {input !== null &&
+            <ModalInput type='email' value={input} onChange={(e) => setInput(e.target.value)} autoComplete='off' placeholder={inputPlaceholder}/>
+          }
           <ModalButtonDiv>
             <ModalDenyButton onClick={() => setShow(false)}>
               Cancel

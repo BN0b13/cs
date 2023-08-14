@@ -52,7 +52,6 @@ const Welcome = () => {
           <WelcomeTitle>Cosmic Strains</WelcomeTitle>
           <WelcomeSubtitle>Collectible Oddities From Out Of This World</WelcomeSubtitle>
           <WelcomeText>Your local source for collectible cannabis seeds. We have an extremely large assortment of F1 lines created with some of the most popular and rarest strains around.</WelcomeText>
-          <WelcomeText>FINAL PAYMENT SYSTEM UPDATE: Our invoice system has been created and we are accepting sign ups and orders. All requested orders will receive a link to our payment provider by the next business day. We appreciate your patience and look forward to serving you!</WelcomeText>
         </WelcomeTextContainer>
       </WelcomeOpacity>
     </WelcomeContainer>
