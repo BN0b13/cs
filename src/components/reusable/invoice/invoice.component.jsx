@@ -91,7 +91,10 @@ const Invoice = () => {
                                     <TrackingContainer>
                                         <TrackingSubtitle>Tracking: </TrackingSubtitle>
                                         { order.tracking ? 
-                                            <TrackingText>{ order.tracking }</TrackingText>
+                                            <TrackingText onClick={() => window.open(
+                                                `https://tools.usps.com/go/TrackConfirmAction?qtc_tLabels1=${order.tracking}`,
+                                                '_blank'
+                                              )}>{ order.tracking }</TrackingText>
                                         : 
                                             <TrackingText>Available once order has shipped</TrackingText>
                                         }

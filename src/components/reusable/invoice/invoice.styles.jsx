@@ -76,6 +76,7 @@ export const TrackingSubtitle = styled.h4`
 export const TrackingText = styled.p`
     margin: 0;
     padding-left: 10px;
+    cursor: pointer;
 `;
 
 export const InvoiceTitle = styled.h2`

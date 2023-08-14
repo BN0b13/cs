@@ -66,9 +66,7 @@ const ProductDisplay = ({ product }) => {
         id,
         name, 
         description,
-        time,
-        mother,
-        father,
+        details,
         profile,
     } = product;
 
@@ -149,8 +147,8 @@ const ProductDisplay = ({ product }) => {
                     </FavoriteContainer> */}
                     <ProductText>{name}</ProductText>
                     <ProductDescriptionText>{description}</ProductDescriptionText>
-                    <ProductSubtext>Lineage: {mother} x {father}</ProductSubtext>
-                    <ProductSubtext>Time: {time}</ProductSubtext>
+                    <ProductSubtext>Lineage: {details.mother} x {details.father}</ProductSubtext>
+                    <ProductSubtext>Time: {details.time}</ProductSubtext>
                     <ProductSubtext>Type: {product.Inventories[0].type}</ProductSubtext>
                     <ProductSubtext>{product.Inventories[0].size} - {product.Inventories[0].sizeDescription}</ProductSubtext>
                     <ProductSubtext>Price: {convertProductPrice(product.Inventories[0].price)}</ProductSubtext>
