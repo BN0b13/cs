@@ -9,7 +9,6 @@ import {
 import { api } from '../../../config';
 
 const ProductCard = ({ product }) => {
-    console.log('Product Card Product: ', product);
 
     return (
         <ProductCardContainer>
