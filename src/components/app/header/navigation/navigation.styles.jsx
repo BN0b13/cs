@@ -7,6 +7,7 @@ import {
 export const NavigationContainer = styled.div`
     display: flex;
     flex-direction: row;
+    align-items: center;
     color: ${textColorLight};
 `;
 

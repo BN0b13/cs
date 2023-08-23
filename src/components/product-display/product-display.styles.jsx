@@ -12,6 +12,25 @@ import {
   textColorLight
 } from '../../styles/theme';
 
+export const ProductDisplayContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const ProductDescriptionContainer = styled.div`
+  width: ${setMobileView() ? '80vw' : '65vw'};
+`;
+
+export const ProductContainer = styled.div`
+  display: flex;
+  flex-direction: ${setMobileView() ? 'column' : 'row'};
+  justify-content: center;
+  ${setMobileView() ? 'row-gap: 2vh' : 'column-gap: 10vw'};
+  margin: ${setMobileView() ? '' : '10vh 5vh'};
+`;
+
 export const CategoryLink = styled(Link)`
   cursor: pointer;
   text-decoration: none;
@@ -23,14 +42,6 @@ export const ProductButtonContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-`;
-
-export const ProductContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  column-gap: 10vw;
-  margin-top: 10vh;
 `;
 
 export const SlideshowContainer = styled.div`
@@ -45,17 +56,6 @@ export const ProductButtonCount = styled.div`
 export const ProductCountInput = styled.input`
   width: 20px;
   margin: 10px;
-`;
-
-export const ProductMobileContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  row-gap: 2vh;
-`;
-
-export const ProductDisplayContainer = styled.div`
-
 `;
 
 export const FavoriteContainer = styled.div`
@@ -78,7 +78,7 @@ export const ProductImage = styled.div`
 
 export const ProductInformation = styled.div`
   text-align: left;
-  margin: ${setMobileView() ? '5px 5px 30px 5px' : '5px'};
+  margin: ${setMobileView() ? '5px 5px 30px 5px' : '0'};
   padding: 2px
 `;
 
