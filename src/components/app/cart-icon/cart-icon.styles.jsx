@@ -13,6 +13,7 @@ export const CartIconContainer = styled.div`
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    padding-bottom: 5px;
 `;
 
 export const Icon = styled.div`
@@ -26,4 +27,5 @@ export const ItemCount = styled.span`
     font-size: 10px;
     font-weight: bold;
     bottom: 12px;
+    padding-bottom: 5px;
 `;

@@ -31,9 +31,9 @@ import {
     ProductButtonCount,
     ProductContainer,
     ProductCountInput,
+    ProductDescriptionContainer,
     ProductDescriptionText,
     ProductDisplayContainer,
-    ProductMobileContainer,
     ProductImage,
     ProductInformation,
     ProductQuantityContainer,
@@ -120,73 +120,8 @@ const ProductDisplay = ({ product }) => {
         setQuantity(quantity - 1);
     }
 
-    const productDisplayContents = () => {
-        return (
-            <>
-                <ProductImage>
-                    {images.length === 0 ?
-                        <img src={logo} alt={`${name}`} height='300' width='300' />
-                        :
-                        <SlideshowContainer>
-                            <Slide autoplay={false} arrows={false}>
-                                {images.map((image, index)=> (
-                                        <div key={index}>
-                                            <a href={image.link}>
-                                                <div style={{ ...divStyle, "backgroundImage": `url(${api}${image.path})` }}>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    ))}
-                            </Slide>
-                        </SlideshowContainer>
-                    }
-                </ProductImage>
-                <ProductInformation>
-                    {/* <FavoriteContainer>
-                        <VscHeart />
-                    </FavoriteContainer> */}
-                    <ProductText>{name}</ProductText>
-                    <ProductDescriptionText>{description}</ProductDescriptionText>
-                    <ProductSubtext>Lineage: {details.mother} x {details.father}</ProductSubtext>
-                    <ProductSubtext>Time: {details.time}</ProductSubtext>
-                    <ProductSubtext>Type: {product.Inventories[0].type}</ProductSubtext>
-                    <ProductSubtext>{product.Inventories[0].size} - {product.Inventories[0].sizeDescription}</ProductSubtext>
-                    <ProductSubtext>Price: {convertProductPrice(product.Inventories[0].price)}</ProductSubtext>
-                    <ProductButtonContainer>
-                        <ProductButtonCount setMobileView={setMobileView()}>
-                            <ProductQuantityContainer>
-                                <VscChevronUp onClick={() => increaseQuantity()} />
-                                <ProductCountInput onChange={(e) => console.log(e.target.value)} value={quantity} />
-                                <VscChevronDown onClick={() => decreaseQuantity()} />
-                            </ProductQuantityContainer>
-                            <Button onClick={() => loggedIn(id, quantity)}>Add to Cart</Button>
-                        </ProductButtonCount>
-                        {showMessage && 
-                            <Snackbar type={messageType} msg={messageContents} show={() => setShowMessage(false)} />
-                        }
-                    </ProductButtonContainer>
-                </ProductInformation>
-            </>
-        )
-    }
-
-    const productDisplayLayout = () => {
-        if(setMobileView()) {
-            return (
-                <ProductMobileContainer>
-                    {productDisplayContents()}
-                </ProductMobileContainer>
-            );
-        }
-        return (
-            <ProductContainer>
-                {productDisplayContents()}
-            </ProductContainer>
-        )
-    }
-
     return (
-        <ProductDisplayContainer>
+        <>
             <ProductTitle>
                 <CategoryLink to={`/shop`}>
                     Shop
@@ -202,8 +137,59 @@ const ProductDisplay = ({ product }) => {
                     {'  '}
                 {name}
             </ProductTitle>
-            {productDisplayLayout()}
-        </ProductDisplayContainer>
+            <ProductDisplayContainer>
+                <ProductContainer>
+                    <ProductImage>
+                            {images.length === 0 ?
+                                <img src={logo} alt={`${name}`} height='300' width='300' />
+                                :
+                                    images.length === 1 ?
+                                        <img src={api + images[0].path} alt={`${name}`} height='300' width='300' />
+                                    :
+                                        <SlideshowContainer>
+                                            <Slide autoplay={false}>
+                                                {images.map((image, index)=> (
+                                                        <div key={index}>
+                                                            <a href={image.link}>
+                                                                <div style={{ ...divStyle, "backgroundImage": `url(${api}${image.path})` }}>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    ))}
+                                            </Slide>
+                                        </SlideshowContainer>
+                            }
+                        </ProductImage>
+                        <ProductInformation>
+                            {/* <FavoriteContainer>
+                                <VscHeart />
+                            </FavoriteContainer> */}
+                            <ProductText>{name}</ProductText>
+                            <ProductSubtext>Lineage: {details.mother} x {details.father}</ProductSubtext>
+                            <ProductSubtext>Time: {details.time}</ProductSubtext>
+                            <ProductSubtext>Type: {product.Inventories[0].type}</ProductSubtext>
+                            <ProductSubtext>{product.Inventories[0].size} - {product.Inventories[0].sizeDescription}</ProductSubtext>
+                            <ProductSubtext>Price: {convertProductPrice(product.Inventories[0].price)}</ProductSubtext>
+                            <ProductButtonContainer>
+                                <ProductButtonCount setMobileView={setMobileView()}>
+                                    <ProductQuantityContainer>
+                                        <VscChevronUp onClick={() => increaseQuantity()} />
+                                        <ProductCountInput onChange={(e) => console.log(e.target.value)} value={quantity} />
+                                        <VscChevronDown onClick={() => decreaseQuantity()} />
+                                    </ProductQuantityContainer>
+                                    <Button onClick={() => loggedIn(id, quantity)}>Add to Cart</Button>
+                                </ProductButtonCount>
+                                {showMessage && 
+                                    <Snackbar type={messageType} msg={messageContents} show={() => setShowMessage(false)} />
+                                }
+                            </ProductButtonContainer>
+                        </ProductInformation>
+                </ProductContainer>
+                <ProductDescriptionContainer>
+                    <ProductDescriptionText>{description}</ProductDescriptionText>
+                </ProductDescriptionContainer>
+            </ProductDisplayContainer>
+        </>
     )
 }
 

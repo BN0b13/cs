@@ -2,6 +2,7 @@ import { useContext, useEffect } from 'react';
 
 import CartIcon from '../cart-icon/cart-icon.component';
 import Navigation from './navigation/navigation.component';
+import Search from './search/search.component';
 
 import Client from '../../../tools/client';
 import { setMobileView } from '../../../tools/mobileView';
@@ -42,7 +43,8 @@ const Header = () => {
   if(setMobileView()) {
     return (
       <MobileHeaderNav>
-           <CartIcon />
+        <Search />
+        <CartIcon />
       </MobileHeaderNav>
     )
   }

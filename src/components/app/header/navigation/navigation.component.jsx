@@ -1,4 +1,5 @@
 import CartIcon from '../../cart-icon/cart-icon.component';
+import Search from '../search/search.component';
 
 import { 
     menuItemsPublic,
@@ -27,6 +28,7 @@ const Navigation = () => {
 
     return (
         <NavigationContainer>
+            <Search />
             {menuItemsPublic.map((item, index) => {
                 return (
                     <HeaderLink key={index} href={item.path}>

@@ -34,7 +34,7 @@ export default class Client {
         }   
     }
     
-    // Helper Functions
+    // Accounts
 
     async createCustomer(data) {
         const requestOptions = this.fetchOptions(this.fetchMethods.post, data);
@@ -77,6 +77,13 @@ export default class Client {
     async getProductById(id) {
         const requestOptions = this.fetchOptions(this.fetchMethods.get);
         const products = await fetch(`${api}/products/${id}`, requestOptions);
+        const res = await products.json();
+        return res;
+    }
+
+    async searchProducts(searchTerm) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.get);
+        const products = await fetch(`${api}/products/search/${searchTerm}`, requestOptions);
         const res = await products.json();
         return res;
     }
