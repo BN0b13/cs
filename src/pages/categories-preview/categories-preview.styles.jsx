@@ -13,11 +13,8 @@ export const Preview = styled.div`
     :
     'grid-template-columns: repeat(4, 1fr);'
     }
-  ${setMobileView() ? 
-    'row-gap: 10px;'
-    :
-    'column-gap: 20px;'
-    }
+    column-gap: 20px;
+    row-gap: 50px;
 `;
 
 export const CategoryCardContainer = styled.div`

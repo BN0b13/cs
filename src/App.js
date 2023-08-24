@@ -85,7 +85,7 @@ function App() {
           } 
         />
         <Route 
-          path="/products" 
+          path="/products/*" 
           element={ 
             <ProductsPage />
           } 

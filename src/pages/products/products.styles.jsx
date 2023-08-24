@@ -15,13 +15,19 @@ export const Products = styled.div`
     :
     'grid-template-columns: repeat(4, 1fr);'
     }
-  ${setMobileView() ? 
-    'row-gap: 10px;'
-    :
-    'column-gap: 20px;'
-    }
+    column-gap: 20px;
+    row-gap: 50px;
+  text-align: center;
 `;
 
 export const ProductCardContainer = styled.div`
 
+`;
+
+export const ProductText = styled.h2`
+
+`;
+
+export const ProductSubtext = styled.h4`
+  cursor: pointer;
 `;

@@ -11,15 +11,15 @@ import {
 } from './search.styles';
 
 const Search = () => {
-    const { searchTerm, setSearchTerm, termSearched, searchForProduct } = useContext(SearchContext);
+    const { searchTerm, setSearchTerm, searchForProduct } = useContext(SearchContext);
+
 
     useEffect(() => {
-        if(termSearched.length === 0) {
-            const storedSearchTerm = localStorage.getItem('searchTerm');
-            if(storedSearchTerm !== null) {
-                searchForProduct(storedSearchTerm);
-                localStorage.removeItem('searchTerm');
-            }
+        const urlSearchTerms = window.location.search;
+        const urlSearchParams = new URLSearchParams(urlSearchTerms);
+        const search = urlSearchParams.get('search');
+        if(search) {
+            searchForProduct(search);
         }
     }, []);
 
@@ -31,11 +31,7 @@ const Search = () => {
 
     const submitSearch = () => {
         if(searchTerm.length <= 1) return;
-        searchForProduct(searchTerm);
-        if(window.location.pathname !== '/products') {
-            localStorage.setItem('searchTerm', searchTerm);
-            window.location.href = '/products';
-        }
+        window.location.href = `/products?search=${searchTerm}`;
     }
 
     return (
