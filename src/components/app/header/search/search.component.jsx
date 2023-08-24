@@ -37,7 +37,7 @@ const Search = () => {
     return (
         <SearchContainer onKeyDown={(e) => handleKeyDown(e)}>
             <SearchBar value={searchTerm} onChange={e => setSearchTerm(e.target.value)} placeholder="search" />
-            <VscSearch onClick={() => submitSearch()} />
+            <VscSearch onClick={() => submitSearch()} style={{ cursor: 'pointer' }} />
         </SearchContainer>
     )
 }
