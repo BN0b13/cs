@@ -1,5 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 
+import { useParams } from 'react-router-dom';
+
 import Spinner from '../../components/reusable/spinner/spinner.component';
 import ProductCard from './product-card/product-card.component';
 
@@ -10,7 +12,9 @@ import Client from '../../tools/client';
 import {
     ProductCardContainer,
     ProductsContainer,
-    Products
+    Products,
+    ProductSubtext,
+    ProductText,
 } from './products.styles';
 
 const client = new Client();
@@ -22,8 +26,21 @@ const ProductsPage = () => {
     const [ products, setProducts ] = useState(null);
 
     useEffect(() => {
-        setProducts(searchResults);
+        if(!window.location.search) {
+            getAllProducts();
+        }
+    }, []);
+
+    useEffect(() => {
+        if(termSearched) {
+            setProducts(searchResults);
+        }
     }, [searchResults]);
+
+    const getAllProducts = async () => {
+        const res = await client.getProducts();
+        setProducts(res.rows);
+    }
 
     return (
         <ProductsContainer>
@@ -31,13 +48,20 @@ const ProductsPage = () => {
                 <Spinner />
             :
             <>
-                <h2>Search Results For: {termSearched.length > 0 ? termSearched : 'No Current Search'}</h2>
+            {!window.location.search ?
+                <ProductText>All Seed Products</ProductText>
+            :
+            <>
+                <ProductSubtext onClick={() => window.location.href = '/products'}>Back To Products</ProductSubtext>
+                <ProductText>Search Results For: {termSearched.length > 0 ? termSearched : 'No Current Search'}</ProductText>    
+            </>
+            }
                 <Products>
                     {products.length === 0 ? 
-                        <h2>No Results</h2>
+                        <ProductText>No Results</ProductText>
                     :
                         products.map((product, index) => (
-                            <ProductCardContainer key={index} onClick={() => window.location.href = `/shop/${product['Category.name']}/${product.name}`}>
+                            <ProductCardContainer key={index} onClick={() => window.location.href = `/shop/${product['Category.name'] || product.Category.name}/${product.name}`}>
                                 <ProductCard product={product} />
                             </ProductCardContainer>
                         )) 

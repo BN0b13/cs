@@ -13,8 +13,8 @@ export const SearchContext = createContext({
 });
 
 export const SearchProvider = ({ children }) => {
-    const [ searchTerm, setSearchTerm ] = useState([]);
-    const [ termSearched, setTermSearched ] = useState([]);
+    const [ searchTerm, setSearchTerm ] = useState('');
+    const [ termSearched, setTermSearched ] = useState('');
     const [ searchResults, setSearchResults ] = useState([]);
     
     const searchForProduct = async (searchTerm) => {

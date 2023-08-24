@@ -12,10 +12,14 @@ const ProductCard = ({ product }) => {
 
     return (
         <ProductCardContainer>
-            {product.ProductImages ?
-                <img src={api + product.ProductImages[0].path} alt={`${product.name}`} />
-            :
-                <img src={logo} alt={`${product.name}`} />
+            {typeof product.ProductImages === 'object' && product.ProductImages.path ?
+
+                    <img src={api + product.ProductImages.path} alt={`${product.name}`} />
+                :
+                    typeof product.ProductImages === 'array' && product.ProductImages.length > 0 ?
+                        <img src={api + product.ProductImages[0].path} alt={`${product.name}`} />
+                    :
+                        <img src={logo} alt={`${product.name}`} />
             }
             <Footer>
                 <Name>{ product.name }</Name>
