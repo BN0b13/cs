@@ -1,10 +1,12 @@
 import styled from 'styled-components';
 
-import { setMobileView } from './tools/mobileView';
-
 import {
     headerHeight
 } from './styles/theme';
+
+export const MainContainer = styled.div`
+    
+`;
 
 export const BackgroundImageContainer = styled.div`
     background-image: ${props => `url(${props.backgroundImage})`};
@@ -14,5 +16,5 @@ export const BackgroundImageContainer = styled.div`
 `;
 
 export const ContentContainer = styled.div`
-    padding-top: ${setMobileView() ? '0' : headerHeight};
+    padding-top: ${headerHeight};
 `;

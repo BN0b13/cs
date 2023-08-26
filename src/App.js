@@ -32,7 +32,8 @@ import backgroundImage from './assets/img/stars.jpeg';
 
 import {
   BackgroundImageContainer,
-  ContentContainer
+  ContentContainer,
+  MainContainer
 } from './App.styles';
 
 function App() {
@@ -117,7 +118,7 @@ function App() {
   }
 
   return (
-    <div id="outer-container" className="App">
+    <MainContainer id="outer-container" className="App">
       <AgeVerify 
         ageVerifyTokenName={ageVerifyTokenName}
         ageToken={ageToken}
@@ -135,7 +136,7 @@ function App() {
         </ContentContainer>
       </BackgroundImageContainer>
         <Footer />
-    </div>
+    </MainContainer>
   );
 }
 

@@ -28,6 +28,8 @@ export const MobileHeaderNav = styled.div`
     border-bottom: 1px solid black;
     background-color: ${backgroundOpacityPages};
     color: ${textColorLight};
+    position: fixed;
+    z-index: 20;
 `;
 
 export const LogoContainer = styled.div`

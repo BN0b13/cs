@@ -15,6 +15,8 @@ import {
     Products,
     ProductSubtext,
     ProductText,
+    ResultTextContainer,
+    ResultText
 } from './products.styles';
 
 const client = new Client();
@@ -56,17 +58,19 @@ const ProductsPage = () => {
                 <ProductText>Search Results For: {termSearched.length > 0 ? termSearched : 'No Current Search'}</ProductText>    
             </>
             }
-                <Products>
                     {products.length === 0 ? 
-                        <ProductText>No Results</ProductText>
+                        <ResultTextContainer>
+                            <ResultText>No Results</ResultText>
+                        </ResultTextContainer>
                     :
-                        products.map((product, index) => (
-                            <ProductCardContainer key={index} onClick={() => window.location.href = `/shop/${product['Category.name'] || product.Category.name}/${product.name}`}>
-                                <ProductCard product={product} />
-                            </ProductCardContainer>
-                        )) 
+                        <Products>
+                            {products.map((product, index) => (
+                                <ProductCardContainer key={index} onClick={() => window.location.href = `/shop/${product['Category.name'] || product.Category.name}/${product.name}`}>
+                                    <ProductCard product={product} />
+                                </ProductCardContainer>
+                            ))}
+                        </Products>
                     }
-                </Products>
             </>
                 
             }
