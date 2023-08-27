@@ -50,7 +50,7 @@ export const customReactTheme = (darkMode) => {
         }
         body {
             color: ${currentPrimaryTheme.text} !important;
-            background-color: ${currentPrimaryTheme.background} !important;
+            background-color: ${currentPrimarytheme.dark} !important;
         }
         .header {
             border-bottom: 1px solid ${currentPrimaryTheme.border} !important;

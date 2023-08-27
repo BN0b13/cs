@@ -59,95 +59,24 @@ export default class Client {
         return res;
     }
 
-    async addView() {
-        const requestOptions = this.fetchOptions(this.fetchMethods.patch);
-        const account = await fetch(`${api}/visits`, requestOptions);
-        const res = await account.json();
-
-        return res;
-    }
-
-    async getProducts() {
-        const requestOptions = this.fetchOptions(this.fetchMethods.get);
-        const products = await fetch(`${api}/products`, requestOptions);
-        const res = await products.json();
-        return res;
-    }
-
-    async getProductById(id) {
-        const requestOptions = this.fetchOptions(this.fetchMethods.get);
-        const products = await fetch(`${api}/products/${id}`, requestOptions);
-        const res = await products.json();
-        return res;
-    }
-
-    async searchProducts(searchTerm) {
-        const requestOptions = this.fetchOptions(this.fetchMethods.get);
-        const products = await fetch(`${api}/products/search/${searchTerm}`, requestOptions);
-        const res = await products.json();
-        return res;
-    }
-
-    async getCategories() {
-        const requestOptions = this.fetchOptions(this.fetchMethods.get);
-        const categories = await fetch(`${api}/categories`, requestOptions);
-        const res = await categories.json();
-        return res;
-    }
-
-    async getCategoryByName(category) {
-        const requestOptions = this.fetchOptions(this.fetchMethods.get);
-        const categoryRes = await fetch(`${api}/categories/name/${category}`, requestOptions);
-        const res = await categoryRes.json();
-        return res;
-    }
-
-    async getCart() {
+    async isEmailTokenValid() {
         const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
-        const cart = await fetch(`${api}/cart`, requestOptions);
-        const res = await cart.json();
+        const isEmailTokenValid = await fetch(`${api}/user/email-token/verify`, requestOptions);
+        const res = await isEmailTokenValid.json();
         return res;
     }
 
-    async getCartContents() {
+    async isPasswordRestTokenValid(token) {
         const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
-        const cart = await fetch(`${api}/cart/contents`, requestOptions);
-        const res = await cart.json();
+        const isEmailTokenValid = await fetch(`${api}/user/reset-password-token/verify/${token}`, requestOptions);
+        const res = await isEmailTokenValid.json();
         return res;
     }
 
-    async modifyCart(data) {
-        const requestOptions = this.fetchOptions(this.fetchMethods.patch, data, true);
-        const cart = await fetch(`${api}/cart`, requestOptions);
-        const res = await cart.json();
-        return res;
-    }
-
-    async checkoutSetUp() {
-        const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
-        const checkoutSetUp = await fetch(`${api}/checkout/set-up`, requestOptions);
-        const res = await checkoutSetUp.json();
-        return res;
-    }
-
-    async checkout(data) {
-        const requestOptions = this.fetchOptions(this.fetchMethods.post, data, true);
-        const checkout = await fetch(`${api}/orders`, requestOptions);
-        const res = await checkout.json();
-        return res;
-    }
-
-    async getOrders() {
-        const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
-        const getOrders = await fetch(`${api}/orders`, requestOptions);
-        const res = await getOrders.json();
-        return res;
-    }
-
-    async getOrderByRef(refId) {
-        const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
-        const getOrderByRef = await fetch(`${api}/orders/${refId}`, requestOptions);
-        const res = await getOrderByRef.json();
+    async completeEmailVerification({ emailToken }) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.get);
+        const completeEmailVerification = await fetch(`${api}/user/verify-email/${emailToken}`, requestOptions);
+        const res = await completeEmailVerification.json();
         return res;
     }
 
@@ -179,26 +108,127 @@ export default class Client {
         return res;
     }
 
-    async isEmailTokenValid() {
-        const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
-        const isEmailTokenValid = await fetch(`${api}/user/email-token/verify`, requestOptions);
-        const res = await isEmailTokenValid.json();
+    async deleteAccount() {
+        const requestOptions = this.fetchOptions(this.fetchMethods.patch, '', true);
+        const deleteAccountRes = await fetch(`${api}/user/delete-account`, requestOptions);
+        const res = await deleteAccountRes.json();
         return res;
     }
 
-    async isPasswordRestTokenValid(token) {
+    // Carts
+
+    async getCart() {
         const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
-        const isEmailTokenValid = await fetch(`${api}/user/reset-password-token/verify/${token}`, requestOptions);
-        const res = await isEmailTokenValid.json();
+        const cart = await fetch(`${api}/cart`, requestOptions);
+        const res = await cart.json();
         return res;
     }
 
-    async completeEmailVerification({ emailToken }) {
+    async getCartContents() {
+        const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
+        const cart = await fetch(`${api}/cart/contents`, requestOptions);
+        const res = await cart.json();
+        return res;
+    }
+
+    async modifyCart(data) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.patch, data, true);
+        const cart = await fetch(`${api}/cart`, requestOptions);
+        const res = await cart.json();
+        return res;
+    }
+
+    // Categories
+
+    async getCategories() {
         const requestOptions = this.fetchOptions(this.fetchMethods.get);
-        const completeEmailVerification = await fetch(`${api}/user/verify-email/${emailToken}`, requestOptions);
-        const res = await completeEmailVerification.json();
+        const categories = await fetch(`${api}/categories`, requestOptions);
+        const res = await categories.json();
         return res;
     }
+
+    async getCategoryByName(category) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.get);
+        const categoryRes = await fetch(`${api}/categories/name/${category}`, requestOptions);
+        const res = await categoryRes.json();
+        return res;
+    }
+
+    // Checkout
+
+    async checkoutSetUp() {
+        const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
+        const checkoutSetUp = await fetch(`${api}/checkout/set-up`, requestOptions);
+        const res = await checkoutSetUp.json();
+        return res;
+    }
+
+    async checkout(data) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.post, data, true);
+        const checkout = await fetch(`${api}/orders`, requestOptions);
+        const res = await checkout.json();
+        return res;
+    }
+
+    // Configuration
+
+    async configuration() {
+        const requestOptions = this.fetchOptions(this.fetchMethods.get);
+        const configuration = await fetch(`${api}/configuration`, requestOptions);
+        const res = await configuration.json();
+        return res;
+    } 
+
+    // Metrics
+
+    async addView() {
+        const requestOptions = this.fetchOptions(this.fetchMethods.patch);
+        const account = await fetch(`${api}/visits`, requestOptions);
+        const res = await account.json();
+
+        return res;
+    }
+
+    // Orders
+
+    async getOrders() {
+        const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
+        const getOrders = await fetch(`${api}/orders`, requestOptions);
+        const res = await getOrders.json();
+        return res;
+    }
+
+    async getOrderByRef(refId) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
+        const getOrderByRef = await fetch(`${api}/orders/${refId}`, requestOptions);
+        const res = await getOrderByRef.json();
+        return res;
+    }
+
+    // Products
+
+    async getProducts() {
+        const requestOptions = this.fetchOptions(this.fetchMethods.get);
+        const products = await fetch(`${api}/products`, requestOptions);
+        const res = await products.json();
+        return res;
+    }
+
+    async getProductById(id) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.get);
+        const products = await fetch(`${api}/products/${id}`, requestOptions);
+        const res = await products.json();
+        return res;
+    }
+
+    async searchProducts(searchTerm) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.get);
+        const products = await fetch(`${api}/products/search/${searchTerm}`, requestOptions);
+        const res = await products.json();
+        return res;
+    }
+
+    // Welcome
 
     async getWelcomeImages() {
         const requestOptions = this.fetchOptions(this.fetchMethods.get);
@@ -211,13 +241,6 @@ export default class Client {
         const requestOptions = this.fetchOptions(this.fetchMethods.get);
         const welcomeContent = await fetch(`${api}/welcome/content`, requestOptions);
         const res = await welcomeContent.json();
-        return res;
-    }
-
-    async deleteAccount() {
-        const requestOptions = this.fetchOptions(this.fetchMethods.patch, '', true);
-        const deleteAccountRes = await fetch(`${api}/user/delete-account`, requestOptions);
-        const res = await deleteAccountRes.json();
         return res;
     }
 }

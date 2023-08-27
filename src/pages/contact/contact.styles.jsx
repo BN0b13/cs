@@ -1,18 +1,14 @@
 import styled from 'styled-components';
 
-import {
-    backgroundOpacityLight,
-    bodyHeight,
-    textColorLight
-} from '../../styles/theme';
+import { bodyHeight } from '../../styles/theme';
 
 export const ContactPageContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    background-color: ${backgroundOpacityLight};
-    color: ${textColorLight};
+    background-color: ${props => `rgba(${props.theme.backgroundOpacityLight})`};
+    color: ${props => props.theme.text};
     min-height: ${bodyHeight};
 `;
 export const ContactPageTitle = styled.h1`

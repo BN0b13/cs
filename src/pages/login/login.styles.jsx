@@ -1,16 +1,12 @@
 import styled from 'styled-components';
 
-import {
-    backgroundOpacityLight,
-    bodyHeight,
-    textColorDark
-} from '../../styles/theme';
+import { bodyHeight } from '../../styles/theme';
 
 export const LoginPageContainer = styled.div`
     display: flex;
     justify-content: space-around;
     align-items: center;
-    background-color: ${backgroundOpacityLight};
-    color: ${textColorDark};
+    background-color: ${props => `rgba(${props.theme.backgroundOpacityLight})`};
+    color: ${props => props.theme.textSecondary};
     min-height: ${bodyHeight};
 `;

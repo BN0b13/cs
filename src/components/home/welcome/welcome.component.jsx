@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import Slideshow from '../../reusable/slideshow/slideshow.component';
 import Spinner from '../../reusable/spinner/spinner.component';
+
+import { ConfigurationContext } from '../../../contexts/configuration.context';
 
 import Client from '../../../tools/client';
 
@@ -20,8 +22,9 @@ import {
 const client = new Client();
 
 const Welcome = () => {
-
   const [ images, setImages ] = useState(null);
+
+  const { colors } = useContext(ConfigurationContext);
 
     useEffect(() => {
         const getImages = async () => {
@@ -36,8 +39,8 @@ const Welcome = () => {
     }, []);
 
   return (
-    <WelcomeContainer image={backSplash}>
-      <WelcomeOpacity>
+    <WelcomeContainer theme={colors} image={backSplash}>
+      <WelcomeOpacity theme={colors}>
         <WelcomeImageContainer>
           {!images ?
               <Spinner />
@@ -48,7 +51,7 @@ const Welcome = () => {
                 <Slideshow images={images} />
           }
         </WelcomeImageContainer>
-        <WelcomeTextContainer>
+        <WelcomeTextContainer theme={colors}>
           <WelcomeTitle>Cosmic Strains</WelcomeTitle>
           <WelcomeSubtitle>Collectible Oddities From Out Of This World</WelcomeSubtitle>
           <WelcomeText>Your local source for collectible cannabis seeds. We have an extremely large assortment of F1 lines created with some of the most popular and rarest strains around.</WelcomeText>

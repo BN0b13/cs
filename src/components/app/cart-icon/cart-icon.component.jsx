@@ -5,8 +5,9 @@ import { ReactComponent as ShoppingIcon } from '../../../assets/img/shopping-bag
 import { getCartCount } from '../../../tools/cart';
 
 import { CartContext } from '../../../contexts/cart.context';
+import { ConfigurationContext } from '../../../contexts/configuration.context';
 
-import { tokenName } from '../../../config';
+import { tokenName, cartTokenName } from '../../../config';
 
 import {
     CartIconContainer,
@@ -16,14 +17,17 @@ import {
 
 const CartIcon = () => {
     const loggedInStatus = localStorage.getItem(tokenName);
+    const cartTokenCount = localStorage.getItem(cartTokenName);
 
     const { cartItems } = useContext(CartContext);
+    const { colors } = useContext(ConfigurationContext);
 
-    const [count, setCount] = useState(null);
+    const [count, setCount] = useState(cartTokenCount ? cartTokenCount : 0);
 
     useEffect(() => {
         const getCart = async () => {
             const res = await getCartCount();
+            localStorage.setItem(cartTokenName, res);
             setCount(res);
         }
         if(loggedInStatus) {
@@ -40,7 +44,7 @@ const CartIcon = () => {
 
     return(
         <CartIconContainer onClick={() => navigateToCart()}>
-            <Icon>
+            <Icon theme={colors}>
                 <ShoppingIcon />
             </Icon>
             <ItemCount>

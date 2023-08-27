@@ -10,6 +10,7 @@ import Spinner from '../../components/reusable/spinner/spinner.component';
 import UpdatePassword from '../../components/account/update-password/update-password.component';
 import VerifyEmail from '../../components/account/verify-email/verify-email.component';
 
+import { ConfigurationContext } from '../../contexts/configuration.context';
 import { UserContext } from '../../contexts/user.context';
 
 import {
@@ -18,10 +19,11 @@ import {
 } from './account.styles';
 
 const AccountPage = () => {
+    const { colors } = useContext(ConfigurationContext);
     const { currentUser } = useContext(UserContext);
 
     return (
-        <AccountPageContainer>
+        <AccountPageContainer theme={colors}>
             {!currentUser ?
                 <Spinner />
             :

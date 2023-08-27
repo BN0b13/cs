@@ -2,11 +2,7 @@ import styled from 'styled-components';
 
 import { setMobileView } from '../../tools/mobileView';
 
-import {
-    backgroundOpacityDark,
-    bodyHeight,
-    textColorLight
-} from '../../styles/theme';
+import { bodyHeight } from '../../styles/theme';
 
 export const DisplayContainer = styled.div`
     display: flex;
@@ -14,8 +10,8 @@ export const DisplayContainer = styled.div`
     align-items: 'center';
     justify-content: ${setMobileView() ? 'center' : ''};
     width: '100%';
-    background-color: ${backgroundOpacityDark};
-    color: ${textColorLight};
+    background-color: ${props => `rgba(${props.theme.backgroundOpacityDark})`};
+    color: ${props => props.theme.text};
     min-height: ${bodyHeight};
     padding: 10px;
 `;

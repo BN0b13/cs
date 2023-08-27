@@ -5,6 +5,7 @@ import Spinner from '../../components/reusable/spinner/spinner.component';
 import CartItem from '../../components/cart-item/cart-item.component';
 
 import { CartContext } from '../../contexts/cart.context';
+import { ConfigurationContext } from '../../contexts/configuration.context';
 
 import {
     CartCollapseButtonContainer,
@@ -22,11 +23,11 @@ import Client from '../../tools/client';
 const client = new Client();
 
 const CartPage = () => {
-
     const [cart, setCart] = useState(null);
     const [subtotal, setSubtotal] = useState(null);
 
     const { cartItems } = useContext(CartContext);
+    const { colors } = useContext(ConfigurationContext);
 
     useEffect(() => {
         const getCart = async () => {
@@ -41,7 +42,7 @@ const CartPage = () => {
     
 
     return (
-        <CartPageContainer>
+        <CartPageContainer theme={colors}>
             <CartPageTitle>Cart</CartPageTitle>
             { !cart ?  
                 <Spinner />
