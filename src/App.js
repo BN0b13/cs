@@ -53,6 +53,7 @@ function App() {
 
   useEffect(() => {
     const themeToken = localStorage.getItem(themeTokenName);
+    
     if(themeToken) {
       const savedTheme =  JSON.parse(themeToken);
       setAppTheme(savedTheme, savedTheme.colors.primary);
@@ -85,6 +86,15 @@ function App() {
         const colors = currentTheme.themeInverted ? theme.colors.secondary : theme.colors.primary;
         setAppTheme(theme, colors);
         setLoading(false);
+      } else {
+        if(savedTheme.id != getAppConfiguration.rows[0].Theme.id || 
+          savedTheme.updatedAt !== getAppConfiguration.rows[0].Theme.updatedAt) {
+          setLoading(true);
+          const theme = getAppConfiguration.rows[0].Theme;
+          const colors = currentTheme.themeInverted ? theme.colors.secondary : theme.colors.primary;
+          setAppTheme(theme, colors);
+          setLoading(false);
+        }
       }
     }
 
