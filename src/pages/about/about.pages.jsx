@@ -1,6 +1,8 @@
-import React from 'react';
+import { useContext } from 'react';
 
 import Button from '../../components/reusable/button/button.component';
+
+import { ConfigurationContext } from '../../contexts/configuration.context';
 
 import logo from '../../assets/img/logo.png';
 
@@ -16,8 +18,10 @@ import {
 } from './about.styles';
 
 const AboutPage = () => {
+    const { colors } = useContext(ConfigurationContext);
+
     return (
-        <AboutPageContainer>
+        <AboutPageContainer theme={colors}>
             <ContentContainer>
                 <AboutPageImage src={logo} />
                 <AboutPageTitle>About Cosmic Strains</AboutPageTitle>

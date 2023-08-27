@@ -1,10 +1,5 @@
 import styled from 'styled-components';
 
-import {
-    backgroundOpacityLight,
-    textColorDark
-} from '../../../styles/theme';
-
 export const AccountSidebarContainer = styled.div`
     display: flex;
     flex-direction: row;
@@ -22,8 +17,8 @@ export const OptionContainer = styled.div`
     cursor: pointer;
 
     &:hover {
-        background-color: ${backgroundOpacityLight};
-        color: ${textColorDark};
+        background-color: ${props => `rgba(${props.theme.backgroundOpacityLight})`};
+        color: ${props => props.theme.textSecondary};
     }
 `;
 

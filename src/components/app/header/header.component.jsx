@@ -1,15 +1,12 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 
 import CartIcon from '../cart-icon/cart-icon.component';
 import Navigation from './navigation/navigation.component';
 import Search from './search/search.component';
 
-import Client from '../../../tools/client';
 import { setMobileView } from '../../../tools/mobileView';
 
-import { UserContext } from '../../../contexts/user.context';
-
-import { tokenName } from '../../../config';
+import { ConfigurationContext } from '../../../contexts/configuration.context';
 
 import navLogo from '../../../assets/img/text.png';
 
@@ -22,27 +19,12 @@ import {
   NavOptionsDiv
 } from './header.styles';
 
-const client = new Client();
-
 const Header = () => {
-  const { setCurrentUser } = useContext(UserContext);
-
-  useEffect(() => {
-    const getAccount = async () => {
-      const res = await client.getAccount();
-      setCurrentUser(res);
-    }
-    const token = localStorage.getItem(tokenName);
-    if(token) {
-      getAccount();
-    } else {
-      localStorage.removeItem(tokenName);
-    }
-  }, []);
+  const { colors } = useContext(ConfigurationContext);
 
   if(setMobileView()) {
     return (
-      <MobileHeaderNav>
+      <MobileHeaderNav theme={colors}>
         <Search />
         <CartIcon />
       </MobileHeaderNav>
@@ -50,10 +32,10 @@ const Header = () => {
   }
 
   return (
-    <HeaderNav>
+    <HeaderNav theme={colors}>
       <LogoContainer>
         <LogoLink onClick={() => window.location = '/'} >
-          <Logo src={navLogo} />
+          <Logo theme={colors} src={navLogo} />
         </LogoLink>
       </LogoContainer>
       <NavOptionsDiv>

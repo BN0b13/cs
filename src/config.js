@@ -1,5 +1,7 @@
-export const tokenName = 'cosmicstrains-token';
+export const tokenName = 'cs-token';
+export const themeTokenName = 'cs-theme-token';
 export const ageVerifyTokenName = 'cs-age-verified-token';
+export const cartTokenName = 'cs-cart-token';
 
 // Prod
 export const api = 'https://api.cosmicstrains.com';

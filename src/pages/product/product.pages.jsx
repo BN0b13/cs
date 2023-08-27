@@ -1,9 +1,4 @@
 import { React, useState, useEffect } from 'react';
-import {
-    VscHeartFilled,
-    VscHeart
-  } from 'react-icons/vsc';
-
 import { useParams } from 'react-router-dom';
 
 import ProductDisplay from '../../components/product-display/product-display.component';

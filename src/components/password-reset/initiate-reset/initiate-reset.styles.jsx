@@ -2,10 +2,6 @@ import styled from 'styled-components';
 
 import { setMobileView } from '../../../tools/mobileView';
 
-import {
-    textColorDark
-} from '../../../styles/theme';
-
 export const InitiateResetContainer = styled.div`
     display: flex;
     flex-direction: column;
@@ -13,7 +9,7 @@ export const InitiateResetContainer = styled.div`
     align-items: center;
     text-align: center;
     padding: 30px;
-    color: ${textColorDark};
+    color: ${props => props.theme.textSecondary};
 `;
 
 export const InitiateResetForm = styled.div`

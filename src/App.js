@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   BrowserRouter,
   Routes,
@@ -7,9 +7,10 @@ import {
 import './App.css';
 
 import AgeVerify from './components/app/age-verify/age-verify.component';
+import Footer from './components/app/footer/footer.component';
 import HamburgerMenu from './components/app/hamburger-menu/hamburger-menu.component';
 import Header from './components/app/header/header.component';
-import Footer from './components/app/footer/footer.component';
+import Spinner from './components/reusable/spinner/spinner.component';
 
 import AboutPage from './pages/about/about.pages';
 import AccountPage from './pages/account/account.pages';
@@ -24,20 +25,71 @@ import SignUpPage from './pages/sign-up/sign-up.pages';
 import ThankYouPage from './pages/thank-you/thank-you.pages';
 import VerifyEmail from './components/account/verify-email/verify-email.component';
 
+import { ConfigurationContext } from './contexts/configuration.context';
+import { UserContext } from './contexts/user.context';
+
+import Client from './tools/client';
 import { setMobileView } from './tools/mobileView';
 
-import { ageVerifyTokenName } from './config';
+import { ageVerifyTokenName, themeTokenName, tokenName } from './config';
 
 import backgroundImage from './assets/img/stars.jpeg';
 
 import {
+  AppLoadingContainer,
   BackgroundImageContainer,
   ContentContainer,
   MainContainer
 } from './App.styles';
 
+const client = new Client();
+
 function App() {
   const [ ageToken, setAgeToken ] = useState(sessionStorage.getItem(ageVerifyTokenName));
+  const [ loading, setLoading ] = useState(false);
+
+  const { theme, setAppTheme } = useContext(ConfigurationContext);
+  const { setCurrentUser } = useContext(UserContext);
+
+  useEffect(() => {
+    const themeToken = localStorage.getItem(themeTokenName);
+    if(themeToken) {
+      const savedTheme =  JSON.parse(themeToken);
+      setAppTheme(savedTheme, savedTheme.colors.primary);
+    }
+
+    const setAppContext = async () => {
+      let currentTheme = {
+        themeInverted: false
+      };
+
+      const getAppConfiguration = await client.configuration();
+      const token = localStorage.getItem(tokenName);
+      
+      if(token) {
+        const getAccount = await client.getAccount();
+        currentTheme = {
+          themeId: getAccount.themeId,
+          themeInverted: getAccount.themeInverted
+        };
+        setCurrentUser(getAccount);
+      } else {
+        localStorage.removeItem(tokenName);
+      }
+
+      const savedTheme = JSON.parse(themeToken);
+      
+      if(!savedTheme) {
+        setLoading(true);
+        const theme = getAppConfiguration.rows[0].Theme;
+        const colors = currentTheme.themeInverted ? theme.colors.secondary : theme.colors.primary;
+        setAppTheme(theme, colors);
+        setLoading(false);
+      }
+    }
+
+    setAppContext();
+  }, []);
 
   const routes = () => {
 
@@ -119,23 +171,30 @@ function App() {
 
   return (
     <MainContainer id="outer-container" className="App">
-      <AgeVerify 
-        ageVerifyTokenName={ageVerifyTokenName}
-        ageToken={ageToken}
-        setAgeToken={setAgeToken}
-      />
-      {setMobileView() &&
-        <HamburgerMenu />
-      }
+      {loading ?
+        <AppLoadingContainer>
+          <Spinner />
+        </AppLoadingContainer>
+      :
+        <>
+        <AgeVerify 
+          ageVerifyTokenName={ageVerifyTokenName}
+          ageToken={ageToken}
+          setAgeToken={setAgeToken}
+        />
+        {setMobileView() &&
+          <HamburgerMenu />
+        }
         <Header />
-      <BackgroundImageContainer id="page-wrap" backgroundImage={backgroundImage}>
-        <ContentContainer>
-          <BrowserRouter>
-            { routes() }
-          </BrowserRouter>
-        </ContentContainer>
-      </BackgroundImageContainer>
+        <BackgroundImageContainer id="page-wrap" theme={theme} backgroundImage={backgroundImage}>
+          <ContentContainer>
+            <BrowserRouter>
+              { routes() }
+            </BrowserRouter>
+          </ContentContainer>
+        </BackgroundImageContainer>
         <Footer />
+      </>}
     </MainContainer>
   );
 }
