@@ -1,6 +1,8 @@
-import React from 'react';
+import { useContext } from 'react';
 
 import ContactForm from '../../components/contact-form/contact-form.component';
+
+import { ConfigurationContext } from '../../contexts/configuration.context';
 
 import {
     ContactPageContainer,
@@ -8,8 +10,10 @@ import {
 } from './contact.styles';
 
 const ContactPage = () => {
+    const { colors } = useContext(ConfigurationContext);
+
     return (
-        <ContactPageContainer>
+        <ContactPageContainer theme={colors}>
             <ContactPageTitle>
                 Contact Us
             </ContactPageTitle>

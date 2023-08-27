@@ -1,18 +1,12 @@
 import styled from 'styled-components';
 
-import { setMobileView } from '../../tools/mobileView';
-
-import {
-    backgroundOpacityDark,
-    bodyHeight,
-    textColorLight
-} from '../../styles/theme';
+import { bodyHeight } from '../../styles/theme';
 
 export const SignUpPageContainer = styled.div`
     display: flex;
     justify-content: space-around;
     align-items: center;
-    background-color: ${backgroundOpacityDark};
-    color: ${textColorLight};
+    background-color: ${props => props.theme.backgroundOpacityDark};
+    color: ${props => props.theme.text};
     min-height: ${bodyHeight};
 `;

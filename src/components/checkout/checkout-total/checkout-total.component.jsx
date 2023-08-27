@@ -1,4 +1,4 @@
-import { useEffect, useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { VscClose, VscInfo } from 'react-icons/vsc'
 
@@ -9,10 +9,10 @@ import Snackbar from '../../reusable/snackbar/snackbar.component';
 import Spinner from '../../reusable/spinner/spinner.component';
 
 import { CheckoutContext } from '../../../contexts/checkout.context';
+import { ConfigurationContext } from '../../../contexts/configuration.context';
 import { UserContext } from '../../../contexts/user.context';
 
 import { convertProductPrice } from '../../../tools/cart';
-import { setMobileView } from '../../../tools/mobileView';
 
 import Client from '../../../tools/client';
 
@@ -56,6 +56,7 @@ const CheckoutTotal = () => {
         total,
         setTotal
     } = useContext(CheckoutContext);
+    const { colors } = useContext(ConfigurationContext);
     const { currentUser } = useContext(UserContext);
 
     useEffect(() => {
@@ -148,7 +149,7 @@ const CheckoutTotal = () => {
     // }
 
     return (
-        <CheckoutTotalContainer setMobileView={setMobileView()}>
+        <CheckoutTotalContainer theme={colors}>
             <ClientModal 
                 show={showModal}
                 setShow={setShowModal}
@@ -162,14 +163,14 @@ const CheckoutTotal = () => {
                 <Spinner />
             :
                 <>
-                    <CartInsuranceContainer setMobileView={setMobileView()}>
+                    <CartInsuranceContainer>
                         <CartInsuranceLabel>
                             <CartInsuranceInput type={'checkbox'} value={deliveryInsuranceSelection} onClick={() => deliveryInsuranceHandler()} />
                             Delivery Insurance 
                         </CartInsuranceLabel>
                         <VscInfo onClick={() => setShowInsuranceInfo(!showInsuranceInfo)} />
                         {showInsuranceInfo &&
-                            <InsuranceInfoContainer>
+                            <InsuranceInfoContainer theme={colors}>
                                 <InsuranceInfoCloseContainer>
                                     <VscClose onClick={() => setShowInsuranceInfo(false)} />
                                 </InsuranceInfoCloseContainer>
@@ -177,7 +178,7 @@ const CheckoutTotal = () => {
                             </InsuranceInfoContainer>
                         }
                     </CartInsuranceContainer>
-                    <CartDetailsContainer setMobileView={setMobileView()}>
+                    <CartDetailsContainer>
                         <CartSubtotalContainer>
                             <CartSubtotalText>
                                     Subtotal: 

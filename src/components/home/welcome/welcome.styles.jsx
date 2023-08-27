@@ -1,15 +1,12 @@
 import styled from 'styled-components';
 
 import {
-    backgroundOpacityLight,
-    backgroundOpacityDark,
     headerHeight,
-    slideshowDimensions,
-    textColorLight
+    slideshowDimensions
 } from '../../../styles/theme';
 
 export const WelcomeContainer = styled.div`
-    color: ${textColorLight};
+    color: ${props => props.theme.text};
     background-image: ${props => `url(${props.image})`};
     background-repeat: no-repeat;
     background-size: cover;
@@ -21,7 +18,7 @@ export const WelcomeOpacity = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: ${backgroundOpacityLight};
+    background-color: ${props => `rgba(${props.theme.backgroundOpacityLight})`};
     padding: 5vh 0 5vh 0;
     width: 100%;
 `;
@@ -33,7 +30,7 @@ export const WelcomeImageContainer = styled.div`
 export const WelcomeTextContainer = styled.div`
     margin-top: ${headerHeight};
     padding: 10px;
-    background-color: ${backgroundOpacityDark};
+    background-color: ${props => `rgba(${props.theme.backgroundOpacityDark})`};
     width: 80%;
     text-align: center;
 `;

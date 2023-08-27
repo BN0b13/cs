@@ -7,6 +7,7 @@ import CheckoutShipping from '../../components/checkout/checkout-shipping/checko
 import CheckoutTotal from '../../components/checkout/checkout-total/checkout-total.component';
 
 import { CheckoutContext } from '../../contexts/checkout.context';
+import { ConfigurationContext } from '../../contexts/configuration.context';
 import { UserContext } from '../../contexts/user.context';
 
 import { setMobileView } from '../../tools/mobileView';
@@ -34,6 +35,7 @@ const CheckoutPage = () => {
         setShippingAndHandling,
         setSubtotal
     } = useContext(CheckoutContext);
+    const { colors } = useContext(ConfigurationContext);
     const { currentUser } = useContext(UserContext);
 
     useEffect(() => {
@@ -58,7 +60,7 @@ const CheckoutPage = () => {
     }, [ currentUser ]);
 
     return (
-        <DisplayContainer>
+        <DisplayContainer theme={colors}>
             <BackButtonContainer>
                 <Button onClick={() => window.location = '/cart'}>Back To Cart</Button>
             </BackButtonContainer>
