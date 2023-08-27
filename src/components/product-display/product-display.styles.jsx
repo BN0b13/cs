@@ -6,12 +6,6 @@ import { api } from '../../config';
 
 import { Link } from 'react-router-dom';
 
-import {
-  backgroundOpacityDark,
-  bodyHeight,
-  textColorLight
-} from '../../styles/theme';
-
 export const ProductDisplayContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -34,7 +28,7 @@ export const ProductContainer = styled.div`
 export const CategoryLink = styled(Link)`
   cursor: pointer;
   text-decoration: none;
-  color: ${textColorLight};
+  color: ${props => props.theme.text};
 `;
 
 export const ProductButtonContainer = styled.div`

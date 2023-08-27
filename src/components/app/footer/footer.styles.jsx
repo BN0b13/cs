@@ -2,11 +2,7 @@ import styled from 'styled-components';
 
 import { setMobileView } from '../../../tools/mobileView';
 
-import {
-    backgroundOpacityPages,
-    footerHeight,
-    textColorLight
-} from '../../../styles/theme';
+import { footerHeight } from '../../../styles/theme';
 
 export const MainContainer = styled.div`
     display: flex;
@@ -15,8 +11,8 @@ export const MainContainer = styled.div`
     align-items: center;
     padding:20px;
     position: static;
-    background-color: ${backgroundOpacityPages};
-    color: ${textColorLight};
+    background-color: ${props => props.theme.dark};
+    color: ${props => props.theme.text};
     min-height: ${footerHeight};
 `;
 

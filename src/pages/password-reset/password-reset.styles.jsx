@@ -1,13 +1,9 @@
 import styled from 'styled-components';
 
-import {
-    backgroundOpacityLight,
-    bodyHeight,
-    textColorLight
-} from '../../styles/theme';
+import { bodyHeight } from '../../styles/theme';
 
 export const PasswordResetPageContainer = styled.div`
-    background-color: ${backgroundOpacityLight};
-    color: ${textColorLight};
+    background-color: ${props => `rgba(${props.theme.backgroundOpacityLight})`};
+    color: ${props => props.theme.text};
     min-height: ${bodyHeight};
 `;

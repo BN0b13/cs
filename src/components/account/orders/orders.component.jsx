@@ -1,7 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import OrdersItem from './orders-item/orders-item.component';
 import Spinner from '../../reusable/spinner/spinner.component';
+
+import { ConfigurationContext } from '../../../contexts/configuration.context';
 
 import Client from '../../../tools/client';
 
@@ -21,6 +23,8 @@ const client = new Client();
 const Orders = () => {
     const [ orders, setOrders ] = useState(null);
 
+    const { colors } = useContext(ConfigurationContext);
+
     useEffect(() => {
         const getOrders = async () => {
             const res = await client.getOrders();
@@ -38,12 +42,12 @@ const Orders = () => {
                 orders.length === 0 ?
                     <OrdersText>No Orders To Display</OrdersText>
                 :
-                    <OrderTable>
-                        <OrderTableHead>
-                            <OrderTableRow>
-                                <OrderTableHeading>Date</OrderTableHeading>
-                                <OrderTableHeading>Status</OrderTableHeading>
-                                <OrderTableHeading>Total</OrderTableHeading>
+                    <OrderTable theme={colors}>
+                        <OrderTableHead theme={colors}>
+                            <OrderTableRow theme={colors}>
+                                <OrderTableHeading theme={colors}>Date</OrderTableHeading>
+                                <OrderTableHeading theme={colors}>Status</OrderTableHeading>
+                                <OrderTableHeading theme={colors}>Total</OrderTableHeading>
                             </OrderTableRow>
                         </OrderTableHead>
                         <OrderTableBody>

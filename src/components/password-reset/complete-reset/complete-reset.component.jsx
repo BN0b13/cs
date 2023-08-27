@@ -1,8 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import Button from '../../reusable/button/button.component';
 import Snackbar from '../../reusable/snackbar/snackbar.component';
+
+import { ConfigurationContext } from '../../../contexts/configuration.context';
 
 import Client from '../../../tools/client';
 import { passwordValidation } from '../../../tools/user.js';
@@ -32,6 +34,7 @@ const CompleteReset = () => {
     const [ showMessage, setShowMessage ] = useState(false);
     const [ msg, setMsg ] = useState('Password needs to be 8 characters in length or more with at least one number and one special character');
 
+    const { colors } = useContext(ConfigurationContext);
 
     useEffect(() => {
         const getPasswordResetTokenStatus = async () => {
@@ -127,7 +130,7 @@ const CompleteReset = () => {
     }
 
     return (
-        <CompleteResetContainer>
+        <CompleteResetContainer theme={colors}>
             { display () }
         </CompleteResetContainer>
     )

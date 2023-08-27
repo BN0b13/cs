@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 import Button from '../../reusable/button/button.component';
 import Snackbar from '../../reusable/snackbar/snackbar.component';
+
+import { ConfigurationContext } from '../../../contexts/configuration.context';
 
 import Client from '../../../tools/client';
 
@@ -22,6 +24,8 @@ const InitiateReset = () => {
     const [ msg, setMsg ] = useState('If your email is in our system you will receive a link to reset your password shortly');
     // TODO success message/ failure message: If the email is in our system, you will receive a link to reset your password shortly
 
+    const { colors } = useContext(ConfigurationContext);
+
     const submitEmail = async () => {
         if(!email.includes('@') || !email.includes('.') || email === '') {
             setMsg('Please input a valid email');
@@ -38,7 +42,7 @@ const InitiateReset = () => {
     }
 
     return (
-        <InitiateResetContainer>
+        <InitiateResetContainer theme={colors}>
             <InitiateResetTitle>Reset Password</InitiateResetTitle>
             <InitiateResetForm onKeyDown={(e) => e.key === 'Enter' ? submitEmail() : ''}>
                 <InitiateResetInput type='email' value={email} onChange={(e) => setEmail(e.target.value)} placeholder={'Email'} />

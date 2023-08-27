@@ -15,6 +15,7 @@ import Spinner from '../reusable/spinner/spinner.component';
 import Snackbar from '../reusable/snackbar/snackbar.component';
 
 import { CartContext } from '../../contexts/cart.context';
+import { ConfigurationContext } from '../../contexts/configuration.context';
 import { UserContext } from '../../contexts/user.context';
 
 import { api } from '../../config';
@@ -60,6 +61,7 @@ const ProductDisplay = ({ product }) => {
     const [inventory, setInventory] = useState(null);
 
     const { addItemToCart } = useContext(CartContext);
+    const { colors } = useContext(ConfigurationContext);
     const { currentUser } = useContext(UserContext);
 
     const {
@@ -123,13 +125,13 @@ const ProductDisplay = ({ product }) => {
     return (
         <>
             <ProductTitle>
-                <CategoryLink to={`/shop`}>
+                <CategoryLink theme={colors} to={`/shop`}>
                     Shop
                 </CategoryLink>
                     {'  '}
                 <VscArrowRight />
                     {'  '}
-                <CategoryLink to={`/shop/${product.Category.name}`}>
+                <CategoryLink theme={colors} to={`/shop/${product.Category.name}`}>
                     {product.Category.name}
                 </CategoryLink>
                     {'  '}

@@ -1,10 +1,15 @@
+import { useContext } from 'react';
+
 import CartIcon from '../../cart-icon/cart-icon.component';
 import Search from '../search/search.component';
 
 import { 
     menuItemsPublic,
     menuItemsLoggedIn
-  } from '../../../../assets/menu-items';
+} from '../../../../assets/menu-items';
+
+import { ConfigurationContext } from '../../../../contexts/configuration.context';
+
 import { tokenName } from '../../../../config';
 
 import {
@@ -14,12 +19,14 @@ import {
 } from './navigation.styles';
 
 const Navigation = () => {
+    const { colors } = useContext(ConfigurationContext);
+
     const loggedInStatus = localStorage.getItem(tokenName);
 
     if(window.location.pathname === '/login') {
         return (
             <NavOptions>
-                <HeaderLink href={`/`}>
+                <HeaderLink theme={colors} href={`/`}>
                     Cancel
                 </HeaderLink>
             </NavOptions>
@@ -27,11 +34,11 @@ const Navigation = () => {
     }
 
     return (
-        <NavigationContainer>
+        <NavigationContainer theme={colors}>
             <Search />
             {menuItemsPublic.map((item, index) => {
                 return (
-                    <HeaderLink key={index} href={item.path}>
+                    <HeaderLink key={index} theme={colors} href={item.path}>
                         { item.title }
                     </HeaderLink>
                 );
@@ -40,12 +47,13 @@ const Navigation = () => {
                 <>
                     {menuItemsLoggedIn.map((item, index) => {
                         return (
-                            <HeaderLink key={index} href={item.path}>
+                            <HeaderLink key={index} theme={colors} href={item.path}>
                                 { item.title }
                             </HeaderLink>
                         )
                     })}
-                    <HeaderLink 
+                    <HeaderLink
+                        theme={colors}
                         onClick={() => {
                         localStorage.removeItem(tokenName);
                         sessionStorage.removeItem(tokenName);
@@ -56,7 +64,7 @@ const Navigation = () => {
                     </HeaderLink>
                 </>
             :
-                <HeaderLink href={`/login`}>
+                <HeaderLink theme={colors} href={`/login`}>
                     Log In
                 </HeaderLink>
             }

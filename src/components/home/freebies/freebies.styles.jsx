@@ -2,14 +2,8 @@ import styled from "styled-components";
 
 import { setMobileView } from "../../../tools/mobileView";
 
-import {
-    backgroundOpacityDark,
-    backgroundOpacityLight,
-    textColorLight
-} from '../../../styles/theme';
-
 export const AboutContainer = styled.div`
-    color: ${textColorLight};
+    color: ${props => props.theme.text};
     background-image: ${props => `url(${props.image})`};
     background-repeat: no-repeat;
     background-size: cover;
@@ -21,7 +15,7 @@ export const AboutOpacity = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: ${backgroundOpacityLight};
+    background-color: rgba(${props => props.theme.backgroundOpacityLight});
     padding: 5vh 0;
     width: 100%;
     height: 100%;
@@ -31,7 +25,7 @@ export const AboutOpacity = styled.div`
 
 export const AboutTextContainer = styled.div`
     width: 80%;
-    background-color: ${backgroundOpacityDark};
+    background-color: rgba(${props => props.theme.backgroundOpacityDark});
     margin: 20px 0;
     padding 20px;
     border-radius: 3px;

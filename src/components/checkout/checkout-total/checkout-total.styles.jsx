@@ -2,12 +2,6 @@ import styled from 'styled-components';
 
 import { setMobileView } from '../../../tools/mobileView';
 
-import {
-    textColorDark,
-    textColorLight,
-    backgroundOpacityLight
-} from '../../../styles/theme';
-
 export const CheckoutTotalContainer = styled.div`
     display: flex;
     flex-direction: column;
@@ -15,7 +9,7 @@ export const CheckoutTotalContainer = styled.div`
     align-items: center;
     width: 100%;
     margin-top: ${setMobileView() ? '10px' : '40px'};
-    color: ${textColorLight}
+    color: ${props => props.theme.text}
 `;
 
 export const CartInsuranceContainer = styled.div`
@@ -50,9 +44,9 @@ export const InsuranceInfoContainer = styled.div`
     padding: 5px;
     z-index: 5;
     position: absolute;
-    background-color: white;
+    background-color: ${props => props.theme.darkAccent};
     margin-top: 150px;
-    color: ${textColorDark};
+    color: ${props => props.theme.textSecondary};
 `;
 
 export const InsuranceInfoCloseContainer = styled.div`
@@ -64,8 +58,8 @@ export const InsuranceInfoCloseContainer = styled.div`
 export const CartDetailsContainer = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: ${props => props.setMobileView ? 'center' : 'end'};
-    width: ${props => props.setMobileView ? '100%' : '350px'};
+    justify-content: ${setMobileView() ? 'center' : 'end'};
+    width: ${setMobileView() ? '100%' : '350px'};
     border: 1px solid darkgrey;
     padding: 0;
     margin-bottom: 20px;

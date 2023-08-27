@@ -1,4 +1,4 @@
-import { useState, useEffect, Fragment } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import {
@@ -6,6 +6,8 @@ import {
 } from "react-icons/vsc";
 
 import ProductCard from '../../components/product-card/product-card.component';
+
+import { ConfigurationContext } from '../../contexts/configuration.context';
 
 import Client from '../../tools/client';
 import { setMobileView } from '../../tools/mobileView';
@@ -23,6 +25,8 @@ const Category = () => {
     const { category } = useParams();
     const [products, setProducts] = useState(null);
 
+    const { colors } = useContext(ConfigurationContext);
+
     useEffect(() => {
         const getCategories = async () => {
             const res = await client.getCategoryByName(category);
@@ -37,18 +41,18 @@ const Category = () => {
 
     return (
         <MainContainer>
-            <CategoryTitle><CategoryLink to={`/shop`}>Shop</CategoryLink>{'  '}<VscArrowRight />{'  '}{category}</CategoryTitle>
+            <CategoryTitle><CategoryLink theme={colors} to={`/shop`}>Shop</CategoryLink>{'  '}<VscArrowRight />{'  '}{category}</CategoryTitle>
             {
                 setMobileView() ? (
                     <CategoryContainerMobile>
                         {products &&
-                            products.map((product) => <CategoryLink to={`/shop/${category}/${product.name}`} key={product.id}><ProductCard key={product.id} product={product} /></CategoryLink>)
+                            products.map((product) => <CategoryLink theme={colors} to={`/shop/${category}/${product.name}`} key={product.id}><ProductCard key={product.id} product={product} /></CategoryLink>)
                         }
                     </CategoryContainerMobile>
                 ) : (
                     <CategoryContainer>
                         {products &&
-                            products.map((product) => <CategoryLink to={`/shop/${category}/${product.name}`} key={product.id}><ProductCard key={product.id} product={product} /></CategoryLink>)
+                            products.map((product) => <CategoryLink theme={colors} to={`/shop/${category}/${product.name}`} key={product.id}><ProductCard key={product.id} product={product} /></CategoryLink>)
                         }
                     </CategoryContainer>
                 )
