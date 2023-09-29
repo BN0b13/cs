@@ -54,7 +54,7 @@ const Welcome = () => {
         <WelcomeTextContainer theme={colors}>
           <WelcomeTitle>Cosmic Strains</WelcomeTitle>
           <WelcomeSubtitle>Collectible Oddities From Out Of This World</WelcomeSubtitle>
-          <WelcomeText>Your local source for collectible cannabis seeds. We have an extremely large assortment of F1 lines created with some of the most popular and rarest strains around.</WelcomeText>
+          <WelcomeText>Welcome to Cosmic Strains, your portal to the extraordinary world of F1 cannabis strains. At Cosmic Strains, we're not just growers; we're celestial breeders crafting unique and unparalleled F1 hybrids that defy the ordinary. Our cosmic laboratory blends carefully selected genetics to birth strains that are nothing short of collectible marvels. Each seed is a piece of the universe, a unique expression of nature's wonder, and an opportunity to elevate your cultivation game. Join us on a journey beyond the mundane, and explore the uncharted cosmos of F1 strains at Cosmic Strains.</WelcomeText>
         </WelcomeTextContainer>
       </WelcomeOpacity>
     </WelcomeContainer>

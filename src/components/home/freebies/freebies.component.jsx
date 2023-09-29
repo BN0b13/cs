@@ -25,8 +25,8 @@ const Freebies = () => {
                     <AboutImage src={freebies} />
                 <AboutTextContainer theme={colors}>
                     <AboutTitle>- FREEBIES -</AboutTitle>
-                    <AboutText>Free seeds with every pack of collectible seeds ordered! Here at Cosmic Strains we wanted to make creating your cannabis seed collection as fun as possible. And who doesn't get excited about freebies?! We are offering a free quarter pack of regular seeds with every full pack of seeds purchased. That's 3 additional seeds with every pack! And the best part...</AboutText>
-                    <AboutText>All freebies are UNRELEASED STRAINS!</AboutText>
+                    <AboutText>Order a full pack of collectible seeds, and we're gifting you a FREE quarter pack of regular seeds—that's THREE extra seeds with each pack! Elevate your collection with these rare, uncharted strains. Explore the future of cannabis cultivation with Cosmic Strains freebies. And the best part...</AboutText>
+                    <AboutText>All our freebies are UNRELEASED STRAINS — exclusive gems from the cannabis galaxy!</AboutText>
                 </AboutTextContainer>
                 <Button onClick={() => window.location.href = '/shop'}>Shop Now</Button>
             </AboutOpacity>
