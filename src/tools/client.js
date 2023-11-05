@@ -221,9 +221,9 @@ export default class Client {
         return res;
     }
 
-    async searchProducts(searchTerm) {
+    async searchProducts(searchTerm, page, size) {
         const requestOptions = this.fetchOptions(this.fetchMethods.get);
-        const products = await fetch(`${api}/products/search/${searchTerm}`, requestOptions);
+        const products = await fetch(`${api}/products/search?search=${searchTerm}&page=${page}&size=${size}`, requestOptions);
         const res = await products.json();
         return res;
     }

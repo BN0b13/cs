@@ -11,15 +11,21 @@ import {
 } from './search.styles';
 
 const Search = () => {
-    const { searchTerm, setSearchTerm, searchForProduct } = useContext(SearchContext);
+    const { searchTerm, setSearchTerm, page, setPage, size, setSize, searchForProduct } = useContext(SearchContext);
 
 
     useEffect(() => {
         const urlSearchTerms = window.location.search;
         const urlSearchParams = new URLSearchParams(urlSearchTerms);
         const search = urlSearchParams.get('search');
-        if(search) {
-            searchForProduct(search);
+        const currentPage = urlSearchParams.get('page');
+        const currentSize = urlSearchParams.get('size');
+
+
+        if(search && currentPage && currentSize) {
+            setPage(currentPage);
+            setSize(currentSize);
+            searchForProduct(search, currentPage, currentSize);
         }
     }, []);
 
@@ -31,7 +37,7 @@ const Search = () => {
 
     const submitSearch = () => {
         if(searchTerm.length <= 1) return;
-        window.location.href = `/products?search=${searchTerm}`;
+        window.location.href = `/products?search=${searchTerm}&page=${page}&size=${size}`;
     }
 
     return (

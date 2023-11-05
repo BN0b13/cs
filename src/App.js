@@ -16,6 +16,7 @@ import AboutPage from './pages/about/about.pages';
 import AccountPage from './pages/account/account.pages';
 import CartPage from './pages/cart/cart.pages';
 import CheckoutPage from './pages/checkout/checkout.pages';
+import ErrorPage from './pages/error/error.pages';
 import HomePage from './pages/home/home.pages';
 import LoginPage from './pages/login/login.pages';
 import PasswordResetPage from './pages/password-reset/password-reset.pages';
@@ -133,6 +134,12 @@ function App() {
           path="/checkout" 
           element={
             <CheckoutPage />
+          } 
+        />
+        <Route 
+          path="/error" 
+          element={
+            <ErrorPage />
           } 
         />
         <Route 
