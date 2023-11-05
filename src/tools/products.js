@@ -7,7 +7,7 @@ export const getProducts = async () => {
     return res.rows;
 }
 
-export const searchProducts = async (searchTerm) => {
-    const res = await client.searchProducts(searchTerm);
+export const searchProducts = async (searchTerm, page, size) => {
+    const res = await client.searchProducts(searchTerm, page, size);
     return res;
 }

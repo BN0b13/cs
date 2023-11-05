@@ -31,7 +31,33 @@ export const ProductCardContainer = styled.div`
 
 `;
 
+export const ProductPaginationContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+export const ProductPaginationTextTitle = styled.h4`
+  padding: 5px;
+`;
+
+export const ProductPaginationText = styled.h4`
+  cursor: pointer;
+  padding: 5px;
+`;
+
 export const ProductText = styled.h2`
+
+`;
+
+export const ProductSizeText = styled.h4`
+  margin: 20px 20px 20px 0;
+`;
+
+export const ProductSizeSelect = styled.select`
+  margin: 20px 0;
+`;
+
+export const ProductSizeOption = styled.option`
 
 `;
 

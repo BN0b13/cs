@@ -57,6 +57,10 @@ const Invoice = () => {
     useEffect(() => {
         const getOrderByRef = async () => {
             const res = await client.getOrderByRef(refId);
+            if(res.status === 404) {
+                window.location.href = '/error';
+                return
+            }
             let subtotalCount = 0;
             res.rows[0].products.map(item => subtotalCount = subtotalCount + (item.quantity * item.product[0].Inventories[0].price));
             setSubtotal(subtotalCount);
