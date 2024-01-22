@@ -209,11 +209,11 @@ class SignUpForm extends React.Component{
   }
 
   render() {
-    if(!this.releaseDate()) {
-      return (
-        <Countdown />
-      )
-    }
+    // if(!this.releaseDate()) {
+    //   return (
+    //     <Countdown />
+    //   )
+    // }
 
     if(this.state.loading) {
       return (
