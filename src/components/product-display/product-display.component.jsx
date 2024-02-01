@@ -146,7 +146,7 @@ const ProductDisplay = ({ product }) => {
                                 <img src={logo} alt={`${name}`} height='300' width='300' />
                                 :
                                     images.length === 1 ?
-                                        <img src={api + images[0].path + '-mobile.webp'} alt={`${name}`} height='300' width='300' />
+                                        <img src={api + images[0].path} alt={`${name}`} height='300' width='300' />
                                     :
                                         <SlideshowContainer>
                                             <Slide autoplay={false}>
