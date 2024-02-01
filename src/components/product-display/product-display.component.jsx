@@ -36,6 +36,7 @@ import {
     ProductDescriptionText,
     ProductDisplayContainer,
     ProductImage,
+    ProductImageDisplay,
     ProductInformation,
     ProductQuantityContainer,
     ProductTitle,
@@ -141,12 +142,13 @@ const ProductDisplay = ({ product }) => {
             </ProductTitle>
             <ProductDisplayContainer>
                 <ProductContainer>
-                    <ProductImage>
+                    <ProductImageDisplay>
                             {images.length === 0 ?
                                 <img src={logo} alt={`${name}`} height='300' width='300' />
                                 :
                                     images.length === 1 ?
-                                        <img src={api + images[0].path} alt={`${name}`} height='300' width='300' />
+                                        // <ProductImage image={api + images[0].path} />
+                                        <ProductImage src={api + images[0].path} alt={`${name}`} />
                                     :
                                         <SlideshowContainer>
                                             <Slide autoplay={false}>
@@ -161,7 +163,7 @@ const ProductDisplay = ({ product }) => {
                                             </Slide>
                                         </SlideshowContainer>
                             }
-                        </ProductImage>
+                        </ProductImageDisplay>
                         <ProductInformation>
                             {/* <FavoriteContainer>
                                 <VscHeart />
