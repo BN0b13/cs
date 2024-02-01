@@ -63,11 +63,11 @@ export const ProductTitle = styled.h4`
   margin-top: 10px;
 `;
 
-export const ProductImage = styled.div`
-  display: flex;
-  justify-content: center;
-  margin: 5px;
-  padding: 2px;
+export const ProductImageDisplay = styled.div`
+  position: relative;
+  width: 300px;
+  height: 300px;
+  overflow: hidden;
 `;
 
 export const ProductInformation = styled.div`
@@ -94,4 +94,15 @@ export const ProductSubtext = styled.h4`
 
 export const ProductDescriptionText = styled.p`
   
+`;
+
+export const ProductImage = styled.img`
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  height: 100%;
+  width: auto;
+  -webkit-transform: translate(-50%,-50%);
+      -ms-transform: translate(-50%,-50%);
+          transform: translate(-50%,-50%);
 `;
