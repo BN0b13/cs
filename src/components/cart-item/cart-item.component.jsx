@@ -35,7 +35,7 @@ const CartItem = ({ quantity, product }) => {
     const { addItemToCart, deleteItemFromCart, removeItemFromCart } = useContext(CartContext);
 
     const increment = async () => {
-        if(quantity >= product.Inventories.length) {
+        if(quantity >= product.Inventories[0].quantity) {
             return
         }
         await addItemToCart({

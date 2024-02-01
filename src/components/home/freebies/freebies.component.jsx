@@ -2,8 +2,8 @@ import { useContext } from 'react';
 
 import Button from '../../reusable/button/button.component';
 
-import backgroundImage from '../../../assets/img/close.png';
-import freebies from '../../../assets/img/blueberry-muffin.jpg';
+import backgroundImage from '../../../assets/img/close.webp';
+import freebies from '../../../assets/img/blueberry-muffin.webp';
 
 import { ConfigurationContext } from '../../../contexts/configuration.context';
 
