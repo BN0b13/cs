@@ -7,7 +7,7 @@ import { ConfigurationContext } from '../../../contexts/configuration.context';
 
 import Client from '../../../tools/client';
 
-import backSplash from '../../../assets/img/back-splash.png';
+import backSplash from '../../../assets/img/back-splash.webp';
 
 import {
   WelcomeContainer,
