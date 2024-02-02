@@ -228,6 +228,15 @@ export default class Client {
         return res;
     }
 
+    // Sales
+
+    async getSales() {
+        const requestOptions = this.fetchOptions(this.fetchMethods.get);
+        const sales = await fetch(`${api}/sales`, requestOptions);
+        const res = await sales.json();
+        return res;
+    }
+
     // Welcome
 
     async getWelcomeImages() {
