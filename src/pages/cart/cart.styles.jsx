@@ -23,12 +23,21 @@ export const CartPageTitle = styled.h1`
 
 export const SubtotalContainer = styled.div`
     display: flex;
+    flex-direction: column;
+    align-items: end;
+    width: 90%;
+`;
+
+export const SubtotalCountContainer = styled.div`
+    display: flex;
     flex-direction: row;
-    justify-content: end;
-    width: 70%;
 `;
 
 export const SubtotalText = styled.h2`
+    margin: 20px;
+`;
+
+export const SubtotalMobileText = styled.h4`
     margin: 20px;
 `;
 

@@ -10,8 +10,9 @@ import { CheckoutContext } from '../../contexts/checkout.context';
 import { ConfigurationContext } from '../../contexts/configuration.context';
 import { UserContext } from '../../contexts/user.context';
 
-import { setMobileView } from '../../tools/mobileView';
 import Client from '../../tools/client';
+import { setMobileView } from '../../tools/mobileView';
+import { processSales } from '../../tools/sales';
 
 import {
     AddressContainer,
@@ -33,6 +34,9 @@ const CheckoutPage = () => {
         setShippingAddress,
         setDeliveryInsurance,
         setShippingAndHandling,
+        setSale,
+        setDiscountAmountRemoved,
+        setPreSaleSubtotal,
         setSubtotal
     } = useContext(CheckoutContext);
     const { colors } = useContext(ConfigurationContext);
@@ -42,16 +46,27 @@ const CheckoutPage = () => {
         const checkoutSetUp = async () => {
             const checkoutSetUp = await client.checkoutSetUp();
             const cartContents = await client.getCartContents();
+            let subtotalCount = 0;
 
             if(cartContents.rows[0].products.length === 0) {
                 window.location.href = '/shop';
                 return
             }
 
-            const price = cartContents.rows[0].products[0].product[0].Inventories[0].price;
-            let subtotalCount = 0;
-            currentUser.cart.products.map(item => subtotalCount = subtotalCount + (item.quantity * price));
-    
+            if(checkoutSetUp.sales) {
+                const processSale = processSales(checkoutSetUp.sales, cartContents.rows[0].products);
+                let calculatePreSaleSubtotal = 0;
+                cartContents.rows[0].products.map(product => calculatePreSaleSubtotal = calculatePreSaleSubtotal + (product.quantity * product.product[0].Inventories[0].price));
+                subtotalCount = processSale.subTotal;
+                
+                setSale(checkoutSetUp.sales);
+                setDiscountAmountRemoved(processSale.discountAmountRemoved);
+                setPreSaleSubtotal(calculatePreSaleSubtotal);
+                
+            } else {
+                cartContents.rows[0].products.map(product => subtotalCount = subtotalCount + (product.quantity * product.product[0].Inventories[0].price));
+            }
+
             setSubtotal(subtotalCount);
             setBillingAddress(currentUser.billingAddress);
             setShippingAddress(currentUser.shippingAddress);

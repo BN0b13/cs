@@ -13,6 +13,7 @@ import { ConfigurationContext } from '../../../contexts/configuration.context';
 import { UserContext } from '../../../contexts/user.context';
 
 import { convertProductPrice } from '../../../tools/cart';
+import { setMobileView } from '../../../tools/mobileView';
 
 import Client from '../../../tools/client';
 
@@ -29,6 +30,7 @@ import {
     CartShippingContainer,
     CartShippingText,
     CheckoutTotalText,
+    CheckoutTotalTextMobile,
     InsuranceInfoText,
     InsuranceInfoContainer,
     InsuranceInfoCloseContainer,
@@ -52,6 +54,9 @@ const CheckoutTotal = () => {
         shippingId,
         shippingTotal,
         shippingAndHandling,
+        sale,
+        preSaleSubtotal,
+        discountAmountRemoved,
         subtotal,
         total,
         setTotal
@@ -119,6 +124,10 @@ const CheckoutTotal = () => {
             deliveryInsuranceTotal: deliveryInsuranceSelection ? deliveryInsurance : 0
         };
 
+        if(sale) {
+            data.saleId = sale[0].id;
+        }
+
         const res = await client.checkout(data);
 
         if(res.status === 201) {
@@ -178,42 +187,123 @@ const CheckoutTotal = () => {
                             </InsuranceInfoContainer>
                         }
                     </CartInsuranceContainer>
-                    <CartDetailsContainer>
-                        <CartSubtotalContainer>
-                            <CartSubtotalText>
-                                    Subtotal: 
-                            </CartSubtotalText>
-                            <CartSubtotalText>
-                                    { convertProductPrice(subtotal) }
-                            </CartSubtotalText>
-                        </CartSubtotalContainer>
-                        {deliveryInsuranceSelection &&
-                                    <CartInsuranceTotalContainer>
-                                        <CartShippingText>
-                                            Delivery Insurance:
-                                        </CartShippingText>
-                                        <CartShippingText>
-                                                { convertProductPrice(deliveryInsurance) }
-                                        </CartShippingText>
-                                    </CartInsuranceTotalContainer>
-                        }
-                        <CartShippingContainer>
-                            <CartShippingText>
-                                    Shipping:
-                            </CartShippingText>
-                            <CartShippingText>
-                                    { convertProductPrice(shippingAndHandling.standard.price) }
-                            </CartShippingText>
-                        </CartShippingContainer>
-                        <CartFinalTotalContainer>
-                            <CheckoutTotalText>
-                                    Total:
-                            </CheckoutTotalText>
-                            <CheckoutTotalText>
-                                    { convertProductPrice(total) }
-                            </CheckoutTotalText>
-                        </CartFinalTotalContainer>
-                    </CartDetailsContainer>
+                    {setMobileView() ?
+                        <CartDetailsContainer>
+                            {sale && 
+                                <>
+                                    <CartSubtotalContainer>
+                                        <CheckoutTotalTextMobile>
+                                            PreSale Subtotal: 
+                                        </CheckoutTotalTextMobile>
+                                        <CheckoutTotalTextMobile>
+                                            { `$${preSaleSubtotal/100}` }
+                                        </CheckoutTotalTextMobile>
+                                    </CartSubtotalContainer>
+                                    <CartSubtotalContainer>
+                                        <CheckoutTotalTextMobile>
+                                            Sale Applied: 
+                                        </CheckoutTotalTextMobile>
+                                        <CheckoutTotalTextMobile>
+                                        { discountAmountRemoved === 0 ? '' : '- '}
+                                        { `$${discountAmountRemoved/100}` }
+                                        </CheckoutTotalTextMobile>
+                                    </CartSubtotalContainer>
+                                </>
+                            }
+                            <CartSubtotalContainer>
+                                <CheckoutTotalTextMobile>
+                                        Subtotal: 
+                                </CheckoutTotalTextMobile>
+                                <CheckoutTotalTextMobile>
+                                        { convertProductPrice(subtotal) }
+                                </CheckoutTotalTextMobile>
+                            </CartSubtotalContainer>
+                            {deliveryInsuranceSelection &&
+                                        <CartInsuranceTotalContainer>
+                                            <CheckoutTotalTextMobile>
+                                                Delivery Insurance:
+                                            </CheckoutTotalTextMobile>
+                                            <CheckoutTotalTextMobile>
+                                                    { convertProductPrice(deliveryInsurance) }
+                                            </CheckoutTotalTextMobile>
+                                        </CartInsuranceTotalContainer>
+                            }
+                            <CartShippingContainer>
+                                <CheckoutTotalTextMobile>
+                                        Shipping:
+                                </CheckoutTotalTextMobile>
+                                <CheckoutTotalTextMobile>
+                                        { convertProductPrice(shippingAndHandling.standard.price) }
+                                </CheckoutTotalTextMobile>
+                            </CartShippingContainer>
+                            <CartFinalTotalContainer>
+                                <CheckoutTotalText>
+                                        Total:
+                                </CheckoutTotalText>
+                                <CheckoutTotalText>
+                                        { convertProductPrice(total) }
+                                </CheckoutTotalText>
+                            </CartFinalTotalContainer>
+                        </CartDetailsContainer>
+                    :
+                        <CartDetailsContainer>
+                            {sale &&
+                                <>
+                                    <CartSubtotalContainer>
+                                        <CartSubtotalText>
+                                            PreSale Subtotal: 
+                                        </CartSubtotalText>
+                                        <CartSubtotalText>
+                                            { `$${preSaleSubtotal/100}` }
+                                        </CartSubtotalText>
+                                    </CartSubtotalContainer>
+                                    <CartSubtotalContainer>
+                                        <CartSubtotalText>
+                                            Sale Applied: 
+                                        </CartSubtotalText>
+                                        <CartSubtotalText>
+                                        { discountAmountRemoved === 0 ? '' : '- '}
+                                        { `$${discountAmountRemoved/100}` }
+                                        </CartSubtotalText>
+                                    </CartSubtotalContainer>
+                                </>
+                            }
+                            <CartSubtotalContainer>
+                                <CartSubtotalText>
+                                        Subtotal: 
+                                </CartSubtotalText>
+                                <CartSubtotalText>
+                                        { convertProductPrice(subtotal) }
+                                </CartSubtotalText>
+                            </CartSubtotalContainer>
+                            {deliveryInsuranceSelection &&
+                                        <CartInsuranceTotalContainer>
+                                            <CartShippingText>
+                                                Delivery Insurance:
+                                            </CartShippingText>
+                                            <CartShippingText>
+                                                    { convertProductPrice(deliveryInsurance) }
+                                            </CartShippingText>
+                                        </CartInsuranceTotalContainer>
+                            }
+                            <CartShippingContainer>
+                                <CartShippingText>
+                                        Shipping:
+                                </CartShippingText>
+                                <CartShippingText>
+                                        { convertProductPrice(shippingAndHandling.standard.price) }
+                                </CartShippingText>
+                            </CartShippingContainer>
+                            <CartFinalTotalContainer>
+                                <CheckoutTotalText>
+                                        Total:
+                                </CheckoutTotalText>
+                                <CheckoutTotalText>
+                                        { convertProductPrice(total) }
+                                </CheckoutTotalText>
+                            </CartFinalTotalContainer>
+                        </CartDetailsContainer>
+                    }
                     <SquareContainer>
                         {/* <SquarePaymentForm
                             buyerData={{

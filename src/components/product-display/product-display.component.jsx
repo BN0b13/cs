@@ -49,7 +49,7 @@ const divStyle = {
     alignItems: 'center',
     justifyContent: 'center',
     backgroundSize: 'cover',
-    height: setMobileView() ? '220px' : '320px'
+    height: '300px'
 };
 
 const ProductDisplay = ({ product }) => {
@@ -143,51 +143,50 @@ const ProductDisplay = ({ product }) => {
             <ProductDisplayContainer>
                 <ProductContainer>
                     <ProductImageDisplay>
-                            {images.length === 0 ?
-                                <img src={logo} alt={`${name}`} height='300' width='300' />
+                        {images.length === 0 ?
+                            <ProductImage src={logo} alt={`${name}`} />
+                            :
+                                images.length === 1 ?
+                                    <ProductImage src={api + images[0].path} alt={`${name}`} />
                                 :
-                                    images.length === 1 ?
-                                        // <ProductImage image={api + images[0].path} />
-                                        <ProductImage src={api + images[0].path} alt={`${name}`} />
-                                    :
-                                        <SlideshowContainer>
-                                            <Slide autoplay={false}>
-                                                {images.map((image, index)=> (
-                                                        <div key={index}>
-                                                            <a href={image.link}>
-                                                                <div style={{ ...divStyle, "backgroundImage": `url(${api}${image.path})` }}>
-                                                                </div>
-                                                            </a>
-                                                        </div>
-                                                    ))}
-                                            </Slide>
-                                        </SlideshowContainer>
+                                    <SlideshowContainer>
+                                        <Slide autoplay={false}>
+                                            {images.map((image, index)=> (
+                                                    <div key={index}>
+                                                        <a href={image.link}>
+                                                            <div style={{ ...divStyle, "backgroundImage": `url(${api}${image.path})` }}>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                ))}
+                                        </Slide>
+                                    </SlideshowContainer>
+                        }
+                    </ProductImageDisplay>
+                    <ProductInformation>
+                        {/* <FavoriteContainer>
+                            <VscHeart />
+                        </FavoriteContainer> */}
+                        <ProductText>{name}</ProductText>
+                        <ProductSubtext>Lineage: {details.mother} x {details.father}</ProductSubtext>
+                        <ProductSubtext>Time: {details.time}</ProductSubtext>
+                        <ProductSubtext>Type: {product.Inventories[0].type}</ProductSubtext>
+                        <ProductSubtext>{product.Inventories[0].size} - {product.Inventories[0].sizeDescription}</ProductSubtext>
+                        <ProductSubtext>Price: {convertProductPrice(product.Inventories[0].price)}</ProductSubtext>
+                        <ProductButtonContainer>
+                            <ProductButtonCount setMobileView={setMobileView()}>
+                                <ProductQuantityContainer>
+                                    <VscChevronUp onClick={() => increaseQuantity()} />
+                                    <ProductCountInput onChange={(e) => console.log(e.target.value)} value={quantity} />
+                                    <VscChevronDown onClick={() => decreaseQuantity()} />
+                                </ProductQuantityContainer>
+                                <Button onClick={() => loggedIn(id, quantity)}>Add to Cart</Button>
+                            </ProductButtonCount>
+                            {showMessage && 
+                                <Snackbar type={messageType} msg={messageContents} show={() => setShowMessage(false)} />
                             }
-                        </ProductImageDisplay>
-                        <ProductInformation>
-                            {/* <FavoriteContainer>
-                                <VscHeart />
-                            </FavoriteContainer> */}
-                            <ProductText>{name}</ProductText>
-                            <ProductSubtext>Lineage: {details.mother} x {details.father}</ProductSubtext>
-                            <ProductSubtext>Time: {details.time}</ProductSubtext>
-                            <ProductSubtext>Type: {product.Inventories[0].type}</ProductSubtext>
-                            <ProductSubtext>{product.Inventories[0].size} - {product.Inventories[0].sizeDescription}</ProductSubtext>
-                            <ProductSubtext>Price: {convertProductPrice(product.Inventories[0].price)}</ProductSubtext>
-                            <ProductButtonContainer>
-                                <ProductButtonCount setMobileView={setMobileView()}>
-                                    <ProductQuantityContainer>
-                                        <VscChevronUp onClick={() => increaseQuantity()} />
-                                        <ProductCountInput onChange={(e) => console.log(e.target.value)} value={quantity} />
-                                        <VscChevronDown onClick={() => decreaseQuantity()} />
-                                    </ProductQuantityContainer>
-                                    <Button onClick={() => loggedIn(id, quantity)}>Add to Cart</Button>
-                                </ProductButtonCount>
-                                {showMessage && 
-                                    <Snackbar type={messageType} msg={messageContents} show={() => setShowMessage(false)} />
-                                }
-                            </ProductButtonContainer>
-                        </ProductInformation>
+                        </ProductButtonContainer>
+                    </ProductInformation>
                 </ProductContainer>
                 <ProductDescriptionContainer>
                     <ProductDescriptionText>{description}</ProductDescriptionText>

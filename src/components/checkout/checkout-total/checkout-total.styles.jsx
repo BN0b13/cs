@@ -101,3 +101,7 @@ export const CartFinalTotalContainer = styled.div`
 export const CheckoutTotalText = styled.h2`
     margin: 20px;
 `;
+
+export const CheckoutTotalTextMobile = styled.h4`
+    margin: 20px;
+`;

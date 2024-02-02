@@ -14,6 +14,12 @@ export const CheckoutContext = createContext({
     setShippingAndHandling: () => null,
     deliveryInsurance: null,
     setDeliveryInsurance: () => null,
+    sale: null,
+    setSale: () => null,
+    preSaleSubtotal: null,
+    setPreSaleSubtotal: () => {},
+    discountAmountRemoved: null,
+    setDiscountAmountRemoved: () => {},
     subtotal: null,
     setSubtotal: () => {},
     total: null,
@@ -27,6 +33,9 @@ export const CHECKOUT_ACTION_TYPES = {
     SET_SHIPPING_TOTAL: 'SET_SHIPPING_TOTAL',
     SET_SHIPPING_AND_HANDLING: 'SET_SHIPPING_AND_HANDLING',
     SET_DELIVERY_INSURANCE: 'SET_DELIVERY_INSURANCE',
+    SET_SALE: 'SET_SALE',
+    SET_PRE_SALE_SUBTOTAL: 'SET_PRE_SALE_SUBTOTAL',
+    SET_DISCOUNT_AMOUNT_REMOVED: 'SET_DISCOUNT_AMOUNT_REMOVED',
     SET_SUBTOTAL: 'SET_SUBTOTAL',
     SET_TOTAL: 'SET_TOTAL'
 }
@@ -65,6 +74,21 @@ const checkoutReducer = (state, action) => {
                 ...state,
                 deliveryInsurance: payload
             }
+        case CHECKOUT_ACTION_TYPES.SET_SALE:
+            return {
+                ...state,
+                sale: payload
+            }
+        case CHECKOUT_ACTION_TYPES.SET_PRE_SALE_SUBTOTAL:
+            return {
+                ...state,
+                preSaleSubtotal: payload
+            }
+        case CHECKOUT_ACTION_TYPES.SET_DISCOUNT_AMOUNT_REMOVED:
+            return {
+                ...state,
+                discountAmountRemoved: payload
+            }
         case CHECKOUT_ACTION_TYPES.SET_SUBTOTAL:
             return {
                 ...state,
@@ -87,12 +111,15 @@ const INITIAL_STATE = {
     shippingTotal: null,
     shippingAndHandling: null,
     deliveryInsurance: null,
+    sale: null,
+    preSaleSubtotal: null,
+    discountAmountRemoved: null,
     subtotal: null,
     total: null
 }
 
 export const CheckoutProvider = ({ children }) => {
-    const [ { billingAddress, shippingAddress, shippingId, shippingTotal, shippingAndHandling, deliveryInsurance, subtotal, total }, dispatch ] = useReducer(checkoutReducer, INITIAL_STATE);
+    const [ { billingAddress, shippingAddress, shippingId, shippingTotal, shippingAndHandling, deliveryInsurance, sale, preSaleSubtotal, discountAmountRemoved, subtotal, total }, dispatch ] = useReducer(checkoutReducer, INITIAL_STATE);
 
     const setBillingAddress = (billingAddress) => {
         dispatch({ type: CHECKOUT_ACTION_TYPES.SET_BILLING_ADDRESS, payload: billingAddress });
@@ -118,6 +145,18 @@ export const CheckoutProvider = ({ children }) => {
         dispatch({ type: CHECKOUT_ACTION_TYPES.SET_DELIVERY_INSURANCE, payload: deliveryInsurance });
     }
 
+    const setSale = (sale) => {
+        dispatch({ type: CHECKOUT_ACTION_TYPES.SET_SALE, payload: sale });
+    }
+
+    const setPreSaleSubtotal = (preSaleSubtotal) => {
+        dispatch({ type: CHECKOUT_ACTION_TYPES.SET_PRE_SALE_SUBTOTAL, payload: preSaleSubtotal });
+    }
+
+    const setDiscountAmountRemoved = (subtotal) => {
+        dispatch({ type: CHECKOUT_ACTION_TYPES.SET_DISCOUNT_AMOUNT_REMOVED, payload: subtotal });
+    }
+
     const setSubtotal = (subtotal) => {
         dispatch({ type: CHECKOUT_ACTION_TYPES.SET_SUBTOTAL, payload: subtotal });
     }
@@ -139,6 +178,12 @@ export const CheckoutProvider = ({ children }) => {
         setShippingAndHandling, 
         deliveryInsurance, 
         setDeliveryInsurance, 
+        sale,
+        setSale,
+        preSaleSubtotal,
+        setPreSaleSubtotal,
+        discountAmountRemoved,
+        setDiscountAmountRemoved,
         subtotal, 
         setSubtotal, 
         total, 
