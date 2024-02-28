@@ -32,6 +32,8 @@ const CartIcon = () => {
         }
         if(loggedInStatus) {
             getCart();
+        } else {
+            setCount(0);
         }
     }, [ loggedInStatus, cartItems ]);
 
