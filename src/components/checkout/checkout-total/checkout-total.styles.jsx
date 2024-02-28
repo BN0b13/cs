@@ -29,7 +29,7 @@ export const CartInsuranceInput = styled.input`
 `;
 
 export const CartInsuranceLabel = styled.label`
-
+    margin: 5px;
 `;
 
 export const InsuranceInfoText = styled.small`
@@ -104,4 +104,9 @@ export const CheckoutTotalText = styled.h2`
 
 export const CheckoutTotalTextMobile = styled.h4`
     margin: 20px;
+`;
+
+export const CheckoutFieldset = styled.fieldset`
+    margin: 10px;
+    padding: 10px;
 `;
