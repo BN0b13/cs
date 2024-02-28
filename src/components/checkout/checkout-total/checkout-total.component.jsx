@@ -21,6 +21,7 @@ import {
     CartFinalTotalContainer,
     CheckoutTotalContainer,
     CartDetailsContainer,
+    CheckoutFieldset,
     CartInsuranceContainer,
     CartInsuranceInput,
     CartInsuranceLabel,
@@ -47,6 +48,7 @@ const CheckoutTotal = () => {
     const [ showMsg, setShowMsg ] = useState(false);
     const [ msgContent, setMsgContent ] = useState('');
     const [ msgType, setMsgType ] = useState('error');
+    const [ paymentType, setPaymentType ] = useState('');
     const {
         billingAddress,
         shippingAddress,
@@ -98,6 +100,12 @@ const CheckoutTotal = () => {
             setShowMsg(true);
             return false;
         }
+        if(!paymentType){
+            setMsgContent('Please select a payment type to submit order.');
+            setMsgType('error');
+            setShowMsg(true);
+            return false;
+        }
         setShowMsg(false);
         return true;
     }
@@ -120,6 +128,7 @@ const CheckoutTotal = () => {
             shippingAddress,
             shippingId,
             shippingTotal,
+            paymentType,
             deliveryInsurance: deliveryInsuranceSelection,
             deliveryInsuranceTotal: deliveryInsuranceSelection ? deliveryInsurance : 0
         };
@@ -172,6 +181,21 @@ const CheckoutTotal = () => {
                 <Spinner />
             :
                 <>
+                    <CheckoutFieldset>
+                        <legend>Select Payment Type</legend>
+                        <CartInsuranceLabel for='card'>
+                            <CartInsuranceInput type='radio' id='card' name='paymentType' value='card' onChange={(e) => setPaymentType(e.target.value)} />
+                            Card
+                        </CartInsuranceLabel>
+                        <CartInsuranceLabel for='bitcoin'>
+                            <CartInsuranceInput type='radio' id='bitcoin' name='paymentType' value='bitcoin' onChange={(e) => setPaymentType(e.target.value)} />
+                            Bitcoin
+                        </CartInsuranceLabel>
+                        <CartInsuranceLabel for='ethereum'>
+                            <CartInsuranceInput type='radio' id='ethereum' name='paymentType' value='ethereum' onChange={(e) => setPaymentType(e.target.value)} />
+                            Ethereum
+                        </CartInsuranceLabel>
+                    </CheckoutFieldset>
                     <CartInsuranceContainer>
                         <CartInsuranceLabel>
                             <CartInsuranceInput type={'checkbox'} value={deliveryInsuranceSelection} onClick={() => deliveryInsuranceHandler()} />
