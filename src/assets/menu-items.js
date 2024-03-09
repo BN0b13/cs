@@ -1,5 +1,6 @@
 import {
   FaRegAddressCard,
+  FaGift,
   FaPeopleArrows,
   FaStoreAlt
 } from 'react-icons/fa';
@@ -20,6 +21,11 @@ export const menuItemsPublic = [
       title: 'About',
       path: '/about',
       icon: (<FaPeopleArrows />)
+    },
+    {
+      title: 'Giveaways',
+      path: '/giveaways',
+      icon: (<FaGift />)
     },
 ];
 

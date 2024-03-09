@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
-import { setMobileView, setTabletView } from '../../tools/mobileView';
+import { setMobileView, setTabletView } from '../../../tools/mobileView';
 
-export const ProductCartContainer = styled.div`
+export const GiveawayContainer = styled.div`
   width: ${setTabletView() ? '100%' : '230px'};
   display: flex;
   flex-direction: column;
@@ -10,6 +10,7 @@ export const ProductCartContainer = styled.div`
   align-items: center;
   position: relative;
   background-color: rgba(0,0,0,.9);
+  color: #fff;
   padding-bottom: 10px;
 
   button {
@@ -52,7 +53,7 @@ export const Price = styled.div`
   width: 10%;
 `;
 
-export const ProductImage = styled.img`
+export const GiveawayImage = styled.img`
   width: 100%;
   height: 90%;
   object-fit: cover;

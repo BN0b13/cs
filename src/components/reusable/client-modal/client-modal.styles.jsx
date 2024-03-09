@@ -54,6 +54,7 @@ export const ModalDiv = styled.div`
     padding: 20px;
     text-align: center;
     color: #000;
+    min-height: 200px;
 `;
 
 export const ModalTitle = styled.h1`
@@ -79,5 +80,9 @@ export const Modal = styled.div`
 `;
 
 export const ModalInput = styled.input`
+    margin: 20px 0;
+`;
+
+export const ModalLabel = styled.label`
     margin: 20px 0;
 `;
