@@ -7,16 +7,20 @@ import {
 import './App.css';
 
 import AgeVerify from './components/app/age-verify/age-verify.component';
+import ClientModal from './components/reusable/client-modal/client-modal.component';
 import Footer from './components/app/footer/footer.component';
 import HamburgerMenu from './components/app/hamburger-menu/hamburger-menu.component';
 import Header from './components/app/header/header.component';
 import Spinner from './components/reusable/spinner/spinner.component';
+import Toasted from './components/reusable/toasted/toasted.component';
 
 import AboutPage from './pages/about/about.pages';
 import AccountPage from './pages/account/account.pages';
 import CartPage from './pages/cart/cart.pages';
 import CheckoutPage from './pages/checkout/checkout.pages';
 import ErrorPage from './pages/error/error.pages';
+import GiveawayPage from './pages/giveaway/giveaway.pages';
+import GiveawaysPage from './pages/giveaways/giveaways.pages';
 import HomePage from './pages/home/home.pages';
 import LoginPage from './pages/login/login.pages';
 import PasswordResetPage from './pages/password-reset/password-reset.pages';
@@ -30,6 +34,7 @@ import { ConfigurationContext } from './contexts/configuration.context';
 import { UserContext } from './contexts/user.context';
 
 import Client from './tools/client';
+import UserTools from './tools/user';
 import { setMobileView } from './tools/mobileView';
 
 import { ageVerifyTokenName, themeTokenName, tokenName } from './config';
@@ -44,10 +49,25 @@ import {
 } from './App.styles';
 
 const client = new Client();
+const userTools = new UserTools();
 
 function App() {
   const [ ageToken, setAgeToken ] = useState(sessionStorage.getItem(ageVerifyTokenName));
   const [ loading, setLoading ] = useState(false);
+  const [ showModal, setShowModal ] = useState(false);
+  const [ modalTitle, setModalTitle ] = useState(null);
+  const [ modalImage, setModalImage ] = useState(null);
+  const [ modalInput, setModalInput ] = useState('');
+  const [ modalInputType, setModalInputType ] = useState('text');
+  const [ modalInputPlaceholder, setModalInputPlaceholder ] = useState('');
+  const [ modalLabel, setModalLabel ] = useState(null);
+  const [ modalMessage, setModalMessage ] = useState('');
+  const [ modalAction, setModalAction ] = useState(null);
+  const [ modalActionText, setModalActionText ] = useState(null);
+  const [ modalAllowCancel, setModalAllowCancel ] = useState(null);
+  const [ toastMessage, setToastMessage ] = useState('');
+  const [ toastError, setToastError ] = useState(false);
+  const [ showToast, setShowToast ] = useState(false);
 
   const { theme, setAppTheme } = useContext(ConfigurationContext);
   const { setCurrentUser } = useContext(UserContext);
@@ -69,11 +89,49 @@ function App() {
       const token = localStorage.getItem(tokenName);
       
       if(token) {
-        const getAccount = await client.getAccount();
+        let getAccount = await client.getAccount();
         currentTheme = {
           themeId: getAccount.themeId,
           themeInverted: getAccount.themeInverted
         };
+        
+        // Username Enhancement - ok to remove after x amount of time
+        if(!getAccount.username) {
+          const createUsername = async (username) => {
+            if(username === '') {
+              errorToast('Please enter a user name');
+              return
+            }
+            if(username.length < 4) {
+              errorToast('Username must be at least 4 characters long');
+              return
+            }
+            
+            const data = {
+              id: getAccount.id,
+              username
+            }
+
+            const res = await client.updateAccount(data);
+            if(res.error) {
+              errorToast(res.error);
+              return
+            }
+
+            successToast('Username created');
+            getAccount = await client.getAccount();
+            setShowModal(false);
+          }
+          
+          setModalTitle('Select Username');
+          setModalMessage('We are happy to announce the roll out of usernames to support exciting upcoming features. Please select a username.');
+          setModalInputType('text');
+          setModalInputPlaceholder('Username');
+          setModalAction(() => createUsername);
+          setModalActionText('Submit');
+          setModalAllowCancel(false);
+          setShowModal(true);
+        }
         setCurrentUser(getAccount);
       } else {
         localStorage.removeItem(tokenName);
@@ -101,6 +159,20 @@ function App() {
 
     setAppContext();
   }, []);
+
+  const getToasted = (toast) => toast();
+
+  const successToast = (message) => {
+    setToastMessage(message);
+    setToastError(false);
+    setShowToast(true);
+}
+
+  const errorToast = (message) => {
+      setToastMessage(message);
+      setToastError(true);
+      setShowToast(true);
+  }
 
   const routes = () => {
 
@@ -140,6 +212,18 @@ function App() {
           path="/error" 
           element={
             <ErrorPage />
+          } 
+        />
+        <Route 
+          path="/giveaways" 
+          element={
+            <GiveawaysPage />
+          } 
+        />
+        <Route 
+          path="/giveaways/:id" 
+          element={
+            <GiveawayPage />
           } 
         />
         <Route 
@@ -199,6 +283,21 @@ function App() {
           ageToken={ageToken}
           setAgeToken={setAgeToken}
         />
+        <ClientModal 
+          show={showModal}
+          setShow={setShowModal}
+          title={modalTitle} 
+          image={modalImage}
+          input={modalInput}
+          setInput={(e) => userTools.usernameInputValidation(e, setModalInput)}
+          inputType={modalInputType}
+          inputPlaceholder={modalInputPlaceholder}
+          label={modalLabel}
+          message={modalMessage}
+          action={modalAction} 
+          actionText={modalActionText}
+          allowCancel={modalAllowCancel}
+        />
         {setMobileView() &&
           <HamburgerMenu />
         }
@@ -212,6 +311,13 @@ function App() {
         </BackgroundImageContainer>
         <Footer />
       </>}
+      <Toasted 
+          message={toastMessage}
+          showToast={showToast}
+          setShowToast={setShowToast}
+          getToasted={getToasted}
+          error={toastError}
+      />
     </MainContainer>
   );
 }

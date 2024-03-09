@@ -5,8 +5,8 @@ import { VscClose, VscInfo } from 'react-icons/vsc'
 // import SquarePaymentForm from '../payment-form/payment-form.component';
 import Button from '../../reusable/button/button.component';
 import ClientModal from '../../reusable/client-modal/client-modal.component';
-import Snackbar from '../../reusable/snackbar/snackbar.component';
 import Spinner from '../../reusable/spinner/spinner.component';
+import Toasted from '../../reusable/toasted/toasted.component';
 
 import { CheckoutContext } from '../../../contexts/checkout.context';
 import { ConfigurationContext } from '../../../contexts/configuration.context';
@@ -49,6 +49,10 @@ const CheckoutTotal = () => {
     const [ msgContent, setMsgContent ] = useState('');
     const [ msgType, setMsgType ] = useState('error');
     const [ paymentType, setPaymentType ] = useState('');
+    const [ toastMessage, setToastMessage ] = useState('');
+    const [ toastError, setToastError ] = useState(false);
+    const [ showToast, setShowToast ] = useState(false);
+
     const {
         billingAddress,
         shippingAddress,
@@ -73,6 +77,20 @@ const CheckoutTotal = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ subtotal, shippingTotal, deliveryInsuranceSelection ]);
 
+    const getToasted = (toast) => toast();
+
+    const successToast = (message) => {
+        setToastMessage(message);
+        setToastError(false);
+        setShowToast(true);
+    }
+
+    const errorToast = (message) => {
+        setToastMessage(message);
+        setToastError(true);
+        setShowToast(true);
+    }
+
     const deliveryInsuranceHandler = () => {
         setDeliveryInsuranceSelection(!deliveryInsuranceSelection);
     }
@@ -84,9 +102,7 @@ const CheckoutTotal = () => {
             billingAddress.city === '' ||
             billingAddress.state === '' ||
             billingAddress.zipCode === ''){
-            setMsgContent('Please fill out all billing address fields to submit order.');
-            setMsgType('error');
-            setShowMsg(true);
+            errorToast('Please fill out all billing address fields to submit order.');
             return false;
         }
         if(shippingAddress.firstName === '' ||
@@ -95,15 +111,11 @@ const CheckoutTotal = () => {
             shippingAddress.city === '' ||
             shippingAddress.state === '' ||
             shippingAddress.zipCode === ''){
-            setMsgContent('Please fill out all shipping address fields to submit order.');
-            setMsgType('error');
-            setShowMsg(true);
+            errorToast('Please fill out all shipping address fields to submit order.');
             return false;
         }
         if(!paymentType){
-            setMsgContent('Please select a payment type to submit order.');
-            setMsgType('error');
-            setShowMsg(true);
+            errorToast('Please select a payment type to submit order.');
             return false;
         }
         setShowMsg(false);
@@ -346,9 +358,13 @@ const CheckoutTotal = () => {
                     </SquareContainer>
                 </>
             }
-            {showMsg &&
-                <Snackbar msg={msgContent} type={msgType} show={setShowMsg} />
-            }
+            <Toasted 
+                message={toastMessage}
+                showToast={showToast}
+                setShowToast={setShowToast}
+                getToasted={getToasted}
+                error={toastError}
+            />
         </CheckoutTotalContainer>
     )
 }

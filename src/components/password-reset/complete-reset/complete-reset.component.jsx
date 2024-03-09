@@ -2,12 +2,12 @@ import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import Button from '../../reusable/button/button.component';
-import Snackbar from '../../reusable/snackbar/snackbar.component';
+import Toasted from '../../reusable/toasted/toasted.component.jsx';
 
 import { ConfigurationContext } from '../../../contexts/configuration.context';
 
 import Client from '../../../tools/client';
-import { passwordValidation } from '../../../tools/user.js';
+import UserTools from '../../../tools/user.js';
 
 import logo from '../../../assets/img/logo.png';
 
@@ -23,18 +23,27 @@ import {
 } from './complete-reset.styles';
 
 const client = new Client();
+const userTools = new UserTools();
 
 const CompleteReset = () => {
     const { token } = useParams();
     const [ password, setPassword ] = useState('');
     const [ confirmPassword, setConfirmPassword ] = useState('');
-
-    const [ showSuccess, setShowSuccess ] = useState(false);
     const [ showTokenExpired, setShowTokenExpired ] = useState(false);
-    const [ showMessage, setShowMessage ] = useState(false);
-    const [ msg, setMsg ] = useState('Password needs to be 8 characters in length or more with at least one number and one special character');
+    const [ showSuccess, setShowSuccess ] = useState(false);
+    const [ toastMessage, setToastMessage ] = useState('');
+    const [ toastError, setToastError ] = useState(false);
+    const [ showToast, setShowToast ] = useState(false);
 
     const { colors } = useContext(ConfigurationContext);
+
+    const getToasted = (toast) => toast();
+
+    const errorToast = (message) => {
+        setToastMessage(message);
+        setToastError(true);
+        setShowToast(true);
+    }
 
     useEffect(() => {
         const getPasswordResetTokenStatus = async () => {
@@ -51,15 +60,15 @@ const CompleteReset = () => {
     const confirmPasswordInputs = () => {
         if(password.length === 0 || 
             confirmPassword.length === 0) {
-                setMsg('Please complete all fields to reset password');
+                errorToast('Please complete all fields to reset password');
                 return false;
             }
-        if(!passwordValidation(password)) {
-            setMsg('Password needs to be 8 characters in length or more with at least one number and one special character');
+        if(!userTools.passwordValidation(password)) {
+            errorToast('Password needs to be 8 characters in length or more with at least one number and one special character');
             return false;
         }
         if(password !== confirmPassword) {
-            setMsg('Password inputs must match');
+            errorToast('Password inputs must match');
             return false;
         }
 
@@ -69,7 +78,6 @@ const CompleteReset = () => {
     const submitPassword = async () => {
         const confirmInputs = confirmPasswordInputs();
         if(!confirmInputs) {
-            setShowMessage(true);
             return
         }
 
@@ -115,13 +123,6 @@ const CompleteReset = () => {
                     <CompleteResetInput type={'password'} value={password} onChange={(e) => setPassword(e.target.value)} placeholder={'Password'} />
                     <CompleteResetInput type={'password'} value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder={'Confirm Password'} />
                 </CompleteResetForm>
-                {showMessage &&
-                    <Snackbar 
-                        msg={msg}
-                        type={'error'}
-                        show={() => setShowMessage(false)}
-                    />
-                }
                 <ButtonContainer>
                         <Button onClick={() => submitPassword()}>Submit</Button>
                 </ButtonContainer>
@@ -132,6 +133,13 @@ const CompleteReset = () => {
     return (
         <CompleteResetContainer theme={colors}>
             { display () }
+            <Toasted 
+                message={toastMessage}
+                showToast={showToast}
+                setShowToast={setShowToast}
+                getToasted={getToasted}
+                error={toastError}
+            />
         </CompleteResetContainer>
     )
 }

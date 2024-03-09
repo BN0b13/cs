@@ -6,30 +6,60 @@ import {
   ModalButtonDiv,
   ModalDiv,
   ModalInput,
+  ModalLabel,
   ModalTitle,
   ModalText,
   Modal
 } from './client-modal.styles';
 
-const ClientModal = ({ show = false, setShow, title = 'Warning', image = null, input = null, inputPlaceholder = null, setInput = null, message = 'Error', action = null, actionText = 'Accept' }) => {
+const ClientModal = ({ 
+  show = false, 
+  setShow, 
+  title = null, 
+  image = null,
+  input = null,
+  inputType = 'text', 
+  setInput = () => {},
+  inputPlaceholder = '',
+  label = null,
+  message = '', 
+  action = null, 
+  actionText = 'Accept',
+  allowCancel = true
+}) => {
+  const handleKeyDown = (e) => {
+    if(e.key === 'Enter') {
+      action(input);
+    }
+  }
   
     return (
       <Modal show={show}>
         <ModalDiv>
-          <ModalTitle>{ title }</ModalTitle>
+          {title &&
+            <ModalTitle>{ title }</ModalTitle>
+          }
           {image &&
             <img src={image}  width='200px' height='200px' />
           }
           <ModalText>{ message }</ModalText>
           {input !== null &&
-            <ModalInput type='email' value={input} onChange={(e) => setInput(e.target.value)} autoComplete='off' placeholder={inputPlaceholder}/>
+            <div onKeyDown={(e) => handleKeyDown(e)}>
+              {/* <ModalLabel> */}
+                <ModalInput type={inputType} value={input} onChange={(e) => setInput(e.target.value)} autoComplete='off' placeholder={inputPlaceholder}/>
+            </div>
           }
+              {/* {label && label}
+            </ModalLabel> */}
+            
           <ModalButtonDiv>
-            <ModalDenyButton onClick={() => setShow(false)}>
-              Cancel
-            </ModalDenyButton>
-            { action &&
-              <ModalAccessButton onClick={() => action()}>
+            {allowCancel &&
+              <ModalDenyButton onClick={() => setShow(false)}>
+                Cancel
+              </ModalDenyButton>
+            }
+            {action !== null &&
+              <ModalAccessButton onClick={() => action(input)}>
                 { actionText }
               </ModalAccessButton>
             }

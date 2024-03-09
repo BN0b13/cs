@@ -12,7 +12,7 @@ import {
 import Button from '../reusable/button/button.component';
 import Slideshow from '../reusable/slideshow/slideshow.component';
 import Spinner from '../reusable/spinner/spinner.component';
-import Snackbar from '../reusable/snackbar/snackbar.component';
+import Toasted from '../reusable/toasted/toasted.component';
 
 import { CartContext } from '../../contexts/cart.context';
 import { ConfigurationContext } from '../../contexts/configuration.context';
@@ -53,13 +53,12 @@ const divStyle = {
 };
 
 const ProductDisplay = ({ product }) => {
-    const [messageType, setMessageType] = useState(null);
-    const [messageContents, setMessageContents] = useState('');
-    const [showMessage, setShowMessage] = useState(false);
-
     const [ images, setImages ] = useState([]);
     const [quantity, setQuantity] = useState('');
     const [inventory, setInventory] = useState(null);
+    const [ toastMessage, setToastMessage ] = useState('');
+    const [ toastError, setToastError ] = useState(false);
+    const [ showToast, setShowToast ] = useState(false);
 
     const { addItemToCart } = useContext(CartContext);
     const { colors } = useContext(ConfigurationContext);
@@ -88,24 +87,32 @@ const ProductDisplay = ({ product }) => {
         getInventory();
     }, [ id ]);
 
-    const message = (message, type = null) => {
-        setMessageType(type);
-        setMessageContents(message);
-        setShowMessage(true);
+    const getToasted = (toast) => toast();
+
+    const successToast = (message) => {
+        setToastMessage(message);
+        setToastError(false);
+        setShowToast(true);
+    }
+
+    const errorToast = (message) => {
+        setToastMessage(message);
+        setToastError(true);
+        setShowToast(true);
     }
 
     const loggedIn = async (id, quantity) => {
         if(!currentUser) {
-            message('Please login to add to cart.');
+            errorToast('Please login to add to cart.');
             return;
         }
         if(quantity === 0) {
-            message('This product is no longer available.');
+            errorToast('This product is no longer available.');
             return;
         }
         
         addItemToCart({productId: id, quantity});
-        message('Product added to cart.', 'success');
+        successToast('Product added to cart.');
     }
 
 
@@ -182,9 +189,6 @@ const ProductDisplay = ({ product }) => {
                                 </ProductQuantityContainer>
                                 <Button onClick={() => loggedIn(id, quantity)}>Add to Cart</Button>
                             </ProductButtonCount>
-                            {showMessage && 
-                                <Snackbar type={messageType} msg={messageContents} show={() => setShowMessage(false)} />
-                            }
                         </ProductButtonContainer>
                     </ProductInformation>
                 </ProductContainer>
@@ -192,6 +196,13 @@ const ProductDisplay = ({ product }) => {
                     <ProductDescriptionText>{description}</ProductDescriptionText>
                 </ProductDescriptionContainer>
             </ProductDisplayContainer>
+            <Toasted 
+                message={toastMessage}
+                showToast={showToast}
+                setShowToast={setShowToast}
+                getToasted={getToasted}
+                error={toastError}
+            />
         </>
     )
 }
