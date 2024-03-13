@@ -1,19 +1,22 @@
 import { useContext } from 'react';
 
-import SignUpForm from '../../components/sign-up-form/sign-up-form.component';
+import SignUp from '../../components/sign-up/sign-up.component';
 
 import { ConfigurationContext } from '../../contexts/configuration.context';
 
 import {
-  SignUpPageContainer
-} from './sign-up.styles';
+  ContentContainerDark,
+  MainContainer
+} from '../../styles/page.styles';
 
 const SignUpPage = () => {
   const { colors } = useContext(ConfigurationContext);
   return (
-    <SignUpPageContainer theme={colors}>
-      <SignUpForm />
-    </SignUpPageContainer>
+    <MainContainer>
+      <ContentContainerDark theme={colors} minHeight={true}>
+        <SignUp />
+      </ContentContainerDark>
+    </MainContainer>
   )
 }
   

@@ -52,6 +52,7 @@ export const AgeVerifyDiv = styled.div`
     background: #fff;
     padding: 20px;
     text-align: center;
+    border-radius: 3px;
 `;
 
 export const AgeVerifyTitle = styled.h1`

@@ -1,23 +1,24 @@
 import { useContext } from 'react';
 
-import LoginForm from '../../components/login-form/login-form.component';
+import Login from '../../components/login/login.component';
 
 import { ConfigurationContext } from '../../contexts/configuration.context';
 
 import {
-  LoginPageContainer
-} from './login.styles';
+  ContentContainerLight,
+  MainContainer
+} from '../../styles/page.styles';
 
 const LoginPage = () => {
   const { colors } = useContext(ConfigurationContext);
 
   return (
-    <LoginPageContainer theme={colors}>
-      <LoginForm />
-    </LoginPageContainer>
+    <MainContainer>
+      <ContentContainerLight theme={colors} minHeight={true}>
+        <Login />
+      </ContentContainerLight>
+    </MainContainer>
   )
 }
-  
-
 
 export default LoginPage;

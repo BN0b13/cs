@@ -42,9 +42,9 @@ const OrderInformation = () => {
         const getOrderByRef = async () => {
             const res = await client.getOrderByRef(refId);
             let subtotalCount = 0;
-            res.rows[0].products.map(item => subtotalCount = subtotalCount + (item.quantity * item.product[0].price));
+            res.products.map(item => subtotalCount = subtotalCount + (item.quantity * item.product[0].price));
             setSubtotal(subtotalCount);
-            setOrder(res.rows[0]);
+            setOrder(res);
         }
         getOrderByRef();
     }, [ refId ]);

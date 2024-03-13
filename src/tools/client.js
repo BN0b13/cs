@@ -36,10 +36,10 @@ export default class Client {
     
     // Accounts
 
-    async createCustomer(data) {
+    async signUp(data) {
         const requestOptions = this.fetchOptions(this.fetchMethods.post, data);
-        const completePasswordReset = await fetch(`${api}/user`, requestOptions);
-        const res = await completePasswordReset.json();
+        const signUp = await fetch(`${api}/user`, requestOptions);
+        const res = await signUp.json();
         return res;
     }
 
@@ -177,7 +177,46 @@ export default class Client {
         const configuration = await fetch(`${api}/configuration`, requestOptions);
         const res = await configuration.json();
         return res;
-    } 
+    }
+
+    // Giveaways
+
+    async getGiveaways() {
+        const requestOptions = this.fetchOptions(this.fetchMethods.get);
+        const giveaways = await fetch(`${api}/giveaways`, requestOptions);
+        const res = await giveaways.json();
+        return res;
+    }
+
+    async getGiveawayById(id) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.get);
+        const giveaway = await fetch(`${api}/giveaways/${id}`, requestOptions);
+        const res = await giveaway.json();
+        return res;
+    }
+    
+    async checkIfUserEnteredGiveaway(data) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.post, data, true);
+        const userEnteredGiveaway = await fetch(`${api}/giveaways/active/user-status`, requestOptions);
+        const res = await userEnteredGiveaway.json();
+        return res;
+    }
+    
+    async enterIntoGiveaway(data) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.patch, data, true);
+        const entryResults = await fetch(`${api}/giveaways/active/enter`, requestOptions);
+        const res = await entryResults.json();
+        return res;
+    }
+
+    // Login and Sign Up
+
+    async login(data) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.post, data);
+        const login = await fetch(`${api}/login`, requestOptions);
+        const res = await login.json();
+        return res;
+    }
 
     // Metrics
 

@@ -1,12 +1,18 @@
-import { useState } from 'react';
-
-import Button from '../../reusable/button/button.component';
-import Snackbar from '../../reusable/snackbar/snackbar.component';
-
-import Client from '../../../tools/client';
-import { passwordValidation } from '../../../tools/user.js';
+import { useContext, useState } from 'react';
 
 import {
+    VscArrowLeft
+} from "react-icons/vsc";
+
+import Button from '../../reusable/button/button.component';
+
+import { ToastContext } from '../../../contexts/toast.context.jsx';
+
+import Client from '../../../tools/client.js';
+import Tools from '../../../tools/tools.js';
+
+import {
+    PageBackLink,
     UpdateInputsContainer,
     UpdatePasswordContainer,
     UpdatePasswordTitle,
@@ -15,63 +21,56 @@ import {
 } from './update-password.styles';
 
 const client = new Client();
+const tools = new Tools();
 
 const UpdatePassword = () => {
     const [ currentPassword, setCurrentPassword ] = useState('');
     const [ newPassword, setNewPassword ] = useState('');
     const [ confirmNewPassword, setConfirmNewPassword ] = useState('');
-    const [ showMsg, setShowMsg ] = useState(false);
-    const [ msgType, setMsgType ] = useState('error');
-    const [ msgContent, setMsgContent ] = useState('Please complete all fields to update password');
-
-    const checkFields = () => {
-        if(currentPassword.length === 0 ||
-            newPassword.length === 0 ||
-            confirmNewPassword.length === 0) {
-            setMsgContent('Please complete all fields to update password');
-            return false;
-        }
-        if(!passwordValidation(newPassword)) {
-            setMsgContent('Password needs to be 8 characters in length or more with at least one number and one special character');
-            return false;
-        }
-        if(newPassword !== confirmNewPassword) {
-            setMsgContent('New password fields do not match');
-            return false;
-        }
-        return true;
-    }
+    
+    const { errorToast, successToast } = useContext(ToastContext);
 
     const handlePasswordUpdate = async () => {
-        if(!checkFields()) {
-            setShowMsg(true);
-            setMsgType('error');
+        const data = {
+            currentPassword,
+            newPassword
+        };
+
+        const validateData = tools.validate(data);
+        if(validateData.error) {
+            errorToast(validateData.error);
             return
         }
-        await client.updateAccountPassword({ currentPassword, newPassword });
+        const res = await client.updateAccountPassword(data);
+
+        if(res.success) {
+            successToast(res.success);
+            setCurrentPassword('');
+            setNewPassword('');
+            setConfirmNewPassword('');
+            return
+        }
         
-        setMsgContent('Updated Password');
-        setShowMsg(true);
-        setMsgType('success');
-        setCurrentPassword('');
-        setNewPassword('');
-        setConfirmNewPassword('');
+        if(res.error) {
+            errorToast(res.error);
+            return
+        }
     }
 
     return (
-        <UpdatePasswordContainer>
-            <UpdatePasswordTitle>Update Password</UpdatePasswordTitle>
-            <UpdatePasswordSubtitle>Please enter your current password to continue</UpdatePasswordSubtitle>
-            <UpdateInputsContainer  onKeyDown={(e) => e.key === 'Enter' ? handlePasswordUpdate() : ''}>
-                <UpdatePasswordInput type={'password'} value={ currentPassword } onChange={(e) => setCurrentPassword(e.target.value)} placeholder={'Current Password'} />
-                <UpdatePasswordInput type={'password'} value={ newPassword } onChange={(e) => setNewPassword(e.target.value)} placeholder={'New Password'} />
-                <UpdatePasswordInput type={'password'} value={ confirmNewPassword } onChange={(e) => setConfirmNewPassword(e.target.value)} placeholder={'Confirm New Password'} />
-            </UpdateInputsContainer>
-            {showMsg &&
-                <Snackbar msg={msgContent} type={msgType} show={setShowMsg} />
-            }
-            <Button onClick={() => handlePasswordUpdate()}>Update Password</Button>
-        </UpdatePasswordContainer>
+        <>
+            <PageBackLink onClick={() => window.location.href = '/account'} title='Back To Account'><VscArrowLeft /> Back To Account</PageBackLink>
+            <UpdatePasswordContainer>
+                <UpdatePasswordTitle>Update Password</UpdatePasswordTitle>
+                <UpdatePasswordSubtitle>Please enter your current password to continue</UpdatePasswordSubtitle>
+                <UpdateInputsContainer  onKeyDown={(e) => e.key === 'Enter' ? handlePasswordUpdate() : ''}>
+                    <UpdatePasswordInput type='password' name='password' value={ currentPassword } onChange={(e) => setCurrentPassword(e.target.value)} placeholder={'Current Password'} />
+                    <UpdatePasswordInput type='password' name='newPassword' value={ newPassword } onChange={(e) => setNewPassword(e.target.value)} placeholder={'New Password'} />
+                    <UpdatePasswordInput type='password' name='confirmPassword' value={ confirmNewPassword } onChange={(e) => setConfirmNewPassword(e.target.value)} placeholder={'Confirm New Password'} />
+                </UpdateInputsContainer>
+                <Button onClick={() => handlePasswordUpdate()}>Update Password</Button>
+            </UpdatePasswordContainer>
+        </>
     )
 }
 

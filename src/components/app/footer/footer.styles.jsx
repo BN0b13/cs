@@ -29,6 +29,7 @@ export const IconContainer = styled.div`
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    padding: 10px;
 `;
 
 export const DisclaimerContainer = styled.div`

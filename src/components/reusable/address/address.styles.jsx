@@ -29,7 +29,7 @@ export const AddressInput = styled.input`
 `;
 
 export const AddressZipCodeInput = styled.input`
-    width:  ${setMobileView() ? '45px' : '55px'};
+    width:  ${setMobileView() ? '45px' : '60px'};
     margin: 5px 0;
     padding: 3px;
 `;
