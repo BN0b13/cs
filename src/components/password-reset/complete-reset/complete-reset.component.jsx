@@ -2,12 +2,12 @@ import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import Button from '../../reusable/button/button.component';
-import Toasted from '../../reusable/toasted/toasted.component.jsx';
 
 import { ConfigurationContext } from '../../../contexts/configuration.context';
+import { ToastContext } from '../../../contexts/toast.context.jsx';
 
 import Client from '../../../tools/client';
-import UserTools from '../../../tools/user.js';
+import Tools from '../../../tools/tools.js';
 
 import logo from '../../../assets/img/logo.png';
 
@@ -23,7 +23,7 @@ import {
 } from './complete-reset.styles';
 
 const client = new Client();
-const userTools = new UserTools();
+const tools = new Tools();
 
 const CompleteReset = () => {
     const { token } = useParams();
@@ -31,19 +31,9 @@ const CompleteReset = () => {
     const [ confirmPassword, setConfirmPassword ] = useState('');
     const [ showTokenExpired, setShowTokenExpired ] = useState(false);
     const [ showSuccess, setShowSuccess ] = useState(false);
-    const [ toastMessage, setToastMessage ] = useState('');
-    const [ toastError, setToastError ] = useState(false);
-    const [ showToast, setShowToast ] = useState(false);
 
     const { colors } = useContext(ConfigurationContext);
-
-    const getToasted = (toast) => toast();
-
-    const errorToast = (message) => {
-        setToastMessage(message);
-        setToastError(true);
-        setShowToast(true);
-    }
+    const { errorToast } = useContext(ToastContext);
 
     useEffect(() => {
         const getPasswordResetTokenStatus = async () => {
@@ -63,7 +53,7 @@ const CompleteReset = () => {
                 errorToast('Please complete all fields to reset password');
                 return false;
             }
-        if(!userTools.passwordValidation(password)) {
+        if(!tools.passwordValidation(password)) {
             errorToast('Password needs to be 8 characters in length or more with at least one number and one special character');
             return false;
         }
@@ -133,13 +123,6 @@ const CompleteReset = () => {
     return (
         <CompleteResetContainer theme={colors}>
             { display () }
-            <Toasted 
-                message={toastMessage}
-                showToast={showToast}
-                setShowToast={setShowToast}
-                getToasted={getToasted}
-                error={toastError}
-            />
         </CompleteResetContainer>
     )
 }

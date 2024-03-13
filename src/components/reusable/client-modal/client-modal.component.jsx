@@ -7,6 +7,7 @@ import {
   ModalDiv,
   ModalInput,
   ModalLabel,
+  ModalSubtext,
   ModalTitle,
   ModalText,
   Modal
@@ -22,7 +23,8 @@ const ClientModal = ({
   setInput = () => {},
   inputPlaceholder = '',
   label = null,
-  message = '', 
+  message = '',
+  subtext = null,
   action = null, 
   actionText = 'Accept',
   allowCancel = true
@@ -43,6 +45,9 @@ const ClientModal = ({
             <img src={image}  width='200px' height='200px' />
           }
           <ModalText>{ message }</ModalText>
+          {subtext &&
+            <ModalSubtext>{ subtext }</ModalSubtext>
+          }
           {input !== null &&
             <div onKeyDown={(e) => handleKeyDown(e)}>
               {/* <ModalLabel> */}

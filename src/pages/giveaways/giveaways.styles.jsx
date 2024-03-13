@@ -16,45 +16,59 @@ export const GiveawaysLink = styled(Link)`
 `;
 
 export const GiveawaysActiveContainer = styled.div`
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 300px);
-    column-gap: 20px;
-    row-gap: 50px;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    background-color: ${props => `rgba(${props.theme.backgroundOpacityLight})`};
-    color: ${props => props.theme.textSecondary};
+    ${setMobileView() ?
+        {
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding: '10px',
+            backgroundColor: props => `rgba(${props.theme.backgroundOpacityLight})`,
+            color: props => props.theme.textSecondary,
+            minHeight: '270px'
+        }
+    :    
+        {
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, 300px)',
+            columnGap: '20px',
+            rowGap: '50px',
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding: '20px',
+            backgroundColor: props => `rgba(${props.theme.backgroundOpacityLight})`,
+            color: props => props.theme.textSecondary,
+            minHeight: '360px'
+        }
+}
 `;
 
 export const GiveawaysCompletedContainer = styled.div`
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 300px);
-    column-gap: 20px;
-    row-gap: 50px;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    background-color: ${props => `rgba(${props.theme.backgroundOpacityDark})`};
-    color: ${props => props.theme.text};
-`;
-
-export const GiveawaysActiveContainerMobile = styled.div`
-    display: grid;
-    grid-template-row: repeat(1fr);
-    row-gap: 20px;
-    padding: 10px;
-    background-color: ${props => `rgba(${props.theme.backgroundOpacityLight})`};
-    color: ${props => props.theme.textSecondary};
-`;
-
-export const GiveawaysCompletedContainerMobile = styled.div`
-    display: grid;
-    grid-template-row: repeat(1fr);
-    row-gap: 20px;
-    padding: 10px;
-    background-color: ${props => `rgba(${props.theme.backgroundOpacityDark})`};
-    color: ${props => props.theme.text};
+    ${setMobileView() ?
+        {
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding: '10px',
+            backgroundColor: props => `rgba(${props.theme.backgroundOpacityDark})`,
+            color: props => props.theme.text,
+            minHeight: '270px'
+        }
+    :
+        {
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, 300px)',
+            columnGap: '20px',
+            rowGap: '50px',
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding: '20px',
+            backgroundColor: props => `rgba(${props.theme.backgroundOpacityDark})`,
+            color: props => props.theme.text,
+            minHeight: '360px'
+        }
+}
 `;
 
 export const GiveawaysMainTitle = styled.h2`

@@ -41,6 +41,7 @@ const CheckoutPage = () => {
     } = useContext(CheckoutContext);
     const { colors } = useContext(ConfigurationContext);
     const { currentUser } = useContext(UserContext);
+    const { total } = useContext(CheckoutContext);
 
     useEffect(() => {
         const checkoutSetUp = async () => {
@@ -78,7 +79,7 @@ const CheckoutPage = () => {
             checkoutSetUp();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ currentUser ]);
+    }, [ currentUser, total ]);
 
     return (
         <DisplayContainer theme={colors}>

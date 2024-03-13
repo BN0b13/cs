@@ -21,10 +21,6 @@ export const CartInsuranceContainer = styled.div`
     width: 100%;
 `;
 
-export const SquareContainer = styled.div`
-    margin: 20px;
-`;
-
 export const CartInsuranceInput = styled.input`
 `;
 
@@ -44,9 +40,9 @@ export const InsuranceInfoContainer = styled.div`
     padding: 5px;
     z-index: 5;
     position: absolute;
-    background-color: ${props => props.theme.darkAccent};
+    background-color: ${props => props.theme.darkAccent || '#fff'};
     margin-top: 150px;
-    color: ${props => props.theme.textSecondary};
+    color: ${props => props.theme.textSecondary || '#000'};
 `;
 
 export const InsuranceInfoCloseContainer = styled.div`
@@ -65,48 +61,46 @@ export const CartDetailsContainer = styled.div`
     margin-bottom: 20px;
 `;
 
-export const CartSubtotalContainer = styled.div`
+export const CheckoutRowContainer = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    border-top: ${props => props.borderTop ? '1px solid darkgrey' : ''};
 `;
 
-export const CartSubtotalText = styled.h2`
+export const CheckoutText = styled.h2`
     margin: 20px;
-`;
-
-export const CartShippingContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    border-bottom: 1px solid darkgrey;
-`;
-
-export const CartInsuranceTotalContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-`;
-
-export const CartShippingText = styled.h2`
-    margin: 20px;
-`;
-
-export const CartFinalTotalContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-`;
-
-export const CheckoutTotalText = styled.h2`
-    margin: 20px;
-`;
-
-export const CheckoutTotalTextMobile = styled.h4`
-    margin: 20px;
+    font-size: ${setMobileView() ? '22px' : ''};
 `;
 
 export const CheckoutFieldset = styled.fieldset`
     margin: 10px;
     padding: 10px;
+`;
+
+export const CheckoutButton = styled.button`
+min-width: ${setMobileView() ? '90px' : '105px'};
+width: auto;
+height: 40px;
+letter-spacing: 0.5px;
+padding: 0 25px 0 25px;
+font-size: ${setMobileView() ? '10px' : '12px'};
+background-color: black;
+color: white;
+text-transform: uppercase;
+font-family: 'Open Sans Condensed';
+font-weight: bolder;
+border: 1px solid white;
+border-radius: 1px;
+cursor: pointer;
+display: flex;
+justify-content: center;
+align-items: center;
+margin-top: 10px;
+
+&:hover {
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+}
 `;

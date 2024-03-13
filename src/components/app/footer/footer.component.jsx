@@ -47,11 +47,14 @@ const Footer = () => {
   return (
   <MainContainer theme={colors}>
     <FooterContainer>
+      <IconContainer onClick={() => window.open('https://discord.gg/fva4pKdeVg', '_blank')} >
+        <FaDiscord size={setMobileView() ? '18' : '28'} />
+      </IconContainer>
       <IconContainer onClick={() => window.open('https://www.instagram.com/cosmicstrainsofficial', '_blank')} >
-        <FaInstagram size={setMobileView() ? '14' : '28'} />
+        <FaInstagram size={setMobileView() ? '18' : '28'} />
       </IconContainer>
       <IconContainer onClick={() => window.open('https://www.reddit.com/r/cosmicstrains', '_blank')} >
-        <FaRedditSquare size={setMobileView() ? '14' : '28'} />
+        <FaRedditSquare size={setMobileView() ? '18' : '28'} />
       </IconContainer>
     </FooterContainer>
     <FooterContainer>

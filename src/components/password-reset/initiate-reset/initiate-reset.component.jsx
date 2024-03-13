@@ -1,9 +1,9 @@
 import { useContext, useState } from 'react';
 
 import Button from '../../reusable/button/button.component';
-import Toasted from '../../reusable/toasted/toasted.component';
 
 import { ConfigurationContext } from '../../../contexts/configuration.context';
+import { ToastContext } from '../../../contexts/toast.context';
 
 import Client from '../../../tools/client';
 
@@ -24,20 +24,7 @@ const InitiateReset = () => {
     const [ showToast, setShowToast ] = useState(false);
     
     const { colors } = useContext(ConfigurationContext);
-
-    const getToasted = (toast) => toast();
-
-    const successToast = (message) => {
-        setToastMessage(message);
-        setToastError(false);
-        setShowToast(true);
-    }
-
-    const errorToast = (message) => {
-        setToastMessage(message);
-        setToastError(true);
-        setShowToast(true);
-    }
+    const { errorToast, successToast } = useContext(ToastContext);
 
     const submitEmail = async () => {
         if(!email.includes('@') || !email.includes('.') || email === '') {
@@ -59,13 +46,6 @@ const InitiateReset = () => {
             <ButtonContainer>
                 <Button onClick={() => submitEmail()}>Submit</Button>
             </ButtonContainer>
-            <Toasted 
-                message={toastMessage}
-                showToast={showToast}
-                setShowToast={setShowToast}
-                getToasted={getToasted}
-                error={toastError}
-            />
         </InitiateResetContainer>
     )
 }

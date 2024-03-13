@@ -50,11 +50,16 @@ export const ModalDenyButton = styled.button`
 `;
 
 export const ModalDiv = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     background: #fff;
     padding: 20px;
     text-align: center;
     color: #000;
     min-height: 200px;
+    border-radius: 3px;
 `;
 
 export const ModalTitle = styled.h1`
@@ -65,8 +70,12 @@ export const ModalText = styled.h4`
     max-width: 320px;
 `;
 
+export const ModalSubtext = styled.h6`
+    max-width: 320px;
+`;
+
 export const Modal = styled.div`
-    z-index: 100;
+    z-index: 4500;
     display: ${({show}) => (show ? 'flex' : 'none')} !important;
     position: fixed;
     flex-direction: column;

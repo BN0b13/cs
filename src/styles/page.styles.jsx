@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import { bodyHeight } from '../styles/theme';
+import { setMobileView } from '../tools/mobileView';
 
 export const MainContainer = styled.div`
     display: flex;
@@ -69,10 +70,12 @@ export const TabSelector = styled.button`
 
 export const MainTitle = styled.h2`
     text-align: center;
+    font-size: ${setMobileView() ? '22px' : ''};
 `;
 
 export const BackLink = styled.h4`
   cursor: pointer;
+  margin: 20px;
 `;
 
 export const Text = styled.h4`

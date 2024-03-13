@@ -2,7 +2,7 @@ import { useContext, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import {
-    VscArrowRight
+    VscArrowLeft
 } from "react-icons/vsc";
 
 import Giveaway from '../../components/giveaways/giveaway.component';
@@ -47,14 +47,14 @@ const GiveawayPage = () => {
     
     return (
         <MainContainer theme={colors}>
-            <BackLink onClick={() => window.location = '/giveaways'}>Giveaways<VscArrowRight /></BackLink>
+            <BackLink onClick={() => window.location = '/giveaways'}>Back to Giveaways</BackLink>
             <ContentContainerLight minHeight={true}>
             {loading ?
                 <Spinner />
             :
                 <>
                     <MainTitle>Giveaway by {giveaway.Company.name}</MainTitle>
-                        <Giveaway giveaway={giveaway} />
+                        <Giveaway giveaway={giveaway} getGiveaway={getGiveaway} />
                 </>
             }
             </ContentContainerLight>
