@@ -80,7 +80,7 @@ const Giveaway = ({ giveaway, getGiveaway }) => {
     }
 
     const confirmEntry = async () => {
-        if(!currentUser) {
+        if(!currentUser || currentUser === null) {
             errorToast('Please log in to enter giveaway');
             return
         }
@@ -89,6 +89,11 @@ const Giveaway = ({ giveaway, getGiveaway }) => {
     }
 
     const submitEntry = async () => {
+        if(!currentUser || currentUser === null) {
+            errorToast('Please log in to enter giveaway');
+            return
+        }
+
         const data = {
             giveawayId: giveaway.id
         };
