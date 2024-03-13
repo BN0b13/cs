@@ -1,16 +1,17 @@
-import React, { useEffect, useState, useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import Address from '../../reusable/address/address.component';
 import Button from '../../reusable/button/button.component';
 import ClientModal from '../../reusable/client-modal/client-modal.component';
-import Snackbar from '../../reusable/snackbar/snackbar.component';
 import Spinner from '../../reusable/spinner/spinner.component';
 
+import { ToastContext } from '../../../contexts/toast.context.jsx';
 import { UserContext } from '../../../contexts/user.context';
 
 import { tokenName } from '../../../config';
 
 import Client from '../../../tools/client';
+import Tools from '../../../tools/tools.js';
 import { setMobileView } from '../../../tools/mobileView';
 
 import {
@@ -31,35 +32,48 @@ import {
     UpdatePasswordLink
 } from './account-details.styles';
 
+import {
+    InputSubtext
+} from '../../../styles/component.styles';
+
 const client = new Client();
+const tools = new Tools();
 
 const AccountDetails = () => {
     const [ loading, setLoading ] = useState(false);
     const [ showEdit, setShowEdit ] = useState(false);
-    const [ email, setEmail ] = useState(null);
-    const [ firstName, setFirstName ] = useState(null);
-    const [ lastName, setLastName ] = useState(null);
-    const [ phone, setPhone ] = useState(null);
+    const [ email, setEmail ] = useState('');
+    const [ username, setUsername ] = useState('');
+    const [ firstName, setFirstName ] = useState('');
+    const [ lastName, setLastName ] = useState('');
+    const [ phone, setPhone ] = useState('');
     const [ billingAddress, setBillingAddress ] = useState({});
     const [ shippingAddress, setShippingAddress ] = useState({});
+    const [ credit, setCredit ] = useState(0);
     const [ showModal, setShowModal ] = useState(false);
     const [ input, setInput ] = useState('');
-    const [ showMsg, setShowMsg ] = useState(false);
-    const [ msgContent, setMsgContent ] = useState('');
-    const [ msgType, setMsgType ] = useState('error');
 
+    const { errorToast } = useContext(ToastContext);
     const { currentUser } = useContext(UserContext);
 
     useEffect(() => {
         if(currentUser) {
             setEmail(currentUser.email);
+            setUsername(currentUser.username);
             setPhone(currentUser.phone);
             setFirstName(currentUser.firstName);
             setLastName(currentUser.lastName);
             setBillingAddress(currentUser.billingAddress);
             setShippingAddress(currentUser.shippingAddress);
+            setCredit(currentUser.credit);
         }
     }, [ currentUser ]);
+
+    const handleKeyDown = (e) => {
+        if(e.key === 'Enter') {
+            updateUserDetails();
+        }
+      }
 
     const handlePhoneChange = (data) => {
         const reg = /^\d+$/;
@@ -84,30 +98,10 @@ const AccountDetails = () => {
         });
     }
 
-    const checkFields = () => {
-        if(firstName === '' || 
-            lastName === '' || 
-            phone === '' ||
-            phone.length < 10 ||
-            billingAddress.addressOne  === '' ||
-            billingAddress.city  === '' ||
-            billingAddress.zipCode  === '' ||
-            shippingAddress.addressOne === '' ||
-            shippingAddress.city === '' ||
-            shippingAddress.zipCode === '') {
-                setMsgContent('Please fill out all fields to update your account.');
-                setMsgType('error');
-                setShowMsg(true);
-                return false;
-        }
-        return true;
-    }
-
     const updateUserDetails = async () => {
-        if(!checkFields()) {
-            return
-        }
+
         const data = {
+            username,
             firstName,
             lastName,
             phone,
@@ -115,9 +109,23 @@ const AccountDetails = () => {
             shippingAddress
         };
 
-        await client.updateAccount(data);
-        
-        window.location = '/account'
+        const validateData = tools.validate(data);
+        if(!validateData.result) {
+          errorToast(validateData.error);
+          return
+        }
+
+        setLoading(true);
+
+        const res = await client.updateAccount(data);
+
+        if(res.error) {
+            errorToast(res.error);
+            setLoading(false);
+            return
+        } else {
+            return window.location = '/account';
+        }
     }
 
     const confirmDelete = () => {
@@ -139,7 +147,7 @@ const AccountDetails = () => {
         setShowModal(false);
         localStorage.removeItem(tokenName);
         sessionStorage.removeItem(tokenName);
-        window.location.href = '/';
+        return window.location.href = '/';
     }
 
     return (
@@ -153,20 +161,22 @@ const AccountDetails = () => {
                 inputPlaceholder={'Email'}
                 setInput={setInput}
                 message={`Are you sure you want to delete your account forever? This action can not be undone. Please enter the account email to confirm.`}
-                action={deleteAccount} 
+                action={() => deleteAccount()} 
                 actionText={'Confirm'}
             />
             {!currentUser || loading ?
                 <Spinner />
                 :
                 showEdit ?
-                    <AccountEditContainer>
+                    <AccountEditContainer onKeyDown={(e) => handleKeyDown(e)}>
                         <AccountDetailsTitle>
                             Update Account
                         </AccountDetailsTitle>
-                        <AccountDetailsInput type={'text'} name={'firstName'} value={firstName} onChange={(e) => setFirstName(e.target.value)} placeholder={'First Name'} />
-                        <AccountDetailsInput type={'text'} name={'lastName'} value={lastName} onChange={(e) => setLastName(e.target.value)}  placeholder={'Last Name'} />
-                        <AccountDetailsInput type={'text'} name={'phone'} value={phone} onChange={(e) => handlePhoneChange(e.target.value)} maxLength={12}  placeholder={'Phone'} />
+                        <AccountDetailsInput type={'text'} name='username' value={username} onChange={(e) => setUsername(e.target.value)} placeholder={'Username'} />
+                        <InputSubtext>In order to create a welcoming environment for all, usernames that are hateful, homophobic, racist, sexist, derogatory, harassing, or otherwise uncivil are grounds for account termination.</InputSubtext>
+                        <AccountDetailsInput type={'text'} name='firstName' value={firstName} onChange={(e) => setFirstName(e.target.value)} placeholder={'First Name'} />
+                        <AccountDetailsInput type={'text'} name='lastName' value={lastName} onChange={(e) => setLastName(e.target.value)}  placeholder={'Last Name'} />
+                        <AccountDetailsInput type={'text'} name='phone' value={phone} onChange={(e) => handlePhoneChange(e.target.value)} maxLength={10}  placeholder={'Phone'} />
                         <AccountAddressContainer setMobileView={setMobileView()}>
                             <AddressContainer setMobileView={setMobileView()}>
                                 <AccountDetailsSubtitle>Billing Address</AccountDetailsSubtitle>
@@ -177,9 +187,6 @@ const AccountDetails = () => {
                                 <Address address={shippingAddress} updateAddress={updateShippingAddress} customSelector={'shippingAddress'} />
                             </AddressContainer>
                         </AccountAddressContainer>
-                        {showMsg &&
-                            <Snackbar msg={msgContent} type={msgType} show={setShowMsg} />
-                        }
                         <UpdateButtonContainer>
                             <Button onClick={() => setShowEdit(false)}>Cancel</Button>
                             <Button onClick={() => updateUserDetails()}>Update</Button>
@@ -196,6 +203,10 @@ const AccountDetails = () => {
                             <TextRowContainer>
                                 <AccountDetailsInlineTitle>Email: </AccountDetailsInlineTitle>
                                 <AccountDetailsText id='accountEmail'>{ email }</AccountDetailsText>
+                            </TextRowContainer>
+                            <TextRowContainer>
+                                <AccountDetailsInlineTitle>Username: </AccountDetailsInlineTitle>
+                                <AccountDetailsText id='accountUsername'>{ username }</AccountDetailsText>
                             </TextRowContainer>
                             <TextRowContainer>
                                 <AccountDetailsInlineTitle>First Name: </AccountDetailsInlineTitle>
@@ -229,6 +240,10 @@ const AccountDetails = () => {
                                 <AccountDetailsText id='shippingAddressState'>{ shippingAddress.state } </AccountDetailsText>
                                 <AccountDetailsText id='shippingAddressZipCode'>{ shippingAddress.zipCode }</AccountDetailsText>
                             </AddressBottomContainer>
+                            <TextRowContainer>
+                                <AccountDetailsInlineTitle>Credit:</AccountDetailsInlineTitle>
+                                <AccountDetailsText id='accountCredit'>${ parseInt(credit)/100 }</AccountDetailsText>
+                            </TextRowContainer>
                         </AccountDetailsTextContainer>
                         <UpdateButtonContainer>
                             <Button onClick={() => setShowEdit(true)}>Update Account</Button>

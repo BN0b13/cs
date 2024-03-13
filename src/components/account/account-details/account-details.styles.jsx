@@ -70,7 +70,7 @@ export const UpdateButtonContainer = styled.div`
 `;
 
 export const AccountDetailsInput = styled.input`
-    width: 300px;
+    width: ${setMobileView() ? '260px' : '300px'};
     margin: 5px 0;
     padding: 3px;
 `;

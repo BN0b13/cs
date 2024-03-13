@@ -1,8 +1,14 @@
 import { useContext } from 'react';
 
 import {
-  FaInstagram
+  FaDiscord,
+  FaFacebook,
+  FaInstagram,
+  FaLinkedin,
+  FaRedditSquare,
+  FaTwitter
 } from 'react-icons/fa';
+
 import { setMobileView } from '../../../tools/mobileView';
 
 import { ConfigurationContext } from '../../../contexts/configuration.context';
@@ -19,13 +25,40 @@ import {
 const Footer = () => {
   const { colors } = useContext(ConfigurationContext);
 
+  // {giveaway.Company.socials?.discord &&
+  //   <FaDiscord onClick={() => window.open(giveaway.Company.socials.discord, '_blank')} />
+  // }
+  // {giveaway.Company.socials?.facebook &&
+  //     <FaFacebook onClick={() => window.open(giveaway.Company.socials.facebook, '_blank')} />
+  // }
+  // {giveaway.Company.socials?.instagram &&
+  //     <FaInstagram onClick={() => window.open(giveaway.Company.socials.instagram, '_blank')} />
+  // }
+  // {giveaway.Company.socials?.linkedIn &&
+  //     <FaLinkedin onClick={() => window.open(giveaway.Company.socials.linkedIn, '_blank')} />
+  // }
+  // {giveaway.Company.socials?.reddit &&
+  //     <FaRedditSquare onClick={() => window.open(giveaway.Company.socials.reddit, '_blank')} />
+  // }
+  // {giveaway.Company.socials?.twitter &&
+  //     <FaTwitter onClick={() => window.open(giveaway.Company.socials.twitter, '_blank')} />
+  // }
+
   return (
   <MainContainer theme={colors}>
-    <IconContainer onClick={() => window.location.href = 'https://www.instagram.com/cosmicstrainsofficial'}>
-      <FaInstagram size={setMobileView() ? '14' : '28'} />
-    </IconContainer>
     <FooterContainer>
-      <FooterText>Copyright ©2023 Cosmic Strains</FooterText>
+      <IconContainer onClick={() => window.open('https://discord.gg/fva4pKdeVg', '_blank')} >
+        <FaDiscord size={setMobileView() ? '18' : '28'} />
+      </IconContainer>
+      <IconContainer onClick={() => window.open('https://www.instagram.com/cosmicstrainsofficial', '_blank')} >
+        <FaInstagram size={setMobileView() ? '18' : '28'} />
+      </IconContainer>
+      <IconContainer onClick={() => window.open('https://www.reddit.com/r/cosmicstrains', '_blank')} >
+        <FaRedditSquare size={setMobileView() ? '18' : '28'} />
+      </IconContainer>
+    </FooterContainer>
+    <FooterContainer>
+      <FooterText>Copyright ©2024 Cosmic Strains</FooterText>
     </FooterContainer>
     <DisclaimerContainer>
       <DisclaimerText>Ages 21+ USA only</DisclaimerText>

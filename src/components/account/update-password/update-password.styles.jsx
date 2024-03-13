@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { setMobileView } from '../../../tools/mobileView';
+
 export const UpdatePasswordContainer = styled.div`
     display: flex;
     flex-direction: column;
@@ -25,4 +27,10 @@ export const UpdatePasswordSubtitle = styled.h4`
 export const UpdatePasswordInput = styled.input`
     width: 280px;
     margin-bottom: 20px;
+`;
+
+export const PageBackLink = styled.h4`
+    cursor: pointer;
+    margin: 0 40px;
+    display: ${setMobileView() ? 'none' : ''};
 `;

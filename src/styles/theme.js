@@ -3,7 +3,7 @@ import { setMobileView, setTabletView } from "../tools/mobileView";
 //Height
 
 export const headerHeight = '8vh';
-export const bodyHeight = '80vh';
+export const bodyHeight = '72vh';
 export const footerHeight = '12vh';
 
 // Slideshow

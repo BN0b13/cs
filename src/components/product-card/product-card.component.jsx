@@ -11,21 +11,15 @@ import {
 } from './product-card.styles';
 
 const ProductCard = ({ product }) => {
-    let imageUrl = '';
-    if(product.ProductImages.length > 0) {
-        imageUrl = `${api}${product.ProductImages[0].path}`;
-    }
+    const imageUrl = product.ProductImages.length > 0 ? `${api}${product.ProductImages[0].path}` : '';
+
     const { name } = product;
 
     return (
         <ProductCartContainer>
-            {imageUrl.length > 0 ?
-                <ProductImage src={imageUrl} alt={`${name}`} />
-            :
-                <ProductImage src={logo} alt={`${name}`} />
-            }
+                <ProductImage src={imageUrl.length > 0 ? imageUrl : logo} alt={name} />
             <Footer>
-                <Name as='span'>{ name }</Name>
+                <Name>{ name }</Name>
                 {/* <Price as='span'>{ price }</Price> */}
             </Footer>
         </ProductCartContainer>
