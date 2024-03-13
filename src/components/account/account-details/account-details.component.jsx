@@ -4,14 +4,14 @@ import Address from '../../reusable/address/address.component';
 import Button from '../../reusable/button/button.component';
 import ClientModal from '../../reusable/client-modal/client-modal.component';
 import Spinner from '../../reusable/spinner/spinner.component';
-import Toasted from '../../reusable/toasted/toasted.component';
 
+import { ToastContext } from '../../../contexts/toast.context.jsx';
 import { UserContext } from '../../../contexts/user.context';
 
 import { tokenName } from '../../../config';
 
 import Client from '../../../tools/client';
-import UserTools from '../../../tools/user';
+import Tools from '../../../tools/tools.js';
 import { setMobileView } from '../../../tools/mobileView';
 
 import {
@@ -32,8 +32,12 @@ import {
     UpdatePasswordLink
 } from './account-details.styles';
 
+import {
+    InputSubtext
+} from '../../../styles/component.styles';
+
 const client = new Client();
-const userTools = new UserTools();
+const tools = new Tools();
 
 const AccountDetails = () => {
     const [ loading, setLoading ] = useState(false);
@@ -45,12 +49,11 @@ const AccountDetails = () => {
     const [ phone, setPhone ] = useState('');
     const [ billingAddress, setBillingAddress ] = useState({});
     const [ shippingAddress, setShippingAddress ] = useState({});
+    const [ credit, setCredit ] = useState(0);
     const [ showModal, setShowModal ] = useState(false);
     const [ input, setInput ] = useState('');
-    const [ toastMessage, setToastMessage ] = useState('');
-    const [ toastError, setToastError ] = useState(false);
-    const [ showToast, setShowToast ] = useState(false);
 
+    const { errorToast } = useContext(ToastContext);
     const { currentUser } = useContext(UserContext);
 
     useEffect(() => {
@@ -62,20 +65,13 @@ const AccountDetails = () => {
             setLastName(currentUser.lastName);
             setBillingAddress(currentUser.billingAddress);
             setShippingAddress(currentUser.shippingAddress);
+            setCredit(currentUser.credit);
         }
     }, [ currentUser ]);
 
-    const getToasted = (toast) => toast();
-
-    const errorToast = (message) => {
-        setToastMessage(message);
-        setToastError(true);
-        setShowToast(true);
-    }
-
     const handleKeyDown = (e) => {
         if(e.key === 'Enter') {
-            updateUserDetails(e);
+            updateUserDetails();
         }
       }
 
@@ -102,8 +98,7 @@ const AccountDetails = () => {
         });
     }
 
-    const updateUserDetails = async (e) => {
-        e.preventDefault();
+    const updateUserDetails = async () => {
 
         const data = {
             username,
@@ -114,7 +109,7 @@ const AccountDetails = () => {
             shippingAddress
         };
 
-        const validateData = userTools.validate(data);
+        const validateData = tools.validate(data);
         if(!validateData.result) {
           errorToast(validateData.error);
           return
@@ -166,7 +161,7 @@ const AccountDetails = () => {
                 inputPlaceholder={'Email'}
                 setInput={setInput}
                 message={`Are you sure you want to delete your account forever? This action can not be undone. Please enter the account email to confirm.`}
-                action={() => deleteAccount} 
+                action={() => deleteAccount()} 
                 actionText={'Confirm'}
             />
             {!currentUser || loading ?
@@ -178,6 +173,7 @@ const AccountDetails = () => {
                             Update Account
                         </AccountDetailsTitle>
                         <AccountDetailsInput type={'text'} name='username' value={username} onChange={(e) => setUsername(e.target.value)} placeholder={'Username'} />
+                        <InputSubtext>In order to create a welcoming environment for all, usernames that are hateful, homophobic, racist, sexist, derogatory, harassing, or otherwise uncivil are grounds for account termination.</InputSubtext>
                         <AccountDetailsInput type={'text'} name='firstName' value={firstName} onChange={(e) => setFirstName(e.target.value)} placeholder={'First Name'} />
                         <AccountDetailsInput type={'text'} name='lastName' value={lastName} onChange={(e) => setLastName(e.target.value)}  placeholder={'Last Name'} />
                         <AccountDetailsInput type={'text'} name='phone' value={phone} onChange={(e) => handlePhoneChange(e.target.value)} maxLength={10}  placeholder={'Phone'} />
@@ -244,6 +240,10 @@ const AccountDetails = () => {
                                 <AccountDetailsText id='shippingAddressState'>{ shippingAddress.state } </AccountDetailsText>
                                 <AccountDetailsText id='shippingAddressZipCode'>{ shippingAddress.zipCode }</AccountDetailsText>
                             </AddressBottomContainer>
+                            <TextRowContainer>
+                                <AccountDetailsInlineTitle>Credit:</AccountDetailsInlineTitle>
+                                <AccountDetailsText id='accountCredit'>${ parseInt(credit)/100 }</AccountDetailsText>
+                            </TextRowContainer>
                         </AccountDetailsTextContainer>
                         <UpdateButtonContainer>
                             <Button onClick={() => setShowEdit(true)}>Update Account</Button>
@@ -251,13 +251,6 @@ const AccountDetails = () => {
                     </AccountDetailsContainer>
                 
             }
-            <Toasted 
-                message={toastMessage}
-                showToast={showToast}
-                setShowToast={setShowToast}
-                getToasted={getToasted}
-                error={toastError}
-            />
         </>
     );
 }

@@ -18,9 +18,17 @@ export const ColumnContainer = styled.div`
 
 export const RowContainer = styled.div`
     display: flex;
-    flex-direction: row;
-    justify-content: center;
+    flex-direction: ${props => props.flexDirection ? props.flexDirection : 'row'};
+    justify-content: ${props => props.justifyContent ? props.justifyContent : 'center'};
     align-items: ${props => props.alignItems ? props.alignItems : 'center'};
+    margin-left: ${props => props.marginLeft ? props.marginLeft : ''};
+    margin: ${props => props.margin ? props.margin : ''};
+    padding: ${props => props.padding ? props.padding : ''};
+    cursor: ${props => props.cursor ? props.cursor : ''};
+    width: ${props => props.width ? props.width : ''};
+    max-width: ${props => props.maxWidth ? props.maxWidth : ''};
+    border: ${props => props.border ? props.border : ''};
+    border-bottom: ${props => props.borderBottom ? props.borderBottom : ''};
 `;
 
 export const Title = styled.h2`
@@ -36,11 +44,17 @@ export const Link = styled.h4`
 `;
 
 export const Subtext = styled.h6`
+    
+`;
 
+export const InputSubtext = styled.h6`
+    max-width: ${setMobileView() ? '270px' : '280px'};
+    padding: 0;
+    margin: 1px 0;
 `;
 
 export const Input = styled.input`
-    width: ${setMobileView() ? '270px' : '280px'};
+    width: ${setMobileView() ? '260px' : '300px'};
     margin-bottom: 10px;
 `;
 

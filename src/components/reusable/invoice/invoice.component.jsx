@@ -49,6 +49,7 @@ const client = new Client();
 const Invoice = () => {
     const componentRef = useRef();
     const { refId } = useParams();
+    const [ loading, setLoading ] = useState(true);
     const [ subtotal, setSubtotal ] = useState(null);
     const [ order, setOrder ] = useState(null);
 
@@ -56,22 +57,25 @@ const Invoice = () => {
 
     useEffect(() => {
         const getOrderByRef = async () => {
+            setLoading(true);
             const res = await client.getOrderByRef(refId);
+            
             if(res.status === 404) {
-                window.location.href = '/error';
+                window.location = '/error';
                 return
             }
             let subtotalCount = 0;
-            res.rows[0].products.map(item => subtotalCount = subtotalCount + (item.quantity * item.product[0].Inventories[0].price));
+            res.products.map(item => subtotalCount = subtotalCount + (item.quantity * item.product[0].Inventories[0].price));
             setSubtotal(subtotalCount);
-            setOrder(res.rows[0]);
+            setOrder(res);
+            setLoading(false);
         }
         getOrderByRef();
-    }, [ refId ]);
+    }, [ refId, currentUser ]);
 
     return (
         <InvoiceContainer>
-            {!currentUser || !order ?
+            {loading || !currentUser ?
                 <Spinner />
             :
                 <>
@@ -113,7 +117,7 @@ const Invoice = () => {
                             <InvoiceAddressesContainer setMobileView={setMobileView()}>
                                 <InvoiceAddressContainer>
                                     <InvoiceSubtitle>Billing</InvoiceSubtitle>
-                                    <InvoiceText>{ `${order.billingAddress.firstName} ${order.billingAddress.lastName}` }</InvoiceText>
+                                    <InvoiceText>{ `${order.billingAddress.firstName || ''} ${order.billingAddress.lastName || ''}` }</InvoiceText>
                                     <InvoiceText>{ order.billingAddress.addressOne }</InvoiceText>
                                     <InvoiceText>{ order.billingAddress.addressTwo }</InvoiceText>
                                     <InvoiceText>{ order.billingAddress.city }</InvoiceText>
@@ -122,7 +126,7 @@ const Invoice = () => {
                                 </InvoiceAddressContainer>
                                 <InvoiceAddressContainer>
                                 <InvoiceSubtitle>Shipping</InvoiceSubtitle>
-                                    <InvoiceText>{ `${order.shippingAddress.firstName} ${order.shippingAddress.lastName}` }</InvoiceText>
+                                    <InvoiceText>{ `${order.shippingAddress.firstName || ''} ${order.shippingAddress.lastName || ''}` }</InvoiceText>
                                     <InvoiceText>{ order.shippingAddress.addressOne }</InvoiceText>
                                     <InvoiceText>{ order.shippingAddress.addressTwo }</InvoiceText>
                                     <InvoiceText>{ order.shippingAddress.city }</InvoiceText>
@@ -165,6 +169,18 @@ const Invoice = () => {
                                 <InvoiceText>Shipping </InvoiceText>
                                 <InvoiceText>{ convertProductPrice(order.shippingTotal) }</InvoiceText>
                             </InvoiceTotalItemContainer>
+                            {order.saleId &&
+                                <InvoiceTotalItemContainer>
+                                    <InvoiceText>Sale </InvoiceText>
+                                    <InvoiceText>{ order.Sale.type }</InvoiceText>
+                                </InvoiceTotalItemContainer>
+                            }
+                            {order.credit &&
+                                <InvoiceTotalItemContainer>
+                                    <InvoiceText>Credit </InvoiceText>
+                                    <InvoiceText>{ `- $${order.credit.credit/100}` }</InvoiceText>
+                                </InvoiceTotalItemContainer>
+                            }
                             <InvoiceTotalItemContainer>
                                 <InvoiceText>Total </InvoiceText>
                                 <InvoiceText>{ convertProductPrice(order.total) }</InvoiceText>

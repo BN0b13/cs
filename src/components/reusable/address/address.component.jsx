@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { states } from '../../../tools/states.js';
+import Tools from '../../../tools/tools.js';
 
 import {
     AddressBottomContainer,
@@ -12,6 +12,8 @@ import {
     AddressZipCodeInput,
     AddressTopContainer
 } from './address.styles';
+
+const tools = new Tools();
 
 const Address = ({ address, updateAddress, customSelector = 'address', names = true }) => {
     const [ firstName, setFirstName ] = useState(address.firstName);
@@ -131,7 +133,7 @@ const Address = ({ address, updateAddress, customSelector = 'address', names = t
                     onChange={(e) => handleState(e.target.value)}
                 >
                     <AddressDropdownOption key={0} value={''} disabled> -- State -- </AddressDropdownOption>
-                    {states.map((state, index) => 
+                    {tools.states.map((state, index) => 
                             <AddressDropdownOption
                                 key={index + 1}
                                 id={state.abbreviation}

@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 import Button from '../reusable/button/button.component';
 import Spinner from '../reusable/spinner/spinner.component';
-import Toasted from '../reusable/toasted/toasted.component';
+
+import { ToastContext } from '../../contexts/toast.context';
 
 import Client from '../../tools/client';
 import { tokenName } from '../../config';
@@ -24,17 +25,8 @@ const Login = () => {
     const [ loading, setLoading ] = useState(false);
     const [ email, setEmail ] = useState('');
     const [ password, setPassword ] = useState('');
-    const [ toastMessage, setToastMessage ] = useState('');
-    const [ toastError, setToastError ] = useState(false);
-    const [ showToast, setShowToast ] = useState(false);
-
-    const getToasted = (toast) => toast();
-
-    const errorToast = (message) => {
-        setToastMessage(message);
-        setToastError(true);
-        setShowToast(true);
-    }
+    
+    const { errorToast } = useContext(ToastContext);
 
     const handleKeyDown = (e) => {
         if(e.key === 'Enter') {
@@ -86,13 +78,6 @@ const Login = () => {
                     <Link onClick={() => window.location = '/password-reset'}>Forgot Password</Link>
                 </ColumnContainer>
             }
-            <Toasted 
-                message={toastMessage}
-                showToast={showToast}
-                setShowToast={setShowToast}
-                getToasted={getToasted}
-                error={toastError}
-            />
         </MainContainer>
     )
 }

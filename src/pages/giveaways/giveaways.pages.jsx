@@ -6,21 +6,16 @@ import Spinner from '../../components/reusable/spinner/spinner.component';
 import { ConfigurationContext } from '../../contexts/configuration.context';
 
 import Client from '../../tools/client';
-import { setMobileView } from '../../tools/mobileView';
 
 import {
     GiveawaysActiveContainer,
     GiveawaysCompletedContainer,
-    GiveawaysActiveContainerMobile,
-    GiveawaysCompletedContainerMobile,
     GiveawaysMainTitle,
     GiveawaysTitle,
 } from './giveaways.styles';
 
 import {
-    ContentContainer,
-    MainContainer,
-    MainTitle
+    MainContainer
 } from '../../styles/page.styles';
 
 const client = new Client();
@@ -43,7 +38,6 @@ const GiveawaysPage = () => {
         const activeRes = res.filter(giveaway => giveaway.status === 'active');
         const completedRes = res.filter(giveaway => giveaway.status === 'completed');
 
-        console.log('GET giveaways res', res);
         setActiveGiveaways(activeRes);
         setCompletedGiveaways(completedRes)
 
@@ -56,70 +50,38 @@ const GiveawaysPage = () => {
             {loading ?
                 <Spinner />
             :
-                setMobileView() ?
-                    <>
-                        <>
-                            <ContentContainer>
-                                <GiveawaysActiveContainerMobile theme={colors}>
-                                    <GiveawaysTitle>ACTIVE</GiveawaysTitle>
-                                    {activeGiveaways &&
-                                        activeGiveaways.map((giveaway) => {
-                                            return (
-                                                <GiveawayCard 
-                                                    key={giveaway.id} 
-                                                    giveaway={giveaway} 
-                                                />
-                                            )
-                                        })
-                                    }
-                                </GiveawaysActiveContainerMobile>
-                            </ContentContainer>
-                            <ContentContainer>
-                                <GiveawaysCompletedContainerMobile theme={colors}>
-                                    <GiveawaysTitle>COMPLETED</GiveawaysTitle>
-                                    {completedGiveaways &&
-                                        completedGiveaways.map((giveaway) => {
-                                            return (
-                                                <GiveawayCard 
-                                                    key={giveaway.id} 
-                                                    giveaway={giveaway} 
-                                                />
-                                            )
-                                        })
-                                    }
-                                </GiveawaysCompletedContainerMobile>
-                            </ContentContainer>
-                        </>
-                    </>
-                :
-                    <>
-                        <GiveawaysActiveContainer theme={colors}>
-                        <GiveawaysTitle>ACTIVE</GiveawaysTitle>
-                            {activeGiveaways &&
-                                activeGiveaways.map((giveaway) => {
-                                    return (
-                                        <GiveawayCard 
-                                            key={giveaway.id} 
-                                            giveaway={giveaway} 
-                                        />
-                                    )
-                                })
-                            }
-                        </GiveawaysActiveContainer>
-                        <GiveawaysCompletedContainer theme={colors}>
-                        <GiveawaysTitle>COMPLETED</GiveawaysTitle>
-                            {completedGiveaways &&
-                                completedGiveaways.map((giveaway) => {
-                                    return (
-                                        <GiveawayCard 
-                                            key={giveaway.id} 
-                                            giveaway={giveaway} 
-                                        />
-                                    )
-                                })
-                            }
-                        </GiveawaysCompletedContainer>
-                    </>
+                <>
+                    <GiveawaysActiveContainer theme={colors}>
+                    <GiveawaysTitle>ACTIVE</GiveawaysTitle>
+                        {activeGiveaways.length === 0 ?
+                            <GiveawaysTitle>No Active Giveaways</GiveawaysTitle>
+                        :
+                            activeGiveaways.map((giveaway) => {
+                                return (
+                                    <GiveawayCard 
+                                        key={giveaway.id} 
+                                        giveaway={giveaway} 
+                                    />
+                                )
+                            })
+                        }
+                    </GiveawaysActiveContainer>
+                    <GiveawaysCompletedContainer theme={colors}>
+                    <GiveawaysTitle>COMPLETED</GiveawaysTitle>
+                        {completedGiveaways.length === 0 ?
+                            <GiveawaysTitle>No Completed Giveaways</GiveawaysTitle>
+                        :
+                            completedGiveaways.map((giveaway) => {
+                                return (
+                                    <GiveawayCard 
+                                        key={giveaway.id} 
+                                        giveaway={giveaway} 
+                                    />
+                                )
+                            })
+                        }
+                    </GiveawaysCompletedContainer>
+                </>
             }
         </MainContainer>
     )

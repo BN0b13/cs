@@ -31,10 +31,11 @@ import ThankYouPage from './pages/thank-you/thank-you.pages';
 import VerifyEmail from './components/account/verify-email/verify-email.component';
 
 import { ConfigurationContext } from './contexts/configuration.context';
+import { ToastContext } from './contexts/toast.context.jsx';
 import { UserContext } from './contexts/user.context';
 
-import Client from './tools/client';
-import UserTools from './tools/user';
+import Client from './tools/client.js';
+import Tools from './tools/tools.js';
 import { setMobileView } from './tools/mobileView';
 
 import { ageVerifyTokenName, themeTokenName, tokenName } from './config';
@@ -49,7 +50,7 @@ import {
 } from './App.styles';
 
 const client = new Client();
-const userTools = new UserTools();
+const tools = new Tools();
 
 function App() {
   const [ ageToken, setAgeToken ] = useState(sessionStorage.getItem(ageVerifyTokenName));
@@ -65,11 +66,17 @@ function App() {
   const [ modalAction, setModalAction ] = useState(null);
   const [ modalActionText, setModalActionText ] = useState(null);
   const [ modalAllowCancel, setModalAllowCancel ] = useState(null);
-  const [ toastMessage, setToastMessage ] = useState('');
-  const [ toastError, setToastError ] = useState(false);
-  const [ showToast, setShowToast ] = useState(false);
+  const [ modalSubtext, setModalSubtext ] = useState('');
 
   const { theme, setAppTheme } = useContext(ConfigurationContext);
+  const { showToast,
+     setShowToast, 
+     getToasted, 
+     toastError, 
+     toastMessage, 
+     errorToast, 
+     successToast 
+  } = useContext(ToastContext);
   const { setCurrentUser } = useContext(UserContext);
 
   useEffect(() => {
@@ -125,6 +132,7 @@ function App() {
           
           setModalTitle('Select Username');
           setModalMessage('We are happy to announce the roll out of usernames to support exciting upcoming features. Please select a username.');
+          setModalSubtext('In order to create a welcoming environment for all, usernames that are hateful, homophobic, racist, sexist, derogatory, harassing, or otherwise uncivil are grounds for account termination.');
           setModalInputType('text');
           setModalInputPlaceholder('Username');
           setModalAction(() => createUsername);
@@ -159,20 +167,6 @@ function App() {
 
     setAppContext();
   }, []);
-
-  const getToasted = (toast) => toast();
-
-  const successToast = (message) => {
-    setToastMessage(message);
-    setToastError(false);
-    setShowToast(true);
-}
-
-  const errorToast = (message) => {
-      setToastMessage(message);
-      setToastError(true);
-      setShowToast(true);
-  }
 
   const routes = () => {
 
@@ -289,11 +283,12 @@ function App() {
           title={modalTitle} 
           image={modalImage}
           input={modalInput}
-          setInput={(e) => userTools.usernameInputValidation(e, setModalInput)}
+          setInput={(e) => tools.usernameInputValidation(e, setModalInput)}
           inputType={modalInputType}
           inputPlaceholder={modalInputPlaceholder}
           label={modalLabel}
           message={modalMessage}
+          subtext={modalSubtext}
           action={modalAction} 
           actionText={modalActionText}
           allowCancel={modalAllowCancel}

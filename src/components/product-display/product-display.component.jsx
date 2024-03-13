@@ -12,10 +12,10 @@ import {
 import Button from '../reusable/button/button.component';
 import Slideshow from '../reusable/slideshow/slideshow.component';
 import Spinner from '../reusable/spinner/spinner.component';
-import Toasted from '../reusable/toasted/toasted.component';
 
 import { CartContext } from '../../contexts/cart.context';
 import { ConfigurationContext } from '../../contexts/configuration.context';
+import { ToastContext } from '../../contexts/toast.context';
 import { UserContext } from '../../contexts/user.context';
 
 import { api } from '../../config';
@@ -56,12 +56,10 @@ const ProductDisplay = ({ product }) => {
     const [ images, setImages ] = useState([]);
     const [quantity, setQuantity] = useState('');
     const [inventory, setInventory] = useState(null);
-    const [ toastMessage, setToastMessage ] = useState('');
-    const [ toastError, setToastError ] = useState(false);
-    const [ showToast, setShowToast ] = useState(false);
 
     const { addItemToCart } = useContext(CartContext);
     const { colors } = useContext(ConfigurationContext);
+    const { errorToast, successToast } = useContext(ToastContext);
     const { currentUser } = useContext(UserContext);
 
     const {
@@ -87,20 +85,6 @@ const ProductDisplay = ({ product }) => {
         getInventory();
     }, [ id ]);
 
-    const getToasted = (toast) => toast();
-
-    const successToast = (message) => {
-        setToastMessage(message);
-        setToastError(false);
-        setShowToast(true);
-    }
-
-    const errorToast = (message) => {
-        setToastMessage(message);
-        setToastError(true);
-        setShowToast(true);
-    }
-
     const loggedIn = async (id, quantity) => {
         if(!currentUser) {
             errorToast('Please login to add to cart.');
@@ -111,7 +95,12 @@ const ProductDisplay = ({ product }) => {
             return;
         }
         
-        addItemToCart({productId: id, quantity});
+        addItemToCart({
+            categoryId: product.Category.id,
+            productId: id,
+            inventoryId: product.Inventories[0].id,
+            quantity
+        });
         successToast('Product added to cart.');
     }
 
@@ -196,13 +185,6 @@ const ProductDisplay = ({ product }) => {
                     <ProductDescriptionText>{description}</ProductDescriptionText>
                 </ProductDescriptionContainer>
             </ProductDisplayContainer>
-            <Toasted 
-                message={toastMessage}
-                showToast={showToast}
-                setShowToast={setShowToast}
-                getToasted={getToasted}
-                error={toastError}
-            />
         </>
     )
 }

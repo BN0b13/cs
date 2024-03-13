@@ -12,6 +12,8 @@ export const GiveawayContainer = styled.div`
   background-color: rgba(0,0,0,.9);
   color: #fff;
   padding-bottom: 10px;
+  margin: 10px 0;
+  cursor: pointer;
 
   button {
     width: 80%;
