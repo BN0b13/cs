@@ -39,7 +39,7 @@ export const ProductButtonContainer = styled.div`
 `;
 
 export const SlideshowContainer = styled.div`
-  width: ${setMobileView() ? '220px' : '300px'};
+  width: 300px;
 `;
 
 export const ProductButtonCount = styled.div`
@@ -97,12 +97,6 @@ export const ProductDescriptionText = styled.p`
 `;
 
 export const ProductImage = styled.img`
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  height: 100%;
-  width: auto;
-  -webkit-transform: translate(-50%,-50%);
-      -ms-transform: translate(-50%,-50%);
-          transform: translate(-50%,-50%);
+  height: auto;
+  width: 100%;
 `;

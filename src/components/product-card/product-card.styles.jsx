@@ -62,3 +62,13 @@ export const ProductImage = styled.img`
     opacity: 0.8;
   }
 `;
+
+export const SoldOutImage = styled.img`
+  width: 100%;
+  margin-top: ${setMobileView() ? '20%' : '37%'};
+  position: absolute;
+
+  &:hover {
+    opacity: 0.8;
+  }
+`;
