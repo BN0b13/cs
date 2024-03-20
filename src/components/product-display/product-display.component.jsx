@@ -23,6 +23,7 @@ import { getProductInventory, convertProductPrice } from '../../tools/cart';
 import { setMobileView } from '../../tools/mobileView';
 
 import logo from '../../assets/img/logo.png';
+import soldOut from '../../assets/img/sold-out.png';
 
 import {
     CategoryLink,
@@ -140,10 +141,18 @@ const ProductDisplay = ({ product }) => {
                 <ProductContainer>
                     <ProductImageDisplay>
                         {images.length === 0 ?
-                            <ProductImage src={logo} alt={`${name}`} />
+                            <div style={{ ...divStyle, "backgroundImage": `url(${logo})` }}>
+                                        {product.Inventories[0].quantity === 0 &&
+                                            <ProductImage src={soldOut} alt='Product Sold Out' />
+                                        }
+                                    </div>
                             :
                                 images.length === 1 ?
-                                    <ProductImage src={api + images[0].path} alt={`${name}`} />
+                                    <div style={{ ...divStyle, "backgroundImage": `url(${api}${images[0].path})` }}>
+                                        {product.Inventories[0].quantity === 0 &&
+                                            <ProductImage src={soldOut} alt='Product Sold Out' />
+                                        }
+                                    </div>
                                 :
                                     <SlideshowContainer>
                                         <Slide autoplay={false}>
@@ -151,6 +160,9 @@ const ProductDisplay = ({ product }) => {
                                                     <div key={index}>
                                                         <a href={image.link}>
                                                             <div style={{ ...divStyle, "backgroundImage": `url(${api}${image.path})` }}>
+                                                                {product.Inventories[0].quantity === 0 &&
+                                                                    <ProductImage src={soldOut} alt='Product Sold Out' />
+                                                                }
                                                             </div>
                                                         </a>
                                                     </div>
