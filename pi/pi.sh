@@ -79,6 +79,9 @@ echo Installing PM2
 sudo npm install -g pm2
 pm2 startup
 sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u bnoble --hp /home/bnoble
+cd ~/cs/backend
+sudo pm2 start app.js --name $1 --time
+sudo pm2 save
 
 # NGINX
 
