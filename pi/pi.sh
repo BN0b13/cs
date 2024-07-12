@@ -86,6 +86,9 @@ sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -
 
 # NGINX
 
-source ./nginx/nginx.sh $1
+# source ./nginx/nginx.sh $1
+sudo apt remove apache2
+sudo apt install nginx -y
+sudo systemctl start nginx
 
 sudo reboot
