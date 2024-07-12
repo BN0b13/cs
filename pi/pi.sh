@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Raspberry Pi set-up
+## Raspberry Pi set-up
 
 # Check argument
 

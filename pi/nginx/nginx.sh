@@ -1,6 +1,6 @@
 #! /bin/bash
 
-echo "NGINX Bash script ran with var $1"
+echo "NGINX Bash script setting up url $1"
 
 # NGINX
 
