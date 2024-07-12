@@ -83,3 +83,5 @@ http {
 # Set up certbot
 
 # sudo certbot --nginx --domain $URL
+
+cd ~/cs/pi
