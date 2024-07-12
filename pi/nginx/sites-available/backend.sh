@@ -52,4 +52,4 @@ sudo ln -s /etc/nginx/sites-available/$URL /etc/nginx/sites-enabled/$URL
 
 sudo certbot --nginx --domain $URL
 
-cd ~/cs
+cd ~/cs/pi
