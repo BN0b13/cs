@@ -53,14 +53,35 @@ sudo mv docker-compose /usr/bin/
 sudo chown root: /usr/bin/docker-compose
 sudo chmod +x /usr/bin/docker-compose
 
-# NGINX
+# Set up sites
 
-source ./nginx/nginx.sh $1
+# Clear local git changes, if any
+cd ..
+git reset --hard
+# Pull new changes to frontend main
+git pull origin main;
+# Set up admin frontend
+cd admin
+source ./build.sh
+cd ..
+# Set up frontend
+cd frontend
+source ../frontend/build.sh
+cd ..
+# Set up backend
+cd backend
+source ./backend/build.sh
+cd ..
+cd pi
 
 # PM2
 echo Installing PM2
 sudo npm install -g pm2
 pm2 startup
 sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u bnoble --hp /home/bnoble
+
+# NGINX
+
+source ./nginx/nginx.sh $1
 
 sudo reboot
