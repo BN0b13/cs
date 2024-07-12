@@ -2,6 +2,18 @@
 
 # Raspberry Pi set-up
 
+# Check argument
+
+if [[ "$#" -eq 0 ]] || [[ $1 != *"."* ]];
+    then echo Please enter in a valid url as an argument.
+    exit
+fi
+
+if [[ $1 = "www"* ]];
+    then echo Please remove www from the url.
+    exit
+fi
+
 # Update Raspberry Pi
 
 sudo apt update -y
@@ -43,9 +55,7 @@ sudo chmod +x /usr/bin/docker-compose
 
 # NGINX
 
-sudo apt remove apache2
-sudo apt install nginx -y
-sudo systemctl start nginx
+source ./nginx/nginx.sh $1
 
 # PM2
 echo Installing PM2
