@@ -40,12 +40,7 @@ app.use(
 //   origin: ['https://cosmicstrains.com', 'https://www.cosmicstrains.com', 'https://admin.cosmicstrains.com']
 // }));
 
-
 // Local
-// app.use(cors({
-//   origin: ['http://localhost:5050', 'http://localhost:3000' ]
-// }));
-
 app.use(cors({ origin: '*' }));
 
 app.disable('x-powered-by');
