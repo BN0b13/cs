@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 
 import CartIcon from '../../cart-icon/cart-icon.component';
+import Dropdown from '../dropdown/dropdown.component';
 import Search from '../search/search.component';
 
 import { 
@@ -15,7 +16,8 @@ import { tokenName } from '../../../../config';
 import {
     NavigationContainer,
     NavOptions,
-    HeaderLink
+    HeaderLink,
+    HeaderNonLink
 } from './navigation.styles';
 
 const Navigation = () => {
@@ -37,6 +39,12 @@ const Navigation = () => {
         <NavigationContainer theme={colors}>
             <Search />
             {menuItemsPublic.map((item, index) => {
+                if(item.title === 'Shop') {
+                    return (
+                        <Dropdown key={index} theme={colors} item={item} />
+                    )
+                }
+
                 return (
                     <HeaderLink key={index} theme={colors} href={item.path}>
                         { item.title }

@@ -1,5 +1,10 @@
 import { useContext, useState } from 'react';
 
+import { 
+  FaEye,
+  FaEyeSlash
+} from "react-icons/fa";
+
 import Address from '../reusable/address/address.component.jsx';
 import Button from '../reusable/button/button.component';
 import Spinner from '../reusable/spinner/spinner.component';
@@ -14,6 +19,9 @@ import Tools from '../../tools/tools.js';
 
 import {
   Disclaimer,
+  PasswordContainer,
+  PasswordIconContainer,
+  PasswordInput,
   SignUpFormButtonContainer,
   SignUpFormContainer,
   SignUpFormForm,
@@ -37,7 +45,9 @@ const SignUp = () => {
     const [ email, setEmail ] = useState('');
     const [ username, setUsername ] = useState('');
     const [ password, setPassword ] = useState('');
+    const [ passwordTextVisible, setPasswordTextVisible ] = useState(false);
     const [ confirmPassword, setConfirmPassword ] = useState('');
+    const [ confirmPasswordTextVisible, setConfirmPasswordTextVisible ] = useState(false);
     const [ firstName, setFirstName ] = useState('');
     const [ lastName, setLastName ] = useState('');
     const [ phone, setPhone ] = useState('');
@@ -142,22 +152,26 @@ const SignUp = () => {
                   required
                 />
                 <InputSubtext>In order to create a welcoming environment for all, usernames that are hateful, homophobic, racist, sexist, derogatory, harassing, or otherwise uncivil are grounds for account termination.</InputSubtext>
-                <SignUpFormInput 
-                  type='password'
-                  name='password' 
-                  value={password} 
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder={'Password'}
-                  required
-                />
-                <SignUpFormInput 
-                  type='password'
-                  name='confirmPassword' 
-                  value={confirmPassword} 
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  placeholder={'Confirm Password'}
-                  required
-                />
+                <PasswordContainer>
+                    <PasswordInput type={passwordTextVisible ? 'text' : 'password'} name='password' value={password} onChange={(e) => setPassword(e.target.value)} placeholder='Password' />
+                        <PasswordIconContainer>
+                            {passwordTextVisible ?
+                                <FaEyeSlash onClick={() => setPasswordTextVisible(false)} />
+                            :
+                                <FaEye onClick={() => setPasswordTextVisible(true)} />
+                            }
+                        </PasswordIconContainer>
+                </PasswordContainer>
+                <PasswordContainer>
+                    <PasswordInput type={confirmPasswordTextVisible ? 'text' : 'password'} name='confirmPassword' value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder='Confirm Password' />
+                        <PasswordIconContainer>
+                            {confirmPasswordTextVisible ?
+                                <FaEyeSlash onClick={() => setConfirmPasswordTextVisible(false)} />
+                            :
+                                <FaEye onClick={() => setConfirmPasswordTextVisible(true)} />
+                            }
+                        </PasswordIconContainer>
+                </PasswordContainer>
                 <SignUpFormInput 
                   type='text'
                   name='firstName'

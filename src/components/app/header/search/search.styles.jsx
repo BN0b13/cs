@@ -10,6 +10,7 @@ export const SearchContainer = styled.div`
     height: 40px;
     width: ${setMobileView() ? '170px' : '250px'};
     color: #fff;
+    margin-right: 15px;
 `;
 
 export const SearchBar = styled.input`
