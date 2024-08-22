@@ -11,7 +11,7 @@ npm run build;
 # Print completion message
 echo "cosmicstrains.com build script successfully completed."
 # CD back to main dir
-cd ~/cosmicStrains
+cd ~/cs
 
 # Copy Admin to NGINX www dir
 cp -r ./admin /var/www
@@ -24,4 +24,4 @@ npm run build;
 # Print completion message
 echo "admin.cosmicstrains.com build script successfully completed."
 # CD back to main dir
-cd ~/cosmicStrains
+cd ~/cs
