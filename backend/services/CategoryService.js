@@ -150,6 +150,70 @@ export default class CategoryService {
             throw Error('There was an error updating the category adding thumbnail');
         }
     }
+
+    deleteThumbnail = async (params) => {
+        try {
+            const {
+                id
+            } = params;
+
+            const getCategory = await Category.findAndCountAll(
+                {
+                    where: {
+                        id
+                    }
+                }
+            );
+
+            const res = await Category.update(
+                {
+                    thumbnailFilename: '',
+                    thumbnailPath: ''
+                },
+                {
+                    where: {
+                        id
+                    }
+                }
+            );
+
+            fs.stat(`./public${getCategory.rows[0].thumbnailPath}`, function (err) {
+                if (err) {
+                    return console.error(err);
+                }
+             
+                fs.unlink(`./public${getCategory.rows[0].thumbnailPath}`,function(err){
+                     if(err) return console.log(err);
+                });
+             });
+
+
+             fs.stat(`./public${getCategory.rows[0].thumbnailPath}-mobile.webp`, function (err) {
+                if (err) {
+                    return console.error(err);
+                }
+            
+                fs.unlink(`./public${getCategory.rows[0].thumbnailPath}-mobile.webp`,function(err){
+                    if(err) return console.log(err);
+                });
+            });
+
+            fs.stat(`./public${getCategory.rows[0].thumbnailPath}-desktop.webp`, function (err) {
+                if (err) {
+                    return console.error(err);
+                }
+            
+                fs.unlink(`./public${getCategory.rows[0].thumbnailPath}-desktop.webp`,function(err){
+                    if(err) return console.log(err);
+                });
+            });
+
+            return res;
+        } catch (err) {
+            console.log('DELETE Category Thumbnail Error: ', err);
+            throw Error('There was an error deleting category thumbnail');
+        }
+    }
     
     // DELETE
 

@@ -48,6 +48,16 @@ const CategoryImages = ({ category }) => {
         setFileInput('');
     }
 
+    const deleteCategoryThumbnail = async () => {
+        const data = {
+            id: category.id
+        };
+
+        const res = await client.deleteCategoryThumbnail(data);
+
+        console.log('DELETE Category Thumbnail res: ', res);
+    }
+
     return (
         <MainContainer>
             <ImagesContainer>
@@ -58,7 +68,11 @@ const CategoryImages = ({ category }) => {
                     <h4>No Category Back Splash Image</h4>
                 }
                 {category.thumbnailPath ?
-                    <img src={api + category.thumbnailPath} alt='thumbnail' width='200' height='200' />
+                    <>
+                        {console.log('Category: ', category)}
+                        <img src={api + category.thumbnailPath} alt='thumbnail' width='200' height='200' />
+                        <button onClick={() => deleteCategoryThumbnail()}>Delete Image</button>
+                    </>
                 :
                     <h4>No Category Thumbnail Image</h4>
                 }

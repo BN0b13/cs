@@ -160,6 +160,13 @@ export default class Client {
         return res;
     }
 
+    async deleteCategoryThumbnail(data) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.patch, data, true);
+        const categories = await fetch(`${api}/admin/categories/images/thumbnail/delete`, requestOptions);
+        const res = await categories.json();
+        return res;
+    }
+
     async deleteCategory(data) {
         const requestOptions = this.fetchOptions(this.fetchMethods.delete, data, true);
         const categories = await fetch(`${api}/admin/categories`, requestOptions);

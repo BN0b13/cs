@@ -143,6 +143,21 @@ class CategoryController {
         res.send(data);
     }
 
+    async deleteThumbnail(req, res) {
+        const {
+            id
+        } = req.body;
+
+        console.log('DELETE category thumbnail id: ', id);
+
+        const params = {
+            id
+        };
+
+        const data = await categoryService.deleteThumbnail(params);
+        res.send(data);
+    }
+
     // DELETE
 
     async deleteCategoryById(req, res) {
