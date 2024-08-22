@@ -2,6 +2,8 @@
 
 # Copy Frontend to NGINX www dir
 cp -r ./frontend /var/www
+# Copy Admin to NGINX www dir
+cp -r ./admin /var/www
 # Change Dir to copy of frontend
 cd /var/www/frontend
 # Install any new npm packages
@@ -10,12 +12,7 @@ npm install
 npm run build;
 # Print completion message
 echo "cosmicstrains.com build script successfully completed."
-# CD back to main dir
-cd ~/cs
-
-# Copy Admin to NGINX www dir
-cp -r ./admin /var/www
-# Change Dir to copy of frontend
+# Change Dir to copy of admin
 cd /var/www/admin
 # Install any new npm packages
 npm install
@@ -25,3 +22,4 @@ npm run build;
 echo "admin.cosmicstrains.com build script successfully completed."
 # CD back to main dir
 cd ~/cs
+ls
