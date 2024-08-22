@@ -1,8 +1,11 @@
 import {
   FaRegAddressCard,
+  FaGavel,
   FaGift,
   FaPeopleArrows,
-  FaStoreAlt
+  FaSeedling,
+  FaStoreAlt,
+  FaTicketAlt
 } from 'react-icons/fa';
 
 import {
@@ -54,3 +57,21 @@ export const accountSidebarMenu = [
   //   icon: (<VscSettingsGear />)
   // },
 ];
+
+export const dropdownMenuItems = [
+  {
+    title: 'Seeds',
+    path: '/shop',
+    icon: (<FaSeedling />)
+  },
+  {
+    title: 'Raffles',
+    path: '/raffles',
+    icon: (<FaTicketAlt />)
+  },
+  {
+    title: 'Auctions',
+    path: '/auctions',
+    icon: (<FaGavel />)
+  },
+]

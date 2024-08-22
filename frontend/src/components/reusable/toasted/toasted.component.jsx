@@ -34,7 +34,7 @@ const Toasted = ({ message, showToast, setShowToast, getToasted, error = false }
                 <>
                 {message}
                 {t.type !== 'loading' && (
-                    <VscChromeClose onClick={() => toast.dismiss(t.id)} />
+                    <VscChromeClose size='20' onClick={() => toast.dismiss(t.id)} />
                 )}
                 </>
             )}

@@ -127,38 +127,40 @@ const Giveaway = ({ giveaway, getGiveaway }) => {
                                 {giveaway.Company.url &&
                                     <WebsiteLink href={giveaway.Company.url} target='_blank'>{ giveaway.Company.name }'s Website</WebsiteLink>
                                 }
-                                <CompanyRowContainer width={'80%'} margin={'20px 0 10px 0'}>
-                                    {giveaway.Company.socials[0]?.discord?.display &&
-                                        <RowContainer onClick={() => window.open(giveaway.Company.socials[0].discord.url, '_blank')} margin={'10px'} cursor={'pointer'}>
-                                            <FaDiscord size={setMobileView() ? '18' : '24'} />
-                                        </RowContainer>
-                                    }
-                                    {giveaway.Company.socials[0]?.facebook?.display &&
-                                        <RowContainer onClick={() => window.open(giveaway.Company.socials[0].facebook.url, '_blank')} margin={'10px'} cursor={'pointer'}>
-                                            <FaFacebook size={setMobileView() ? '18' : '24'} />
-                                        </RowContainer>
-                                    }
-                                    {giveaway.Company.socials[0]?.instagram?.display &&
-                                        <RowContainer onClick={() => window.open(giveaway.Company.socials[0].instagram.url, '_blank')} margin={'10px'} cursor={'pointer'}>
-                                            <FaInstagram size={setMobileView() ? '18' : '24'} />
-                                        </RowContainer>
-                                    }
-                                    {giveaway.Company.socials[0]?.linkedIn?.display &&
-                                        <RowContainer onClick={() => window.open(giveaway.Company.socials[0].linkedIn.url, '_blank')} margin={'10px'} cursor={'pointer'}>
-                                            <FaLinkedin size={setMobileView() ? '18' : '24'} />
-                                        </RowContainer>
-                                    }
-                                    {giveaway.Company.socials[0]?.reddit?.display &&
-                                        <RowContainer onClick={() => window.open(giveaway.Company.socials[0].reddit.url, '_blank')} margin={'10px'} cursor={'pointer'}>
-                                            <FaRedditSquare size={setMobileView() ? '18' : '24'} />
-                                        </RowContainer>
-                                    }
-                                    {giveaway.Company.socials[0]?.twitter?.display &&
-                                        <RowContainer onClick={() => window.open(giveaway.Company.socials[0].twitter.url, '_blank')} margin={'10px'} cursor={'pointer'}>
-                                            <FaTwitter size={setMobileView() ? '18' : '24'} />
-                                        </RowContainer>
-                                    }
-                                </ CompanyRowContainer>
+                                {giveaway.Company.socials !== null &&
+                                    <CompanyRowContainer width={'80%'} margin={'20px 0 10px 0'}>
+                                        {giveaway.Company.socials[0]?.discord?.display &&
+                                            <RowContainer onClick={() => window.open(giveaway.Company.socials[0].discord.url, '_blank')} margin={'10px'} cursor={'pointer'}>
+                                                <FaDiscord size={setMobileView() ? '18' : '24'} />
+                                            </RowContainer>
+                                        }
+                                        {giveaway.Company.socials[0]?.facebook?.display &&
+                                            <RowContainer onClick={() => window.open(giveaway.Company.socials[0].facebook.url, '_blank')} margin={'10px'} cursor={'pointer'}>
+                                                <FaFacebook size={setMobileView() ? '18' : '24'} />
+                                            </RowContainer>
+                                        }
+                                        {giveaway.Company.socials[0]?.instagram?.display &&
+                                            <RowContainer onClick={() => window.open(giveaway.Company.socials[0].instagram.url, '_blank')} margin={'10px'} cursor={'pointer'}>
+                                                <FaInstagram size={setMobileView() ? '18' : '24'} />
+                                            </RowContainer>
+                                        }
+                                        {giveaway.Company.socials[0]?.linkedIn?.display &&
+                                            <RowContainer onClick={() => window.open(giveaway.Company.socials[0].linkedIn.url, '_blank')} margin={'10px'} cursor={'pointer'}>
+                                                <FaLinkedin size={setMobileView() ? '18' : '24'} />
+                                            </RowContainer>
+                                        }
+                                        {giveaway.Company.socials[0]?.reddit?.display &&
+                                            <RowContainer onClick={() => window.open(giveaway.Company.socials[0].reddit.url, '_blank')} margin={'10px'} cursor={'pointer'}>
+                                                <FaRedditSquare size={setMobileView() ? '18' : '24'} />
+                                            </RowContainer>
+                                        }
+                                        {giveaway.Company.socials[0]?.twitter?.display &&
+                                            <RowContainer onClick={() => window.open(giveaway.Company.socials[0].twitter.url, '_blank')} margin={'10px'} cursor={'pointer'}>
+                                                <FaTwitter size={setMobileView() ? '18' : '24'} />
+                                            </RowContainer>
+                                        }
+                                    </ CompanyRowContainer>
+                                }
                             </>
                     </CompanyDetailsContainer>
                 </CompanyContainer>
@@ -193,7 +195,7 @@ const Giveaway = ({ giveaway, getGiveaway }) => {
                         return (
                             <div key={index}>
                                 <Text>{index + 1}. {prize.prizeType === 'credit' ? `$${parseInt(prize.prize)/100} credit on account` : prize.prize} - { prize.prizeWinnerLimit } Winner{ prize.prizeWinnerLimit > 1 ? 's' : ''}</Text>
-                                {giveaway.status === 'completed' &&
+                                {giveaway.status === 'completed'&&
                                     giveaway.winners.map((winner, index) => {
                                         if(winner.prize.id === prize.id) {
                                             return(

@@ -16,6 +16,7 @@ import Toasted from './components/reusable/toasted/toasted.component';
 
 import AboutPage from './pages/about/about.pages';
 import AccountPage from './pages/account/account.pages';
+import AuctionsPage from './pages/auctions/auctions.pages';
 import CartPage from './pages/cart/cart.pages';
 import CheckoutPage from './pages/checkout/checkout.pages';
 import ErrorPage from './pages/error/error.pages';
@@ -25,6 +26,7 @@ import HomePage from './pages/home/home.pages';
 import LoginPage from './pages/login/login.pages';
 import PasswordResetPage from './pages/password-reset/password-reset.pages';
 import ProductsPage from './pages/products/products.pages';
+import RafflesPage from './pages/raffles/raffles.pages';
 import ShopPage from './pages/shop/shop.pages';
 import SignUpPage from './pages/sign-up/sign-up.pages';
 import ThankYouPage from './pages/thank-you/thank-you.pages';
@@ -51,6 +53,7 @@ import {
 
 const client = new Client();
 const tools = new Tools();
+
 
 function App() {
   const [ ageToken, setAgeToken ] = useState(sessionStorage.getItem(ageVerifyTokenName));
@@ -191,6 +194,12 @@ function App() {
           } 
         />
         <Route 
+          path="/auctions/*" 
+          element={
+            <AuctionsPage />
+          } 
+        />
+        <Route 
           path="/cart" 
           element={
             <CartPage />
@@ -236,6 +245,12 @@ function App() {
           path="/products/*" 
           element={ 
             <ProductsPage />
+          } 
+        />
+        <Route 
+          path="/raffles/*" 
+          element={ 
+            <RafflesPage />
           } 
         />
         <Route 

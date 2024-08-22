@@ -69,3 +69,21 @@ export const InputSubtext = styled.h6`
     margin: ${props => props.margin ? props.margin : ''};
     padding: ${props => props.padding ? props.padding : ''};
 `;
+
+export const Option = styled.option`
+    
+`;
+
+export const Select = styled.select`
+    max-width: ${props => props.maxWidth ? props.maxWidth : ''};
+    margin-bottom: ${props => props.marginBottom ? props.marginBottom : ''};
+    padding: ${props => props.padding ? props.padding : ''};
+`;
+
+export const Input = styled.input`
+    margin: 10px;
+`;
+
+export const Textarea = styled.textarea`
+    margin: 10px;
+`;

@@ -11,7 +11,7 @@ class CompanyRepository {
                     [sortKey, sortDirection],
                 ],
                 limit: size,
-                offset: page,
+                offset: (page * size),
             });
             return res;
         } catch (err) {
@@ -25,10 +25,7 @@ class CompanyRepository {
             const res = await Company.findAndCountAll({
                 where: {
                     userId: id
-                },
-                order: [
-                    [sortKey, sortDirection],
-                ]
+                }
             });
             return res;
         } catch (err) {
