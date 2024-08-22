@@ -8,6 +8,7 @@ import Spinner from '../reusable/spinner/spinner.component';
 import { ToastContext } from '../../contexts/toast.context';
 
 import Client from '../../tools/client';
+import { shopUrl } from '../../config';
 
 import {
     ButtonContainer,
@@ -28,6 +29,11 @@ const Giveaway = ({ giveaway, getGiveaway, setShowUpdate, setShowEntries }) => {
     const changeDisplay = async () => {
         setShowEntries(true);
         await getGiveaway();
+    }
+
+    const copyUrlToClipboard = (url) => {
+        navigator.clipboard.writeText(url);
+        successToast(`Copied Giveaway URL ${url} to Clipboard`);
     }
 
     const copyEmailToClipboard = (email) => {
@@ -73,6 +79,7 @@ const Giveaway = ({ giveaway, getGiveaway, setShowUpdate, setShowEntries }) => {
                     <ButtonContainer>
                         <Button onClick={() => changeDisplay()}>Show Entries</Button>
                     </ButtonContainer>
+                    <Subtitle onClick={() => copyUrlToClipboard(`${shopUrl}/giveaways/${giveaway.id}`)} cursor={'pointer'}>Giveaway URL: { `${shopUrl}/giveaways/${giveaway.id}` }</Subtitle>
                     <Subtitle>Status: { giveaway.status }</Subtitle>
                     <Subtitle>Entries: { giveaway.entries.length }</Subtitle>
                     <Subtitle>Type: { giveaway.type }</Subtitle>
@@ -99,9 +106,9 @@ const Giveaway = ({ giveaway, getGiveaway, setShowUpdate, setShowEntries }) => {
                         <RowContainer key={index} width={'300px'} flexDirection={'column'}>
                             <Subtitle textAlign={'left'}>{ index + 1 }. { prize.prizeType === 'credit' ? `$${parseInt(prize.prize)/100} credit on account` : prize.prize } - { prize.prizeWinnerLimit } Winner{ prize.prizeWinnerLimit > 1 ? 's' : ''}</Subtitle>
                             {giveaway.status === 'completed' &&
-                                giveaway.winners.forEach((winner, index) => {
+                                giveaway.winners.map((winner, index) => {
                                     if(winner.prize.id === prize.id) {
-                                        return(
+                                        return (
                                             <RowContainer key={index} justifyContent='flex-start' margin='0 0 0 30px' cursor='pointer'>
                                                 <Subtitle textAlign={'center'} onClick={() => copyEmailToClipboard(winner.email)}>Username: { winner.username } - Email: { winner.email }</Subtitle>
                                             </RowContainer>

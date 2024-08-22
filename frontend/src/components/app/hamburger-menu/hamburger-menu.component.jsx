@@ -1,9 +1,14 @@
+import { useContext } from 'react';
 import { slide as Menu } from 'react-burger-menu';
 
 import { 
     GrLogin, 
     GrLogout 
-  } from 'react-icons/gr';
+} from 'react-icons/gr';
+
+import DropdownMobile from './dropdown-mobile/dropdown-mobile.component';
+
+import { ConfigurationContext } from '../../../contexts/configuration.context';
 
 import navLogoMobile from '../../../assets/img/logo-hamburger-menu.png';
 
@@ -29,6 +34,8 @@ import {
 const HamburgerMenu = props => {
     const loggedInStatus = localStorage.getItem(tokenName);
 
+    const { colors } = useContext(ConfigurationContext);
+
     return (
         <Menu>
             <MobileDropDownMenu>
@@ -38,6 +45,12 @@ const HamburgerMenu = props => {
                     </LogoLink>
                 </LogoContainer>
             {menuItemsPublic.map((item, index) => {
+                if(item.title === 'Shop') {
+                    return (
+                        <DropdownMobile key={index} theme={colors} item={item} />
+                    )
+                }
+
                 return (
                     <MobileDropDownMenuItem key={index}>
                             { item.icon }

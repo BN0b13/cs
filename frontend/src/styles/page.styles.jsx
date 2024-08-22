@@ -71,6 +71,7 @@ export const TabSelector = styled.button`
 export const MainTitle = styled.h2`
     text-align: center;
     font-size: ${setMobileView() ? '22px' : ''};
+    color: ${props => props.color ?? '#000'};
 `;
 
 export const BackLink = styled.h4`
@@ -79,5 +80,6 @@ export const BackLink = styled.h4`
 `;
 
 export const Text = styled.h4`
-
+    text-align: ${props => props.textAlign ?? ''};
+    color: ${props => props.color ?? '#000'};
 `;

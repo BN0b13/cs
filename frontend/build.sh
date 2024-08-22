@@ -1,14 +1,12 @@
 #!/bin/bash
 
+# Clear local git changes, if any
+git reset --hard
+# Pull new changes to frontend main
+git pull origin main;
 # Install any new npm packages
 npm install
-
-if [ $1 = "pi" ]
-then
-    npm run build:pi;
-else
-    npm run build;
-fi
-
+# Build React app with said copy
+npm run build;
 # Print completion message
 echo "CosmicStrains.com Frontend start-up script successfully completed."
