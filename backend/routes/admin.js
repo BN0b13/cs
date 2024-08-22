@@ -66,6 +66,7 @@ router.post('/categories', AdminTokenVerifier, uploadCategory.array('files'), Ha
 
 router.patch('/categories', AdminTokenVerifier, HandleErrors(categoryController.updateCategoryById));
 router.patch('/categories/images/thumbnail', AdminTokenVerifier, uploadCategory.array('files'), HandleErrors(categoryController.addThumbnail));
+router.patch('/categories/images/thumbnail/delete', AdminTokenVerifier, HandleErrors(categoryController.deleteThumbnail));
 
 router.delete('/categories', AdminTokenVerifier, HandleErrors(categoryController.deleteCategoryById));
 
