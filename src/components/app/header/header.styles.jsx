@@ -17,6 +17,7 @@ export const HeaderNav = styled.div`
 export const MobileHeaderNav = styled.div`
     height: ${headerHeight};
     width: 100%;
+    margin-right: 15px;
     display: flex;
     justify-content: end;
     align-items: center;

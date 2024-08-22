@@ -56,3 +56,28 @@ export const Disclaimer = styled.p`
     font-size: 10px;
     max-width: 280px;
 `;
+
+export const PasswordContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+`;
+
+export const PasswordIconContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    padding: 5px;
+    width: 20px;
+    height: 20px;
+    margin-left: ${setMobileView() ? '240px' : '280px'};
+    color: black;
+`;
+
+export const PasswordInput = styled.input`
+    margin: 5px;
+    width: ${setMobileView() ? '260px' : '300px'};
+`;
