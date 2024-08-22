@@ -54,7 +54,6 @@ import {
 const client = new Client();
 const tools = new Tools();
 
-
 function App() {
   const [ ageToken, setAgeToken ] = useState(sessionStorage.getItem(ageVerifyTokenName));
   const [ loading, setLoading ] = useState(false);
