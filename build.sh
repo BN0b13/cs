@@ -21,5 +21,5 @@ npm run build;
 # Print completion message
 echo "admin.cosmicstrains.com build script successfully completed."
 # CD back to main dir
-cd ~/cs
+cd /home/bnoble/cs
 ls
