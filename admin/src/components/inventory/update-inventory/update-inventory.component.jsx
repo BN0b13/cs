@@ -1,5 +1,6 @@
 import { useContext, useState } from 'react';
 
+import AdminModal from '../../reusable/admin-modal/admin-modal.component';
 import Button from '../../reusable/button/button.component';
 import InventoryTable from '../../reusable/tables/inventory-table/inventory-table.component';
 import Spinner from '../../reusable/spinner/spinner.component';
@@ -10,6 +11,7 @@ import Client from '../../../tools/client';
 
 import {
     ContentContainer,
+    DeleteButton,
     Input,
     MainContainer,
     Option,
@@ -21,6 +23,8 @@ const client = new Client();
 
 const UpdateInventory = ({ inventories, getProduct }) => {
     const [ loading, setLoading ] = useState(false);
+    const [ showModal, setShowModal ] = useState(false);
+
     const [ inventoryId, setInventoryId ] = useState(inventories[0].id);
     const [ type, setType ] = useState(inventories[0].type);
     const [ quantity, setQuantity ] = useState(inventories[0].quantity);
@@ -108,24 +112,31 @@ const UpdateInventory = ({ inventories, getProduct }) => {
         setLoading(false);
     }
 
-    // TODO add inventory delete option - backend verifies it is NOT last inventory of product before delete, if so - do not delete
-    // const confirmDelete = () => {
-    //     setShowDeleteModal(true);
-    // }
+    const confirmDelete = () => {
+        setShowModal(true);
+    }
 
-    // const deleteProduct = async () => {
-    //     const res = await client.deleteProduct({ id: product.id });
-    //     if(res.status) {
-    //         setShowDeleteModal(false);
-    //         errorToast(res.message);
-    //         return
-    //     }
+    const deleteInventory = async () => {
+        const res = await client.deleteInventory({ id: inventoryId });
         
-    //     window.location.href = '/products';
-    // }
+        if(res.status !== 200) {
+            errorToast(res.message);
+            return
+        }
+        
+        await getProduct();
+    }
 
     return (
         <MainContainer>
+            <AdminModal 
+                show={showModal}
+                setShow={setShowModal}
+                title={'Delete Inventory'}
+                message={`Are you sure you want to delete inventory ${size}, ${sizeDescription}?`} 
+                action={() => deleteInventory()} 
+                actionText={'Delete'}
+            />
             {loading ?
                 <Spinner />
             :
@@ -154,6 +165,10 @@ const UpdateInventory = ({ inventories, getProduct }) => {
                     <Input type='text' value={state} onChange={(e) => setState(e.target.value)} placeholder='State' />
                     <Input type='text' value={zipCode} onChange={(e) => setZipCode(e.target.value)} placeholder='Zip Code' />
                     <Input type='text' value={bay} onChange={(e) => setBay(e.target.value)} placeholder='Bay' />
+
+                    <ContentContainer>
+                        <DeleteButton onClick={() => confirmDelete()}>Delete Inventory</DeleteButton>
+                    </ContentContainer>
 
                     <RowContainer margin={'20px 0'}>
                         <Button onClick={() => updateInventory()}>Update Inventory</Button>

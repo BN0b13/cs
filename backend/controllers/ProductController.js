@@ -54,6 +54,12 @@ class ProductController {
         res.send(data);
     }
 
+    async getProductByName(req, res) {
+        const { name } = req.params;
+        const data = await productRepository.getProductByName(name);
+        res.send(data);
+    }
+
     async getByName(req, res) {
         const { name } = req.params;
         const data = await productRepository.getProductInventoryByName(name);

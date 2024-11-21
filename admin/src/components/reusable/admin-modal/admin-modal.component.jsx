@@ -11,7 +11,7 @@ import {
   Modal
 } from './admin-modal.styles';
 
-const AdminModal = ({ show = false, setShow, title = 'Warning', image = null, input = null, inputPlaceholder = null, setInput = null, message = 'Error', action = null, actionText = 'Accept' }) => {
+const AdminModal = ({ show = false, setShow, title = 'Warning', image = null, input = null, inputPlaceholder = null, setInput = null, message = 'Error', cancelText = 'Cancel', action = null, actionText = 'Accept' }) => {
   
     return (
       <Modal show={show}>
@@ -26,7 +26,7 @@ const AdminModal = ({ show = false, setShow, title = 'Warning', image = null, in
           }
           <ModalButtonDiv>
             <ModalDenyButton onClick={() => setShow(false)}>
-              Cancel
+              { cancelText }
             </ModalDenyButton>
             { action &&
               <ModalAccessButton onClick={() => action()}>

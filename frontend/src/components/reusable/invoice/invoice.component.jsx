@@ -65,7 +65,12 @@ const Invoice = () => {
                 return
             }
             let subtotalCount = 0;
-            res.products.map(item => subtotalCount = subtotalCount + (item.quantity * item.product[0].Inventories[0].price));
+
+            res.products.map(item => {
+                const inventory = item.product[0].Inventories.filter(e => e.id === item.inventoryId)[0];
+                subtotalCount = subtotalCount + (inventory.price * item.quantity);
+            });
+
             setSubtotal(subtotalCount);
             setOrder(res);
             setLoading(false);

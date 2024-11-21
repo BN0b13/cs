@@ -8,13 +8,14 @@ class CartRepository {
     // CREATE
 
     async create(id) {
-        const params = {
-            userId: id,
-            products: []
-        };
-
         try {
+            const params = {
+                userId: id,
+                products: []
+            };
+
             const res = await Cart.create(params);
+
             return res;
         } catch (err) {
             console.log(err);
@@ -26,16 +27,15 @@ class CartRepository {
 
     async getCart(id) {
         try {
-            const res = await Cart.findAndCountAll({
+            const res = await Cart.findOne({
                 where: {
                     userId: id
                 }
             });
-
-            // TODO make seeder and remove if statement
-            if(res.count === 0) {
+            
+            if(res === null) {
                 await this.create(id);
-                return await Cart.findAndCountAll({
+                return await Cart.findOne({
                     where: {
                         userId: id
                     }
@@ -75,8 +75,27 @@ class CartRepository {
             );
             return res;
         } catch (err) {
-            console.log('Add to Cart Error: ', err);
-            throw Error('There was an error adding to cart');
+            console.log('Update to Cart Error: ', err);
+            throw Error('There was an error updating to cart');
+        }
+    }
+
+    // DELETE
+
+    async deleteCart(id) {
+        try {
+            const res = await Cart.destroy({
+                where: {
+                    id
+                }
+            });
+
+            return {
+                result: res
+            }
+        } catch (err) {
+            console.log('DELETE Cart Error: ', err);
+            throw Error('There was an error deleting cart');
         }
     }
 }

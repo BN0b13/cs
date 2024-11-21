@@ -82,4 +82,5 @@ export const BackLink = styled.h4`
 export const Text = styled.h4`
     text-align: ${props => props.textAlign ?? ''};
     color: ${props => props.color ?? '#000'};
+    cursor: ${props => props.cursor ?? ''};
 `;

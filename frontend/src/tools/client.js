@@ -124,13 +124,6 @@ export default class Client {
         return res;
     }
 
-    async getCartContents() {
-        const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
-        const cart = await fetch(`${api}/cart/contents`, requestOptions);
-        const res = await cart.json();
-        return res;
-    }
-
     async modifyCart(data) {
         const requestOptions = this.fetchOptions(this.fetchMethods.patch, data, true);
         const cart = await fetch(`${api}/cart`, requestOptions);
@@ -140,23 +133,30 @@ export default class Client {
 
     // Categories
 
-    async getCategories() {
+    async getAllCategories() {
         const requestOptions = this.fetchOptions(this.fetchMethods.get);
         const categories = await fetch(`${api}/categories`, requestOptions);
         const res = await categories.json();
         return res;
     }
-
-    async getCategoryByName(category) {
+    
+    async getCategoriesByType(type) {
         const requestOptions = this.fetchOptions(this.fetchMethods.get);
-        const categoryRes = await fetch(`${api}/categories/name/${category}`, requestOptions);
-        const res = await categoryRes.json();
+        const categories = await fetch(`${api}/categories/type/${type}`, requestOptions);
+        const res = await categories.json();
+        return res;
+    }
+
+    async getCategoryByName(name) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.get);
+        const category = await fetch(`${api}/categories/name/${name}`, requestOptions);
+        const res = await category.json();
         return res;
     }
 
     // Checkout
 
-    async checkoutSetUp() {
+    async checkoutSetup() {
         const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
         const checkoutSetUp = await fetch(`${api}/checkout/set-up`, requestOptions);
         const res = await checkoutSetUp.json();
@@ -255,8 +255,15 @@ export default class Client {
 
     async getProductById(id) {
         const requestOptions = this.fetchOptions(this.fetchMethods.get);
-        const products = await fetch(`${api}/products/${id}`, requestOptions);
-        const res = await products.json();
+        const product = await fetch(`${api}/products/id/${id}`, requestOptions);
+        const res = await product.json();
+        return res;
+    }
+
+    async getProductByName(name) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.get);
+        const product = await fetch(`${api}/products/name/${name}`, requestOptions);
+        const res = await product.json();
         return res;
     }
 

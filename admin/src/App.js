@@ -2,8 +2,9 @@ import { useContext, useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import AccountPage from './pages/account/account.pages';
-import ActivateAccountPage from './pages/activate-account/activate-account.pages';
 import AccountsPage from './pages/accounts/accounts.pages';
+import ActivateAccountPage from './pages/activate-account/activate-account.pages';
+import AuctionsPage from './pages/auctions/auctions.pages';
 import CategoryPage from './pages/category/category.page';
 import CategoriesPage from './pages/categories/categories.pages';
 import CompaniesPage from './pages/companies/companies.pages';
@@ -22,6 +23,8 @@ import Order from './pages/order/order.pages';
 import Orders from './pages/orders/orders.pages';
 import ProductPage from './pages/product/product.pages';
 import ProductsPage from './pages/products/products.pages';
+import RafflePage from './pages/raffle/raffle.pages';
+import RafflesPage from './pages/raffles/raffles.pages';
 import SalesPage from './pages/sales/sales.pages';
 
 import HamburgerMenu from './components/app/hamburger-menu/hamburger-menu.component';
@@ -112,6 +115,7 @@ function App() {
         <Route index element={<MetricsPage />} />
         <Route path="/accounts" element={<AccountsPage />} />
         <Route path="/accounts/:id" element={<AccountPage />} />
+        <Route path="/auctions" element={<AuctionsPage />} />
         <Route path="/categories" element={<CategoriesPage />} />
         <Route path="/categories/:id" element={<CategoryPage />} />
         <Route path="/companies" element={<CompaniesPage />} />
@@ -126,6 +130,8 @@ function App() {
         <Route path="/orders/:refId" element={<Order />} />
         <Route path="/products" element={<ProductsPage />} />
         <Route path="/products/:id" element={<ProductPage />} />
+        <Route path="/raffles/:id" element={<RafflePage />} />
+        <Route path="/raffles" element={<RafflesPage />} />
         <Route path="/sales" element={<SalesPage />} />
       </Routes>
     )

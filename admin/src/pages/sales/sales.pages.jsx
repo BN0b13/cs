@@ -43,15 +43,19 @@ const SalesPage = () => {
             :
                 <ContentContainer>
                     {showAddSale ?
-                        <>
+                        <ContentContainer>
                             <AddSale setShowAddSale={setShowAddSale} />
-                        </>
+                        </ContentContainer>
                     :
-                        <>
+                        <ContentContainer>
                             <Button onClick={() => setShowAddSale(true)}>New Sale</Button>
-                        </>
+                        </ContentContainer>
                     }
-                    {sales && <Sales sales={sales} getSales={getSales} /> }
+                    {sales && 
+                        <ContentContainer>
+                            <Sales sales={sales} getSales={getSales} /> 
+                        </ContentContainer>
+                    }
                 </ContentContainer>
             }
         </MainContainer>

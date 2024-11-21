@@ -45,6 +45,13 @@ class SaleRepository {
                     id
                 }
             });
+
+            if(res === null) {
+                return {
+                    status: 404
+                }
+            }
+            
             return res;
         } catch (err) {
             console.log('Get Sales Error: ', err);

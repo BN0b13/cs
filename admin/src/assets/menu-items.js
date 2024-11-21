@@ -1,9 +1,11 @@
 import {
+  FaGavel,
   FaGift,
   FaMoneyBillAlt,
   FaRegBuilding,
   FaServer,
-  FaStoreAlt
+  FaStoreAlt,
+  FaTicketAlt
 } from 'react-icons/fa';
 
 import {
@@ -49,6 +51,16 @@ export const menuItemsAdmin = [
     title: 'Products',
     path: '/products',
     icon: (<VscFile />)
+  },
+  {
+    title: 'Raffles',
+    path: '/raffles',
+    icon: (<FaTicketAlt />)
+  },
+  {
+    title: 'Auctions',
+    path: '/auctions',
+    icon: (<FaGavel />)
   },
   {
     title: 'Sales',

@@ -61,6 +61,25 @@ export default class UserService {
                 username: {
                     [Op.iLike]: username
                 }
+            }
+        });
+
+        if(res) {
+            if(res.id === id) {
+                return false
+            }
+
+            return true;
+        }
+        return false;
+    }
+
+    checkIfEmailExists = async (email, id) => {
+        const res = await User.findOne({
+            where: {
+                email: {
+                    [Op.iLike]: email
+                }
                 
             }
         });
@@ -69,6 +88,7 @@ export default class UserService {
             if(res.id === id) {
                 return false
             }
+
             return true;
         }
         return false;
@@ -488,10 +508,18 @@ export default class UserService {
     async updateUser(id, params) {
         try {
             let data = params;
+
             if(data.username && await this.checkIfUsernameExists(data.username, id)) {
                 return {
                     statusCode: 422,
                     error: 'Username already exists'
+                }
+            }
+
+            if(data.email && await this.checkIfEmailExists(data.email, id)) {
+                return {
+                    statusCode: 422,
+                    error: 'Email already exists'
                 }
             }
 

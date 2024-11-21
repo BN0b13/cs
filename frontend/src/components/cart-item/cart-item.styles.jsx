@@ -39,7 +39,7 @@ export const MobileTopContainer = styled.div`
     justify-content: center;
     align-items: center;
     text-align
-    margin: 20px 0;
+    margin: 10px 0;
 `;
 
 export const MobileBottomContainer = styled.div`
@@ -49,9 +49,14 @@ export const MobileBottomContainer = styled.div`
     align-items: center;
 `;
 
-export const CartItemText = styled.div`
-    margin: ${setMobileView() ? '0 60% 0 10px' : ''};
-    font-size: 18px;
+export const CartItemText = styled.h4`
+    width: ${setMobileView() ? '90%' : ''};
+    font-size: ${props => props.fontSize ?? '12px'};
+`;
+
+export const CartItemSubtext = styled.p`
+    font-size: 14px;
+    text-align: center;
 `;
 
 export const TotalText = styled.div`
@@ -67,13 +72,15 @@ export const CartItemQuantityContainer = styled.div`
 
 export const CartItemTextContainer = styled.div`
     display: flex;
+    flex-direction: column;
+    justify-content: center;
     text-align: center;
-    cursor: pointer;
+    cursor: ${props => props.cursor ?? 'pointer'};
     margin: auto;
 `;
 
 export const CartItemQuantityText = styled.div`
-    font-size: 18px;
+    font-size: ${setMobileView() ? '16px' : '20px'};
     margin: 0 15px;
 `;
 
@@ -88,6 +95,7 @@ export const ProductImage = styled.div`
 `;
 
 export const DeleteProductContainer = styled.div`
+    cursor: pointer;
     margin-left: ${setMobileView() ? '' : 'auto'};
-    width: ${setMobileView() ? '50%' : ''};
+    width: ${setMobileView() ? '10%' : ''};
 `;

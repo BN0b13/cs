@@ -20,6 +20,44 @@ class CategoryRepository {
         }
     }
 
+    async getPublicCategories({ sortKey = 'createdAt', sortDirection = 'ASC', size = 10, page = 0 }) {
+        try {
+            const res = await Category.findAndCountAll({
+                where: {
+                    status: true
+                },
+                order: [
+                    [sortKey, sortDirection],
+                ],
+                limit: size,
+                offset: (page * size),
+            });
+            return res;
+        } catch (err) {
+            console.log('Get Categories Error: ', err);
+            throw Error('There was an error getting all categories');
+        }
+    }
+
+    async getCategoriesByType({ sortKey = 'createdAt', sortDirection = 'ASC', size = 10, page = 0, type = '' }) {
+        try {
+            const res = await Category.findAndCountAll({
+                where: {
+                    type
+                },
+                order: [
+                    [sortKey, sortDirection],
+                ],
+                limit: size,
+                offset: (page * size),
+            });
+            return res;
+        } catch (err) {
+            console.log('GET Categories by Type Error: ', err);
+            throw Error('There was an error getting all categories by type');
+        }
+    }
+
     async getCategoryById(id) {
         try {
             const res = await Category.findAndCountAll({
@@ -34,7 +72,7 @@ class CategoryRepository {
             });
             return res;
         } catch (err) {
-            console.log('Get Category by id Messages Error: ', err);
+            console.log('GET Category by id Messages Error: ', err);
             throw Error('There was an error getting category by id');
         }
     }
@@ -53,8 +91,27 @@ class CategoryRepository {
             );
             return res;
         } catch (err) {
-            console.log('Update Category Error: ', err);
+            console.log('UPDATE Category Error: ', err);
             throw Error('There was an error updating the category');
+        }
+    }
+
+    // DELETE
+
+    async deleteCategory(id) {
+        try {
+            const res = await Category.destroy({
+                where: {
+                    id
+                }
+            });
+
+            return {
+                result: res
+            }
+        } catch (err) {
+            console.log('DELETE Category Error: ', err);
+            throw Error('There was an error deleting the category');
         }
     }
 }

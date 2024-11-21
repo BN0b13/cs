@@ -23,7 +23,7 @@ const HomePage = () => {
     useEffect(() => {
         const getProducts = async () => {
             const productsRes = await client.getProducts();
-            const categoriesRes = await client.getCategories();
+            const categoriesRes = await client.getAllCategories();
 
             setProducts(productsRes.rows);
             setCategories(categoriesRes.rows);

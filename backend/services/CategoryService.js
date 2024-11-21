@@ -7,7 +7,10 @@ import { Category, Inventory, Product, ProductImage } from '../models/Associatio
 export default class CategoryService {
 
     categoryTypes = {
-        CLOTHING: 'clothing',
+        AUCTIONS: 'auctions',
+        CLONES: 'clones',
+        MERCHANDISE: 'merchandise',
+        RAFFLES: 'raffles',
         SEEDS: 'seeds'
     }
 
@@ -17,7 +20,8 @@ export default class CategoryService {
         const res = await Category.findAndCountAll(
             {
                 where: {
-                    type
+                    type,
+                    status: true
                 }
             }
         );
@@ -27,10 +31,11 @@ export default class CategoryService {
 
     async getCategoryByName(name) {
         try {
-            const res = await Category.findAndCountAll(
+            const res = await Category.findOne(
                 {
                     where: {
-                        name
+                        name,
+                        status: true
                     },
                     include: [
                         {
@@ -47,6 +52,12 @@ export default class CategoryService {
                     ],
                 }
             );
+
+            if(res === null) {
+                return {
+                    status: 404
+                }
+            }
     
             return res;
         } catch (err) {
@@ -78,8 +89,36 @@ export default class CategoryService {
                 rows: res[0]
             };
         } catch (err) {
-            console.log('Search Users Error: ', err);
-            throw Error('There was an error searching Users');
+            console.log('Search Categories Error: ', err);
+            throw Error('There was an error searching Categories');
+        }
+    }
+
+    searchCategoriesByType = async ({ search = '', page, size, sortKey, sortDirection, type = '' }) => {
+        try {
+            const getCount = await sequelize.query(`
+            select *
+            from  ${process.env.PG_SCHEMA_NAME}."Categories" as "Category"
+            where ("Category".name ilike '%${search}%' or "Category".description ilike '%${search}%' or "Category"."type" ilike '%${type}%')
+            `);
+
+            const currentPage = page * size;
+            const res = await sequelize.query(`
+            select *
+            from  ${process.env.PG_SCHEMA_NAME}."Categories" as "Category"
+            where ("Category".name ilike '%${search}%' or "Category".description ilike '%${search}%' or "Category"."type" ilike '%${type}%')
+            ORDER BY "Category"."${sortKey}" ${sortDirection}
+            LIMIT ${size}
+            OFFSET ${currentPage}
+            `);
+
+            return {
+                count: getCount[1].rowCount,
+                rows: res[0]
+            };
+        } catch (err) {
+            console.log('Search Categories by Type Error: ', err);
+            throw Error('There was an error searching Categories by Type');
         }
     }
 

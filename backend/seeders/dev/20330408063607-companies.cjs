@@ -22,6 +22,6 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    return queryInterface.bulkDelete('Users', null, { schema: process.env.PG_SCHEMA_NAME });
+    return queryInterface.bulkDelete('Companies', null, { schema: process.env.PG_SCHEMA_NAME });
   }
 };

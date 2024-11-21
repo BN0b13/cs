@@ -15,12 +15,6 @@ class CartController {
         res.send(data);
     }
     
-    async getCartContents(req, res) {
-        const { id } = req.userData;
-        const data = await cartService.getCartContents(id);
-        res.send(data);
-    }
-    
     async getCartsWithContents(req, res) {
         const data = await cartRepository.getCartsWithContents();
         res.send(data);
@@ -35,7 +29,7 @@ class CartController {
             products
         };
 
-        const data = await cartRepository.patchCart(id, params);
+        const data = await cartService.updateCart(id, params);
         res.send(data);
     }
 }

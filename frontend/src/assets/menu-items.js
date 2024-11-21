@@ -60,8 +60,13 @@ export const accountSidebarMenu = [
 
 export const dropdownMenuItems = [
   {
-    title: 'Seeds',
+    title: 'All',
     path: '/shop',
+    icon: (<FaStoreAlt />)
+  },
+  {
+    title: 'Seeds',
+    path: '/shop/seeds',
     icon: (<FaSeedling />)
   },
   {

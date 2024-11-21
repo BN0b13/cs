@@ -7,6 +7,7 @@ import {
 } from './invoice-item.styles';
 
 const InvoiceItem = ({ product }) => {
+    const inventory = product.product[0].Inventories.filter(item => item.id === product.inventoryId)[0];
 
     return (
         <InvoiceItemRow>
@@ -17,7 +18,7 @@ const InvoiceItem = ({ product }) => {
                 <InvoiceItemData>{ product.product[0].description }</InvoiceItemData>
             }
             <InvoiceItemData>{ product.quantity }</InvoiceItemData>
-            <InvoiceItemData>{ convertProductPrice(product.quantity * product.product[0].Inventories[0].price) }</InvoiceItemData>
+            <InvoiceItemData>{ convertProductPrice(product.quantity * inventory.price) }</InvoiceItemData>
         </InvoiceItemRow>
     )
 }
