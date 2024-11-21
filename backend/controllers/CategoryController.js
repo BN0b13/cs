@@ -92,6 +92,33 @@ class CategoryController {
         const data = await categoryService.searchCategories(params);
         res.send(data);
     }
+    
+    async getPublicCategories(req, res) {
+        const { 
+            search = null, 
+            page = 0, 
+            size = 10,
+            sortKey = 'createdAt',
+            sortDirection = 'ASC'
+        } = req.query;
+
+        const params = {
+            sortKey,
+            sortDirection,
+            page,
+            size
+        };
+
+        if(search === null) {
+            const data = await categoryRepository.getPublicCategories(params);
+            return res.send(data);
+        }
+
+        params.search = search;
+
+        const data = await categoryService.searchCategories(params);
+        res.send(data);
+    }
 
     async getCategoryByName(req, res) {
         const { name } = req.params;

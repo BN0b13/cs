@@ -9,7 +9,7 @@ export const MainContainer = styled.div`
 
 export const DropdownContainer = styled.div`
     position: absolute;
-    margin-top: 7vh;
+    top: ${headerHeight};
     display: ${props => props.showDropdown ? 'flex' : 'none'};
     flex-direction: column;
     justify-content: center;

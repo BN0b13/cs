@@ -20,6 +20,16 @@ module.exports = {
       updatedAt: new Date()
     },
     {
+      role: 'driver',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      role: 'contributor',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
       role: 'customer',
       createdAt: new Date(),
       updatedAt: new Date()

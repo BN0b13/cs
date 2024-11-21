@@ -8,6 +8,15 @@ export const MainContainer = styled.div`
     
 `;
 
+export const OnOffIcon = styled.div`
+    margin: auto;
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    border: ${props => props.backgroundColor ? '' : '1px black solid'};
+    background-color: ${props => props.backgroundColor ?? '#fff'};
+`;
+
 export const SalesTable = styled.table`
     border: 1px solid;
     border-collapse: collapse;

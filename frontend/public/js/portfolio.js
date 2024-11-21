@@ -41,7 +41,6 @@ function typewriter(sentence) {
       let count = j;
       setTimeout(function(){ 
         sentenceHolder+=myArr[count];
-        // console.log(myArr);
         typeDiv.innerHTML = `
           ${sentenceHolder}
         `;

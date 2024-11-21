@@ -118,7 +118,7 @@ export default class Client {
 
     // Categories
 
-    async getCategories(query = '') {
+    async getAllCategories(query = '') {
         const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
         const categories = await fetch(`${api}/admin/categories${query}`, requestOptions);
         const res = await categories.json();
@@ -132,7 +132,7 @@ export default class Client {
         return res;
     }
 
-    async getCategoryByType(type) {
+    async getCategoriesByType(type) {
         const requestOptions = this.fetchOptions(this.fetchMethods.get);
         const categories = await fetch(`${api}/categories/type/${type}`, requestOptions);
         const res = await categories.json();
@@ -458,6 +458,13 @@ export default class Client {
 
     // Orders
 
+    async getOrdersByStatus(status = 'new') {
+        const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
+        const orders = await fetch(`${api}/admin/orders/status/${status}`, requestOptions);
+        const res = await orders.json();
+        return res;
+    }
+
     async getOrders(query = '') {
         const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
         const orders = await fetch(`${api}/admin/orders${query}`, requestOptions);
@@ -482,6 +489,13 @@ export default class Client {
     async updateOrder(data) {
         const requestOptions = this.fetchOptions(this.fetchMethods.patch, data, true);
         const patchOrder = await fetch(`${api}/admin/orders`, requestOptions);
+        const res = await patchOrder.json();
+        return res;
+    }
+
+    async cancelOrder(id) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.patch, '', true);
+        const patchOrder = await fetch(`${api}/admin/orders/cancel/${id}`, requestOptions);
         const res = await patchOrder.json();
         return res;
     }
@@ -518,7 +532,7 @@ export default class Client {
 
     async getProductById(id) {
         const requestOptions = this.fetchOptions(this.fetchMethods.get);
-        const product = await fetch(`${api}/products/${id}`, requestOptions);
+        const product = await fetch(`${api}/products/id/${id}`, requestOptions);
         const res = await product.json();
         return res;
     }
@@ -532,8 +546,8 @@ export default class Client {
 
     async getProductsByCategoryId(id) {
         const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
-        const productTypes = await fetch(`${api}/admin/products/category/${id}`, requestOptions);
-        const res = await productTypes.json();
+        const products = await fetch(`${api}/admin/products/category/${id}`, requestOptions);
+        const res = await products.json();
         return res;
     }
 
@@ -590,6 +604,43 @@ export default class Client {
         const requestOptions = this.fetchOptions(this.fetchMethods.delete, data, true);
         const deleteProductImage = await fetch(`${api}/admin/products/product-image`, requestOptions);
         const res = await deleteProductImage.json();
+        return res;
+    }
+
+    // Raffles
+
+    async getRaffles(query = '') {
+        const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
+        const raffles = await fetch(`${api}/admin/raffles${query}`, requestOptions);
+        const res = await raffles.json();
+        return res;
+    }
+
+    async getRaffleById(id) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
+        const raffle = await fetch(`${api}/admin/raffles/${id}`, requestOptions);
+        const res = await raffle.json();
+        return res;
+    }
+
+    async createRaffle(data) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.post, data, true, true);
+        const raffle = await fetch(`${api}/admin/raffles`, requestOptions);
+        const res = await raffle.json();
+        return res;
+    }
+
+    async updateRaffle(data) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.patch, data, true);
+        const updateRaffle = await fetch(`${api}/admin/raffles`, requestOptions);
+        const res = await updateRaffle.json();
+        return res;
+    }
+
+    async deleteRaffle(data) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.delete, data, true);
+        const deleteProduct = await fetch(`${api}/admin/raffles`, requestOptions);
+        const res = await deleteProduct.json();
         return res;
     }
 

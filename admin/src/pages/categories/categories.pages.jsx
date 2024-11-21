@@ -59,7 +59,7 @@ const CategoriesPage = () => {
         search && (query = query + `&search=${search}`);
         sortDirection && (query = query + `&sortDirection=${sortDirection}`);
         sortKey && (query = query + `&sortKey=${sortKey}`);
-        const res = await client.getCategories(query);
+        const res = await client.getAllCategories(query);
         setCategories(res.rows);
         setCategoriesCount(res.count);
         setLoading(false);

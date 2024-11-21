@@ -62,6 +62,12 @@ class OrderController {
         res.send(data);
     }
     
+    async getOrdersByStatus(req, res) {
+        const { status } = req.params;
+        const data = await orderRepository.getOrdersByStatus(status);
+        res.send(data);
+    }
+    
     async getOrderId(req, res) {
         const { id } = req.params;
         const data = await orderRepository.getOrderById(id);
@@ -110,13 +116,21 @@ class OrderController {
 
     async updateOrder(req, res) {
         const {
-            orderId,
+            id,
             status = null,
             tracking = null,
             refId = null,
             paymentLink = null,
+            paymentType = null,
             paid = null,
             fulfilledBy = null,
+            billingAddress = null,
+            shippingAddress = null,
+            products = null,
+            deliveryInsurance = null,
+            deliveryInsuranceTotal = null,
+            shippingTotal = null,
+            total = null,
             notes = null
         } = req.body;
 
@@ -125,14 +139,28 @@ class OrderController {
             tracking,
             refId,
             paymentLink,
+            paymentType,
             paid,
             fulfilledBy,
+            billingAddress,
+            shippingAddress,
+            products,
+            deliveryInsurance,
+            deliveryInsuranceTotal,
+            shippingTotal,
+            total,
             notes
         };
 
         Object.keys(params).forEach(param => params[param] == null && delete params[param]);
 
-        const data = await orderRepository.updateOrder(orderId, params);
+        const data = await orderRepository.updateOrder(id, params);
+        res.send(data);
+    }
+
+    async cancelOrder(req, res) {
+        const { id } = req.params;
+        const data = await orderService.cancelOrder(id);
         res.send(data);
     }
 
@@ -160,7 +188,7 @@ class OrderController {
 
     async shipOrder(req, res) {
         const {
-            orderId,
+            id,
             email = null,
             refId = null,
             status = null,
@@ -176,7 +204,7 @@ class OrderController {
 
         Object.keys(params).forEach(param => params[param] == null && delete params[param]);
 
-        const data = await orderService.shipOrder(orderId, params);
+        const data = await orderService.shipOrder(id, params);
         res.send(data);
     }
 }

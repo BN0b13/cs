@@ -19,6 +19,7 @@ import {
     CartItemContainer,
     CartItemQuantityContainer,
     CartItemQuantityText,
+    CartItemSubtext,
     CartItemText,
     CartItemTextContainer,
     DeleteProductContainer,
@@ -31,21 +32,27 @@ import {
     TotalText
 } from './cart-item.styles';
 
-const CartItem = ({ quantity, product }) => {
+const CartItem = ({ quantity, product, inventoryId }) => {
     const { addItemToCart, deleteItemFromCart, removeItemFromCart } = useContext(CartContext);
+    const inventory = product.Inventories.filter(item => item.id === inventoryId)[0];
 
     const increment = async () => {
-        if(quantity >= product.Inventories[0].quantity) {
+        if(quantity >= inventory.quantity) {
             return
         }
-        await addItemToCart({
+        addItemToCart({
+            categoryId: product.categoryId,
             productId: product.id,
-            quantity: 1 
+            inventoryId,
+            quantity: 1
         });
     }
 
     const decrement = async () => {
-        removeItemFromCart({ productId: product.id });
+        removeItemFromCart({ 
+            productId: product.id,
+            inventoryId
+        });
     }
 
     const informationDisplay = () => {
@@ -53,24 +60,24 @@ const CartItem = ({ quantity, product }) => {
             return (
                 <MobileInformationContainer>
                     <MobileTopContainer>
-                        <CartItemText onClick={() => window.location=`shop/${product.Category.name}/${product.name}`}>
-                            { product.name }
+                        <CartItemText onClick={() => window.location=`shop/${product.Category.type}/${product.Category.name}/${product.name}`}>
+                            { product.name } { inventory.type === 'Regular' ? '(R)' : inventory.type === 'Feminized' ? '(F)' : '' } - { inventory.size }
                         </CartItemText>
                         <DeleteProductContainer>
-                            <VscChromeClose onClick={() => deleteItemFromCart({ productId: product.id })} />
+                            <VscChromeClose onClick={() => deleteItemFromCart({ productId: product.id, inventoryId })} />
                         </DeleteProductContainer>
                     </MobileTopContainer>
                     <MobileBottomContainer>
                         <CartItemQuantityContainer>
-                            <VscChevronUp onClick={() => increment()} />
+                            <VscChevronDown onClick={() => decrement()} />
                                 <CartItemQuantityText>
                                     { quantity }
                                 </CartItemQuantityText>
-                            <VscChevronDown onClick={() => decrement()} />
+                            <VscChevronUp onClick={() => increment()} />
                         </CartItemQuantityContainer>
-                        <CartItemTextContainer>
+                        <CartItemTextContainer cursor={'default'}>
                             <TotalText>
-                                { convertProductPrice(product.Inventories[0].price * quantity) }
+                                { convertProductPrice(inventory.price * quantity) }
                             </TotalText>
                         </CartItemTextContainer>
                         
@@ -81,25 +88,28 @@ const CartItem = ({ quantity, product }) => {
 
         return (
             <>
-                <CartItemTextContainer onClick={() => window.location=`shop/${product.Category.name}/${product.name}`}>
-                    <CartItemText >
-                        { product.name }
+                <CartItemTextContainer onClick={() => window.location=`shop/${product.Category.type}/${product.Category.name}/${product.name}`}>
+                    <CartItemText fontSize={'20px'} >
+                        { product.name } { inventory.type === 'regular' ? '(R)' : inventory.type === 'feminized' ? '(F)' : '' }
                     </CartItemText>
+                    <CartItemSubtext>
+                        { inventory.size } - { inventory.sizeDescription }
+                    </CartItemSubtext>
                 </CartItemTextContainer>
                 <CartItemQuantityContainer>
-                    <VscChevronUp onClick={() => increment()} />
+                    <VscChevronDown onClick={() => decrement()} />
                         <CartItemQuantityText>
                             { quantity }
                         </CartItemQuantityText>
-                    <VscChevronDown onClick={() => decrement()} />
+                    <VscChevronUp onClick={() => increment()} />
                 </CartItemQuantityContainer>
-                <CartItemTextContainer>
-                    <CartItemText>
-                        { convertProductPrice(product.Inventories[0].price * quantity) }
+                <CartItemTextContainer cursor={'default'}>
+                    <CartItemText fontSize={'20px'}>
+                        { convertProductPrice(inventory.price * quantity) }
                     </CartItemText>
                 </CartItemTextContainer>
                 <DeleteProductContainer>
-                    <VscChromeClose onClick={() => deleteItemFromCart({ productId: product.id })} />
+                    <VscChromeClose onClick={() => deleteItemFromCart({ productId: product.id, inventoryId })} />
                 </DeleteProductContainer>
             </>
         )
@@ -110,11 +120,11 @@ const CartItem = ({ quantity, product }) => {
             <MainContentContainer>
                 <ImageContainer>
                     {product.ProductImages.length > 0 ? 
-                        <ProductImage onClick={() => window.location=`shop/${product.Category.name}/${product.name}`}>
+                        <ProductImage onClick={() => window.location=`shop/${product.Category.type}/${product.Category.name}/${product.name}`}>
                             <img src={api + product.ProductImages[0].path} alt={`${product.name}`} />
                         </ProductImage> 
                     : 
-                        <ProductImage onClick={() => window.location=`shop/${product.Category.name}/${product.name}`}>
+                        <ProductImage onClick={() => window.location=`shop/${product.Category.type}/${product.Category.name}/${product.name}`}>
                             <img src={logo} alt={`${product.name}`} />
                         </ProductImage> 
                     }

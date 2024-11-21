@@ -2,6 +2,7 @@ import Client from '../../tools/client';
 
 import {
     MainContainer,
+    OnOffIcon,
     SalesTable,
     SalesTableBody,
     SalesTableHead,
@@ -27,6 +28,7 @@ const Sales = ({ sales, getSales }) => {
             <SalesTable>
                 <SalesTableHeader>
                     <SalesTableRow>
+                        <SalesTableHead>Status</SalesTableHead>
                         <SalesTableHead>Name</SalesTableHead>
                         <SalesTableHead>Description</SalesTableHead>
                         <SalesTableHead>Type</SalesTableHead>
@@ -40,11 +42,12 @@ const Sales = ({ sales, getSales }) => {
 
                     return (
                         <SalesTableRow key={index}>
+                            <SalesTableData><OnOffIcon backgroundColor={sale.active ? 'green' : 'red'} /></SalesTableData>
                             <SalesTableData>{ sale.name }</SalesTableData>
                             <SalesTableData>{ sale.description } {sale.lastName}</SalesTableData>
                             <SalesTableData>{ sale.type }</SalesTableData>
                             <SalesTableData>{formattedDate}</SalesTableData>
-                            <SalesTableData><button onClick={() => changeActivationStatus(sale.id)}>{sale.active ? 'On' : 'Off'}</button></SalesTableData>
+                            <SalesTableData><button onClick={() => changeActivationStatus(sale.id)}>{sale.active ? 'Turn Off' : 'Turn On'}</button></SalesTableData>
                         </SalesTableRow>
                 )})}
                 </SalesTableBody>

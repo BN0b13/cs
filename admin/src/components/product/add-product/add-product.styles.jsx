@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
 export const AddProductContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     text-align: center;
     
 `;
@@ -71,4 +75,35 @@ export const AddProductButton = styled.button`
         background-color: #fff;
         border: #000 solid 1px;
     }
+`;
+
+export const ProductProfileContainer = styled.div`
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 20px;
+    row-gap: 50px;
+`;
+
+export const CheckboxContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 75px;
+`;
+
+export const AddProductLabel = styled.label`
+    
+`;
+
+export const AddProductSelect = styled.select`
+    margin: 8px;
+    padding: 2px;
+`;
+
+export const AddProductOption = styled.option`
+    margin: 8px;
+    padding: 2px;    
+    width: 300px;
+    height: 100px;
 `;

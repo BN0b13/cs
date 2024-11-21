@@ -29,6 +29,7 @@ import MessageController from '../controllers/MessageController.js';
 import InventoryController from '../controllers/InventoryController.js';
 import OrderController from '../controllers/OrderController.js';
 import ProductController from '../controllers/ProductController.js';
+import RaffleController from '../controllers/RaffleController.js';
 import RoleController from '../controllers/RoleController.js';
 import SaleController from '../controllers/SaleController.js';
 import ThemeController from '../controllers/ThemeController.js';
@@ -47,6 +48,7 @@ const inventoryController = new InventoryController();
 const messageController = new MessageController();
 const orderController = new OrderController();
 const productController = new ProductController();
+const raffleController = new RaffleController();
 const roleController = new RoleController();
 const saleController = new SaleController();
 const themeController = new ThemeController();
@@ -143,6 +145,7 @@ router.patch('/messages', AdminTokenVerifier, HandleErrors(messageController.upd
 // Orders
 
 router.get('/orders', AdminTokenVerifier, HandleErrors(orderController.getOrders));
+router.get('/orders/status/:status', AdminTokenVerifier, HandleErrors(orderController.getOrdersByStatus));
 router.get('/orders/search/id/:id', AdminTokenVerifier, HandleErrors(orderController.getOrderId));
 router.get('/orders/search/product-id/:productId', AdminTokenVerifier, HandleErrors(orderController.getOrdersByProductId));
 router.get('/orders/search/ref-id/:refId', AdminTokenVerifier, HandleErrors(orderController.getOrderByRefId));
@@ -151,6 +154,7 @@ router.get('/products/search', AdminTokenVerifier, HandleErrors(productControlle
 router.post('/orders/date', AdminTokenVerifier, HandleErrors(orderController.getOrdersByDateRange));
 
 router.patch('/orders', AdminTokenVerifier, HandleErrors(orderController.updateOrder));
+router.patch('/orders/cancel/:id', AdminTokenVerifier, HandleErrors(orderController.cancelOrder));
 router.patch('/orders/payment-link', AdminTokenVerifier, HandleErrors(orderController.paymentLink));
 router.patch('/orders/ship', AdminTokenVerifier, HandleErrors(orderController.shipOrder));
 
@@ -169,6 +173,17 @@ router.patch('/products', AdminTokenVerifier, HandleErrors(productController.upd
 
 router.delete('/products', AdminTokenVerifier, HandleErrors(productController.deleteProduct));
 router.delete('/products/product-image', AdminTokenVerifier, HandleErrors(productController.deleteProductImageById));
+
+// Raffles
+
+router.get('/raffles', AdminTokenVerifier, HandleErrors(raffleController.getRaffles));
+router.get('/raffles/:id', AdminTokenVerifier, HandleErrors(raffleController.getRaffleById));
+
+router.post('/raffles', AdminTokenVerifier, uploadProducts.array("files"), HandleErrors(raffleController.create));
+
+router.patch('/raffles', AdminTokenVerifier, HandleErrors(raffleController.updateRaffle));
+
+router.delete('/raffles', AdminTokenVerifier, HandleErrors(raffleController.deleteRaffle));
 
 // Roles
 
@@ -198,8 +213,6 @@ router.patch('/themes/colors', AdminTokenVerifier, HandleErrors(themeController.
 // GET - ALL, By ID, Search
 // Used to GET users for table on admin site
 router.get('/users', AdminTokenVerifier, HandleErrors(userController.getUsers));
-
-
 
 router.get('/user/account', ContributorTokenVerifier, HandleErrors(userController.getAccountById));
 

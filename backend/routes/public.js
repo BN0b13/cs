@@ -105,13 +105,11 @@ router.patch('/account/activate', HandleErrors(userController.activateAdminCreat
 
 router.get('/cart', TokenVerifier, HandleErrors(cartController.getCart));
 
-router.get('/cart/contents', TokenVerifier, HandleErrors(cartController.getCartContents));
-
 router.patch('/cart', TokenVerifier, HandleErrors(cartController.patchCart));
 
 // Categories
 
-router.get('/categories', HandleErrors(categoryController.getCategories));
+router.get('/categories', HandleErrors(categoryController.getPublicCategories));
 router.get('/categories/:id', HandleErrors(categoryController.getCategoryById));
 router.get('/categories/name/:name', HandleErrors(categoryController.getCategoryByName));
 router.get('/categories/type/:type', HandleErrors(categoryController.getCategoriesByType));
@@ -154,7 +152,8 @@ router.get('/orders/:refId', TokenVerifier, HandleErrors(orderController.getOrde
 router.get('/products', HandleErrors(productController.getProducts));
 router.get('/products/pagination', HandleErrors(productController.getProductsByPage));
 router.get('/products/search', HandleErrors(productController.searchShopProducts));
-router.get('/products/:id', HandleErrors(productController.getProductById));
+router.get('/products/id/:id', HandleErrors(productController.getProductById));
+router.get('/products/name/:name', HandleErrors(productController.getProductByName));
 router.get('/products/type/:type', HandleErrors(productController.getProductsByType));
 router.get('/products/profiles/all', HandleErrors(productController.getProductProfiles));
 router.get('/products/profiles/search', HandleErrors(productController.getProductProfilesByIds));

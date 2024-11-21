@@ -3,8 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { sequelize } from "../db.js";
 
-import { User } from '../models/Associations.js';
-import { Coupon, Order, Sale } from '../models/Associations.js';
+import { Coupon, Inventory, Order, Sale, User } from '../models/Associations.js';
 
 import CartService from './CartService.js';
 import EmailService from './EmailService.js';
@@ -88,18 +87,18 @@ export default class OrderService {
             billingAddress,
             shippingAddress,
             shippingId,
-            shippingTotal,
+            shippingTotal = 0,
             deliveryInsurance,
-            deliveryInsuranceTotal,
+            deliveryInsuranceTotal = 0,
             couponId = null,
             notes = null,
             paymentType,
             credit = null
         } = params;
-        let total = (shippingTotal || 0) + (deliveryInsuranceTotal || 0);
+        let total = shippingTotal + deliveryInsuranceTotal;
 
         const handleSales = await saleService.updateOrderTotalWithActiveSales(products, shippingTotal, deliveryInsuranceTotal);
-        total = total + handleSales.total;
+        total = total + handleSales.subtotal;
 
         let orderCreditData = null;
 
@@ -205,17 +204,13 @@ export default class OrderService {
         });
 
         const orderId = order.dataValues.id;
-        const products = order.dataValues.products;
+        const orderProducts = order.dataValues.products;
 
-        
-        const productIds = products.map(product => product.productId);
-        const getProductsInCart = await productService.getProductsByIds(productIds);
-
-        const checkInventory = this.confirmInventoryIsAvailable(getProductsInCart, products);
+        const checkInventory = await this.confirmInventoryIsAvailable(orderProducts);
 
         if(!checkInventory.result) {
             await orderRepository.deleteOrder(orderId);
-            await cartService.modifyCart(userId);
+            await cartService.emptyCart(userId);
 
             return {
                 status: 404,
@@ -229,54 +224,43 @@ export default class OrderService {
 
         try {
             const res = await sequelize.transaction(async (t) => {
-
                 for(const singleInventory of newInventoryQuantity) {
                     await inventoryService.modifyInventory(singleInventory, { transaction: t });
                 }
 
                 
-                await cartService.modifyCart(userId, { transaction: t });
+                await cartService.emptyCart(userId, { transaction: t });
+
+                await orderRepository.updateOrder(orderId, { status: 'new' });
+
+                await emailService.orderReceivedEmail({ buyerEmail: email, refId: orderRefId });
 
                 return;
             });
 
-            // const processPayment = await paymentService.processPayment({ token, total });
-
-            // if(processPayment.payment.status === 'COMPLETED') {
-
-                await emailService.orderReceivedEmail({ buyerEmail: email, refId: orderRefId });
-
-                await orderRepository.updateOrder(orderId, { status: 'new' });
-
-                return {
-                    status: 201
-                };
-            // } else {
-            //     throw Error('Payment failed');
-            // }
+            return {
+                status: 201
+            };
         } catch (err) {
             console.log('Order Create Error: ', err);
             throw Error('There was an error creating the Order');
         }
     }
 
-    confirmInventoryIsAvailable = (inventoryProducts, productsInCart) => {
-        // Database indexing -> important for querying through large amounts of data
+    confirmInventoryIsAvailable = async (orderProducts) => {
+        const getInventory = await Inventory.findAndCountAll();
         let result = true;
-        const data = [];
-        
-        inventoryProducts.rows.map(product => {
-            const inventoryId = product.Inventories[0].id;
-            const inventoryQuantity = product.Inventories[0].quantity;
-            const productInCart = productsInCart.filter(item => item.productId === product.id);
-            const quantityRequested = productInCart[0].quantity;
-            if(inventoryQuantity === 0 ||
-                inventoryQuantity < quantityRequested) {
+        let data = [];
+
+        orderProducts.map(product => {
+            const productInventory = getInventory.rows.filter(inventory => inventory.id === product.inventoryId)[0].dataValues;
+
+            if(productInventory.quantity < product.quantity) {
                 result = false;
             } else {
                 data.push({
-                    id: inventoryId,
-                    quantity: inventoryQuantity - quantityRequested
+                    id: product.inventoryId,
+                    quantity: productInventory.quantity - product.quantity
                 });
             }
         });
@@ -363,6 +347,54 @@ export default class OrderService {
         }
     }
 
+    async cancelOrder(id) {
+        const order = await Order.findOne({
+            where: {
+                id
+            }
+        });
+
+        console.log('Order db res: ', order.dataValues);
+        const orderProducts = order.dataValues.products;
+        console.log('Order Products: ', orderProducts);
+
+        for(const product of orderProducts) {
+            const inventory = await Inventory.findOne({
+                where: {
+                    id: product.inventoryId
+                }
+            });
+
+            const quantity = inventory.dataValues.quantity;
+
+            await Inventory.update(
+                {
+                    quantity: quantity + product.quantity
+                },
+                {
+                    where: {
+                        id: product.inventoryId
+                    }
+                }
+            );
+        }
+
+        await Order.update(
+            {
+                status: 'canceled'
+            },
+            {
+                where: {
+                    id
+                }
+            }
+        )
+
+        return {
+            status: 200
+        }
+    }
+
     async sendPaymentLink(orderId, data) {
         try {
         const {
@@ -396,7 +428,7 @@ export default class OrderService {
 
     }
 
-    async shipOrder(orderId, data) {
+    async shipOrder(id, data) {
         try {
         const {
             email,
@@ -414,7 +446,7 @@ export default class OrderService {
                 params,
                 {
                     where: {
-                        id: orderId
+                        id
                     }
                 }
             );

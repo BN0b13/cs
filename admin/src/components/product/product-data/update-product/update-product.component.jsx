@@ -147,7 +147,7 @@ const UpdateProduct = ({ product, getProduct, setShowUpdate }) => {
                 <InputContainer>
                     <UpdateLabel>Type:</UpdateLabel>
                     <UpdateSelect value={type} onChange={(e) => setType(e.target.value)}>
-                        <UpdateOption value={'clothing'}>Clothing</UpdateOption>
+                        <UpdateOption value={'merchandise'}>Merchandise</UpdateOption>
                         <UpdateOption value={'seeds'}>Seeds</UpdateOption>
                     </UpdateSelect>
                 </InputContainer>

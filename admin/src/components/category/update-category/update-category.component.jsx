@@ -7,7 +7,7 @@ import Spinner from '../../reusable/spinner/spinner.component';
 import { ToastContext } from '../../../contexts/toast.context';
 
 import Client from '../../../tools/client';
-import { api } from '../../../config';
+import { api, categoryTypes } from '../../../config';
 
 import {
     ButtonContainer,
@@ -92,8 +92,9 @@ const UpdateCategory = ({ category, setShowEdit, getCategory }) => {
                     <UpdateCategoryInput value={name} onChange={(e) => setName(e.target.value)} />
                     <UpdateCategoryTextarea value={description} onChange={(e) => setDescription(e.target.value)} />
                     <UpdateCategorySelect value={type} onChange={(e) => setType(e.target.value)}>
-                        <UpdateCategoryOption value={'clothing'}>Clothing</UpdateCategoryOption>
-                        <UpdateCategoryOption value={'seeds'}>Seeds</UpdateCategoryOption>
+                        {categoryTypes.map((productType, index) => (
+                            <UpdateCategoryOption key={ index } value={ productType.type }>{ productType.name }</UpdateCategoryOption>
+                        ))}
                     </UpdateCategorySelect>
                     <UpdateCategorySelect value={status} onChange={(e) => setStatus(e.target.value)}>
                         <UpdateCategoryOption value={true}>Active</UpdateCategoryOption>

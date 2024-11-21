@@ -1,7 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
 
-import { useParams } from 'react-router-dom';
-
 import Spinner from '../../components/reusable/spinner/spinner.component';
 import ProductCard from './product-card/product-card.component';
 

@@ -9,17 +9,16 @@ import Client from '../../tools/client';
 const client = new Client();
 
 const Product = () => {
-    const { item } = useParams();
-    const [product, setProduct] = useState('');
+    const { name } = useParams();
+    const [product, setProduct] = useState([]);
 
     useEffect(() => {
         const getProduct = async () => {
-            const res = await client.getProducts();
-            const currentProduct = res.rows.filter(data => data.name === item);
-            setProduct(currentProduct[0]);
+            const res = await client.getProductByName(name);
+            setProduct(res);
         }
         getProduct();
-    }, [item]);
+    }, []);
     
     return (
         <>

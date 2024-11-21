@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 import AddImage from './add-image/add-image.component';
 import ProductImage from './product-image/product-image.component';
 import Spinner from '../../reusable/spinner/spinner.component';
+
+import { ToastContext } from '../../../contexts/toast.context';
 
 import Client from '../../../tools/client';
 
@@ -17,6 +19,8 @@ const ProductImages = ({ product, getProduct }) => {
     const [ loading, setLoading ] = useState(false);
     const [ images, setImages ] = useState(product.ProductImages);
 
+    const { errorToast } = useContext(ToastContext);
+
     const deleteImage = async (id) => {
         setLoading(true);
         const data = { id };
@@ -26,7 +30,7 @@ const ProductImages = ({ product, getProduct }) => {
             const newGetProduct = await getProduct();
             setImages(newGetProduct.data.ProductImages);
         } else {
-            console.log('DELETE product image failed');
+            errorToast('DELETE product image failed');
         }
         setLoading(false);
     }

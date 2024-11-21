@@ -508,33 +508,33 @@ class UserController {
             roleId = null,
             username = null,
             password = null,
+            email = null,
             firstName = null,
             lastName = null,
             phone = null,
             billingAddress = null,
             shippingAddress = null,
             subscriptions = null,
-            credit = null
+            credit = null,
+            status = null
         } = req.body;
-
-        console.log('REQ body: ', req.body);
 
         const params = {
             roleId,
             username,
             password,
+            email,
             firstName,
             lastName,
             phone,
             billingAddress,
             shippingAddress,
             subscriptions,
-            credit
+            credit,
+            status
         };
 
         Object.keys(params).forEach(param => params[param] == null && delete params[param]);
-
-        console.log('Params: ', params);
 
         const data = await userService.updateUser(id, params);
         res.send(data);
