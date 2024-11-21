@@ -75,7 +75,7 @@ class UserRepository {
     }
 
     async getUser(id) {
-        const user = await User.findOne({
+        const res = await User.findOne({
             where: {
                 id
             },
@@ -92,23 +92,30 @@ class UserRepository {
             ]
         });
 
+        if(res === null) {
+            return {
+                status: 404
+            }
+        }
+
         const data = {
-            email: user.email,
-            username: user.username,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            phone: user.phone,
-            billingAddress: user.billingAddress,
-            shippingAddress: user.shippingAddress,
-            subscriptions: user.subscriptions,
-            emailVerified: user.emailVerified,
-            favorites: user.favorites,
-            subscriptions: user.subscriptions,
-            themeId: user.themeId,
-            themeInverted: user.themeInverted,
-            cart: user.Cart,
-            orders: user.Orders,
-            credit: user.credit
+            email: res.email,
+            username: res.username,
+            firstName: res.firstName,
+            lastName: res.lastName,
+            phone: res.phone,
+            billingAddress: res.billingAddress,
+            shippingAddress: res.shippingAddress,
+            subscriptions: res.subscriptions,
+            emailVerified: res.emailVerified,
+            favorites: res.favorites,
+            subscriptions: res.subscriptions,
+            themeId: res.themeId,
+            themeInverted: res.themeInverted,
+            cart: res.Cart,
+            orders: res.Orders,
+            credit: res.credit,
+            status: res.status
         }
 
         return data;
@@ -131,11 +138,19 @@ class UserRepository {
     }
 
     async getSingleUserByEmail(email) {
-        return await User.findOne({
+        const res = await User.findOne({
             where: {
                 email
             }
         });
+
+        if(res === null) {
+            return {
+                status: 404
+            }
+        }
+
+        return res;
     }
 
     async getByPK(id) {
@@ -165,7 +180,7 @@ class UserRepository {
 
     async getUserById(id) {
         try {
-            return await User.findOne(
+            const res = await User.findOne(
                 {
                     where: {
                         id
@@ -183,9 +198,17 @@ class UserRepository {
                     ]
                 }
             );
+
+            if(res === null) {
+                return {
+                    status: 404
+                }
+            }
+
+            return res;
         } catch (err) {
-            console.log('Get Users Error: ', err);
-            throw Error('There was an error getting all users');
+            console.log('GET User by ID Error: ', err);
+            throw Error('There was an error getting User by ID');
         }
     }
 
@@ -251,7 +274,7 @@ class UserRepository {
             const startDate = dayjs.unix(start);
             const endDate = dayjs.unix(end);
             
-            const res = await User.findAndCountAll({
+            return await User.findAndCountAll({
                 where: {
                     createdAt: {
                        [Op.between]: [startDate.$d, endDate.$d],
@@ -270,7 +293,6 @@ class UserRepository {
                       }
                   ]
             });
-            return res;
         } catch (err) {
             console.log('Get Customers by date range Error: ', err);
             throw Error('There was an error getting customers by date range');

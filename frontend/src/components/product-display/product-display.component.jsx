@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
+import Select from 'react-select';
 import { Slide } from 'react-slideshow-image';
 
 import {
@@ -19,7 +20,8 @@ import { ToastContext } from '../../contexts/toast.context';
 import { UserContext } from '../../contexts/user.context';
 
 import { api } from '../../config';
-import { getProductInventory, convertProductPrice } from '../../tools/cart';
+import Client from '../../tools/client';
+import { convertProductPrice } from '../../tools/cart';
 import { setMobileView } from '../../tools/mobileView';
 
 import logo from '../../assets/img/logo.png';
@@ -44,6 +46,11 @@ import {
     ProductSubtext,
     ProductText,
 } from './product-display.styles';
+
+// import {
+//     Option,
+//     Select
+// } from '../../styles/component.styles';
   
 const divStyle = {
     display: 'flex',
@@ -53,12 +60,35 @@ const divStyle = {
     height: '300px'
 };
 
-const ProductDisplay = ({ product }) => {
-    const [ images, setImages ] = useState([]);
-    const [quantity, setQuantity] = useState('');
-    const [inventory, setInventory] = useState(null);
+const selectCustomStyles = {
+    control: base => ({
+        ...base,
+        width: '150px'
+    }),
+    menu: base => ({
+    ...base,
+    width: '150px'
+    }),
+    menuList: base => ({
+        ...base,
+        color: 'black',
+        width: '150px'
+    })
+}
 
-    const { addItemToCart } = useContext(CartContext);
+const client = new Client();
+
+const ProductDisplay = ({ product }) => {
+    const pictureSize = setMobileView() ? '-mobile.webp' : '-desktop.webp';
+    const [ loading, setLoading ] = useState(true);
+    const [ cart, setCart ] = useState(null);
+    const [ images, setImages ] = useState([]);
+    const [ quantity, setQuantity ] = useState(1);
+    const [ inventory, setInventory ] = useState(product.Inventories[0]);
+    const [ inventoryId, setInventoryId ] = useState(product.Inventories[0].id);
+    const [ inventories, setInventories ] = useState(product.Inventories);
+
+    const { addItemToCart, cartItems } = useContext(CartContext);
     const { colors } = useContext(ConfigurationContext);
     const { errorToast, successToast } = useContext(ToastContext);
     const { currentUser } = useContext(UserContext);
@@ -72,42 +102,87 @@ const ProductDisplay = ({ product }) => {
     } = product;
 
     useEffect(() => {
-
         product.ProductImages.sort((a, b) => a.position - b.position);
 
         setImages(product.ProductImages);
-
-        const getInventory = async () => {
-            const res = await getProductInventory(id);
-            const startingQuantity = res >= 1 ? 1 : 0;
-            setQuantity(startingQuantity);
-            setInventory(res);
+        if(currentUser) {
+            getCart();
         }
-        getInventory();
-    }, [ id ]);
+        setLoading(false);
+    }, [ cartItems, currentUser ]);
 
-    const loggedIn = async (id, quantity) => {
+    const getCart = async () => {
+        setLoading(true);
+        const res = await client.getCart();
+
+        setCart(res);
+        setLoading(false);
+    }
+
+    const handleInventory = (e) => {
+        const id = parseInt(e.value);
+        const data = inventories.filter(item => item.id === id);
+        
+        setInventoryId(id);
+        setInventory(data[0]);
+    }
+
+    const loggedIn = async (id) => {
+        if(quantity === '') {
+            setQuantity(1);
+        }
+
         if(!currentUser) {
             errorToast('Please login to add to cart.');
             return;
         }
+
         if(quantity === 0) {
             errorToast('This product is no longer available.');
             return;
         }
         
+        const productAlreadyInCart = cart.products.filter(product => product.inventoryId === inventoryId);
+
+        if(productAlreadyInCart.length > 0) {
+
+            if(productAlreadyInCart[0].quantity === inventory.quantity) {
+                errorToast('Maximum Inventory already in cart');
+                return
+            }
+        }
+        
         addItemToCart({
             categoryId: product.Category.id,
             productId: id,
-            inventoryId: product.Inventories[0].id,
+            inventoryId: inventoryId,
             quantity
         });
         successToast('Product added to cart.');
     }
 
+    const inputQuantity = (input) => {
+        const inputQuantity = Number(input);
+
+        if(isNaN(inputQuantity)) {
+            return
+        }
+
+        if(inputQuantity < 0) {
+            setQuantity(0);
+            return
+        }
+
+        if(inputQuantity > inventory.quantity) {
+            setQuantity(inventory.quantity);
+            return
+        }
+
+        setQuantity(inputQuantity);
+    }
 
     const increaseQuantity = () => {
-        if(quantity >= inventory) {
+        if(quantity >= inventory.quantity) {
             return
         }
         setQuantity(quantity + 1);
@@ -122,81 +197,107 @@ const ProductDisplay = ({ product }) => {
 
     return (
         <>
-            <ProductTitle>
-                <CategoryLink theme={colors} to={`/shop`}>
-                    Shop
-                </CategoryLink>
-                    {'  '}
-                <VscArrowRight />
-                    {'  '}
-                <CategoryLink theme={colors} to={`/shop/${product.Category.name}`}>
-                    {product.Category.name}
-                </CategoryLink>
-                    {'  '}
-                <VscArrowRight />
-                    {'  '}
-                {name}
-            </ProductTitle>
-            <ProductDisplayContainer>
-                <ProductContainer>
-                    <ProductImageDisplay>
-                        {images.length === 0 ?
-                            <div style={{ ...divStyle, "backgroundImage": `url(${logo})` }}>
+            {loading ?
+                <Spinner />
+            :
+                <>
+                    <ProductTitle>
+                        <CategoryLink theme={colors} to={`/shop?type=${product.Category.type}`}>
+                            SHOP
+                        </CategoryLink>
+                            {'  '}
+                        <VscArrowRight />
+                            {'  '}
+                        <CategoryLink theme={colors} to={`/shop/${product.Category.type}`}>
+                            { product.Category.type.toUpperCase() }
+                        </CategoryLink>
+                            {'  '}
+                        <VscArrowRight />
+                            {'  '}
+                        <CategoryLink theme={colors} to={`/shop/${product.Category.type}/${product.Category.name}`}>
+                            { product.Category.name.toUpperCase() }
+                        </CategoryLink>
+                            {'  '}
+                        <VscArrowRight />
+                            {'  '}
+                            { name.toUpperCase() }
+                    </ProductTitle>
+                    <ProductDisplayContainer>
+                        <ProductContainer>
+                            <ProductImageDisplay>
+                                {images.length === 0 ?
+                                    <div style={{ ...divStyle, "backgroundImage": `url(${logo})` }}>
                                         {product.Inventories[0].quantity === 0 &&
                                             <ProductImage src={soldOut} alt='Product Sold Out' />
                                         }
                                     </div>
-                            :
-                                images.length === 1 ?
-                                    <div style={{ ...divStyle, "backgroundImage": `url(${api}${images[0].path})` }}>
-                                        {product.Inventories[0].quantity === 0 &&
-                                            <ProductImage src={soldOut} alt='Product Sold Out' />
-                                        }
-                                    </div>
-                                :
-                                    <SlideshowContainer>
-                                        <Slide autoplay={false}>
-                                            {images.map((image, index)=> (
-                                                    <div key={index}>
-                                                        <a href={image.link}>
-                                                            <div style={{ ...divStyle, "backgroundImage": `url(${api}${image.path})` }}>
-                                                                {product.Inventories[0].quantity === 0 &&
-                                                                    <ProductImage src={soldOut} alt='Product Sold Out' />
-                                                                }
+                                    :
+                                        images.length === 1 ?
+                                            <div style={{ ...divStyle, "backgroundImage": `url(${api}${images[0].path}${pictureSize})` }}>
+                                                {product.Inventories[0].quantity === 0 &&
+                                                    <ProductImage src={soldOut} alt='Product Sold Out' />
+                                                }
+                                            </div>
+                                        :
+                                            <SlideshowContainer>
+                                                <Slide autoplay={false}>
+                                                    {images.map((image, index)=> (
+                                                            <div key={index}>
+                                                                <a href={image.link}>
+                                                                    <div style={{ ...divStyle, "backgroundImage": `url(${api}${image.path}${pictureSize})` }}>
+                                                                        {product.Inventories[0].quantity === 0 &&
+                                                                            <ProductImage src={soldOut} alt='Product Sold Out' />
+                                                                        }
+                                                                    </div>
+                                                                </a>
                                                             </div>
-                                                        </a>
-                                                    </div>
-                                                ))}
-                                        </Slide>
-                                    </SlideshowContainer>
-                        }
-                    </ProductImageDisplay>
-                    <ProductInformation>
-                        {/* <FavoriteContainer>
-                            <VscHeart />
-                        </FavoriteContainer> */}
-                        <ProductText>{name}</ProductText>
-                        <ProductSubtext>Lineage: {details.mother} x {details.father}</ProductSubtext>
-                        <ProductSubtext>Time: {details.time}</ProductSubtext>
-                        <ProductSubtext>Type: {product.Inventories[0].type}</ProductSubtext>
-                        <ProductSubtext>{product.Inventories[0].size} - {product.Inventories[0].sizeDescription}</ProductSubtext>
-                        <ProductSubtext>Price: {convertProductPrice(product.Inventories[0].price)}</ProductSubtext>
-                        <ProductButtonContainer>
-                            <ProductButtonCount setMobileView={setMobileView()}>
-                                <ProductQuantityContainer>
-                                    <VscChevronUp onClick={() => increaseQuantity()} />
-                                    <ProductCountInput onChange={(e) => console.log(e.target.value)} value={quantity} />
-                                    <VscChevronDown onClick={() => decreaseQuantity()} />
-                                </ProductQuantityContainer>
-                                <Button onClick={() => loggedIn(id, quantity)}>Add to Cart</Button>
-                            </ProductButtonCount>
-                        </ProductButtonContainer>
-                    </ProductInformation>
-                </ProductContainer>
-                <ProductDescriptionContainer>
-                    <ProductDescriptionText>{description}</ProductDescriptionText>
-                </ProductDescriptionContainer>
-            </ProductDisplayContainer>
+                                                        ))}
+                                                </Slide>
+                                            </SlideshowContainer>
+                                }
+                            </ProductImageDisplay>
+                            <ProductInformation>
+                                {/* <FavoriteContainer>
+                                    <VscHeart />
+                                </FavoriteContainer> */}
+                                <ProductText>{name}</ProductText>
+                                <ProductSubtext>Lineage: {details.mother} x {details.father}</ProductSubtext>
+                                <ProductSubtext>Time: {details.time}</ProductSubtext>
+                                {/* <Select value={inventoryId} onChange={(e) => handleInventory(e.target.value)}>
+                                    {inventories.map((item, index) => (
+                                        <Option key={index} value={item.id}>{ item.size }</Option>
+                                    ))}
+                                </Select> */}
+                                <Select
+                                    defaultValue={{ value: product.Inventories[0].id, label: product.Inventories[0].size }}
+                                    onChange={handleInventory}
+                                    options={inventories.map(item => {
+                                        return { value: item.id, label: item.size }; 
+                                    })}
+                                    styles={selectCustomStyles}
+                                />
+                                <ProductSubtext>Type: {inventory.type}</ProductSubtext>
+                                <ProductSubtext>{inventory.size} - {inventory.sizeDescription}</ProductSubtext>
+
+                                <ProductSubtext>Price: {convertProductPrice(inventory.price)}</ProductSubtext>
+                                <ProductButtonContainer>
+                                    <ProductButtonCount setMobileView={setMobileView()}>
+                                        <ProductQuantityContainer>
+                                            <VscChevronDown onClick={() => decreaseQuantity()} />
+                                            <ProductCountInput type='string' value={quantity} onChange={(e) => inputQuantity(e.target.value)} />
+                                            <VscChevronUp onClick={() => increaseQuantity()} />
+                                        </ProductQuantityContainer>
+                                        <Button onClick={() => loggedIn(id)}>Add to Cart</Button>
+                                    </ProductButtonCount>
+                                </ProductButtonContainer>
+                            </ProductInformation>
+                        </ProductContainer>
+                        <ProductDescriptionContainer>
+                            <ProductDescriptionText>{description}</ProductDescriptionText>
+                        </ProductDescriptionContainer>
+                    </ProductDisplayContainer>
+                </>
+            }
         </>
     )
 }

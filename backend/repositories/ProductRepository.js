@@ -35,30 +35,6 @@ class ProductRepository {
         }
     }
 
-    async getProducts() {
-        try {
-            const res = await Product.findAndCountAll({
-                include: [
-                    { 
-                        model: Category,
-                        required: true
-                    },
-                    { 
-                        model: Inventory,
-                        required: true
-                    },
-                    { 
-                        model: ProductImage
-                    },
-                ]
-            });
-            return res;
-        } catch (err) {
-            console.log('GET Product Error: ', err);
-            throw Error('There was an error getting products');
-        }
-    }
-
     async getProductsByPage(page, size) {
         try {
             const currentPage = page * size;
@@ -151,6 +127,40 @@ class ProductRepository {
         }
     }
 
+    async getProductByName(name) {
+        try {
+            const res = await Product.findOne({
+                where: {
+                    name
+                },
+                include: [
+                    { 
+                        model: Category,
+                        required: true
+                    },
+                    { 
+                        model: Inventory,
+                        required: true
+                    },
+                    { 
+                        model: ProductImage
+                    },
+                ]
+            });
+
+            if(res === null) {
+                return {
+                    status: 404
+                }
+            }
+
+            return res;
+        } catch (err) {
+            console.log('GET Product Error: ', err);
+            throw Error('There was an error getting products');
+        }
+    }
+
     async getProductInventoryByName(name) {
         try {
             const res = await Product.findAndCountAll({
@@ -202,8 +212,8 @@ class ProductRepository {
             });
             return res;
         } catch (err) {
-            console.log('GET Product Error: ', err);
-            throw Error('There was an error getting products');
+            console.log('GET Products by ids Error: ', err);
+            throw Error('There was an error getting products by ids');
         }
     }
 

@@ -34,9 +34,9 @@ const DropdownMobile = ({ theme, item }) => {
             {showDropdown &&
                 <DropdownContainer showDropdown={showDropdown}>
                     {dropdownMenuItems.map((item, index) => (
-                        <TextContainer>
+                        <TextContainer key={index}>
                             { item.icon }
-                            <DropdownText key={index} onClick={() => window.location = item.path}>{ item.title }</DropdownText>
+                            <DropdownText onClick={() => window.location = item.path}>{ item.title }</DropdownText>
                         </TextContainer>
                     ))}
                 </DropdownContainer>

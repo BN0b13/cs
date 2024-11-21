@@ -61,6 +61,7 @@ function App() {
   const [ showModal, setShowModal ] = useState(false);
   const [ modalTitle, setModalTitle ] = useState(null);
   const [ modalImage, setModalImage ] = useState(null);
+  const [ showModalInput, setShowModalInput ] = useState(true);
   const [ modalInput, setModalInput ] = useState('');
   const [ modalInputType, setModalInputType ] = useState('text');
   const [ modalInputPlaceholder, setModalInputPlaceholder ] = useState('');
@@ -100,12 +101,28 @@ function App() {
       
       if(token) {
         let getAccount = await client.getAccount();
+
+        if(getAccount.status === 'inactive') {
+          const logOut = () => {
+            localStorage.removeItem(tokenName);
+            sessionStorage.removeItem(tokenName);
+            window.location = '/';
+          }
+
+          setModalTitle('Account Inactive');
+          setModalMessage('This account is inactive. Please log out.');
+          setModalInput(null);
+          setModalAction(() => logOut);
+          setModalActionText('Log Out');
+          setModalAllowCancel(false);
+          setShowModal(true);
+        }
+
         currentTheme = {
           themeId: getAccount.themeId,
           themeInverted: getAccount.themeInverted
         };
         
-        // Username Enhancement - ok to remove after x amount of time
         if(!getAccount.username) {
           const createUsername = async (username) => {
             if(username === '') {
@@ -136,6 +153,7 @@ function App() {
           setModalTitle('Select Username');
           setModalMessage('We are happy to announce the roll out of usernames to support exciting upcoming features. Please select a username.');
           setModalSubtext('In order to create a welcoming environment for all, usernames that are hateful, homophobic, racist, sexist, derogatory, harassing, or otherwise uncivil are grounds for account termination.');
+          setModalInput('');
           setModalInputType('text');
           setModalInputPlaceholder('Username');
           setModalAction(() => createUsername);

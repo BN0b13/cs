@@ -321,6 +321,42 @@ export default class Tools {
     return `$${price / 100}`;
   }
 
+  handleMoneyInput = (e) => {
+    if(e < 0) {
+        return
+    }
+
+    const value = e/1;
+    let display = e === 0 ? '$0.00' : `$${e/100}`;
+
+    if(!display.includes('.')) {
+        display = display + '.00';
+    }
+
+    if(display.indexOf('.') !== (display.length - 3)) {
+        display = display + '0';
+    }
+
+    return {
+      value,
+      display: display
+    };
+  }
+
+  nonZeroNumberInput = (e, setInput) => {
+    if(e === '' || e < 0) {
+      setInput(0);
+      return
+    }
+
+    if(!this.integerRegex.test(e)) {
+      return
+    }
+
+    setInput(Number(e));
+    return
+  }
+
   formatCreatedAtDate = (date) => {
     return new Date(date).toLocaleDateString('en-us', { day:"numeric", year:"numeric", month:"numeric"});
   }

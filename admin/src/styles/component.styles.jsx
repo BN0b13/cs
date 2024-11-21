@@ -54,14 +54,21 @@ export const RowContainer = styled.div`
 
 export const ContentContainer = styled.div`
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    flex-direction: ${props => props.flexDirection ?? 'column'};
+    justify-content: ${props => props.justifyContent ? props.justifyContent : 'center'};
+    align-items: ${props => props.alignItems ? props.alignItems : 'center'};
     max-width: ${setMobileView() ? '300px' : '550px'};
+    margin: ${props => props.margin ?? ''};
 `;
 
 export const PrinterContainer = styled.div`
     
+`;
+
+export const WordBreakContainer = styled.div`
+    max-width: 300px;
+    word-break: break-all;
+    text-wrap: wrap;
 `;
 
 export const ButtonContainer = styled.div`
@@ -102,10 +109,11 @@ export const Label = styled.label`
 export const Input = styled.input`
     width: ${props => props.width ? props.width : '300px'};
     margin-bottom: ${props => props.marginBottom ? props.marginBottom : '10px'};
+    margin: ${props => props.marginBottom ? props.marginBottom : '0'};
 `;
 
 export const Select = styled.select`
-
+    margin: 10px 0;
 `;
 
 export const Option = styled.option`

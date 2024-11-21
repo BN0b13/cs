@@ -6,7 +6,7 @@ import { ToastContext } from '../../../contexts/toast.context';
 
 import Client from '../../../tools/client';
 
-import { productTypes, url } from '../../../config';
+import { categoryTypes, url } from '../../../config';
 
 import {
     AddCategoryButton,
@@ -87,7 +87,7 @@ const AddCategory = () => {
                     <AddCategorySubtitle>Category Type: </AddCategorySubtitle>
                     <AddCategorySelector name='product-type' onChange={(e) => setType(e.target.value)} defaultValue={''}>
                         <AddCategoryOption key={0}  disabled value={''}> -- select an option -- </AddCategoryOption>
-                        {productTypes.map((item, index) => (
+                        {categoryTypes.map((item, index) => (
                                 <AddCategoryOption key={index + 1} value={item.type}>{item.type}</AddCategoryOption>
                         ))}
                     </AddCategorySelector>

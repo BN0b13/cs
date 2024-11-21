@@ -22,11 +22,11 @@ import {
 import { convertProductPrice } from '../../tools/cart';
 import Client from '../../tools/client';
 import { setMobileView } from '../../tools/mobileView';
-import { processSales } from '../../tools/sales';
 
 const client = new Client();
 
 const CartPage = () => {
+    const [ loading, setLoading ] = useState(true);
     const [ cart, setCart ] = useState(null);
     const [ subtotal, setSubtotal ] = useState(null);
     const [ saleActive, setSaleActive ] = useState(false);
@@ -37,33 +37,27 @@ const CartPage = () => {
     const { colors } = useContext(ConfigurationContext);
 
     useEffect(() => {
-        const getCart = async () => {
-            const checkoutSetUp = await client.checkoutSetUp();
-            const cartContents = await client.getCartContents();
-            let subtotalCount = 0;
-            let preSaleAmount = 0;
-            
-            if(checkoutSetUp.sales) {
-                setSaleActive(true);
-                const processSalePrice = processSales(checkoutSetUp.sales, cartContents.rows[0].products);
-                subtotalCount = processSalePrice.subTotal;
-                setDiscountAmountRemoved(processSalePrice.discountAmountRemoved);
-                cartContents.rows[0].products.map(product => preSaleAmount = preSaleAmount + (product.quantity * product.product[0].Inventories[0].price));
-            } else {
-                cartContents.rows[0].products.map(product => subtotalCount = subtotalCount + (product.quantity * product.product[0].Inventories[0].price));
-            }
-            setPreSaleSubtotal(preSaleAmount); 
-            setSubtotal(subtotalCount);
-            setCart(cartContents.rows[0].products);
-        }
         getCart();
     }, [ cartItems ]);
-    
+
+    const getCart = async () => {
+        setLoading(true);
+        const checkoutSetup = await client.checkoutSetup();
+
+        if(checkoutSetup.preSaleTotal) {
+            setPreSaleSubtotal(checkoutSetup.preSaleTotal);
+            setDiscountAmountRemoved(checkoutSetup.subtotal - checkoutSetup.preSaleTotal);
+            setSaleActive(true);
+        }
+        setSubtotal(checkoutSetup.subtotal);
+        setCart(checkoutSetup.cart.products);
+        setLoading(false);
+    }
 
     return (
         <CartPageContainer theme={colors}>
             <CartPageTitle>Cart</CartPageTitle>
-            { !cart ?  
+            { loading ?  
                 <Spinner />
             :
                 cart.length === 0 ?
@@ -73,7 +67,7 @@ const CartPage = () => {
                         <CartItemsContainer>
                             {
                                 cart.map((item, index) => 
-                                    <CartItem key={index} quantity={item.quantity} product={item.product[0]} />
+                                    <CartItem key={index} quantity={item.quantity} product={item.product} inventoryId={item.inventory.id} />
                                 )
                             }
                         </CartItemsContainer>

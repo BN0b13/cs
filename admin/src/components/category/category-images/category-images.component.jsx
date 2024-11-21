@@ -16,7 +16,7 @@ import {
 
 const client = new Client();
 
-const CategoryImages = ({ category }) => {
+const CategoryImages = ({ category, getCategory }) => {
     const [ image, setImage ] = useState('');
     const [ imagePreview, setImagePreview ] = useState('');
     const [ fileInput, setFileInput ] = useState('');
@@ -53,9 +53,9 @@ const CategoryImages = ({ category }) => {
             id: category.id
         };
 
-        const res = await client.deleteCategoryThumbnail(data);
+        await client.deleteCategoryThumbnail(data);
 
-        console.log('DELETE Category Thumbnail res: ', res);
+        await getCategory();
     }
 
     return (
@@ -69,7 +69,6 @@ const CategoryImages = ({ category }) => {
                 }
                 {category.thumbnailPath ?
                     <>
-                        {console.log('Category: ', category)}
                         <img src={api + category.thumbnailPath} alt='thumbnail' width='200' height='200' />
                         <button onClick={() => deleteCategoryThumbnail()}>Delete Image</button>
                     </>

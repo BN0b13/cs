@@ -20,31 +20,36 @@ const confirmCartWithInventory = async (cart, product) => {
             cartItem.quantity = inventory;
         }
     });
+
     return cart;
 }
 
 export const getCartCount = async () => {
     let currentCount = 0;
     const res = await client.getCart();
-    res.rows[0].products.map(product => currentCount = currentCount + product.quantity);
-    return currentCount;
+    res.products.map(product => currentCount = currentCount + product.quantity);
+
+    return {
+        cart: res,
+        currentCount
+    };
 }
 
 export const addCartItem = async (productToAdd) => {
     const res = await client.getCart();
-    const cartItems = res.rows[0].products;
-    const existingCartItem = cartItems.find(
-        (cartItem) => cartItem.productId === productToAdd.productId
+    const cartItems = res.products;
+    const existingCartItem = cartItems.filter(
+        (cartItem) => (cartItem.productId === productToAdd.productId && cartItem.inventoryId === productToAdd.inventoryId)
     );
 
     let cart = [...cartItems, { ...productToAdd }];
 
-    if(existingCartItem) {
+    if(existingCartItem.length > 0) {
         cart = cartItems.map(
-            (cartItem) => cartItem.productId === productToAdd.productId ? 
-                {...cartItem, quantity: (cartItem.quantity + productToAdd.quantity)} 
-            : 
-                cartItem
+            (cartItem) => (cartItem.productId === productToAdd.productId && cartItem.inventoryId === productToAdd.inventoryId) ? 
+                    {...cartItem, quantity: (cartItem.quantity + productToAdd.quantity)} 
+                : 
+                    cartItem
         );
     }
 
@@ -55,21 +60,21 @@ export const addCartItem = async (productToAdd) => {
 
 export const deleteCartItem = async (cartItemToDelete) => {
     const res = await client.getCart();
-    const cartItems = res.rows[0].products;
+    const cartItems = res.products;
 
-    const data = cartItems.filter(cartItem => cartItem.productId !== cartItemToDelete.productId);
+    const data = cartItems.filter(cartItem => cartItem.inventoryId !== cartItemToDelete.inventoryId);
     
     return await modifyCart(data);
 }
 
 export const removeCartItem = async (cartItemToRemove) => {
     const res = await client.getCart();
-    const cartItems = res.rows[0].products;
+    const cartItems = res.products;
 
     let deleteCartItemCheck = false;
 
     let cart = cartItems.map((cartItem) => {
-        if(cartItem.productId === cartItemToRemove.productId) {
+        if(cartItem.inventoryId === cartItemToRemove.inventoryId) {
             if(cartItem.quantity === 1) {
                 deleteCartItemCheck = true;
                 return cartItem
@@ -80,7 +85,7 @@ export const removeCartItem = async (cartItemToRemove) => {
     });
 
     if(deleteCartItemCheck) {
-        cart = cartItems.filter(cartItem => cartItem.productId !== cartItemToRemove.productId);
+        cart = cartItems.filter(cartItem => cartItem.inventoryId !== cartItemToRemove.inventoryId);
     }
 
     return await modifyCart(cart);
@@ -89,5 +94,5 @@ export const removeCartItem = async (cartItemToRemove) => {
 export const modifyCart = async (data) => {
     await client.modifyCart({products: data});
     const res = await client.getCart();
-    return res.rows[0].products;
+    return res.products;
 }

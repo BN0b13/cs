@@ -37,7 +37,7 @@ const AboutPage = () => {
                 </ContentTextContainer>
             </ContentContainer>
             <ButtonContainer>
-                <Button onClick={() => window.location.href = '/shop'}>SHOP NOW</Button>
+                <Button onClick={() => window.location.href = '/shop?type=seeds'}>SHOP NOW</Button>
             </ButtonContainer>
         </AboutPageContainer>
     );

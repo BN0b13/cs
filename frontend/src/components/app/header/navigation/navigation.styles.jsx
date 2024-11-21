@@ -5,6 +5,7 @@ export const NavigationContainer = styled.div`
     flex-direction: row;
     align-items: center;
     color: ${props => props.theme.text};
+    margin: 0;
 `;
 
 export const NavOptions = styled.div`

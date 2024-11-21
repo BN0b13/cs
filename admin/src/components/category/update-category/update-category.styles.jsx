@@ -25,7 +25,7 @@ export const UpdateCategoryTextarea = styled.textarea`
 `;
 
 export const UpdateCategorySelect = styled.select`
-
+    margin: 10px;
 `;
 
 export const UpdateCategoryOption = styled.option`

@@ -18,18 +18,19 @@ import {
 const CartIcon = () => {
     const loggedInStatus = localStorage.getItem(tokenName);
     const cartTokenCount = localStorage.getItem(cartTokenName);
+    const [count, setCount] = useState(cartTokenCount ? cartTokenCount : 0);
 
     const { cartItems } = useContext(CartContext);
     const { colors } = useContext(ConfigurationContext);
 
-    const [count, setCount] = useState(cartTokenCount ? cartTokenCount : 0);
 
     useEffect(() => {
         const getCart = async () => {
             const res = await getCartCount();
-            localStorage.setItem(cartTokenName, res);
-            setCount(res);
+            localStorage.setItem(cartTokenName, res.currentCount);
+            setCount(res.currentCount);
         }
+
         if(loggedInStatus) {
             getCart();
         } else {

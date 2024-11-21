@@ -28,11 +28,19 @@ class InventoryRepository {
 
     async getInventoryById(id) {
         try {
-            return await Inventory.findOne({
+            const res =  await Inventory.findOne({
                 where: {
                     id
                 }
             });
+
+            if(res === null) {
+                return {
+                    status: 404
+                }
+            }
+
+            return res;
         } catch (err) {
             console.log('Get Inventory Error: ', err);
             throw Error('There was an error getting inventory');

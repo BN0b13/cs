@@ -1,6 +1,8 @@
 import InventoryRepository from '../repositories/InventoryRepository.js';
+import InventoryService from '../services/InventoryService.js';
 
 const inventoryRepository = new InventoryRepository();
+const inventoryService = new InventoryService();
 
 class InventoryController {
 
@@ -97,7 +99,7 @@ class InventoryController {
         const {
             id
         } = req.body;
-        const data = await inventoryRepository.deleteInventoryById(id);
+        const data = await inventoryService.deleteInventoryById(id);
         res.send(data);
     }
 

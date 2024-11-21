@@ -24,6 +24,7 @@ const client = new Client();
 const tools = new Tools();
 
 const CustomerMetrics = () => {
+  console.log('Customer Metrics Hit');
   const [ loading, setLoading ] = useState(true);
   const [ data, setData ] = useState(null);
   const [ totalCount, setTotalCount ] = useState(null);
@@ -92,6 +93,7 @@ const CustomerMetrics = () => {
     };
 
     const res = await client.getCustomersByDateRange(data);
+    console.log('GET Customers res: ', res);
     setCurrentCount(res.count);
     const sortedData = tools.sortByDateAscending(res.rows);
     setData(sortedData);

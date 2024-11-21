@@ -22,9 +22,12 @@ class ThemeRepository {
                 }
             });
             
-            if(!res) {
-                return {};
+            if(res === null) {
+                return {
+                    status: 404
+                }
             }
+            
             return res;
         } catch (err) {
             console.log('GET Welcome Images Error: ', err);

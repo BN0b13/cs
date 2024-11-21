@@ -188,6 +188,8 @@ export default class ProductService {
             image = null
         } = params;
 
+        // Check to see if product already exists
+
         const productProfile = [];
 
         for(let id of profile) {
@@ -325,11 +327,12 @@ export default class ProductService {
             return res;
         } catch (err) {
             console.log('Update User Error: ', err);
-            throw Error('There was an error updating the user');
+            throw Error('There was an error updating the Product');
         }
     }
 
     deleteProduct = async (id) => {
+        console.log('DELETE Product id: ', id);
         try {
             const orderStatus = await sequelize.query(`select *
             from ${process.env.PG_SCHEMA_NAME}."Orders"
@@ -342,16 +345,12 @@ export default class ProductService {
                 }
             }
 
-            const getProduct = await Product.findAll(
+            const getProduct = await Product.findOne(
                 {
                     where: {
-                        id: id
+                        id
                     },
                     include: [
-                        { 
-                            model: Category,
-                            required: true
-                        },
                         { 
                             model: Inventory,
                             required: true
@@ -363,18 +362,27 @@ export default class ProductService {
                 }
             );
 
-            const inventoryId = getProduct[0].Inventories[0].id;
-            const productImages = getProduct[0].ProductImages;
+            const inventories = getProduct.dataValues.Inventories;
+            const productImages = getProduct.dataValues.ProductImages;
 
             // Delete inventory
 
-            const deleteInventoryRes = await Inventory.destroy(
-                {
-                    where: {
-                                id: inventoryId
-                            }
-                }
-            );
+            let deleteProductInventoryRes = [];
+
+            for(const inventory of inventories) {
+                const deleteInventoryRes = await Inventory.destroy(
+                    {
+                        where: {
+                                    id: inventory.id
+                                }
+                    }
+                );
+
+                deleteProductInventoryRes.push({
+                    id: inventory.id,
+                    deleteInventoryRes
+                });
+            }
 
             let deleteProductImagesRes = [];
 
@@ -442,7 +450,7 @@ export default class ProductService {
 
             return {
                 deleteProductRes,
-                deleteInventoryRes,
+                deleteProductInventoryRes,
                 deleteProductImagesRes
             };
         } catch (err) {

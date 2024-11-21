@@ -44,7 +44,7 @@ const AddSale = ({ setShowAddSale }) => {
 
         const data = {
             name,
-            type
+            type: type.value
         };
 
         if (categoryId !== '') { data.categoryId = categoryId };

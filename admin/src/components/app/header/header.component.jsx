@@ -32,10 +32,10 @@ const Header = () => {
         setNewAccounts(signUpsToday.length);
     }
 
-    const getOrders= async () => {
-        const res = await client.getOrders();
-        const newOrderArr = res.rows.filter(order => order.status.toLowerCase() === 'new');
-        setNewOrders(newOrderArr.length);
+    const getOrders = async () => {
+        const status = 'new';
+        const res = await client.getOrdersByStatus(status);
+        setNewOrders(res.count);
     }
 
     return(

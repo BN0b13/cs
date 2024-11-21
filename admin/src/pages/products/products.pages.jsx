@@ -8,22 +8,17 @@ import Pagination from '../../components/reusable/pagination/pagination.componen
 import ProductsTable from '../../components/reusable/tables/products-table/products-table.component';
 
 import Client from '../../tools/client';
-import Tools from '../../tools/tools';
-
-import {
-    TabContainer,
-    TabSelector
-} from './products.styles';
 
 import {
     ContentContainer,
     MainTitle,
     Option,
-    Select
+    Select,
+    TabContainer,
+    TabSelector
 } from '../../styles/page.styles';
 
 const client = new Client();
-const tools = new Tools();
 
 const ProductsPage = () => {
     const [ loading, setLoading ] = useState(true);
@@ -98,7 +93,6 @@ const ProductsPage = () => {
     }
 
     const showCurrentTab = () => {
-
         if(currentTab === 2) {
             return (
                 <AddProduct />
@@ -150,14 +144,14 @@ const ProductsPage = () => {
     }
 
     return (
-        <div>
+        <>
             <TabContainer>
                 <TabSelector active={tabOneActive} onClick={() => activateTabOne()}>Products</TabSelector>
                 <TabSelector active={tabTwoActive} onClick={() => activateTabTwo()}>Add Product</TabSelector>
                 <TabSelector active={tabThreeActive} onClick={() => activateTabThree()}>Product Profiles</TabSelector>
             </TabContainer>
             { showCurrentTab() }
-        </div>
+        </>
     )
 }
 

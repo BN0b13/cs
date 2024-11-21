@@ -10,6 +10,12 @@ import UpdateCategory from '../../components/category/update-category/update-cat
 import Client from '../../tools/client';
 import { url } from '../../config';
 
+import {
+    BackLink,
+    MainContainer,
+    MainTitle
+} from '../../styles/page.styles';
+
 const client = new Client();
 
 const CategoryPage = () => {
@@ -27,6 +33,7 @@ const CategoryPage = () => {
     }, []);
 
     const getCategory = async () => {
+        setLoading(true);
         const res = await client.getCategoryById(id);
         const categoryProducts = await client.getProductsByCategoryId(id);
 
@@ -44,21 +51,21 @@ const CategoryPage = () => {
     }
 
     return (
-        <div>
-            <h6 onClick={() => window.location.href = `${url}/categories`}>Back to Categories</h6>
+        <MainContainer>
+            <BackLink onClick={() => window.location.href = `${url}/categories`}>Back to Categories</BackLink>
             {loading ?
                 <Spinner />
             :
                 category.length === 0 ?
-                    <h2>No Category to Display</h2>
+                    <MainTitle>No Category to Display</MainTitle>
                 :
                     <>
-                        <CategoryImages category={category} />
+                        <CategoryImages category={category} getCategory={getCategory} />
                         { categoryContent() }
                         <ProductsTable products={products} />
                     </>
             }
-        </div>
+        </MainContainer>
     )
 }
 

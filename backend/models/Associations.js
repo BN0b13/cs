@@ -1,3 +1,4 @@
+import Auction from './Auction.js';
 import Cart from './Cart.js';
 import Category from './Category.js';
 import Company from './Company.js';
@@ -10,6 +11,7 @@ import Order from './Order.js';
 import Product from './Product.js';
 import ProductImage from './ProductImage.js';
 import ProductProfile from './ProductProfile.js';
+import Raffle from './Raffle.js';
 import Role from './Role.js';
 import Sale from './Sale.js';
 import Theme from './Theme.js';
@@ -101,6 +103,14 @@ Product.hasMany(Inventory, {
     }
 });
 
+Raffle.hasOne(Product, {
+    foreignKey:{
+        allowNull: false, 
+        name:'id'
+    },
+    sourceKey: 'productId'
+});
+
 User.hasOne(Cart, {
     foreignKey:{
         allowNull: false, 
@@ -138,6 +148,7 @@ User.hasOne(Role, {
 });
 
 export {
+    Auction,
     Cart,
     Category,
     Company,
@@ -150,6 +161,7 @@ export {
     Product,
     ProductImage,
     ProductProfile,
+    Raffle,
     Role,
     Sale,
     Theme,

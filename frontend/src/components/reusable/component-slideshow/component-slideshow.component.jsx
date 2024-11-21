@@ -13,7 +13,7 @@ import {
   MainContainer
 } from './component-slideshow.styles';
 
-const ComponentSlideshow = ({ products, categories }) => {
+const ComponentSlideshow = ({ products }) => {
   const mainViewAmount = setTabletView() ? 2 : 3;
   const amountDisplayed = setMobileView() ? 1 : mainViewAmount;
   const [ autoPlay, setAutoPlay ] = useState(true);
@@ -32,16 +32,10 @@ const ComponentSlideshow = ({ products, categories }) => {
     let arr = [];
     let obj = { current: [] };
 
-    const productsWithInventory = products.filter(product => product.Inventories[0].quantity !== 0);
+    const activeProducts = products.filter(product => product.Category.status === true);
+    const productsWithInventory = activeProducts.filter(product => product.Inventories[0].quantity !== 0);
 
     productsWithInventory.forEach((product, index) => {
-      let productCategory = '';
-      categories.forEach(category => {
-        if(category.id === product.categoryId) { 
-          return productCategory = category; 
-        }
-      });
-      product.category = productCategory;
       if(count === amountDisplayed) {
         count = 0;
         arr.push(obj);
@@ -66,7 +60,7 @@ const ComponentSlideshow = ({ products, categories }) => {
               <ContentContainer key={index}>
                 {productGroup.current.map((product, index) => (
                   <Content key={index}>
-                    <ContentLink href={`/shop/${product.category}/${product.name}`}>
+                    <ContentLink href={`/shop/${product.Category.type}/${product.Category.name}/${product.name}`}>
                       <ProductCard product={product} />
                     </ContentLink>
                   </Content>

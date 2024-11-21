@@ -33,6 +33,29 @@ class OrderRepository {
         }
     }
 
+    async getOrdersByStatus(status) {
+        try {
+            const res = await Order.findAndCountAll({
+                where: {
+                    status
+                },
+                include: [
+                    { 
+                        model: Coupon
+                    },
+                    { 
+                        model: Sale
+                    }
+                ]
+            });
+
+            return res;
+        } catch (err) {
+            console.log('Get All Orders Error: ', err);
+            throw Error('There was an error getting all orders');
+        }
+    }
+
     async getOrderById(id) {
         try {
             const res = await Order.findOne({
@@ -48,6 +71,13 @@ class OrderRepository {
                     }
                 ]
             });
+
+            if(res === null) {
+                return {
+                    status: 404
+                }
+            }
+
             return res;
         } catch (err) {
             console.log('Get Order Error: ', err);
@@ -105,6 +135,12 @@ class OrderRepository {
                 ]
             });
 
+            if(res === null) {
+                return {
+                    status: 404
+                }
+            }
+
             return res;
         } catch (err) {
             console.log('Get Orders Messages Error: ', err);
@@ -127,6 +163,13 @@ class OrderRepository {
                     }
                 ]
             });
+
+            if(res === null) {
+                return {
+                    status: 404
+                }
+            }
+            
             return res;
         } catch (err) {
             console.log('Get Orders Messages Error: ', err);
@@ -163,13 +206,13 @@ class OrderRepository {
 
     // UPDATE
 
-    async updateOrder(orderId, data) {
+    async updateOrder(id, data) {
         try {
             const res = await Order.update(
                 data,
                 {
                     where: {
-                                id: orderId
+                                id
                             }
                 }
             );
