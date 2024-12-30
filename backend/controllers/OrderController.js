@@ -166,7 +166,7 @@ class OrderController {
 
     async paymentLink(req, res) {
         const {
-            orderId,
+            id,
             email = null,
             refId = null,
             status = null,
@@ -182,7 +182,7 @@ class OrderController {
 
         Object.keys(params).forEach(param => params[param] == null && delete params[param]);
 
-        const data = await orderService.sendPaymentLink(orderId, params);
+        const data = await orderService.sendPaymentLink(id, params);
         res.send(data);
     }
 
