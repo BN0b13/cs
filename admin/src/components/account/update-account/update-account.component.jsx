@@ -75,8 +75,6 @@ const UpdateAccount = ({ account, submit, showUpdate }) => {
     }
 
     const submitUpdate = async () => {
-        setLoading(true);
-
         if(roleId === '' ||
             username === '' ||
             firstName === '' ||
@@ -90,6 +88,7 @@ const UpdateAccount = ({ account, submit, showUpdate }) => {
             errorToast('Please fill out all fields to update account.');
             return
         }
+        setLoading(true);
 
         const params = {
             roleId,
