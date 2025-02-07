@@ -3,7 +3,6 @@
 ## Raspberry Pi set-up
 
 # Check argument
-
 if [[ "$#" -eq 0 ]] || [[ $1 != *"."* ]];
     then echo Please enter in a valid url as an argument.
     exit
@@ -15,12 +14,10 @@ if [[ $1 = "www."* ]];
 fi
 
 # Update Raspberry Pi
-
 sudo apt update -y
 sudo apt upgrade -y
 
 # Node
-
 echo Installing Node
 sudo apt install -y ca-certificates curl gnupg
 sudo curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /usr/share/keyrings/nodesource.gpg
@@ -31,7 +28,6 @@ sudo apt install nodejs -y
 sudo apt install build-essential
 
 # Docker
-
 echo Installing Docker
 sudo apt-get update
 sudo apt-get install ca-certificates curl
@@ -46,7 +42,6 @@ sudo apt-get update -y
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
 
 # Docker-Compose
-
 echo Installing Docker-Compose
 sudo curl -L https://github.com/docker/compose/releases/download/v2.23.3/docker-compose-`uname -s`-`uname -m` > docker-compose
 sudo mv docker-compose /usr/bin/
@@ -54,41 +49,25 @@ sudo chown root: /usr/bin/docker-compose
 sudo chmod +x /usr/bin/docker-compose
 
 # Set up sites
-
-# Clear local git changes, if any
-cd ..
-git reset --hard
-# Pull new changes to frontend main
-git pull origin main;
-# Set up admin frontend
-cd admin
+cd ~/cs
 source ./build.sh
-cd ..
-# Set up frontend
-cd frontend
-source ../frontend/build.sh
-cd ..
-# Set up backend
-cd backend
-source ./backend/build.sh
-cd ..
-cd pi
+cd ~/cs/pi
 
 # PM2
 echo Installing PM2
 sudo npm install -g pm2
 pm2 startup
 sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u bnoble --hp /home/bnoble
-# cd ~/cs/backend
-# sudo pm2 start app.js --name $1 --time
-# sudo pm2 save
-# cd ~/cs/pi
+cd ~/cs/backend
+sudo pm2 start app.js --name $1 --time
+sudo pm2 save
 
 # NGINX
-
-# source ./nginx/nginx.sh $1
-sudo apt remove apache2
-sudo apt install nginx -y
-sudo systemctl start nginx
+cd ~/cs/pi/nginx
+source ./nginx.sh $1
+## OR
+# sudo apt remove apache2
+# sudo apt install nginx -y
+# sudo systemctl start nginx
 
 sudo reboot

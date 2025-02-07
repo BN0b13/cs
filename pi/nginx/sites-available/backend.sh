@@ -20,12 +20,6 @@ server_name $URL;
         proxy_pass http://$URL/;
         proxy_redirect off;
     }
-
-    listen 443 ssl; # managed by Certbot
-    ssl_certificate /etc/letsencrypt/live/$URL/fullchain.pem; # managed by Certbot
-    ssl_certificate_key /etc/letsencrypt/live/$URL/privkey.pem; # managed by Certbot
-    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
 }
 
 server {
@@ -33,19 +27,11 @@ server {
         return 301 https://\$host\$request_uri;
     }
 
-server_name $URL;
+    server_name $URL;
 
-listen 80;
+    listen 80;
 
-return 301 https://\$host\$request_uri;
-
-
-}
-
-server {
-    if (\$host = $URL) {
-        return 301 https://\$host\$request_uri;
-    }
+    return 301 https://\$host\$request_uri;
 }" > $URL
 
 sudo ln -s /etc/nginx/sites-available/$URL /etc/nginx/sites-enabled/$URL

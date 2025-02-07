@@ -8,10 +8,6 @@ sudo apt remove apache2
 sudo apt install nginx -y
 sudo systemctl start nginx
 
-# # Certbot
-
-sudo apt install certbot -y
-
 for f in ./nginx/sites-available/*.sh; do
     bash "$f" $1
 done
@@ -80,8 +76,9 @@ http {
 	include /etc/nginx/sites-enabled/*;
 }" > nginx.conf
 
-# Set up certbot
+# Certbot
 
-# sudo certbot --nginx --domain $URL
+# sudo apt install certbot -y
+# sudo certbot --nginx --domain $1
 
 cd ~/cs/pi
