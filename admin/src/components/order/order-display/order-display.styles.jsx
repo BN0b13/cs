@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { setMobileView } from '../../../tools/mobileView';
 
 export const MainContent = styled.div`
     display: flex;
@@ -30,15 +31,15 @@ export const PrintContainer = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: end;
-    width: 80%;
+    width: ${setMobileView() ? '300px' : '80%'};
     margin: auto;
-    padding-top: 40px;
+    padding-top: ${setMobileView() ? '10px' : '30px'};
     cursor: pointer;
 `;
 
 export const InvoiceDetailsContainer = styled.div`
     display: flex;
-    flex-direction:'row';
+    flex-direction:row;
     justify-content: space-between;
     width: 100%;
     margin: 5px;
@@ -46,34 +47,38 @@ export const InvoiceDetailsContainer = styled.div`
 
 export const InvoiceAddressesContainer = styled.div`
     display: flex;
-    flex-direction: 'row';
+    flex-direction: row;
     margin: 5px;
 `;
 
 export const InvoiceAddressContainer = styled.div`
-    margin: 5px;
+    margin: ${setMobileView() ? '10px' : '5px'};
 `;
 
 export const InvoiceHeaderContainer = styled.div`
     display: flex;
-    flex-direction: row;
-    align-items: end;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
 `;
 
 export const InvoiceTotalContainer = styled.div`
     display: flex;
     flex-direction: column;
-    align-items: 'end';
-    margin-top: 40px;
+    align-items: end;
+    margin-top: ${setMobileView() ? '10px' : '30px'};
+    border: 1px solid black;
+    width: ${setMobileView() ? '300px' : ''};
 `;
 
 export const InvoiceTotalItemContainer = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    border: 1px solid darkgrey;
-    width: 250px;
-    padding: 10px;
+    width: ${setMobileView() ? '300px' : '250px'};
+    padding: 10px 0;
+    border-bottom: ${props => props.borderBottom ?? '1px solid black'};
 `;
 
 export const TrackingContainer = styled.div`
@@ -84,43 +89,28 @@ export const TrackingContainer = styled.div`
 
 export const TrackingSubtitle = styled.h4`
     margin: 0;
+    font-size: ${setMobileView() ? '12px' : ''};
 `;
 
 export const TrackingText = styled.p`
     margin: 0;
     padding-left: 10px;
+    font-size: ${setMobileView() ? '12px' : ''};
 `;
 
 export const InvoiceTitle = styled.h2`
     text-align: center;
+    font-size: ${setMobileView() ? '16px' : ''};
 `;
 
 export const InvoiceSubtitle = styled.h4`
     text-align: start;
     margin-bottom: 5px;
+    font-size: ${setMobileView() ? '12px' : ''};
 `;
 
 export const InvoiceText = styled.p`
-    margin: 1px;
-`;
-
-export const InvoiceTable = styled.table`
-    margin: 40px 0;
-    width: 100%;
-`;
-
-export const InvoiceTableHead = styled.thead`
-    font-size: 18px;
-`;
-
-export const InvoiceTableBody = styled.tbody`
-
-`;
-
-export const InvoiceTableRow = styled.tr`
-    
-`;
-
-export const InvoiceTableHeading = styled.th`
-    
+    margin: 5px;
+    padding: 0 5px;
+    font-size: ${setMobileView() ? '12px' : ''};
 `;

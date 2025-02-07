@@ -7,4 +7,4 @@ npm run up
 npm run migrate
 npm run seed
 # Print completion message
-echo "CosmicStrains.com Backend build script successfully completed."
+echo "$SITE Backend build script successfully completed."

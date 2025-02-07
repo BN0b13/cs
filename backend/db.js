@@ -6,7 +6,7 @@ const sequelize = new Sequelize(process.env.PG_DATABASE_NAME, process.env.PG_USE
     dialectModule: pg,
     dialectOptions: {},
     host: process.env.HOST,
-    port: 5432,
+    port: process.env.PG_PORT,
     pool: {
         max: 50
     }

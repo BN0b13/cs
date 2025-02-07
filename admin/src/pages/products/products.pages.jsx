@@ -148,7 +148,7 @@ const ProductsPage = () => {
             <TabContainer>
                 <TabSelector active={tabOneActive} onClick={() => activateTabOne()}>Products</TabSelector>
                 <TabSelector active={tabTwoActive} onClick={() => activateTabTwo()}>Add Product</TabSelector>
-                <TabSelector active={tabThreeActive} onClick={() => activateTabThree()}>Product Profiles</TabSelector>
+                {/* <TabSelector active={tabThreeActive} onClick={() => activateTabThree()}>Product Profiles</TabSelector> */}
             </TabContainer>
             { showCurrentTab() }
         </>

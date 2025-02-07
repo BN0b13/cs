@@ -32,11 +32,11 @@ export const menuItemsAdmin = [
     path: '/companies',
     icon: (<FaRegBuilding />)
   },
-  {
-    title: 'Messages',
-    path: '/messages',
-    icon: (<VscAccount />)
-  },
+  // {
+  //   title: 'Messages',
+  //   path: '/messages',
+  //   icon: (<VscAccount />)
+  // },
   {
     title: 'Orders',
     path: '/orders',
@@ -52,31 +52,31 @@ export const menuItemsAdmin = [
     path: '/products',
     icon: (<VscFile />)
   },
-  {
-    title: 'Raffles',
-    path: '/raffles',
-    icon: (<FaTicketAlt />)
-  },
-  {
-    title: 'Auctions',
-    path: '/auctions',
-    icon: (<FaGavel />)
-  },
-  {
-    title: 'Sales',
-    path: '/sales',
-    icon: (<FaMoneyBillAlt />)
-  },
+  // {
+  //   title: 'Raffles',
+  //   path: '/raffles',
+  //   icon: (<FaTicketAlt />)
+  // },
+  // {
+  //   title: 'Auctions',
+  //   path: '/auctions',
+  //   icon: (<FaGavel />)
+  // },
+  // {
+  //   title: 'Sales',
+  //   path: '/sales',
+  //   icon: (<FaMoneyBillAlt />)
+  // },
   {
     title: 'Giveaways',
     path: '/giveaways',
     icon: (<FaGift />)
   },
-  {
-    title: 'Grow Room',
-    path: '/grow-room',
-    icon: (<FaServer />)
-  },
+  // {
+  //   title: 'Grow Room',
+  //   path: '/grow-room',
+  //   icon: (<FaServer />)
+  // },
   {
     title: 'Configuration',
     path: '/configuration',

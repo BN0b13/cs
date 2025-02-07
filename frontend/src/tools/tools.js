@@ -1,5 +1,7 @@
 import dayjs from 'dayjs';
 
+import { tokenName } from '../config';
+
 export default class Tools {
 
   usernameRegex = /^[a-zA-Z0-9\-._!?@#$]+$/;
@@ -217,6 +219,12 @@ export default class Tools {
         "abbreviation": "WY"
     }
   ];
+
+  logOut = () => {
+    localStorage.removeItem(tokenName);
+    sessionStorage.removeItem(tokenName);
+    window.location = '/';
+  }
 
   handleEmailAddress = (email, setEmail, setShowEmailDisclaimer) => {
     if(email.toLowerCase().includes('hotmail') ||

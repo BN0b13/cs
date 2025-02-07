@@ -103,16 +103,10 @@ function App() {
         let getAccount = await client.getAccount();
 
         if(getAccount.status === 'inactive') {
-          const logOut = () => {
-            localStorage.removeItem(tokenName);
-            sessionStorage.removeItem(tokenName);
-            window.location = '/';
-          }
-
           setModalTitle('Account Inactive');
           setModalMessage('This account is inactive. Please log out.');
           setModalInput(null);
-          setModalAction(() => logOut);
+          setModalAction(() => tools.logOut());
           setModalActionText('Log Out');
           setModalAllowCancel(false);
           setShowModal(true);

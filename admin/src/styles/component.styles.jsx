@@ -10,10 +10,10 @@ export const MainContainer = styled.div`
 
     @media print {
         .printerContainer {
-          padding: 40px !important;
-          font-size: 12px !important;
+            margin-top: 30px;
+            font-size: 12px;
         }
-      }
+    }
 `;
 
 export const ColumnContainer = styled.div`
