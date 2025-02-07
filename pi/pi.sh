@@ -9,7 +9,7 @@ if [[ "$#" -eq 0 ]] || [[ $1 != *"."* ]];
     exit
 fi
 
-if [[ $1 = "www"* ]];
+if [[ $1 = "www."* ]];
     then echo Please remove www from the url.
     exit
 fi

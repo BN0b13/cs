@@ -10,6 +10,7 @@ import {
 import OrderItem from './order-item/order-item.component';
 
 import Tools from '../../../tools/tools.js';
+import { setMobileView } from '../../../tools/mobileView.js';
 
 import {
     AccountDetailsContainer,
@@ -17,11 +18,6 @@ import {
     InvoiceAddressesContainer,
     InvoiceAddressContainer,
     InvoiceHeaderContainer,
-    InvoiceTable,
-    InvoiceTableBody,
-    InvoiceTableHead,
-    InvoiceTableRow,
-    InvoiceTableHeading,
     InvoiceText,
     InvoiceTotalContainer,
     InvoiceTotalItemContainer,
@@ -36,16 +32,23 @@ import {
     ColumnContainer,
     ContentContainer,
     MainContainer,
-    Text
+    Text,
+    Table,
+    TableBody,
+    TableHead,
+    TableHeader,
+    TableRow
 } from '../../../styles/component.styles.jsx';
 
 const tools = new Tools();
+const iconSize = setMobileView() ? '18px' : '28px';
 
 const OrderDisplay = ({ user, order, products, showUpdate }) => {
     const componentRef = useRef();
     const [ subtotal, setSubtotal ] = useState('');
 
     useEffect(() => {
+        console.log('Order Display Displayed');
         let subtotalCount = 0;
         products.map(product => {
             const inventory = product.product.Inventories.filter(item => item.id === product.inventoryId)[0];
@@ -60,9 +63,9 @@ const OrderDisplay = ({ user, order, products, showUpdate }) => {
         <MainContainer>
             <>
                 <PrintContainer>
-                    <FaEdit onClick={() => showUpdate(true)} style={{ fontSize: '28px'}} />
+                    <FaEdit onClick={() => showUpdate(true)} style={{ fontSize: iconSize, marginRight: '20px' }} />
                     <ReactToPrint
-                        trigger={() => <FaPrint style={{ fontSize: '28px'}} />}
+                        trigger={() => <FaPrint style={{ fontSize: iconSize }} />}
                         content={() => componentRef.current}
                     />
                 </PrintContainer>
@@ -73,7 +76,6 @@ const OrderDisplay = ({ user, order, products, showUpdate }) => {
                 </AccountDetailsContainer>
                 <InvoiceContainer ref={componentRef}>
                     <InvoiceHeaderContainer>
-                                
                         <ColumnContainer>
                             <InvoiceAddressContainer>
                                 <InvoiceSubtitle>{ dayjs(order.createdAt).format('MM/DD/YY') }</InvoiceSubtitle>
@@ -113,23 +115,23 @@ const OrderDisplay = ({ user, order, products, showUpdate }) => {
                             </InvoiceAddressContainer>
                         </InvoiceAddressesContainer>
                     </InvoiceHeaderContainer>
-                    <InvoiceTable>
-                        <InvoiceTableHead>
-                            <InvoiceTableRow>
-                                <InvoiceTableHeading>Product</InvoiceTableHeading>
-                                <InvoiceTableHeading>Quantity</InvoiceTableHeading>
-                                <InvoiceTableHeading>Price</InvoiceTableHeading>
-                            </InvoiceTableRow>
-                        </InvoiceTableHead>
-                        <InvoiceTableBody>
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead>Product</TableHead>
+                                <TableHead>Quantity</TableHead>
+                                <TableHead>Price</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
                                 {products.map((product, index) => (
                                     <OrderItem key={index} product={product} />
                                 ))}
-                        </InvoiceTableBody>
-                    </InvoiceTable>
+                        </TableBody>
+                    </Table>
                     <InvoiceTotalContainer>
-                    <InvoiceTotalItemContainer>
-                        <InvoiceText>Subtotal </InvoiceText>
+                        <InvoiceTotalItemContainer>
+                            <InvoiceText>Subtotal </InvoiceText>
                             <InvoiceText>{ tools.formatPrice(subtotal) }</InvoiceText>
                         </InvoiceTotalItemContainer>
                         {order.deliveryInsurance &&
@@ -154,7 +156,7 @@ const OrderDisplay = ({ user, order, products, showUpdate }) => {
                                 <InvoiceText>{ `- $${order.credit.credit/100}` }</InvoiceText>
                             </InvoiceTotalItemContainer>
                         }
-                        <InvoiceTotalItemContainer>
+                        <InvoiceTotalItemContainer borderBottom={''}>
                             <InvoiceText>Total </InvoiceText>
                             <InvoiceText>{ tools.formatPrice(order.total) }</InvoiceText>
                         </InvoiceTotalItemContainer>

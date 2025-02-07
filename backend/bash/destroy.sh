@@ -1,8 +1,8 @@
 #!/bin/bash
 
-git reset --hard
+source ./.env
 
-git pull origin main
+echo Destroying database for site: $SITE
 
 rm -r public
 
@@ -20,12 +20,4 @@ cd ..
 
 cd ..
 
-npm run destroy
-
-npm run up
-
-sleep 3
-
-npm run migrate
-
-npm run seed
+docker-compose -f ./docker-compose.yml -p $NAME down -v --remove-orphans

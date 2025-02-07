@@ -6,13 +6,14 @@
   "type": "module",
   "scripts": {
     "start": "npm run migrate && nodemon app.js",
-    "up": "docker-compose -f ./docker-compose.yml -p cosmic_strains up -d",
-    "down": "docker-compose -f ./docker-compose.yml -p cosmic_strains down",
-    "destroy": "docker-compose -f ./docker-compose.yml -p cosmic_strains down -v --remove-orphans",
+    "build": "sudo chmod +x ./bash/build.sh && ./bash/build.sh",
+    "env": "sudo chmod +x ./bash/env.sh && ./bash/env.sh",
+    "up": "sudo chmod +x ./bash/up.sh && ./bash/up.sh",
+    "down": "sudo chmod +x ./bash/down.sh && ./bash/down.sh",
+    "destroy": "sudo chmod +x ./bash/destroy.sh && ./bash/destroy.sh",
     "migrate": "sequelize-cli db:migrate",
     "migrate:down": "sequelize-cli db:migrate:undo",
-    "seed": "npx sequelize-cli db:seed:all --seeders-path seeders/prod",
-    "seed:dev": "npx sequelize-cli db:seed:all --seeders-path seeders/dev",
+    "seed": "sudo chmod +x ./bash/seed.sh && ./bash/seed.sh",
     "redis": "docker-compose -f ./redis.docker-compose.yml -p order_queue up -d"
   },
   "repository": {
