@@ -28,6 +28,12 @@ echo "admin.cosmicstrains.com build script successfully completed."
 cd /home/bnoble/cs/backend
 # Install any new npm packages
 npm install
+# Spin up DB, if not already up
+sudo npm run up
+# Check DB Migrations
+npm run migrate
+# Check seeder
+sudo npm run seed
 # Restart PM2
 pm2 restart all --time
 # Print completion message
