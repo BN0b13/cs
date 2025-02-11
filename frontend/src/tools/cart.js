@@ -1,6 +1,8 @@
 import Client from './client';
+import Tools from './tools';
 
 const client = new Client();
+const tools = new Tools();
 
 export const getProductInventory = async (id) => {
     const res = await client.getProductById(id);
@@ -27,6 +29,11 @@ const confirmCartWithInventory = async (cart, product) => {
 export const getCartCount = async () => {
     let currentCount = 0;
     const res = await client.getCart();
+    console.log('GET Cart count res: ', res);
+    if(res.error) {
+        console.log('Error getting cart: ', res.error);
+        tools.logOut();
+    }
     res.products.map(product => currentCount = currentCount + product.quantity);
 
     return {

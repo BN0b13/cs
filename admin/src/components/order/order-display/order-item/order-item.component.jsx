@@ -5,17 +5,22 @@ import {
     InvoiceItemData
 } from './order-item.styles';
 
+import {
+    TableData,
+    TableRow
+} from '../../../../styles/component.styles.jsx';
+
 const tools = new Tools();
 
 const OrderItem = ({ product }) => {
     const inventory = product.product.Inventories.filter(item => item.id === product.inventoryId)[0];
 
     return (
-        <InvoiceItemRow>
-            <InvoiceItemData>{ product.product.name }</InvoiceItemData>
-            <InvoiceItemData>{ product.quantity }</InvoiceItemData>
-            <InvoiceItemData>{ tools.formatPrice(product.quantity * inventory.price) }</InvoiceItemData>
-        </InvoiceItemRow>
+        <TableRow>
+            <TableData>{ product.product.name }</TableData>
+            <TableData>{ product.quantity }</TableData>
+            <TableData>{ tools.formatPrice(product.quantity * inventory.price) }</TableData>
+        </TableRow>
     )
 }
 

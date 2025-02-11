@@ -269,6 +269,20 @@ class UserRepository {
         });
     }
 
+    async getCustomersPerDay(time = '7d') {
+        try {
+            return await User.findAndCountAll({
+                where: {
+                    created_at: {
+                        $gte: Sequelize.literal(`NOW() - INTERVAL \'${time}\'`),
+                    }
+                }
+            });
+        } catch (err) {
+            console.log('There was an error getting customers by day: ', err);
+        }
+    }
+
     async getCustomersByDateRange({ start, end }) {
         try {
             const startDate = dayjs.unix(start);

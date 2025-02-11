@@ -57,11 +57,11 @@ const MetricsPage = () => {
 
     return (
         <div>
-            <TabContainer>
+            {/* <TabContainer>
                 <TabSelector active={tabOneActive} onClick={() => activateTabOne()}>Views</TabSelector>
                 <TabSelector active={tabTwoActive} onClick={() => activateTabTwo()}>Customers</TabSelector>
                 <TabSelector active={tabThreeActive} onClick={() => activateTabThree()}>Orders</TabSelector>
-            </TabContainer>
+            </TabContainer> */}
             { showCurrentTab() }
         </div>
     )

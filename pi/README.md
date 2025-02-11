@@ -11,7 +11,7 @@ chmod +x nginx.sh
 
 ## NOTES
 
-# How to runanother bash script
+# How to run another bash script
 source ./nginx/nginx.sh $1
 
 # How to make a prompt
