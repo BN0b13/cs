@@ -27,10 +27,6 @@ export const AddCategoryInput = styled.input`
     width: 300px;
 `;
 
-export const AddCategoryLabel = styled.label`
-
-`;
-
 export const AddCategorySelector = styled.select`
     margin: 10px;
     padding: 2px;

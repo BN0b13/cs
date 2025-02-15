@@ -1,5 +1,6 @@
 import { useContext, useState } from 'react';
 
+import AddImage from '../../reusable/images/add-image/add-image.component';
 import Spinner from '../../reusable/spinner/spinner.component';
 
 import { ToastContext } from '../../../contexts/toast.context';
@@ -12,7 +13,6 @@ import {
     AddCategoryButton,
     AddCategoryContainer,
     AddCategoryInput,
-    AddCategoryLabel,
     AddCategoryOption,
     AddCategorySelector,
     AddCategoryTextarea,
@@ -25,7 +25,7 @@ const client = new Client();
 
 const AddCategory = () => {
     const [ loading, setLoading ] = useState(false);
-    const [ thumbnail, setThumbnail ] = useState('');
+    const [ image, setImage ] = useState('');
     const [ imagePreview, setImagePreview ] = useState('');
     const [ name, setName ] = useState('');
     const [ description, setDescription ] = useState('');
@@ -34,7 +34,7 @@ const AddCategory = () => {
     const { errorToast } = useContext(ToastContext);
 
     const handleFileChange = (e) => {
-        setThumbnail(e.target.files[0]);
+        setImage(e.target.files[0]);
 
         if(e.target.files[0] === undefined) {
             return setImagePreview('');
@@ -57,7 +57,7 @@ const AddCategory = () => {
         formData.append('name', name);
         formData.append('description', description);
         formData.append('type', type);
-        formData.append('files', thumbnail);
+        formData.append('files', image);
         formData.append('motherProductId', null);
         formData.append('fatherProductId', null);
 
@@ -78,10 +78,12 @@ const AddCategory = () => {
                 <Spinner />
             :
                 <NewCategoryContainer>
-                    {imagePreview && <img src={imagePreview} width='300' height='300' alt='Category Preview' />}
-                    <AddCategoryLabel>Thumbnail:
-                        <AddCategoryInput type='file' accept='image/*' name='thumbnail' onChange={e => handleFileChange(e)} />
-                    </AddCategoryLabel>
+                    <AddImage
+                        image={image} 
+                        setImage={setImage} 
+                        imagePreview={imagePreview} 
+                        setImagePreview={setImagePreview}
+                    />
                     <AddCategoryInput type='text' name='name' value={name} onChange={(e) => setName(e.target.value)} placeholder='Name' />
                     <AddCategoryTextarea name='description' value={description} onChange={(e) => setDescription(e.target.value)} placeholder='Description' />
                     <AddCategorySubtitle>Category Type: </AddCategorySubtitle>

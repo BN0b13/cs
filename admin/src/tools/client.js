@@ -514,6 +514,22 @@ export default class Client {
         return res;
     }
 
+    // Pages
+
+    async getPages(query = '') {
+        const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
+        const pages = await fetch(`${api}/admin/pages${query}`, requestOptions);
+        const res = await pages.json();
+        return res;
+    }
+
+    async getPagesByType(type) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
+        const pagesByType = await fetch(`${api}/admin/pages/type/${type}`, requestOptions);
+        const res = await pagesByType.json();
+        return res;
+    }
+
     // Products
 
     async getProducts(query = '') {
