@@ -20,18 +20,6 @@ server {
         proxy_pass http://$URL/;
         proxy_redirect off;
     }
-}
-
-server {
-    if (\$host = $URL) {
-        return 301 https://\$host\$request_uri;
-    }
-
-    server_name $URL;
-
-    listen 80;
-
-    return 301 https://\$host\$request_uri;
 }" > $URL
 
 sudo ln -s /etc/nginx/sites-available/$URL /etc/nginx/sites-enabled/$URL

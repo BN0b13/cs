@@ -8,6 +8,7 @@ import Giveaway from './Giveaway.js';
 import Inventory from './Inventory.js';
 import Message from './Message.js';
 import Order from './Order.js';
+import Page from './Page.js';
 import Product from './Product.js';
 import ProductImage from './ProductImage.js';
 import ProductProfile from './ProductProfile.js';
@@ -158,6 +159,7 @@ export {
     Inventory,
     Message,
     Order,
+    Page,
     Product,
     ProductImage,
     ProductProfile,

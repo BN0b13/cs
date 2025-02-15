@@ -2,6 +2,7 @@ import { useEffect, useContext, useState } from 'react';
 
 import { ToastContext } from '../../../contexts/toast.context';
 
+import AddImage from '../../reusable/images/add-image/add-image.component';
 import ProductFormClones from '../../reusable/forms/product-form-clones/product-form-clones.component';
 import ProductFormMerchandise from '../../reusable/forms/product-form-merchandise/product-form-merchandise.component';
 import ProductFormSeeds from '../../reusable/forms/product-form-seeds/product-form-seeds.component';
@@ -17,7 +18,6 @@ import DataHelper from '../../../tools/data.helper';
 
 import {
     ContentContainer,
-    Input,
     Label,
     MainContainer,
     Option,
@@ -152,10 +152,12 @@ const AddProduct = () => {
 
                         {category && productType ?
                             <>
-                                {imagePreview && <img src={imagePreview} width='100' height='100' alt='preview' />}
-                                <Label>Product Image:
-                                    <Input type='file' accept='image/*' name='files' onChange={e => handleFileChange(e)} />
-                                </Label>
+                                <AddImage
+                                    image={image} 
+                                    setImage={setImage} 
+                                    imagePreview={imagePreview} 
+                                    setImagePreview={setImagePreview}
+                                />
 
                                 { productInputs() }
                             </>
