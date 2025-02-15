@@ -51,13 +51,6 @@ export const AddProductInput = styled.input`
     width: 300px;
 `;
 
-export const AddProductTextarea = styled.textarea`
-    margin: 8px;
-    padding: 2px;    
-    width: 300px;
-    height: 100px;
-`;
-
 export const AddProductButton = styled.button`
     font-family: 'Open Sans Condensed';
     font-weight: bolder;

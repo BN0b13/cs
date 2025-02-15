@@ -69,14 +69,14 @@ export const dropdownMenuItems = [
     path: '/shop/seeds',
     icon: (<FaSeedling />)
   },
-  {
-    title: 'Raffles',
-    path: '/raffles',
-    icon: (<FaTicketAlt />)
-  },
-  {
-    title: 'Auctions',
-    path: '/auctions',
-    icon: (<FaGavel />)
-  },
+  // {
+  //   title: 'Raffles',
+  //   path: '/raffles',
+  //   icon: (<FaTicketAlt />)
+  // },
+  // {
+  //   title: 'Auctions',
+  //   path: '/auctions',
+  //   icon: (<FaGavel />)
+  // },
 ]

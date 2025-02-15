@@ -1,14 +1,21 @@
 export const tokenName = 'cosmicstrains-admin-token';
 export const themeTokenName = 'cs-admin-theme-token';
 
+const localIP = 'http://192.168.4.31';
+
 // Prod
-export const api = 'https://api.cosmicstrains.com';
-export const url = 'https://admin.cosmicstrains.com';
-export const shopUrl = 'https://www.cosmicstrains.com';
+// export const api = 'https://api.cosmicstrains.com';
+// export const url = 'https://admin.cosmicstrains.com';
+// export const shopUrl = 'https://www.cosmicstrains.com';
 
 // Dev
 // export const api = 'https://api.dev.cosmicstrains.com';
 // export const url = 'https://admin.dev.cosmicstrains.com';
+
+// Local Network
+export const api = localIP + ':8050';
+export const url = localIP + ':5050';
+export const shopUrl = localIP + ':3000';
 
 // Local
 // export const api = 'http://localhost:8050';

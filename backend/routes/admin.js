@@ -28,6 +28,7 @@ import GRServerController from '../controllers/GRServerController.js';
 import MessageController from '../controllers/MessageController.js';
 import InventoryController from '../controllers/InventoryController.js';
 import OrderController from '../controllers/OrderController.js';
+import PageController from '../controllers/PageController.js';
 import ProductController from '../controllers/ProductController.js';
 import RaffleController from '../controllers/RaffleController.js';
 import RoleController from '../controllers/RoleController.js';
@@ -47,6 +48,7 @@ const gRServerController = new GRServerController();
 const inventoryController = new InventoryController();
 const messageController = new MessageController();
 const orderController = new OrderController();
+const pageController = new PageController();
 const productController = new ProductController();
 const raffleController = new RaffleController();
 const roleController = new RoleController();
@@ -157,6 +159,11 @@ router.patch('/orders', AdminTokenVerifier, HandleErrors(orderController.updateO
 router.patch('/orders/cancel/:id', AdminTokenVerifier, HandleErrors(orderController.cancelOrder));
 router.patch('/orders/payment-link', AdminTokenVerifier, HandleErrors(orderController.paymentLink));
 router.patch('/orders/ship', AdminTokenVerifier, HandleErrors(orderController.shipOrder));
+
+// Pages
+
+router.get('/pages', AdminTokenVerifier, HandleErrors(pageController.getPages));
+router.get('/pages/type/:type', AdminTokenVerifier, HandleErrors(pageController.getPagesByType));
 
 // Products
 

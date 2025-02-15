@@ -1,5 +1,6 @@
 import { useContext, useState } from 'react';
 
+import Button from '../../reusable/button/button.component';
 import Spinner from '../../reusable/spinner/spinner.component';
 
 import { ToastContext } from '../../../contexts/toast.context';
@@ -7,15 +8,14 @@ import { ToastContext } from '../../../contexts/toast.context';
 import Client from '../../../tools/client';
 
 import {
-    AddCompanyLogoButton,
-    AddCompanyLogoLabel,
-    ImagePreviewContainer,
-    LogoInput,
-    LogoPreviewImage,
+    AddImgInput,
+    AddImgLabel,
+    AddImgPreviewEmpty,
+    AddImgPreview,
+    ContentContainer,
     MainContainer,
-    MainForm,
-    MainText
-} from './add-company-logo.styles';
+    Text
+} from '../../../styles/component.styles';
 
 const client = new Client();
 
@@ -69,27 +69,27 @@ const AddCompanyLogo = ({ id, getCompany }) => {
             {loading ?
                 <Spinner />
             :
-                <MainForm>
+                <ContentContainer>
                     {imagePreview ?
                         <>
-                            <LogoPreviewImage src={imagePreview} width='200px' height='200px' />
+                            <AddImgPreview src={imagePreview} />
                             <MainContainer direction={'row'}>
-                                <AddCompanyLogoButton onClick={() => cancelImage()}>Cancel</AddCompanyLogoButton>
-                                <AddCompanyLogoButton onClick={() => createLogo()}>Save</AddCompanyLogoButton>  
+                                <Button onClick={() => cancelImage()}>Cancel</Button>
+                                <Button onClick={() => createLogo()}>Save</Button>  
                             </MainContainer>
                         </>
                     :
                         <>
-                            <ImagePreviewContainer>
-                                <MainText>No Company Logo</MainText>
-                            </ImagePreviewContainer>
-                            <AddCompanyLogoLabel>
+                            <AddImgPreviewEmpty>
+                                <Text>No Company Logo</Text>
+                            </AddImgPreviewEmpty>
+                            <AddImgLabel>
                                 Add Logo
-                                <LogoInput type="file" accept='image/*' name="files" value={fileInput} onChange={e => handleFileChange(e)} />
-                            </AddCompanyLogoLabel>
+                                <AddImgInput type="file" accept='image/*' name="files" value={fileInput} onChange={e => handleFileChange(e)} />
+                            </AddImgLabel>
                         </>
                     }
-                </MainForm>
+                </ContentContainer>
             }
         </MainContainer>
     )
