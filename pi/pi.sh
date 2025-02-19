@@ -70,4 +70,7 @@ source ./nginx.sh $1
 # sudo apt install nginx -y
 # sudo systemctl start nginx
 
+# Add getting backend postgres container up
+# Add getting backend redis container up
+
 sudo reboot

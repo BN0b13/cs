@@ -25,3 +25,26 @@ server {
 sudo ln -s /etc/nginx/sites-available/$URL /etc/nginx/sites-enabled/$URL
 
 cd ~/cs/pi
+
+
+
+
+# upstream api_backend {
+#     server localhost:8050;
+# }
+
+# server {
+#     listen 8050;
+#     server_name api.cosmicstrains.com;
+
+#     location / {
+#         proxy_pass http://api_backend;
+#         proxy_set_header Host $host;
+#         proxy_set_header X-Real-IP $remote_addr;
+#         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+#         proxy_set_header X-Forwarded-Proto $scheme;
+#     }
+
+#     access_log /var/log/nginx/api_access.log;
+#     error_log /var/log/nginx/api_error.log;
+# }
