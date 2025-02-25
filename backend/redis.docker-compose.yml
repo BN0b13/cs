@@ -8,12 +8,13 @@ services:
     ports:
       - "${REDIS_PORT}:6379"
     volumes:
-      - order_queue:/root/redis
-      - /usr/local/etc/redis.conf:/usr/local/etc/redis/redis.conf
+      - order_queue_${ENV}:/root/redis
+      - /usr/local/etc/redis-${ENV}:/usr/local/etc/redis/redis.conf
     environment:
       - REDIS_PASSWORD=my-password
       - REDIS_PORT=${REDIS_PORT}
       - REDIS_DATABASES=16
 
 volumes:
-  order_queue:
+  order_queue_prod:
+  order_queue_dev:
