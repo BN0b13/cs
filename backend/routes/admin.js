@@ -182,7 +182,6 @@ router.patch('/orders/ship', AdminTokenVerifier, HandleErrors(orderController.sh
 
 // Pages
 
-router.get('/pages/kill', HandleErrors(pageController.killPages));
 router.get('/pages', HandleErrors(pageController.getPages));
 router.get('/pages/type/:type', AdminTokenVerifier, HandleErrors(pageController.getPagesByType));
 

@@ -53,11 +53,6 @@ class PageController {
 
     // READ
     
-    async killPages(req, res) {
-        const data = await pageRepository.killPages();
-        res.send(data);
-    }
-    
     async getPages(req, res) {
         const data = await pageRepository.getPages();
         res.send(data);
