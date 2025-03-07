@@ -1,19 +1,19 @@
 version: '3.5'
 
 services:
-  # PostgreSQL - Prod
+  # Postgres - Prod
   postgres_prod:
     image: postgres:14.2-alpine
     container_name: postgres-prod
     environment:
-      POSTGRES_USER: "${PG_PROD_USERNAME}"
-      POSTGRES_PASSWORD: "${PG_PROD_PASSWORD}"
-      POSTGRES_DB: "${PG_PROD_DATABASE_NAME}"
+      POSTGRES_USER: "admin"
+      POSTGRES_PASSWORD: "Axoj2378"
+      POSTGRES_DB: "prod_database"
     restart: unless-stopped
     volumes:
       - postgres_prod_data:/var/lib/postgresql/data/
     ports:
-      - "${PG_PROD_PORT}:5432"
+      - "5432:5432"
     env_file:
       - "./.env"
 
@@ -22,14 +22,14 @@ services:
     image: postgres:14.2-alpine
     container_name: postgres-dev
     environment:
-      POSTGRES_USER: "${PG_DEV_USERNAME}"
-      POSTGRES_PASSWORD: "${PG_DEV_PASSWORD}"
-      POSTGRES_DB: "${PG_DEV_DATABASE_NAME}"
+      POSTGRES_USER: "admin"
+      POSTGRES_PASSWORD: "Axoj2378"
+      POSTGRES_DB: "dev_database"
     restart: unless-stopped
     volumes:
       - postgres_dev_data:/var/lib/postgresql/data/
     ports:
-      - "${PG_DEV_PORT}:5432"
+      - "5433:5432"
     env_file:
       - "./.env"
 
@@ -39,33 +39,29 @@ services:
     container_name: redis-prod
     restart: always
     ports:
-      - "${REDIS_PROD_PORT}:6379"
+      - "6379:6379"
     volumes:
       - order_queue_prod:/root/redis
       - /usr/local/etc/redis-prod:/usr/local/etc/redis/redis.conf
     environment:
-      - REDIS_PASSWORD=${REDIS_PROD_PASSWORD}
+      - REDIS_PASSWORD=fsdalgsd!@#lkjklj24398$
       - REDIS_PORT=6379
       - REDIS_DATABASES=16
-    env_file:
-      - "./.env"
 
-  # Redis - Dev
+  # Reids - Dev
   redis_dev:
     image: redis:latest
     container_name: redis-dev
     restart: always
     ports:
-      - "${REDIS_DEV_PORT}:6379"
+      - "6380:6379"
     volumes:
       - order_queue_dev:/root/redis
       - /usr/local/etc/redis-dev:/usr/local/etc/redis/redis.conf
     environment:
-      - REDIS_PASSWORD=${REDIS_DEV_PASSWORD}
+      - REDIS_PASSWORD=salkj22r3ls8!@
       - REDIS_PORT=6379
       - REDIS_DATABASES=16
-    env_file:
-      - "./.env"
 
 volumes:
   postgres_prod_data:
