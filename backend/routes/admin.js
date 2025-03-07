@@ -7,6 +7,8 @@ import { dirname } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const router = express.Router();
+const uploadAudio = multer({ dest: path.join(__dirname, '..', 'public', 'audio')});
+const uploadVideos = multer({ dest: path.join(__dirname, '..', 'public', 'video')});
 const uploadCategory = multer({ dest: path.join(__dirname, '..', 'public', 'img', 'categories')});
 const uploadCompany = multer({ dest: path.join(__dirname, '..', 'public', 'img', 'companies')});
 const uploadIcon = multer({ dest: path.join(__dirname, '..', 'public', 'img', 'icons')});
@@ -25,6 +27,7 @@ import ConfigurationController from '../controllers/ConfigurationController.js';
 import CouponController from '../controllers/CouponController.js';
 import GiveawayController from '../controllers/GiveawayController.js';
 import GRServerController from '../controllers/GRServerController.js';
+import MediaController from '../controllers/MediaController.js';
 import MessageController from '../controllers/MessageController.js';
 import InventoryController from '../controllers/InventoryController.js';
 import OrderController from '../controllers/OrderController.js';
@@ -46,6 +49,7 @@ const couponController = new CouponController();
 const giveawayController = new GiveawayController();
 const gRServerController = new GRServerController();
 const inventoryController = new InventoryController();
+const mediaController = new MediaController();
 const messageController = new MessageController();
 const orderController = new OrderController();
 const pageController = new PageController();
@@ -137,6 +141,22 @@ router.delete('/inventory', AdminTokenVerifier, HandleErrors(inventoryController
 
 router.post('/login', HandleErrors(userController.adminLogin));
 
+// Media
+
+router.get('/media/', AdminTokenVerifier, HandleErrors(mediaController.getMedia));
+router.get('/media/:id', AdminTokenVerifier, HandleErrors(mediaController.getMediaById));
+router.get('/media/audio/:filename', HandleErrors(mediaController.getAudioByFilename));
+router.get('/media/video/:filename', HandleErrors(mediaController.getVideoByFilename));
+
+router.post('/media/audio', AdminTokenVerifier, uploadAudio.array("files"), HandleErrors(mediaController.createAudio));
+router.post('/media/video', AdminTokenVerifier, uploadVideos.array("files"), HandleErrors(mediaController.createVideo));
+router.post('/media/youtube', AdminTokenVerifier, HandleErrors(mediaController.createYoutubeUrl));
+
+router.patch('/media/activate', AdminTokenVerifier, HandleErrors(mediaController.activateMedia));
+router.patch('/media', AdminTokenVerifier, HandleErrors(mediaController.updateMedia));
+
+router.delete('/media', AdminTokenVerifier, HandleErrors(mediaController.deleteMediaById));
+
 // Messages
 
 router.get('/messages', AdminTokenVerifier, HandleErrors(messageController.getMessages));
@@ -162,7 +182,8 @@ router.patch('/orders/ship', AdminTokenVerifier, HandleErrors(orderController.sh
 
 // Pages
 
-router.get('/pages', AdminTokenVerifier, HandleErrors(pageController.getPages));
+router.get('/pages/kill', HandleErrors(pageController.killPages));
+router.get('/pages', HandleErrors(pageController.getPages));
 router.get('/pages/type/:type', AdminTokenVerifier, HandleErrors(pageController.getPagesByType));
 
 // Products

@@ -1,4 +1,8 @@
 import {
+  BsCameraReels
+} from 'react-icons/bs';
+
+import {
   FaGavel,
   FaGift,
   FaMoneyBillAlt,
@@ -77,6 +81,11 @@ export const menuItemsAdmin = [
   //   path: '/grow-room',
   //   icon: (<FaServer />)
   // },
+  {
+    title: 'Media',
+    path: '/media',
+    icon: (<BsCameraReels />)
+  },
   {
     title: 'Configuration',
     path: '/configuration',

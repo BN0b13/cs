@@ -16,6 +16,8 @@ import GiveawayPage from './pages/giveaway/giveaway.page';
 import GiveawaysPage from './pages/giveaways/giveaways.pages';
 import GrowRoomPage from './pages/grow-room/grow-room.pages';
 import LoginPage from './pages/login/login.pages';
+import MediaPage from './pages/media/media.pages';
+import MediasPage from './pages/medias/medias.pages';
 import MessagePage from './pages/message/message.pages';
 import MessagesPage from './pages/messages/messages.pages';
 import MetricsPage from './pages/metrics/metrics.pages';
@@ -124,6 +126,8 @@ function App() {
         <Route path="/giveaways" element={<GiveawaysPage />} />
         <Route path="/giveaways/:id" element={<GiveawayPage />} />
         <Route path="/grow-room" element={<GrowRoomPage />} />
+        <Route path='/media' element={<MediasPage />} />
+        <Route path='/media/:id' element={<MediaPage />} />
         <Route path='/messages' element={<MessagesPage />} />
         <Route path='/messages/:id' element={<MessagePage />} />
         <Route path="/orders" element={<Orders />} />
