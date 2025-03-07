@@ -63,14 +63,11 @@ sudo pm2 start app.js --name $1 --time
 sudo pm2 save
 
 # NGINX
-cd ~/cs/pi/nginx
-source ./nginx.sh $1
+# cd ~/cs/pi/nginx
+# source ./nginx.sh $1
 ## OR
-# sudo apt remove apache2
-# sudo apt install nginx -y
-# sudo systemctl start nginx
-
-# Add getting backend postgres container up
-# Add getting backend redis container up
+sudo apt remove apache2
+sudo apt install nginx -y
+sudo systemctl start nginx
 
 sudo reboot

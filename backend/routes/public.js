@@ -11,6 +11,7 @@ import CategoryController from '../controllers/CategoryController.js';
 import CheckoutController from '../controllers/CheckoutController.js';
 import ConfigurationController from '../controllers/ConfigurationController.js';
 import GiveawayController from '../controllers/GiveawayController.js';
+import MediaController from '../controllers/MediaController.js';
 import MessageController from '../controllers/MessageController.js';
 import OrderController from '../controllers/OrderController.js';
 import ProductController from '../controllers/ProductController.js';
@@ -25,6 +26,7 @@ const categoryController = new CategoryController();
 const checkoutController = new CheckoutController();
 const configurationController = new ConfigurationController();
 const giveawayController = new GiveawayController();
+const mediaController = new MediaController();
 const messageController = new MessageController();
 const orderController = new OrderController();
 const productController = new ProductController();
@@ -35,11 +37,11 @@ const visitController = new VisitController();
 const welcomeController = new WelcomeController();
 
 const orderQueue = new Bull("order", {
-  redis: "localhost:6379",
+  redis: process.env.REDIS_URL,
 });
 
 const giveawayQueue = new Bull("giveaway", {
-  redis: "localhost:6379",
+  redis: process.env.REDIS_URL,
 });
 
 const createOrder = async (req, res) => {
@@ -138,6 +140,11 @@ router.patch('/giveaways/active/enter', TokenVerifier, HandleErrors(giveawayCont
 // Login
 
 router.post('/login', HandleErrors(userController.login));
+
+// Media
+
+router.get('/media/audio/:filename', HandleErrors(mediaController.getAudioByFilename));
+router.get('/media/video/:filename', HandleErrors(mediaController.getVideoByFilename));
 
 // Orders
 

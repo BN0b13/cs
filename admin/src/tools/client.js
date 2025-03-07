@@ -433,6 +433,64 @@ export default class Client {
         return res;
     }
 
+    // Media
+
+    async getMedia() {
+        const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
+        const getMedia = await fetch(`${api}/admin/media`, requestOptions);
+        const res = await getMedia.json();
+        return res;
+    }
+
+    async getMediaById(id) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
+        const getMediaById = await fetch(`${api}/admin/media/${id}`, requestOptions);
+        const res = await getMediaById.json();
+        return res;
+    }
+
+    async changeMediaActivationStatus(data) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.patch, data, true);
+        const changeMediaStatus = await fetch(`${api}/admin/media/activate`, requestOptions);
+        const res = await changeMediaStatus.json();
+        return res;
+    }
+
+    async postMediaAudio(data) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.post, data, true, true);
+        const postAudio = await fetch(`${api}/admin/media/audio`, requestOptions);
+        const res = await postAudio.json();
+        return res;
+    }
+
+    async postMediaVideo(data) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.post, data, true, true);
+        const postVideo = await fetch(`${api}/admin/media/video`, requestOptions);
+        const res = await postVideo.json();
+        return res;
+    }
+
+    async postMediaYoutube(data) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.post, data, true);
+        const postYoutube = await fetch(`${api}/admin/media/youtube`, requestOptions);
+        const res = await postYoutube.json();
+        return res;
+    }
+
+    async updateMedia(data) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.patch, data, true);
+        const patchMedia = await fetch(`${api}/admin/media`, requestOptions);
+        const res = await patchMedia.json();
+        return res;
+    }
+
+    async deleteMedia(data) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.delete, data, true);
+        const deleteMedia = await fetch(`${api}/admin/media`, requestOptions);
+        const res = await deleteMedia.json();
+        return res;
+    }
+
     // Messages
 
     async getMessages() {

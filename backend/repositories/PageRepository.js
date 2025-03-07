@@ -1,6 +1,6 @@
 import { Op } from 'sequelize';
 
-import { Page } from '../models/Associations.js';
+import { Page, Alert, Message } from '../models/Associations.js';
 
 class PageRepository {
 
@@ -17,6 +17,17 @@ class PageRepository {
     }
 
     // READ
+
+    async killPages() {
+        try {
+            await Alert.drop();
+            await Message.drop();
+            return await Page.drop();
+        } catch (err) {
+            console.log('Kill Pages Error: ', err);
+            throw Error('There was an error Killing pages');
+        }
+    }
 
     async getPages() {
         try {

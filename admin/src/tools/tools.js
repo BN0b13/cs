@@ -508,4 +508,9 @@ export default class Tools {
         first.localeCompare(second);
     });
   }
+  
+  formatYoutubeUrl = (url) => {
+    const removeFirstCharacter = url.substring(1);
+    return removeFirstCharacter.slice(0, -1);
+  }
 }

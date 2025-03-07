@@ -1,3 +1,4 @@
+import Alert from './Alert.js';
 import Auction from './Auction.js';
 import Cart from './Cart.js';
 import Category from './Category.js';
@@ -6,6 +7,7 @@ import Configuration from './Configuration.js';
 import Coupon from './Coupon.js';
 import Giveaway from './Giveaway.js';
 import Inventory from './Inventory.js';
+import Media from './Media.js';
 import Message from './Message.js';
 import Order from './Order.js';
 import Page from './Page.js';
@@ -149,6 +151,7 @@ User.hasOne(Role, {
 });
 
 export {
+    Alert,
     Auction,
     Cart,
     Category,
@@ -157,6 +160,7 @@ export {
     Coupon,
     Giveaway,
     Inventory,
+    Media,
     Message,
     Order,
     Page,

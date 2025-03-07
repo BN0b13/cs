@@ -17,7 +17,7 @@ import {
     WordBreakContainer
 } from '../../../styles/component.styles';
 
-const client = new Client;
+const client = new Client();
 
 const AccountDisplay = ({ account, showUpdate }) => {
     const [ loading, setLoading ] = useState(true);

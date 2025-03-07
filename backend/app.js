@@ -62,4 +62,4 @@ io.on('connection', (socket) => {
 
 app.use('/', routes);
 
-httpServer.listen(port, () => console.log(`Cosmic Strains Backend listening on port ${port}.`));
+httpServer.listen(port, () => console.log(`Backend listening on port ${port}.`));
