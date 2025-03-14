@@ -1,7 +1,5 @@
-import { 
-    api,
-    tokenName
-} from '../config';
+import { api, url } from '../config/router';
+import { tokenName } from '../config/token';
 
 export default class Client {
     token = localStorage.getItem(tokenName);
@@ -19,7 +17,7 @@ export default class Client {
             headers.append("Authorization", `Bearer ${this.token}`);
             headers.append("Access-Control-Request-Method", `${method}`);
             headers.append("Access-Control-Request-Headers", 'origin, x-requested-with');
-            headers.append("Origin", "https://admin.cosmicstrains.com");
+            headers.append("Origin", url);
         }
         if(image) {
             modifiedBody = body;
@@ -174,6 +172,22 @@ export default class Client {
         return res;
     }
 
+    // Content Management System
+
+    async getCMS() {
+        const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
+        const cms = await fetch(`${api}/admin/cms`, requestOptions);
+        const res = await cms.json();
+        return res;
+    }
+
+    async updateCMS(data) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.patch, data, true);
+        const cms = await fetch(`${api}/admin/cms`, requestOptions);
+        const res = await cms.json();
+        return res;
+    }
+
     // Company
 
     async getCompanies(query = '') {
@@ -234,12 +248,19 @@ export default class Client {
 
     // Configuration
 
-    async configuration() {
-        const requestOptions = this.fetchOptions(this.fetchMethods.get);
-        const configuration = await fetch(`${api}/configuration`, requestOptions);
+    async getConfiguration() {
+        const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
+        const configuration = await fetch(`${api}/admin/configuration`, requestOptions);
         const res = await configuration.json();
         return res;
-    } 
+    }
+
+    async updateConfiguration(data) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.patch, data, true);
+        const updateCompanyConfiguration = await fetch(`${api}/admin/configuration`, requestOptions);
+        const res = await updateCompanyConfiguration.json();
+        return res;
+    }
 
     async getWelcomeImages() {
         const requestOptions = this.fetchOptions(this.fetchMethods.get);
@@ -273,31 +294,6 @@ export default class Client {
         const requestOptions = this.fetchOptions(this.fetchMethods.get);
         const getWelcomeContent = await fetch(`${api}/welcome/content`, requestOptions);
         const res = await getWelcomeContent.json();
-        return res;
-    }
-
-    // Customers
-
-    async getCustomers() {
-        const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
-        const customers = await fetch(`${api}/admin/customers`, requestOptions);
-        const res = await customers.json();
-        return res;
-    }
-
-    async getCustomersByDateRange(data) {
-        const requestOptions = this.fetchOptions(this.fetchMethods.post, data, true);
-        const customers = await fetch(`${api}/admin/customers/date`, requestOptions);
-        const res = await customers.json();
-        return res;
-    }
-
-    // Employees
-
-    async getEmployees() {
-        const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
-        const customers = await fetch(`${api}/admin/employees`, requestOptions);
-        const res = await customers.json();
         return res;
     }
 
@@ -514,6 +510,30 @@ export default class Client {
         return res;
     }
 
+    // Metrics
+
+    async getCustomersByDateRange(startDate = null, endDate = null) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
+        let params = '';
+        if(startDate && endDate) {
+            params = `?startDate=${startDate}&endDate=${endDate}`;
+        }
+        const customers = await fetch(`${api}/admin/metrics/customers${params}`, requestOptions);
+        const res = await customers.json();
+        return res;
+    }
+
+    async getOrdersByDateRange(startDate = null, endDate = null) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
+        let params = '';
+        if(startDate && endDate) {
+            params = `?startDate=${startDate}&endDate=${endDate}`;
+        }
+        const orders = await fetch(`${api}/admin/metrics/orders${params}`, requestOptions);
+        const res = await orders.json();
+        return res;
+    }
+
     // Orders
 
     async getOrdersByStatus(status = 'new') {
@@ -533,13 +553,6 @@ export default class Client {
     async getOrderByRefId(refId) {
         const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
         const orders = await fetch(`${api}/admin/orders/search/ref-id/${refId}`, requestOptions);
-        const res = await orders.json();
-        return res;
-    }
-
-    async getOrdersByDateRange(data) {
-        const requestOptions = this.fetchOptions(this.fetchMethods.post, data, true);
-        const orders = await fetch(`${api}/admin/orders/date`, requestOptions);
         const res = await orders.json();
         return res;
     }
@@ -576,7 +589,14 @@ export default class Client {
 
     async getPages(query = '') {
         const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
-        const pages = await fetch(`${api}/admin/pages${query}`, requestOptions);
+        const pages = await fetch(`${api}/pages${query}`, requestOptions);
+        const res = await pages.json();
+        return res;
+    }
+
+    async getPageById(id) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
+        const pages = await fetch(`${api}/pages/${id}`, requestOptions);
         const res = await pages.json();
         return res;
     }
@@ -585,6 +605,27 @@ export default class Client {
         const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
         const pagesByType = await fetch(`${api}/admin/pages/type/${type}`, requestOptions);
         const res = await pagesByType.json();
+        return res;
+    }
+
+    async createPage(data) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.post, data, true);
+        const page = await fetch(`${api}/admin/pages`, requestOptions);
+        const res = await page.json();
+        return res;
+    }
+
+    async updatePage(id, data) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.patch, data, true);
+        const page = await fetch(`${api}/admin/pages/${id}`, requestOptions);
+        const res = await page.json();
+        return res;
+    }
+
+    async deletePage(id, data) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.delete, data, true);
+        const deleteProduct = await fetch(`${api}/admin/products/${id}`, requestOptions);
+        const res = await deleteProduct.json();
         return res;
     }
 
@@ -757,6 +798,43 @@ export default class Client {
         return res;
     }
 
+    // Sections
+
+    async getSections(query = '') {
+        const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
+        const sections = await fetch(`${api}/admin/sections${query}`, requestOptions);
+        const res = await sections.json();
+        return res;
+    }
+
+    async getSectionById(id) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
+        const section = await fetch(`${api}/admin/sections/${id}`, requestOptions);
+        const res = await section.json();
+        return res;
+    }
+
+    async createSection(data) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.post, data, true, true);
+        const section = await fetch(`${api}/admin/sections`, requestOptions);
+        const res = await section.json();
+        return res;
+    }
+
+    async updateSection(id, data) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.patch, data, true);
+        const section = await fetch(`${api}/admin/sections/${id}`, requestOptions);
+        const res = await section.json();
+        return res;
+    }
+
+    async deleteSection(id) {
+        const requestOptions = this.fetchOptions(this.fetchMethods.delete, '', true);
+        const section = await fetch(`${api}/admin/sections/${id}`, requestOptions);
+        const res = await section.json();
+        return res;
+    }
+
     // Users
 
     async getUsers(query = '') {
@@ -766,18 +844,25 @@ export default class Client {
         return res;
     }
 
+    async getUsersByRoleId(roleId = '') {
+        const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
+        const users = await fetch(`${api}/admin/users/role/${roleId}`, requestOptions);
+        const res = await users.json();
+        return res;
+    }
+
     // Views
 
     async getViews() {
         const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
-        const views = await fetch(`${api}/admin/visits`, requestOptions);
+        const views = await fetch(`${api}/admin/metrics/views`, requestOptions);
         const res = await views.json();
         return res;
     }
 
     async getViewsByDateRange(data) {
         const requestOptions = this.fetchOptions(this.fetchMethods.post, data, true);
-        const views = await fetch(`${api}/admin/visits/date`, requestOptions);
+        const views = await fetch(`${api}/admin/metrics/views/date`, requestOptions);
         const res = await views.json();
         return res;
     }

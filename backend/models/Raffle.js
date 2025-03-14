@@ -8,7 +8,7 @@ import { sequelize } from '../db.js';
 class Raffle extends Model {
   
   static associate(models) {
-    
+    this.belongsTo(Product, { foreignKey: 'productId' });
   }
 }
 Raffle.init({

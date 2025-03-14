@@ -17,7 +17,6 @@ export const HeaderNav = styled.div`
 export const MobileHeaderNav = styled.div`
     height: ${headerHeight};
     width: 100%;
-    margin-right: 15px;
     display: flex;
     justify-content: end;
     align-items: center;
@@ -42,7 +41,6 @@ export const LogoLink = styled.a`
 
 export const Logo = styled.img`
     height: 100%;
-    ${props => props.theme.svg};
 `;
 
 export const NavOptionsDiv = styled.div`

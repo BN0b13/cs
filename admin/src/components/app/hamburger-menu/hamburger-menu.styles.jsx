@@ -45,4 +45,5 @@ export const LogoLink = styled.a`
 
 export const Logo = styled.img`
   width: 100%;
+
 `;

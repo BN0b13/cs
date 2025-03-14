@@ -1,6 +1,7 @@
 export const companyName = 'Cosmic Strains';
 export const companyEmail = 'sales@cosmicstrains.com';
 export const companySupportEmail = 'support@cosmicstrains.com';
+export const domainName = 'cosmicstrains.com';
 
 export const deliveryInsurance = 800;
 

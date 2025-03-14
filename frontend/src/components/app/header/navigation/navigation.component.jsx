@@ -11,7 +11,9 @@ import {
 
 import { ConfigurationContext } from '../../../../contexts/configuration.context';
 
-import { tokenName } from '../../../../config';
+import { tokenName } from '../../../../config/tokens';
+import { pagesConfig } from '../../../../config/cms';
+import CMSTool from '../../../../tools/cms';
 
 import {
     NavigationContainer,
@@ -20,12 +22,14 @@ import {
     HeaderNonLink
 } from './navigation.styles';
 
+const cmsTool = new CMSTool();
+
 const Navigation = () => {
     const { colors } = useContext(ConfigurationContext);
 
     const loggedInStatus = localStorage.getItem(tokenName);
 
-    if(window.location.pathname === '/login') {
+    if(window.location.pathname === '/login' && pagesConfig.shop.active) {
         return (
             <NavOptions>
                 <HeaderLink theme={colors} href={`/`}>
@@ -37,8 +41,10 @@ const Navigation = () => {
 
     return (
         <NavigationContainer theme={colors}>
-            <Search />
-            {menuItemsPublic.map((item, index) => {
+
+            {pagesConfig.shop.active && <Search />}
+
+            {cmsTool.processHeaderNavigation(menuItemsPublic).map((item, index) => {
                 if(item.title === 'Shop') {
                     return (
                         <Dropdown key={index} theme={colors} item={item} />
@@ -51,32 +57,35 @@ const Navigation = () => {
                     </HeaderLink>
                 );
             })}
-            {loggedInStatus ?
+            {pagesConfig.shop.active &&
                 <>
-                    {menuItemsLoggedIn.map((item, index) => {
-                        return (
-                            <HeaderLink key={index} theme={colors} href={item.path}>
-                                { item.title }
+                    {loggedInStatus ?
+                        <>
+                            {cmsTool.processHeaderNavigation(menuItemsLoggedIn).map((item, index) => {
+                                return (
+                                    <HeaderLink key={index} theme={colors} href={item.path}>
+                                        { item.title }
+                                    </HeaderLink>
+                                )
+                            })}
+                            <HeaderLink
+                                theme={colors}
+                                onClick={() => {
+                                localStorage.removeItem(tokenName);
+                                sessionStorage.removeItem(tokenName);
+                                window.location = '/';
+                                }}
+                            >
+                                Log Out
                             </HeaderLink>
-                        )
-                    })}
-                    <HeaderLink
-                        theme={colors}
-                        onClick={() => {
-                        localStorage.removeItem(tokenName);
-                        sessionStorage.removeItem(tokenName);
-                        window.location = '/';
-                        }}
-                    >
-                        Log Out
-                    </HeaderLink>
+                        </>
+                    :
+                        <HeaderLink theme={colors} href={`/login`}>
+                            Log In
+                        </HeaderLink>}
+                    <CartIcon loggedInStatus={loggedInStatus} />
                 </>
-            :
-                <HeaderLink theme={colors} href={`/login`}>
-                    Log In
-                </HeaderLink>
             }
-            <CartIcon loggedInStatus={loggedInStatus} />
         </NavigationContainer>
     )
 }

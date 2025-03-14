@@ -5,7 +5,7 @@ import Company from '../../components/company/company.component';
 import Spinner from '../../components/reusable/spinner/spinner.component';
 import UpdateCompany from '../../components/company/update-company/update-company.component';
 
-import { url } from '../../config';
+import { url } from '../../config/router';
 import Client from '../../tools/client';
 
 import {
@@ -43,7 +43,7 @@ const CompanyPage = () => {
                 <Spinner />
             :
                 !company ?
-                    <Text>Account does not have associated company. Please contact Cosmic Strains to set one up.</Text>
+                    <Text>Account does not have associated company. Please contact support to set up an account associated company.</Text>
                 :
                     showUpdate ?
                         <UpdateCompany company={company} getCompany={getCompany} setShowUpdate={setShowUpdate} />

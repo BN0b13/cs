@@ -2,8 +2,6 @@ import styled from 'styled-components';
 
 import { setMobileView } from '../../tools/mobileView';
 
-import { api } from '../../config';
-
 import { Link } from 'react-router-dom';
 
 export const ProductDisplayContainer = styled.div`

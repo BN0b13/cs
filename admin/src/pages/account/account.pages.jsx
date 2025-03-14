@@ -10,7 +10,7 @@ import UpdateAccount from '../../components/account/update-account/update-accoun
 import { ToastContext } from '../../contexts/toast.context';
 
 import Client from '../../tools/client';
-import { url } from '../../config';
+import { url } from '../../config/router';
 
 import {
     BackLink,

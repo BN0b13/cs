@@ -8,8 +8,8 @@ import { ToastContext } from '../../../../contexts/toast.context';
 import Client from '../../../../tools/client';
 import { 
     merchandiseSizes,
-    merchandiseTypes
-} from '../../../../config';
+    merchandiseTypes 
+} from '../../../../assets/shop-types';
 
 import {
     ContentContainer,

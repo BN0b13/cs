@@ -10,7 +10,7 @@ import Spinner from '../../reusable/spinner/spinner.component';
 
 import { ToastContext } from '../../../contexts/toast.context';
 
-import { productTypes } from '../../../config';
+import { productTypes } from '../../../assets/shop-types';
 
 import Client from '../../../tools/client';
 import DataHelper from '../../../tools/data.helper';

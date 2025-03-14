@@ -12,6 +12,8 @@ import {
   FaTicketAlt
 } from 'react-icons/fa';
 
+import { MdConstruction } from "react-icons/md";
+
 import {
   VscAccount,
   VscFile,
@@ -85,6 +87,11 @@ export const menuItemsAdmin = [
     title: 'Media',
     path: '/media',
     icon: (<BsCameraReels />)
+  },
+  {
+    title: 'Content Management',
+    path: '/content-management',
+    icon: (<MdConstruction />)
   },
   {
     title: 'Configuration',

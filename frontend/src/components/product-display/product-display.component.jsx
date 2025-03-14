@@ -11,7 +11,7 @@ import {
 } from "react-icons/vsc";
 
 import Button from '../reusable/button/button.component';
-import Slideshow from '../reusable/slideshow/slideshow.component';
+import ProductSlideshow from '../sections/product-slideshow/product-slideshow.component';
 import Spinner from '../reusable/spinner/spinner.component';
 
 import { CartContext } from '../../contexts/cart.context';
@@ -19,13 +19,11 @@ import { ConfigurationContext } from '../../contexts/configuration.context';
 import { ToastContext } from '../../contexts/toast.context';
 import { UserContext } from '../../contexts/user.context';
 
-import { api } from '../../config';
+import { api } from '../../config/router';
 import Client from '../../tools/client';
 import { convertProductPrice } from '../../tools/cart';
 import { setMobileView } from '../../tools/mobileView';
-
-import logo from '../../assets/img/logo.png';
-import soldOut from '../../assets/img/sold-out.png';
+import { imageRouter } from '../../config/images';
 
 import {
     CategoryLink,
@@ -226,16 +224,16 @@ const ProductDisplay = ({ product }) => {
                         <ProductContainer>
                             <ProductImageDisplay>
                                 {images.length === 0 ?
-                                    <div style={{ ...divStyle, "backgroundImage": `url(${logo})` }}>
+                                    <div style={{ ...divStyle, "backgroundImage": `url(${imageRouter.logos.logo.path})` }}>
                                         {product.Inventories[0].quantity === 0 &&
-                                            <ProductImage src={soldOut} alt='Product Sold Out' />
+                                            <ProductImage src={imageRouter.app.soldOut.path} alt='Product Sold Out' />
                                         }
                                     </div>
                                     :
                                         images.length === 1 ?
                                             <div style={{ ...divStyle, "backgroundImage": `url(${api}${images[0].path}${pictureSize})` }}>
                                                 {product.Inventories[0].quantity === 0 &&
-                                                    <ProductImage src={soldOut} alt='Product Sold Out' />
+                                                    <ProductImage src={imageRouter.app.soldOut.path} alt='Product Sold Out' />
                                                 }
                                             </div>
                                         :
@@ -246,7 +244,7 @@ const ProductDisplay = ({ product }) => {
                                                                 <a href={image.link}>
                                                                     <div style={{ ...divStyle, "backgroundImage": `url(${api}${image.path}${pictureSize})` }}>
                                                                         {product.Inventories[0].quantity === 0 &&
-                                                                            <ProductImage src={soldOut} alt='Product Sold Out' />
+                                                                            <ProductImage src={imageRouter.app.soldOut.path} alt='Product Sold Out' />
                                                                         }
                                                                     </div>
                                                                 </a>

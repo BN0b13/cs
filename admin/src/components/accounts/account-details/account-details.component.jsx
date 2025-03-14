@@ -9,7 +9,7 @@ import UpdatePassword from '../update-password/update-password.component';
 import { ToastContext } from '../../../contexts/toast.context';
 import { UserContext } from '../../../contexts/user.context';
 
-import { tokenName } from '../../../config';
+import { tokenName } from '../../../config/token.js';
 
 import Client from '../../../tools/client.js';
 import Tools from '../../../tools/tools.js';

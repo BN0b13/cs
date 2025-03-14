@@ -1,12 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { lazy, Suspense, useContext, useEffect, useState } from 'react';
 import {
   BrowserRouter,
   Routes,
   Route,
+  Navigate
 } from "react-router-dom";
 import './App.css';
 
-import AgeVerify from './components/app/age-verify/age-verify.component';
 import ClientModal from './components/reusable/client-modal/client-modal.component';
 import Footer from './components/app/footer/footer.component';
 import HamburgerMenu from './components/app/hamburger-menu/hamburger-menu.component';
@@ -14,20 +14,18 @@ import Header from './components/app/header/header.component';
 import Spinner from './components/reusable/spinner/spinner.component';
 import Toasted from './components/reusable/toasted/toasted.component';
 
-import AboutPage from './pages/about/about.pages';
 import AccountPage from './pages/account/account.pages';
 import AuctionsPage from './pages/auctions/auctions.pages';
 import CartPage from './pages/cart/cart.pages';
 import CheckoutPage from './pages/checkout/checkout.pages';
+import CustomPage from './pages/custom/custom.pages';
 import ErrorPage from './pages/error/error.pages';
 import GiveawayPage from './pages/giveaway/giveaway.pages';
 import GiveawaysPage from './pages/giveaways/giveaways.pages';
-import HomePage from './pages/home/home.pages';
 import LoginPage from './pages/login/login.pages';
 import PasswordResetPage from './pages/password-reset/password-reset.pages';
 import ProductsPage from './pages/products/products.pages';
 import RafflesPage from './pages/raffles/raffles.pages';
-import ShopPage from './pages/shop/shop.pages';
 import SignUpPage from './pages/sign-up/sign-up.pages';
 import ThankYouPage from './pages/thank-you/thank-you.pages';
 import VerifyEmail from './components/account/verify-email/verify-email.component';
@@ -37,12 +35,13 @@ import { ToastContext } from './contexts/toast.context.jsx';
 import { UserContext } from './contexts/user.context';
 
 import Client from './tools/client.js';
+import CMSTool from './tools/cms.js';
 import Tools from './tools/tools.js';
-import { setMobileView } from './tools/mobileView';
+import { setMobileView, setTabletView } from './tools/mobileView';
 
-import { ageVerifyTokenName, themeTokenName, tokenName } from './config';
-
-import backgroundImage from './assets/img/stars.jpeg';
+import { pagesConfig } from './config/cms.js';
+import { ageVerifyTokenName, themeTokenName, tokenName } from './config/tokens.js';
+import { imageRouter } from './config/images.js';
 
 import {
   AppLoadingContainer,
@@ -52,12 +51,16 @@ import {
 } from './App.styles';
 
 const client = new Client();
+const cmsTool = new CMSTool();
 const tools = new Tools();
 
+const ShopPage = pagesConfig.shop.active ? lazy(() => import("./pages/shop/shop.pages.jsx")) : null;
+
+const AgeVerify = pagesConfig.shop.active ? lazy(() => import("./components/app/age-verify/age-verify.component")) : null;
 
 function App() {
+  const [ loading, setLoading ] = useState(true);
   const [ ageToken, setAgeToken ] = useState(sessionStorage.getItem(ageVerifyTokenName));
-  const [ loading, setLoading ] = useState(false);
   const [ showModal, setShowModal ] = useState(false);
   const [ modalTitle, setModalTitle ] = useState(null);
   const [ modalImage, setModalImage ] = useState(null);
@@ -72,7 +75,9 @@ function App() {
   const [ modalAllowCancel, setModalAllowCancel ] = useState(null);
   const [ modalSubtext, setModalSubtext ] = useState('');
 
-  const { theme, setAppTheme } = useContext(ConfigurationContext);
+  const [ pages, setPages ] = useState([]);
+
+  const { colors, theme, setAppTheme, configuration, setConfiguration } = useContext(ConfigurationContext);
   const { showToast,
      setShowToast, 
      getToasted, 
@@ -92,11 +97,17 @@ function App() {
     }
 
     const setAppContext = async () => {
+      const getAppConfiguration = await client.configuration();
+      setConfiguration(getAppConfiguration.rows[0]);
+
+      const getPages = await client.getPages();
+
+      setPages(getPages.rows);
+
       let currentTheme = {
         themeInverted: false
       };
 
-      const getAppConfiguration = await client.configuration();
       const token = localStorage.getItem(tokenName);
       
       if(token) {
@@ -163,147 +174,138 @@ function App() {
       const savedTheme = JSON.parse(themeToken);
       
       if(!savedTheme) {
-        setLoading(true);
         const theme = getAppConfiguration.rows[0].Theme;
         const colors = currentTheme.themeInverted ? theme.colors.secondary : theme.colors.primary;
         setAppTheme(theme, colors);
-        setLoading(false);
       } else {
         if(savedTheme.id != getAppConfiguration.rows[0].Theme.id || 
           savedTheme.updatedAt !== getAppConfiguration.rows[0].Theme.updatedAt) {
-          setLoading(true);
           const theme = getAppConfiguration.rows[0].Theme;
           const colors = currentTheme.themeInverted ? theme.colors.secondary : theme.colors.primary;
           setAppTheme(theme, colors);
-          setLoading(false);
         }
       }
+      setLoading(false);
     }
 
     setAppContext();
   }, []);
 
+  const getHomePageComponent = () => {
+    if (pagesConfig.shop?.active && pages.length === 0) return (<ShopPage />);
+    return (<ErrorPage />); // Fallback if no pages are active
+  };
+
   const routes = () => {
 
     return (
       <Routes>
-        <Route 
-          path="/" 
-          element={
-            <HomePage />
-          }
-        />
-        <Route 
-          path="/about" 
-          element={
-            <AboutPage />
-          }
-        />
-        <Route 
+        {pages.map((page, index) => 
+          <Route key={index} path={page.url} element={<CustomPage page={page} />} />
+        )}
+        <Route path="/" element={getHomePageComponent()} />
+        {ShopPage && <Route 
           path="/account/*" 
           element={
             <AccountPage />
           } 
-        />
-        <Route 
+        />}
+        {ShopPage && <Route 
           path="/auctions/*" 
           element={
             <AuctionsPage />
           } 
-        />
-        <Route 
+        />}
+        {ShopPage && <Route 
           path="/cart" 
           element={
             <CartPage />
           } 
-        />
-        <Route 
+        />}
+        {ShopPage && <Route 
           path="/checkout" 
           element={
             <CheckoutPage />
           } 
-        />
-        <Route 
-          path="/error" 
-          element={
-            <ErrorPage />
-          } 
-        />
-        <Route 
+        />}
+        {ShopPage && <Route 
           path="/giveaways" 
           element={
             <GiveawaysPage />
           } 
-        />
-        <Route 
+        />}
+        {ShopPage && <Route 
           path="/giveaways/:id" 
           element={
             <GiveawayPage />
           } 
-        />
-        <Route 
+        />}
+        {ShopPage && <Route 
           path="/login" 
           element={ 
             <LoginPage /> 
           } 
-        />
-        <Route 
+        />}
+        {ShopPage && <Route 
           path="/password-reset/*" 
           element={ 
             <PasswordResetPage />
           } 
-        />
-        <Route 
+        />}
+        {ShopPage && <Route 
           path="/products/*" 
           element={ 
             <ProductsPage />
           } 
-        />
-        <Route 
+        />}
+        {ShopPage && <Route 
           path="/raffles/*" 
           element={ 
             <RafflesPage />
           } 
-        />
-        <Route 
+        />}
+        {ShopPage && <Route 
           path="/shop/*" 
           element={
             <ShopPage />
           } 
-        />
-        <Route 
+        />}
+        {ShopPage && <Route 
           path="/sign-up" 
           element={ 
             <SignUpPage /> 
           } 
-        />
-        <Route 
+        />}
+        {ShopPage && <Route 
           path="/thankyou/*" 
           element={
             <ThankYouPage />
           } 
-        />
-        <Route 
+        />}
+        {ShopPage && <Route 
           path="/verify-email/:emailToken" 
           element={<VerifyEmail />}
-        />
+        />}
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
     );
   }
 
   return (
     <MainContainer id="outer-container" className="App">
-      {loading ?
+      <Suspense fallback={<Spinner />}>
+      {!configuration ?
         <AppLoadingContainer>
           <Spinner />
         </AppLoadingContainer>
       :
         <>
-        <AgeVerify 
+        {AgeVerify && <AgeVerify 
+          company={configuration.company}
           ageVerifyTokenName={ageVerifyTokenName}
           ageToken={ageToken}
           setAgeToken={setAgeToken}
-        />
+        />}
         <ClientModal 
           show={showModal}
           setShow={setShowModal}
@@ -320,18 +322,22 @@ function App() {
           actionText={modalActionText}
           allowCancel={modalAllowCancel}
         />
-        {setMobileView() &&
+        {((setTabletView() || setMobileView()) && !cmsTool.spaCheck()) &&
           <HamburgerMenu />
         }
         <Header />
-        <BackgroundImageContainer id="page-wrap" theme={theme} backgroundImage={backgroundImage}>
+        <BackgroundImageContainer id="page-wrap" theme={theme} backgroundImage={imageRouter.app.background.path}>
           <ContentContainer>
-            <BrowserRouter>
-              { routes() }
-            </BrowserRouter>
+            {loading ?
+             <Spinner />
+            :
+              <BrowserRouter>
+                { routes() }
+              </BrowserRouter>
+            }
           </ContentContainer>
         </BackgroundImageContainer>
-        <Footer />
+        <Footer colors={colors} company={configuration.company} />
       </>}
       <Toasted 
           message={toastMessage}
@@ -340,6 +346,7 @@ function App() {
           getToasted={getToasted}
           error={toastError}
       />
+      </Suspense>
     </MainContainer>
   );
 }

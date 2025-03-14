@@ -3,7 +3,7 @@ export default class UserTools {
   usernameRegex = /^[a-zA-Z0-9\-._!?@#$]+$/;
   usernameMinLength = 4;
   usernameMaxLength = 30;
-  restrictedUsernames = ['cosmicstrains', 'cosmic_strains', 'cosmic-strains', 'cscollectibles', 'admin', 'customerservice', 'customer-service', 'customer_service', 'help', 'support', 'sales'];
+  restrictedUsernames = ['admin', 'customerservice', 'customer-service', 'customer_service', 'help', 'support', 'sales'];
   passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,30}$/;
   passwordMinLength = 8;
   passwordMaxLength = 30;

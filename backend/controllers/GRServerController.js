@@ -4,7 +4,7 @@ import GRServerService from '../services/GRServerService.js';
 const gRServerRepository = new GRServerRepository();
 const gRServerService = new GRServerService();
 
-class CartController {
+class GRServerController {
 
     // READ
     
@@ -57,4 +57,4 @@ class CartController {
     }
 }
 
-export default CartController;
+export default GRServerController;

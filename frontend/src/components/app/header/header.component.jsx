@@ -8,8 +8,8 @@ import { setMobileView, setTabletView } from '../../../tools/mobileView';
 
 import { ConfigurationContext } from '../../../contexts/configuration.context';
 
-import navLogo from '../../../assets/img/text.png';
-import mobileLogo from '../../../assets/img/textMobile.png';
+import { imageRouter } from '../../../config/images';
+import { pagesConfig } from '../../../config/cms';
 
 import {
   HeaderNav,
@@ -23,7 +23,7 @@ import {
 const Header = () => {
   const { colors } = useContext(ConfigurationContext);
 
-  if(setMobileView()) {
+  if((setMobileView() || setTabletView()) && pagesConfig.shop.active) {
     return (
       <MobileHeaderNav theme={colors}>
         <Search />
@@ -35,9 +35,11 @@ const Header = () => {
   return (
     <HeaderNav theme={colors}>
       <LogoContainer>
-        <LogoLink onClick={() => window.location = '/'} >
-          <Logo theme={colors} src={setTabletView() ? mobileLogo : navLogo} />
-        </LogoLink>
+        {(!setMobileView() && !setTabletView()) && 
+          <LogoLink onClick={() => window.location = '/'} >
+            <Logo src={imageRouter.logos.logoText.path} />
+          </LogoLink>
+        }
       </LogoContainer>
       <NavOptionsDiv>
         <Navigation />

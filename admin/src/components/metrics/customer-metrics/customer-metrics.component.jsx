@@ -24,11 +24,10 @@ const client = new Client();
 const tools = new Tools();
 
 const CustomerMetrics = () => {
-  console.log('Customer Metrics Hit');
   const [ loading, setLoading ] = useState(true);
-  const [ data, setData ] = useState(null);
-  const [ totalCount, setTotalCount ] = useState(null);
-  const [ currentCount, setCurrentCount ] = useState(null);
+  const [ data, setData ] = useState([]);
+  const [ totalCount, setTotalCount ] = useState(0);
+  const [ currentCount, setCurrentCount ] = useState(0);
   const [ currentDateRange, setCurrentDateRange ] = useState({});
   const [ dateRangeType, setDateRangeType ] = useState({value: 'all', label: 'All'});
   const [ dateRangePosition, setDateRangePosition ] = useState(0);
@@ -44,16 +43,17 @@ const CustomerMetrics = () => {
   useEffect(() => {
     changeDateRange();
 
-    // eslint-disable-next-line
   }, [ dateRangeType, dateRangePosition ]);
 
   const getAllData = async () => {
     setLoading(true);
-    const res = await client.getCustomers();
-    const sortedData = tools.sortByDateAscending(res.rows);
+    const res = await client.getCustomersByDateRange();
+    const sortedData = tools.sortByDateAscending(res);
     setData(sortedData);
-    setTotalCount(res.count);
-    setCurrentCount(res.count);
+    let count = 0;
+    sortedData.map(day => count = count + parseInt(day.count));
+    setTotalCount(count);
+    setCurrentCount(count);
     setLoading(false);
   }
 
@@ -87,15 +87,12 @@ const CustomerMetrics = () => {
       start: dayjs(dayjs.unix(start)).$d.toString(),
       end: dayjs(dayjs.unix(end)).$d.toString()
     });
-    const data = {
-      start,
-      end
-    };
 
-    const res = await client.getCustomersByDateRange(data);
-    console.log('GET Customers res: ', res);
-    setCurrentCount(res.count);
-    const sortedData = tools.sortByDateAscending(res.rows);
+    const res = await client.getCustomersByDateRange(start, end);
+    const sortedData = tools.sortByDateAscending(res);
+    let count = 0;
+    sortedData.map(day => count = count + parseInt(day.count));
+    setCurrentCount(count);
     setData(sortedData);
     setLoading(false);
   }
@@ -131,7 +128,7 @@ const CustomerMetrics = () => {
           <Spinner />
         :
           <ContentContainer>
-            <Title>New Customers</Title>
+            <Title>Customer Metrics</Title>
             <RowContainer>
               <FaAngleLeft onClick={() => goBack()} />
               <Select

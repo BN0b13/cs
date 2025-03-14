@@ -103,12 +103,12 @@ class OrderController {
         return data;
     }
 
-    async getOrdersByDateRange(req, res) {
+    async getOrdersPerDay(req, res) {
         const {
-            start,
-            end
-        } = req.body;
-        const data = await orderRepository.getOrdersByDateRange({ start, end });
+            start = null,
+            end = null
+        } = req.query;
+        const data = await orderRepository.getOrdersPerDay(start, end);
         res.send(data);
     }
 

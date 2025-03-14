@@ -4,7 +4,7 @@ import { ToastContext } from '../../contexts/toast.context';
 
 import Client from '../../tools/client';
 
-import { api } from '../../config';
+import { api } from '../../config/router';
 
 import {
     AddProductProfileButton,

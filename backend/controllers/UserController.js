@@ -326,8 +326,16 @@ class UserController {
         res.send(data);
     }
 
-    async getCustomers(req, res) {
-        const data = await userRepository.getCustomers();
+    async getCustomersPerDay(req, res) {
+        const {
+            startDate = null,
+            endDate = null
+        } = req.query;
+
+        console.log('Start Date: ', startDate);
+        console.log('End Date: ', endDate);
+
+        const data = await userRepository.getCustomersPerDay(startDate, endDate);
         res.send(data);
     }
     
@@ -359,6 +367,12 @@ class UserController {
     async getUserById(req, res) {
         const { id } = req.params;
         const data = await userRepository.getUserById(id);
+        res.send(data);
+    }
+
+    async getUsersByRoleId(req, res) {
+        const { roleId } = req.params;
+        const data = await userRepository.getUsersByRoleId(roleId);
         res.send(data);
     }
     

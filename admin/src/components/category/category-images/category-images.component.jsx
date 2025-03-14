@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import Button from '../../reusable/button/button.component';
 
-import { api } from "../../../config";
+import { api } from "../../../config/router";
 
 import Client from "../../../tools/client";
 

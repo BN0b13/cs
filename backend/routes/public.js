@@ -14,6 +14,7 @@ import GiveawayController from '../controllers/GiveawayController.js';
 import MediaController from '../controllers/MediaController.js';
 import MessageController from '../controllers/MessageController.js';
 import OrderController from '../controllers/OrderController.js';
+import PageController from '../controllers/PageController.js';
 import ProductController from '../controllers/ProductController.js';
 import SaleController from '../controllers/SaleController.js';
 import ThemeController from '../controllers/ThemeController.js';
@@ -29,6 +30,7 @@ const giveawayController = new GiveawayController();
 const mediaController = new MediaController();
 const messageController = new MessageController();
 const orderController = new OrderController();
+const pageController = new PageController();
 const productController = new ProductController();
 const saleController = new SaleController();
 const themeController = new ThemeController();
@@ -154,6 +156,12 @@ router.get('/orders', TokenVerifier, HandleErrors(orderController.getOrdersByUse
 
 router.get('/orders/:refId', TokenVerifier, HandleErrors(orderController.getOrderByRef));
 
+// Pages
+
+router.get('/pages', HandleErrors(pageController.getPages));
+router.get('/pages/:id', HandleErrors(pageController.getPageById));
+router.get('/pages/type/:type', HandleErrors(pageController.getPagesByType));
+
 // Products
 
 router.get('/products', HandleErrors(productController.getProducts));
@@ -167,7 +175,7 @@ router.get('/products/profiles/search', HandleErrors(productController.getProduc
 
 // Sales
 
-router.get('/sales', HandleErrors(saleController.getActiveSales))
+router.get('/sales', HandleErrors(saleController.getActiveSales));
 
 // Themes
 

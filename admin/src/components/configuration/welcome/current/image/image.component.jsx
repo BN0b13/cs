@@ -8,7 +8,7 @@ import AdminModal from '../../../../reusable/admin-modal/admin-modal.component';
 
 import { ToastContext } from '../../../../../contexts/toast.context';
 
-import { api } from '../../../../../config';
+import { api } from '../../../../../config/router';
 import Client from "../../../../../tools/client";
 
 import {

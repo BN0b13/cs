@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+
+import Button from '../../../reusable/button/button.component';
 
 import Client from '../../../../tools/client';
 
@@ -13,50 +15,48 @@ import {
 
 const client = new Client();
 
-const Contents = () => {
-    const [ title, setTitle ] = useState('');
-    const [ titleOn, setTitleOn ] = useState(false);
-    const [ subtitle, setSubtitle ] = useState('');
-    const [ subtitleOn, setSubtitleOn ] = useState(false);
-    const [ paragraph, setParagraph ] = useState('');
-    const [ paragraphOn, setParagraphOn ] = useState(false);
+const Contents = ({ cms }) => {
+    const [ homeActive, setHomeActive ] = useState(cms.home.active ?? false);
+    const [ aboutActive, setAboutActive ] = useState(cms.about.active ?? false);
+    const [ shopActive, setShopActive ] = useState(cms.shop.active ?? false);
 
-    useEffect(() => {
-        getWelcomePages();
-    });
-
-    const getWelcomePages = async () => {
-        const res = await client.getPagesByType('welcome');
-        console.log('GET Welcome Pages by type res: ', res);
-    }
-
-    const submit = async () => {
+    const submitAppUpdate = async () => {
         const data = {
-            
-        }
+            cmsConfig: {
+                home: {
+                    active: homeActive
+                },
+                about: {
+                    active: aboutActive
+                },
+                shop: {
+                    active: shopActive
+                },
+            }
+        };
+
+        const res = await client.updateCMS(data);
+
+        console.log('Update CMS: ', res);
     }
 
     return (
         <MainContainer>
-            <Title>Contents</Title>
-            <Subtitle>Title: </Subtitle>
-            <Subtitle>{title}</Subtitle>
+            <Title>CMS</Title>
             <Label>
-                Title On:
-                <Input type='checkbox' margin={'0'} width={'15px'} value={titleOn} onChange={() => setTitleOn(!titleOn)} />
+                Home Page On:
+                <Input type='checkbox' margin={'0'} width={'15px'} checked={homeActive} onChange={() => setHomeActive(!homeActive)} />
             </Label>
-            <Subtitle>Subtitle: </Subtitle>
-            <Subtitle>{subtitle}</Subtitle>
             <Label>
-                Subtitle On:
-                <Input type='checkbox' margin={'0'} width={'15px'} value={subtitleOn} onChange={() => setSubtitleOn(!subtitleOn)} />
+                About Page On:
+                <Input type='checkbox' margin={'0'} width={'15px'} checked={aboutActive} onChange={() => setAboutActive(!aboutActive)} />
             </Label>
-            <Text>Paragraph: </Text>
-            <Text>{paragraph}</Text>
             <Label>
-                Paragraph On:
-                <Input type='checkbox' margin={'0'} width={'15px'} value={paragraphOn} onChange={() => setParagraphOn(!paragraphOn)} />
+                Shop On:
+                <Input type='checkbox' margin={'0'} width={'15px'} checked={shopActive} onChange={() => setShopActive(!shopActive)} />
             </Label>
+
+            <Button onClick={() => submitAppUpdate()}>Update App</Button>
         </MainContainer>
     )
 }

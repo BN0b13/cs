@@ -1,7 +1,6 @@
-import logo from '../../assets/img/logo.png';
-import soldOut from '../../assets/img/sold-out.png';
+import { imageRouter } from '../../config/images';
 
-import { api } from '../../config';
+import { api } from '../../config/router';
 
 import {
     ProductCartContainer,
@@ -13,7 +12,7 @@ import {
 } from './product-card.styles';
 
 const ProductCard = ({ product }) => {
-    const imageUrl = product.ProductImages.length > 0 ? `${api}${product.ProductImages[0].path}` : logo;
+    const imageUrl = product.ProductImages.length > 0 ? `${api}${product.ProductImages[0].path}` : imageRouter.logos.logo.path;
 
     const { name } = product;
 
@@ -21,7 +20,7 @@ const ProductCard = ({ product }) => {
         <ProductCartContainer>
             <ProductImage src={imageUrl} alt={name} />
             {product.Inventories[0].quantity === 0 &&
-                <SoldOutImage src={soldOut} alt={'Product sold out'} />
+                <SoldOutImage src={imageRouter.app.soldOut.path} alt={'Product sold out'} />
             }
             <Footer>
                 <Name>{ name }</Name>

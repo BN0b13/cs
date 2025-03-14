@@ -10,6 +10,9 @@ import CategoriesPage from './pages/categories/categories.pages';
 import CompaniesPage from './pages/companies/companies.pages';
 import CompanyPage from './pages/company/company.pages';
 import ConfigurationPage from './pages/configuration/configuration.pages';
+import ContentManagementPage from './pages/content-management/content-management.pages';
+import CMSPage from './pages/content-management/page/cmspage.pages';
+import CMSSection from './pages/content-management/section/cmssection.pages';
 import ContributorAccountPage from './pages/role-based/contributor/contributor-account/contributor-account.pages';
 import ContributorCompanyPage from './pages/role-based/contributor/contributor-company/contributor-company.pages';
 import GiveawayPage from './pages/giveaway/giveaway.page';
@@ -40,7 +43,7 @@ import { ToastContext } from './contexts/toast.context';
 import { UserContext } from './contexts/user.context';
 
 import Client from './tools/client';
-import { themeTokenName, tokenName } from './config';
+import { themeTokenName, tokenName } from './config/token';
 
 import {
   AppLoadingContainer,
@@ -52,9 +55,8 @@ import './App.css';
 const client = new Client();
 
 function App() {
-  const [ loading, setLoading ] = useState(false);
 
-  const { theme, setAppTheme } = useContext(ConfigurationContext);
+  const { setAppTheme, configuration, setConfiguration } = useContext(ConfigurationContext);
   const { showToast, setShowToast, getToasted, toastError, toastMessage } = useContext(ToastContext);
   const { currentUser, setCurrentUser } = useContext(UserContext);
 
@@ -67,11 +69,13 @@ function App() {
     }
 
     const setAppContext = async () => {
+      const getAppConfiguration = await client.getConfiguration();
+      setConfiguration(getAppConfiguration.rows[0]);
+
       let currentTheme = {
         themeInverted: false
       };
 
-      const getAppConfiguration = await client.configuration();
       const token = localStorage.getItem(tokenName);
       
       if(token) {
@@ -88,25 +92,20 @@ function App() {
       const savedTheme = JSON.parse(themeToken);
       
       if(!savedTheme) {
-        setLoading(true);
         const theme = getAppConfiguration.rows[0].Theme;
         const colors = currentTheme.themeInverted ? theme.colors.secondary : theme.colors.primary;
         setAppTheme(theme, colors);
-        setLoading(false);
       } else {
         if(savedTheme.id !== getAppConfiguration.rows[0].Theme.id || 
           savedTheme.updatedAt !== getAppConfiguration.rows[0].Theme.updatedAt) {
-          setLoading(true);
           const theme = getAppConfiguration.rows[0].Theme;
           const colors = currentTheme.themeInverted ? theme.colors.secondary : theme.colors.primary;
           setAppTheme(theme, colors);
-          setLoading(false);
         }
       }
     }
 
-    setAppContext(theme);
-    setLoading(false);
+    setAppContext();
 
     // eslint-disable-next-line
   }, []);
@@ -123,6 +122,9 @@ function App() {
         <Route path="/companies" element={<CompaniesPage />} />
         <Route path="/companies/:id" element={<CompanyPage />} />
         <Route path="/configuration" element={<ConfigurationPage />} />
+        <Route path="/content-management" element={<ContentManagementPage />} />
+        <Route path="/content-management/pages/:id" element={<CMSPage />} />
+        <Route path="/content-management/sections/:id" element={<CMSSection />} />
         <Route path="/giveaways" element={<GiveawaysPage />} />
         <Route path="/giveaways/:id" element={<GiveawayPage />} />
         <Route path="/grow-room" element={<GrowRoomPage />} />
@@ -187,7 +189,7 @@ function App() {
 
   return (
     <MainContainer id="outer-container" className="App">
-      {loading ?
+      {!configuration ?
         <AppLoadingContainer>
           <Spinner />
         </AppLoadingContainer>

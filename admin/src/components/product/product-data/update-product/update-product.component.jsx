@@ -6,7 +6,7 @@ import UpdateInventory from '../../../inventory/update-inventory/update-inventor
 
 import { ToastContext } from '../../../../contexts/toast.context';
 
-import { api } from '../../../../config';
+import { api } from '../../../../config/router';
 
 import Client from '../../../../tools/client';
 

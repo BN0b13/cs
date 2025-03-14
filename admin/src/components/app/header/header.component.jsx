@@ -26,7 +26,7 @@ const Header = () => {
     }, [ currentUser ]);
 
     const getAccounts = async () => {
-        const res = await client.getCustomers();
+        const res = await client.getUsersByRoleId(4);
         const today = dayjs().format('MM/DD/YY');
         const signUpsToday = res.rows.filter(customer =>  dayjs(customer.createdAt).format('MM/DD/YY') === today);
         setNewAccounts(signUpsToday.length);

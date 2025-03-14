@@ -3,7 +3,7 @@ import ReactPlayer from 'react-player';
 
 import Button from '../reusable/button/button.component.jsx';
 
-import { api } from '../../config.js';
+import { api } from '../../config/router.js';
 import Client from '../../tools/client.js';
 import Tools from '../../tools/tools.js';
 

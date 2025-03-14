@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 
-import { tokenName } from '../config';
+import { tokenName } from '../config/tokens';
 
 export default class Tools {
 

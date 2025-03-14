@@ -9,6 +9,7 @@ const __dirname = dirname(__filename);
 const router = express.Router();
 const uploadAudio = multer({ dest: path.join(__dirname, '..', 'public', 'audio')});
 const uploadVideos = multer({ dest: path.join(__dirname, '..', 'public', 'video')});
+const uploadAppImages = multer({ dest: path.join(__dirname, '..', 'public', 'img', 'app')});
 const uploadCategory = multer({ dest: path.join(__dirname, '..', 'public', 'img', 'categories')});
 const uploadCompany = multer({ dest: path.join(__dirname, '..', 'public', 'img', 'companies')});
 const uploadIcon = multer({ dest: path.join(__dirname, '..', 'public', 'img', 'icons')});
@@ -22,6 +23,7 @@ import { HandleErrors } from '../middleware/errorHandler.js';
 
 import CartController from '../controllers/CartController.js';
 import CategoryController from '../controllers/CategoryController.js';
+import CMSController from '../controllers/CMSController.js';
 import CompanyController from '../controllers/CompanyController.js';
 import ConfigurationController from '../controllers/ConfigurationController.js';
 import CouponController from '../controllers/CouponController.js';
@@ -29,6 +31,7 @@ import GiveawayController from '../controllers/GiveawayController.js';
 import GRServerController from '../controllers/GRServerController.js';
 import MediaController from '../controllers/MediaController.js';
 import MessageController from '../controllers/MessageController.js';
+import ImageController from '../controllers/ImageController.js';
 import InventoryController from '../controllers/InventoryController.js';
 import OrderController from '../controllers/OrderController.js';
 import PageController from '../controllers/PageController.js';
@@ -36,6 +39,7 @@ import ProductController from '../controllers/ProductController.js';
 import RaffleController from '../controllers/RaffleController.js';
 import RoleController from '../controllers/RoleController.js';
 import SaleController from '../controllers/SaleController.js';
+import SectionController from '../controllers/SectionController.js';
 import ThemeController from '../controllers/ThemeController.js';
 import UserController from '../controllers/UserController.js';
 import VisitController from '../controllers/VisitController.js';
@@ -43,11 +47,13 @@ import WelcomeController from '../controllers/WelcomeController.js';
 
 const cartController = new CartController();
 const categoryController = new CategoryController();
+const cmsController = new CMSController();
 const companyController = new CompanyController();
 const configurationController = new ConfigurationController();
 const couponController = new CouponController();
 const giveawayController = new GiveawayController();
 const gRServerController = new GRServerController();
+const imageController = new ImageController();
 const inventoryController = new InventoryController();
 const mediaController = new MediaController();
 const messageController = new MessageController();
@@ -57,6 +63,7 @@ const productController = new ProductController();
 const raffleController = new RaffleController();
 const roleController = new RoleController();
 const saleController = new SaleController();
+const sectionController = new SectionController();
 const themeController = new ThemeController();
 const visitController = new VisitController();
 const userController = new UserController();
@@ -78,6 +85,12 @@ router.patch('/categories/images/thumbnail/delete', AdminTokenVerifier, HandleEr
 
 router.delete('/categories', AdminTokenVerifier, HandleErrors(categoryController.deleteCategoryById));
 
+// Content Management System
+
+router.get('/cms', AdminTokenVerifier, HandleErrors(cmsController.getCMSConfiguration));
+
+router.patch('/cms', AdminTokenVerifier, HandleErrors(cmsController.updateCMSConfiguration));
+
 // Companies
 
 router.get('/companies', ContributorTokenVerifier, HandleErrors(companyController.getCompanies));
@@ -94,7 +107,9 @@ router.delete('/companies/logo', ContributorTokenVerifier, HandleErrors(companyC
 
 // Configuration
 
-router.get('/configuration', AdminTokenVerifier, HandleErrors(configurationController.getAdminConfiguration));
+router.get('/configuration', AdminTokenVerifier, HandleErrors(configurationController.getConfiguration));
+
+router.patch('/configuration', AdminTokenVerifier, HandleErrors(configurationController.updateConfiguration));
 
 // Coupons
 
@@ -125,6 +140,10 @@ router.get('/gr-server/outlet-status', AdminTokenVerifier, HandleErrors(gRServer
 router.get('/gr-server/cycle-outlet/on-off', AdminTokenVerifier, HandleErrors(gRServerController.cycleOutletOnOff));
 
 router.delete('/gr-server/logs/:id', AdminTokenVerifier, HandleErrors(gRServerController.deleteLogById));
+
+// Image
+
+router.patch('/images/section', AdminTokenVerifier, HandleErrors(imageController.updateImageOrderBulk));
 
 // Inventory
 
@@ -164,6 +183,14 @@ router.get('/messages/:id', AdminTokenVerifier, HandleErrors(messageController.g
 
 router.patch('/messages', AdminTokenVerifier, HandleErrors(messageController.updateMessage));
 
+// Metrics
+
+router.get('/metrics/customers', AdminTokenVerifier, HandleErrors(userController.getCustomersPerDay));
+router.get('/metrics/orders', AdminTokenVerifier, HandleErrors(orderController.getOrdersPerDay));
+
+router.get('/metrics/views', AdminTokenVerifier, HandleErrors(visitController.getVisits));
+router.post('/metrics/views/date', AdminTokenVerifier, HandleErrors(visitController.getVisitsByDateRange));
+
 // Orders
 
 router.get('/orders', AdminTokenVerifier, HandleErrors(orderController.getOrders));
@@ -173,8 +200,6 @@ router.get('/orders/search/product-id/:productId', AdminTokenVerifier, HandleErr
 router.get('/orders/search/ref-id/:refId', AdminTokenVerifier, HandleErrors(orderController.getOrderByRefId));
 router.get('/products/search', AdminTokenVerifier, HandleErrors(productController.searchProducts));
 
-router.post('/orders/date', AdminTokenVerifier, HandleErrors(orderController.getOrdersByDateRange));
-
 router.patch('/orders', AdminTokenVerifier, HandleErrors(orderController.updateOrder));
 router.patch('/orders/cancel/:id', AdminTokenVerifier, HandleErrors(orderController.cancelOrder));
 router.patch('/orders/payment-link', AdminTokenVerifier, HandleErrors(orderController.paymentLink));
@@ -182,8 +207,11 @@ router.patch('/orders/ship', AdminTokenVerifier, HandleErrors(orderController.sh
 
 // Pages
 
-router.get('/pages', HandleErrors(pageController.getPages));
-router.get('/pages/type/:type', AdminTokenVerifier, HandleErrors(pageController.getPagesByType));
+router.post('/pages', AdminTokenVerifier, HandleErrors(pageController.create));
+
+router.patch('/pages/:id', AdminTokenVerifier, HandleErrors(pageController.updatePageById));
+
+router.delete('/pages/:id', AdminTokenVerifier, HandleErrors(pageController.deletePageById));
 
 // Products
 
@@ -194,6 +222,7 @@ router.get('/products/search', AdminTokenVerifier, HandleErrors(productControlle
 
 router.post('/products', AdminTokenVerifier, uploadProducts.array("files"), HandleErrors(productController.create));
 router.post('/products/profiles', AdminTokenVerifier, uploadIcon.array("files"), HandleErrors(productController.createProductProfile));
+
 router.patch('/products/images', AdminTokenVerifier, uploadProducts.array("files"), HandleErrors(productController.addProductImage));
 
 router.patch('/products', AdminTokenVerifier, HandleErrors(productController.updateProduct));
@@ -227,6 +256,17 @@ router.get('/sales', AdminTokenVerifier, HandleErrors(saleController.getSales));
 router.patch('/sales', AdminTokenVerifier, HandleErrors(saleController.updateSale));
 router.patch('/sales/activation', AdminTokenVerifier, HandleErrors(saleController.changeActivationStatus));
 
+// Sections
+
+router.get('/sections', HandleErrors(sectionController.getSections));
+router.get('/sections/:id', HandleErrors(sectionController.getSectionById));
+
+router.post('/sections', AdminTokenVerifier, uploadAppImages.array("files"), HandleErrors(sectionController.create));
+
+router.patch('/sections/:id', AdminTokenVerifier, HandleErrors(sectionController.updateSectionById));
+
+router.delete('/sections/:id', AdminTokenVerifier, HandleErrors(sectionController.deleteSectionById));
+
 // Themes
 
 router.post('/themes', AdminTokenVerifier, uploadThemes.array("files"), HandleErrors(themeController.create));
@@ -240,15 +280,13 @@ router.patch('/themes/colors', AdminTokenVerifier, HandleErrors(themeController.
 // GET - ALL, By ID, Search
 // Used to GET users for table on admin site
 router.get('/users', AdminTokenVerifier, HandleErrors(userController.getUsers));
+router.get('/users/role/:roleId', AdminTokenVerifier, HandleErrors(userController.getUsersByRoleId));
 
 router.get('/user/account', ContributorTokenVerifier, HandleErrors(userController.getAccountById));
 
 router.post('/user/accounts', AdminTokenVerifier, HandleErrors(userController.adminCreateAccount));
 router.post('/admin', AdminTokenVerifier, HandleErrors(userController.createAdmin));
 router.get('/admin', AdminTokenVerifier, HandleErrors(userController.getAdmin));
-
-router.post('/customers/date', AdminTokenVerifier, HandleErrors(userController.getCustomersByDateRange));
-router.get('/customers', AdminTokenVerifier, HandleErrors(userController.getCustomers));
 
 // router.get('/users', AdminTokenVerifier, HandleErrors(userController.getUsers));
 router.get('/user/:id', AdminTokenVerifier, HandleErrors(userController.getUserById));
@@ -257,13 +295,6 @@ router.get('/users/search', AdminTokenVerifier, HandleErrors(userController.sear
 router.patch('/users', AdminTokenVerifier, HandleErrors(userController.updateAdminUser));
 
 router.delete('/users', AdminTokenVerifier, HandleErrors(userController.deleteUser));
-
-// Visits
-
-router.get('/visits', AdminTokenVerifier, HandleErrors(visitController.getVisits));
-router.get('/visits/views', AdminTokenVerifier, HandleErrors(visitController.getTotalVisitCount));
-router.get('/visits/pagination', AdminTokenVerifier, HandleErrors(visitController.getVisitsByPage));
-router.post('/visits/date', AdminTokenVerifier, HandleErrors(visitController.getVisitsByDateRange));
 
 // Welcome
 

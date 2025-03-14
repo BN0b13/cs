@@ -9,6 +9,8 @@ import routes from './routes/index.js';
 
 import Cron from './services/Cron.js';
 
+import { domainName } from './config.js';
+
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
@@ -37,7 +39,12 @@ app.use(
 
 // Prod
 // app.use(cors({
-//   origin: ['https://cosmicstrains.com', 'https://www.cosmicstrains.com', 'https://admin.cosmicstrains.com']
+//   origin: [`https://${domainName}`, `https://www.${domainName}`, `https://admin.${domainName}`]
+// }));
+
+// Dev
+// app.use(cors({
+//   origin: [`https://dev.${domainName}`, `https://dev.admin.${domainName}`]
 // }));
 
 

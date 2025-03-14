@@ -9,7 +9,7 @@ module.exports = {
       "description": "default site theme",
       "colors": JSON.stringify({
           "primary": {
-              "svg": "filter: invert(99%) sepia(14%) saturate(5%) hue-rotate(260deg) brightness(112%) contrast(100%)",
+              "svg": "",
               "dark": "#000",
               "main": "#333",
               "text": "#fff",
@@ -21,7 +21,7 @@ module.exports = {
               "backgroundOpacityLight": "255,255,255,0.6"
           },
           "secondary": {
-              "svg": "filter: invert(0%) sepia(59%) saturate(5260%) hue-rotate(21deg) brightness(94%) contrast(106%)",
+              "svg": "filter: invert(99%) sepia(14%) saturate(5%) hue-rotate(260deg) brightness(112%) contrast(100%)",
               "dark": "#333",
               "main": "#fff",
               "text": "#000",

@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from 'react';
 import Button from '../../reusable/button/button.component';
 import Spinner from '../../reusable/spinner/spinner.component';
 
+import { ConfigurationContext } from '../../../contexts/configuration.context';
 import { ToastContext } from '../../../contexts/toast.context';
 
 import Client from '../../../tools/client';
@@ -20,28 +21,28 @@ import {
 const client = new Client();
 
 const AccountDisplay = ({ account, showUpdate }) => {
-    const [ loading, setLoading ] = useState(true);
     const [ activationLink, setActivationLink ] = useState('');
     const [ role, setRole ] = useState(null);
 
     const { successToast } = useContext(ToastContext);
+    const { configuration } = useContext(ConfigurationContext);
 
     useEffect(() => {
-        if(account.status === 'pending' && account.passwordToken) {
-            const subdomain = account.roleId === 4 ? 'www' : 'admin';
-            setActivationLink(`https://${subdomain}.cosmicstrains.com/accounts/activate/${account.passwordToken}`);
-        }
-
         getRoles();
     }, []);
 
+    useEffect(() => {
+        if(configuration && (account.status === 'pending' && account.passwordToken)) {
+            const subdomain = account.roleId === 4 ? 'www' : 'admin';
+            setActivationLink(`https://${subdomain}.${configuration.company.url}/accounts/activate/${account.passwordToken}`);
+        }
+    }, [ configuration ]);
+
     const getRoles = async () => {
-        setLoading(true);
         const res = await client.getRoles();
         const roleName = res.rows.filter(role => role.id === account.roleId);
         
         setRole(roleName[0].role);
-        setLoading(false);
     }
 
     const copyActivationLinkToClipBoard = () => {
@@ -51,7 +52,7 @@ const AccountDisplay = ({ account, showUpdate }) => {
 
     return (
         <MainContainer>
-            {loading ?
+            {!configuration || !role ?
                 <Spinner />
             :
                 <>

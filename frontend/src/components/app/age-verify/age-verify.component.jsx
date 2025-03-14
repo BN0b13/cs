@@ -17,7 +17,7 @@ import Client from '../../../tools/client';
 
 const client = new Client();
 
-const AgeVerify = ({ ageVerifyTokenName, ageToken, setAgeToken }) => {
+const AgeVerify = ({ companyName, ageVerifyTokenName, ageToken, setAgeToken }) => {
     const [show, setShow] = useState(false);
 
     useEffect(() => {
@@ -42,7 +42,7 @@ const AgeVerify = ({ ageVerifyTokenName, ageToken, setAgeToken }) => {
     return (
       <Modal show={show}>
         <AgeVerifyDiv>
-          <AgeVerifyTitle>Cosmic Strains Age Check</AgeVerifyTitle>
+          <AgeVerifyTitle>{ companyName } Age Check</AgeVerifyTitle>
           <AgeVerifyText>Please verify your age to enter.</AgeVerifyText>
           <AgeVerifyButtonDiv>
             <AgeVerifyDenyButton onClick={accessDenied}>

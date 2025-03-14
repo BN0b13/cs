@@ -199,16 +199,38 @@ class UserRepository {
                 }
             );
 
-            if(res === null) {
-                return {
-                    status: 404
+            return res;
+        } catch (err) {
+            console.log('GET User by id Error: ', err);
+            throw Error('There was an error getting User by id');
+        }
+    }
+
+    async getUsersByRoleId(roleId) {
+        try {
+            const res = await User.findAndCountAll(
+                {
+                    where: {
+                        roleId
+                    },
+                    include: [
+                        { 
+                            model: Cart
+                        },
+                        { 
+                            model: Order
+                        },
+                        { 
+                            model: Role
+                        }
+                    ]
                 }
-            }
+            );
 
             return res;
         } catch (err) {
-            console.log('GET User by ID Error: ', err);
-            throw Error('There was an error getting User by ID');
+            console.log('GET User by role id Error: ', err);
+            throw Error('There was an error getting User by role id');
         }
     }
 
@@ -250,66 +272,38 @@ class UserRepository {
         });
     }
 
-    async getCustomers() {
-        return await User.findAndCountAll({
-            where: {
-                roleId: 4
-            },
-            include: [
-                { 
-                    model: Cart
-                },
-                { 
-                    model: Order
-                },
-                { 
-                    model: Role
-                }
-            ]
-        });
-    }
-
-    async getCustomersPerDay(time = '7d') {
+    async getCustomersPerDay(startDate = null, endDate = null) {
         try {
-            return await User.findAndCountAll({
-                where: {
-                    created_at: {
-                        $gte: Sequelize.literal(`NOW() - INTERVAL \'${time}\'`),
-                    }
+            const whereCondition = { roleId: 4 };
+    
+            if (startDate && endDate) {
+                // Convert UNIX timestamp (seconds) to JavaScript Date
+                const start = new Date(startDate * 1000);
+                const end = new Date(endDate * 1000);
+    
+                if (isNaN(start) || isNaN(end)) {
+                    throw new Error('Invalid date format');
                 }
+    
+                whereCondition.createdAt = {
+                    [Op.between]: [start, end]
+                };
+            }
+    
+            const userData = await User.findAll({
+                attributes: [
+                    [Sequelize.fn('DATE', Sequelize.col('createdAt')), 'date'],
+                    [Sequelize.fn('COUNT', Sequelize.col('id')), 'count']
+                ],
+                where: whereCondition,
+                group: [Sequelize.fn('DATE', Sequelize.col('createdAt'))],
+                order: [[Sequelize.fn('DATE', Sequelize.col('createdAt')), 'DESC']]
             });
+    
+            return userData;
         } catch (err) {
-            console.log('There was an error getting customers by day: ', err);
-        }
-    }
-
-    async getCustomersByDateRange({ start, end }) {
-        try {
-            const startDate = dayjs.unix(start);
-            const endDate = dayjs.unix(end);
-            
-            return await User.findAndCountAll({
-                where: {
-                    createdAt: {
-                       [Op.between]: [startDate.$d, endDate.$d],
-                    },
-                    roleId: 4
-                  },
-                  include: [
-                      { 
-                          model: Cart
-                      },
-                      { 
-                          model: Order
-                      },
-                      { 
-                          model: Role
-                      }
-                  ]
-            });
-        } catch (err) {
-            console.log('Get Customers by date range Error: ', err);
-            throw Error('There was an error getting customers by date range');
+            console.error('Error fetching new customers per day:', err);
+            throw err;
         }
     }
 

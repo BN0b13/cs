@@ -23,6 +23,16 @@ module.exports = {
       role: 'customer',
       createdAt: new Date(),
       updatedAt: new Date()
+    },
+    {
+      role: 'contributor',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      role: 'driver',
+      createdAt: new Date(),
+      updatedAt: new Date()
     }
   ], { schema: process.env.PG_SCHEMA_NAME });
   },

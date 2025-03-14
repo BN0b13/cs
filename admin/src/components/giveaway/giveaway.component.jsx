@@ -8,7 +8,7 @@ import Spinner from '../reusable/spinner/spinner.component';
 import { ToastContext } from '../../contexts/toast.context';
 
 import Client from '../../tools/client';
-import { shopUrl } from '../../config';
+import { shopUrl } from '../../config/router';
 
 import {
     ButtonContainer,

@@ -10,7 +10,9 @@ import { sequelize } from '../db.js';
 class Order extends Model {
   
   static associate(models) {
-    
+    this.belongsTo(Coupon, { foreignKey: 'couponId' });
+    this.belongsTo(Sale, { foreignKey: 'saleId' });
+    this.belongsTo(User, { foreignKey: 'userId' });
   }
 }
 Order.init({

@@ -8,7 +8,8 @@ import { sequelize } from '../db.js';
 class Company extends Model {
   
   static associate(models) {
-    
+    this.hasOne(User, { foreignKey: 'userId' });
+    this.hasOne(Giveaway, { foreignKey: 'companyId' });
   }
 }
 Company.init({

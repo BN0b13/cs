@@ -8,10 +8,9 @@ import {
 
 import Spinner from '../../reusable/spinner/spinner.component';
 
-import navLogoMobile from '../../../assets/img/text.png';
-
 import { menuItemsAdmin, menuItemsContributor } from '../../../assets/menu-items';
-import { tokenName } from '../../../config';
+import { tokenName } from '../../../config/token';
+import { imageRouter } from '../../../config/images';
 
 import { UserContext } from '../../../contexts/user.context';
 
@@ -38,7 +37,7 @@ const HamburgerMenu = props => {
             <MobileDropDownMenu>
                 <LogoContainer>
                     <LogoLink onClick={() => window.location = '/'} >
-                        <Logo src={navLogoMobile} />
+                        <Logo src={imageRouter.logos.logoText.path} alt='Mobile Logo' />
                     </LogoLink>
                 </LogoContainer>
             {loggedInStatus ? 

@@ -3,7 +3,7 @@ import {
     FaAngleDown
 } from 'react-icons/fa';
 
-import { url } from '../../../../config';
+import { url } from '../../../../config/router';
 
 import {
     ColumnContainer,

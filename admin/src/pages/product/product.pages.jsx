@@ -6,7 +6,7 @@ import ProductImages from '../../components/product/product-images/product-image
 import Spinner from '../../components/reusable/spinner/spinner.component';
 
 import ClientHelper from '../../tools/client-helper';
-import { url } from '../../config';
+import { url } from '../../config/router';
 
 import {
     BackLink,

@@ -11,9 +11,8 @@ import { CartContext } from '../../contexts/cart.context';
 import { convertProductPrice } from '../../tools/cart';
 import { setMobileView } from '../../tools/mobileView';
 
-import { api } from '../../config';
-
-import logo from '../../assets/img/logo.png';
+import { api } from '../../config/router';
+import { imageRouter } from '../../config/images';
 
 import {
     CartItemContainer,
@@ -125,7 +124,7 @@ const CartItem = ({ quantity, product, inventoryId }) => {
                         </ProductImage> 
                     : 
                         <ProductImage onClick={() => window.location=`shop/${product.Category.type}/${product.Category.name}/${product.name}`}>
-                            <img src={logo} alt={`${product.name}`} />
+                            <img src={imageRouter.logos.logo.path} alt={`${product.name}`} />
                         </ProductImage> 
                     }
                 </ImageContainer>

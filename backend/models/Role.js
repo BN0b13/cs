@@ -8,7 +8,7 @@ import { sequelize } from '../db.js';
 class Role extends Model {
   
   static associate(models) {
-    
+    this.hasMany(User, { foreignKey: 'roleId' });
   }
 }
 Role.init({

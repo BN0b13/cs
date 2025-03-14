@@ -8,7 +8,7 @@ import Spinner from '../../reusable/spinner/spinner.component';
 import { ToastContext } from '../../../contexts/toast.context.jsx';
 import { UserContext } from '../../../contexts/user.context';
 
-import { tokenName } from '../../../config';
+import { tokenName } from '../../../config/tokens.js';
 
 import Client from '../../../tools/client';
 import Tools from '../../../tools/tools.js';

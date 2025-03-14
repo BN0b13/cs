@@ -1,6 +1,6 @@
 import { createContext, useState } from "react";
 
-import { themeTokenName } from '../config';
+import { themeTokenName } from '../config/tokens';
 
 export const ConfigurationContext = createContext({
     configuration: {},

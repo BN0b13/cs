@@ -6,8 +6,8 @@ import Spinner from '../../reusable/spinner/spinner.component';
 import { ToastContext } from '../../../contexts/toast.context';
 
 import Client from '../../../tools/client';
-
-import { categoryTypes, url } from '../../../config';
+import { categoryTypes } from '../../../assets/shop-types';
+import { url } from '../../../config/router';
 
 import {
     AddCategoryButton,

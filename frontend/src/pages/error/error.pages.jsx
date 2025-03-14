@@ -1,5 +1,7 @@
 import { useContext } from 'react';
 
+import Button from '../../components/reusable/button/button.component';
+
 import { ConfigurationContext } from '../../contexts/configuration.context';
 
 import {
@@ -17,8 +19,10 @@ const ErrorPage = () => {
                 ERROR
             </ErrorPageTitle>
             <ErrorPageText>
-                There was an error with your request. Please try again.
+                The page you requested does not exist
             </ErrorPageText>
+
+            <Button onClick={() => window.location='/'}>Home</Button>
         </ErrorPageContainer>
     );
 };

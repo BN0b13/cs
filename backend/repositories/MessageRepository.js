@@ -41,19 +41,30 @@ class MessageRepository {
 
     async getMessageById(id) {
         try {
-            const res = await Message.findAll(
-                {
-                    where: {
-                        id: id
-                    }
-                }
-            );
+            const res = await Message.findByPk(id, {
+                include: [
+                  { model: User, as: 'Sender' },
+                  { model: User, as: 'Receiver' },
+                ],
+              });
             return res;
         } catch (err) {
             console.log('Get Message by id Error: ', err);
             throw Error('There was an error getting the message by id');
         }
     }
+
+    async getUserMessages(id) {
+        try {
+            const res = await User.findByPk(userId, {
+                include: [{ model: Message, as: 'SentMessages' }],
+              });
+            return res;
+        } catch (err) {
+            console.log('Get Message by id Error: ', err);
+            throw Error('There was an error getting the message by id');
+        }
+    } 
 
     // UPDATE 
 

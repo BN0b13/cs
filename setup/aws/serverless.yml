@@ -1,0 +1,107 @@
+service: my-app
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: us-east-1
+  environment:
+    NODE_ENV: production
+    DATABASE_URL: postgres://admin:password@${self:custom.ec2PrivateIp}:5432/mydb
+    REDIS_HOST: ${self:custom.ec2PrivateIp}
+    REDIS_PORT: 6379
+    SES_EMAIL: no-reply@mydomain.com  # Default sending email
+
+custom:
+  ec2PrivateIp: !GetAtt MyEC2Instance.PrivateIp # Fetch EC2 Private IP dynamically
+
+functions:
+  api:
+    handler: handler.main
+    events:
+      - httpApi: "*"
+
+resources:
+  Resources:
+    # EC2 Instance for Backend, Database, Redis
+    MyEC2Instance:
+      Type: AWS::EC2::Instance
+      Properties:
+        InstanceType: t3.small
+        ImageId: ami-xxxxxxxxxxxxxxxxx  # Replace with latest Ubuntu AMI
+        SecurityGroupIds:
+          - !Ref MySecurityGroup
+        SubnetId: subnet-xxxxxxxx  # Replace with your VPC subnet
+        KeyName: my-key  # Replace with your EC2 key pair
+        Tags:
+          - Key: Name
+            Value: my-app-backend
+
+    # Security Group for EC2
+    MySecurityGroup:
+      Type: AWS::EC2::SecurityGroup
+      Properties:
+        GroupDescription: Allow traffic for backend
+        VpcId: vpc-xxxxxxxx  # Replace with your VPC ID
+        SecurityGroupIngress:
+          - IpProtocol: tcp
+            FromPort: 22
+            ToPort: 22
+            CidrIp: 0.0.0.0/0 # SSH (lock this down in production)
+          - IpProtocol: tcp
+            FromPort: 5432
+            ToPort: 5432
+            CidrIp: 0.0.0.0/0 # PostgreSQL
+          - IpProtocol: tcp
+            FromPort: 6379
+            ToPort: 6379
+            CidrIp: 0.0.0.0/0 # Redis
+
+    # S3 Bucket for Customer Site
+    CustomerFrontendBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: my-customer-frontend
+        PublicAccessBlockConfiguration:
+          BlockPublicAcls: true
+          BlockPublicPolicy: false
+          IgnorePublicAcls: true
+          RestrictPublicBuckets: false
+
+    # S3 Bucket for Admin Site
+    AdminFrontendBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: my-admin-frontend
+        PublicAccessBlockConfiguration:
+          BlockPublicAcls: true
+          BlockPublicPolicy: false
+          IgnorePublicAcls: true
+          RestrictPublicBuckets: false
+
+    # Route 53 Domain for Customer Site
+    CustomerSiteDomain:
+      Type: AWS::Route53::RecordSet
+      Properties:
+        HostedZoneName: mydomain.com.
+        Name: www.mydomain.com.
+        Type: A
+        AliasTarget:
+          HostedZoneId: Z2FDTNDATAQYW2  # CloudFront Hosted Zone ID
+          DNSName: !GetAtt CustomerFrontendBucket.DomainName
+
+    # Route 53 Domain for Admin Site
+    AdminSiteDomain:
+      Type: AWS::Route53::RecordSet
+      Properties:
+        HostedZoneName: mydomain.com.
+        Name: admin.mydomain.com.
+        Type: A
+        AliasTarget:
+          HostedZoneId: Z2FDTNDATAQYW2
+          DNSName: !GetAtt AdminFrontendBucket.DomainName
+
+    # AWS SES Email Sending
+    SESIdentity:
+      Type: AWS::SES::EmailIdentity
+      Properties:
+        EmailIdentity: no-reply@mydomain.com

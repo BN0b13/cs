@@ -8,10 +8,8 @@ import ProductFormMerchandise from '../../reusable/forms/product-form-merchandis
 import ProductFormSeeds from '../../reusable/forms/product-form-seeds/product-form-seeds.component';
 import Spinner from '../../reusable/spinner/spinner.component';
 
-import { 
-    categoryTypes,
-    url
-} from '../../../config';
+import { categoryTypes } from '../../../assets/shop-types';
+import { url } from '../../../config/router';
 
 import Client from '../../../tools/client';
 import DataHelper from '../../../tools/data.helper';

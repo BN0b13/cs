@@ -1,7 +1,5 @@
-import { api } from '../../../config';
-
-import friendor from '../../../assets/img/friendor.png';
-import logo from '../../../assets/img/logo.png';
+import { api } from '../../../config/router';
+import { imageRouter } from '../../../config/images';
 
 import {
     GiveawayContainer,
@@ -11,7 +9,7 @@ import {
 } from './giveaway-card.styles';
 
 const GiveawayCard = ({ giveaway }) => {
-    const img = giveaway.Company.logoPath ? api + giveaway.Company.logoPath : (giveaway.Company.id !== 1 ? friendor : logo);
+    const img = giveaway.Company.logoPath ? api + giveaway.Company.logoPath : (giveaway.Company.id !== 1 ? imageRouter.giveaways.logo.path : imageRouter.logos.logo.path);
 
     return (
         <GiveawayContainer onClick={() => window.location = `/giveaways/${giveaway.id}`}>

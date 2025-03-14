@@ -11,7 +11,7 @@ import { sequelize } from '../db.js';
 class Category extends Model {
   
   static associate(models) {
-    
+    this.hasMany(Product, { foreignKey: 'categoryId' });
   }
 }
 Category.init({

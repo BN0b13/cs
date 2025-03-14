@@ -10,13 +10,14 @@ import DropdownMobile from './dropdown-mobile/dropdown-mobile.component';
 
 import { ConfigurationContext } from '../../../contexts/configuration.context';
 
-import navLogoMobile from '../../../assets/img/logo-hamburger-menu.png';
-
 import { 
     menuItemsPublic,
     menuItemsLoggedIn
 } from '../../../assets/menu-items';
-import { tokenName } from '../../../config';
+import { pagesConfig } from '../../../config/cms';
+import { tokenName } from '../../../config/tokens';
+import { imageRouter } from '../../../config/images';
+import CMSTool from '../../../tools/cms';
 
 import './hamburger-menu.css';
 
@@ -31,20 +32,76 @@ import {
     LogoLink,
 } from './hamburger-menu.styles';
 
+const cmsTool = new CMSTool();
+
 const HamburgerMenu = props => {
     const loggedInStatus = localStorage.getItem(tokenName);
 
     const { colors } = useContext(ConfigurationContext);
+
+    const loginOptions = () => {
+        if(loggedInStatus){
+            return (
+                <>
+                    {cmsTool.processHeaderNavigation(menuItemsLoggedIn).map((item, index) => {
+                        return (
+                            <MobileDropDownMenuItem key={index}>
+                                    { item.icon }
+                                <MobileDropDownMenuLink href={item.path}>
+                                    { item.title }
+                                </MobileDropDownMenuLink>
+                            </MobileDropDownMenuItem>
+                        );
+                    })}
+                    <MobileDropDownMenuLastItem>
+                        <style>
+                            {`
+                                svg path {
+                                stroke: white
+                                }
+                            `}
+                        </style>
+                        <GrLogout color="white" />
+                        <HeaderLink 
+                            onClick={() => {
+                            localStorage.removeItem(tokenName);
+                            sessionStorage.removeItem(tokenName);
+                            window.location = '/';
+                            }}
+                        >
+                            Log Out
+                        </HeaderLink>
+                    </MobileDropDownMenuLastItem>
+                </>
+            )
+        }
+        
+        return (
+            <MobileDropDownMenuLastItem>
+                <style>
+                    {`
+                        svg path {
+                        stroke: white
+                        }
+                    `}
+                </style>
+                <GrLogin color="white" />
+                <HeaderLink href={`/login`}>
+                    Log In
+                </HeaderLink>
+            </MobileDropDownMenuLastItem>
+        )
+    }
 
     return (
         <Menu>
             <MobileDropDownMenu>
                 <LogoContainer>
                     <LogoLink onClick={() => window.location = '/'} >
-                        <Logo src={navLogoMobile} />
+                        <Logo src={imageRouter.logos.logoText.path} />
                     </LogoLink>
                 </LogoContainer>
-            {menuItemsPublic.map((item, index) => {
+            {cmsTool.processHeaderNavigation(menuItemsPublic).map((item, index) => {
                 if(item.title === 'Shop') {
                     return (
                         <DropdownMobile key={index} theme={colors} item={item} />
@@ -60,54 +117,10 @@ const HamburgerMenu = props => {
                     </MobileDropDownMenuItem>
                 );
             })}
-            {loggedInStatus ? 
-                <>
-                {menuItemsLoggedIn.map((item, index) => {
-                    return (
-                        <MobileDropDownMenuItem key={index}>
-                                { item.icon }
-                            <MobileDropDownMenuLink href={item.path}>
-                                { item.title }
-                            </MobileDropDownMenuLink>
-                        </MobileDropDownMenuItem>
-                    );
-                })}
-                <MobileDropDownMenuLastItem>
-                    <style>
-                        {`
-                            svg path {
-                            stroke: white
-                            }
-                        `}
-                    </style>
-                    <GrLogout color="white" />
-                    <HeaderLink 
-                        onClick={() => {
-                        localStorage.removeItem(tokenName);
-                        sessionStorage.removeItem(tokenName);
-                        window.location = '/';
-                        }}
-                    >
-                        Log Out
-                    </HeaderLink>
-                </MobileDropDownMenuLastItem>
-                </>
-            :
-            <MobileDropDownMenuLastItem>
-                <style>
-                    {`
-                        svg path {
-                        stroke: white
-                        }
-                    `}
-                </style>
-                <GrLogin color="white" />
-                <HeaderLink href={`/login`}>
-                    Log In
-                </HeaderLink>
-            </MobileDropDownMenuLastItem>
+
+            {pagesConfig.shop.active &&
+                loginOptions()
             }
-            
             </MobileDropDownMenu>
         </Menu>
     

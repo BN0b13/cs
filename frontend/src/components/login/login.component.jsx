@@ -6,9 +6,8 @@ import Spinner from '../reusable/spinner/spinner.component';
 import { ToastContext } from '../../contexts/toast.context';
 
 import Client from '../../tools/client';
-import { tokenName } from '../../config';
-
-import logo from '../../assets/img/logo.png';
+import { tokenName } from '../../config/tokens';
+import { imageRouter } from '../../config/images';
 
 import {
     ColumnContainer,
@@ -68,7 +67,7 @@ const Login = () => {
                 <Spinner />
             :
                 <ColumnContainer onKeyDown={(e) => handleKeyDown(e)}>
-                    <Image src={logo} alt='Cosmic Strains Logo' />
+                    <Image src={imageRouter.logos.logo.path} alt='Logo' />
                     <Input type='email' name='email' value={email} onChange={(e) => setEmail(e.target.value)} placeholder='Email' />
                     <Input type='password' name='password' value={password} onChange={(e) => setPassword(e.target.value)} placeholder='Password' />
                     <RowContainer>

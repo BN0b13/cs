@@ -29,12 +29,15 @@ pm2 restart all --time
 
 # copy docker .sql file from raspberry pi to docker container
 # sudo docker cp ./backup.sql cosmic_strains:/tmp
+# sudo docker cp ./backup.sql postgres-prod:/tmp
 
 # ssh into docker from raspberry pi
 # sudo docker exec -it cosmic_strains sh
+# sudo docker exec -it postgres-prod sh
 
 # cd into docker container folder that now has backup.sql
 # cd tmp
 
 # reseed database
 # psql -U admin -d postgres < backup.sql
+# psql -U admin -d prod_database < backup.sql

@@ -1,7 +1,5 @@
-import { 
-    api,
-    tokenName
-} from '../config';
+import { api } from '../config/router';
+import { tokenName } from '../config/tokens';
 
 export default class Client {
     token = localStorage.getItem(tokenName);
@@ -243,6 +241,22 @@ export default class Client {
         const res = await getOrderByRef.json();
         return res;
     }
+
+    // Pages
+    
+        async getPages(query = '') {
+            const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
+            const pages = await fetch(`${api}/pages${query}`, requestOptions);
+            const res = await pages.json();
+            return res;
+        }
+    
+        async getPageById(id) {
+            const requestOptions = this.fetchOptions(this.fetchMethods.get, '', true);
+            const pages = await fetch(`${api}/pages/${id}`, requestOptions);
+            const res = await pages.json();
+            return res;
+        }
 
     // Products
 

@@ -27,6 +27,7 @@ const OrderMetrics = () => {
   const [ loading, setLoading ] = useState(true);
   const [ data, setData ] = useState(null);
   const [ totalCount, setTotalCount ] = useState(null);
+  const [ totalIncome, setTotalIncome ] = useState(0);
   const [ currentCount, setCurrentCount ] = useState(null);
   const [ currentDateRange, setCurrentDateRange ] = useState({});
   const [ dateRangeType, setDateRangeType ] = useState({value: 'all', label: 'All'});
@@ -48,11 +49,18 @@ const OrderMetrics = () => {
 
   const getAllData = async () => {
     setLoading(true);
-    const res = await client.getOrders();
-    const sortedData = tools.sortByDateAscending(res.rows);
+    const res = await client.getOrdersByDateRange();
+    const sortedData = tools.sortByDateAscending(res);
     setData(sortedData);
-    setTotalCount(res.count);
-    setCurrentCount(res.count);
+    let count = 0;
+    let income = 0;
+    sortedData.map(day => {
+      count = count + parseInt(day.count);
+      income = income + parseInt(day.income);
+    });
+    setTotalCount(count);
+    setCurrentCount(count);
+    setTotalIncome(income);
     setLoading(false);
   }
 
@@ -92,8 +100,15 @@ const OrderMetrics = () => {
     };
 
     const res = await client.getOrdersByDateRange(data);
-    setCurrentCount(res.count);
-    const sortedData = tools.sortByDateAscending(res.rows);
+    const sortedData = tools.sortByDateAscending(res);
+    let count = 0;
+    let income = 0;
+    sortedData.map(day => {
+      count = count + parseInt(day.count);
+      income = income + parseInt(day.income);
+    });
+    setCurrentCount(count);
+    setTotalIncome(income);
     setData(sortedData);
     setLoading(false);
   }
@@ -129,7 +144,7 @@ const OrderMetrics = () => {
           <Spinner />
         :
           <ContentContainer>
-            <Title>Orders</Title>
+            <Title>Order Metrics</Title>
             <RowContainer>
               <FaAngleLeft onClick={() => goBack()} />
               <Select
@@ -140,7 +155,10 @@ const OrderMetrics = () => {
               <FaAngleRight onClick={() => goForward()} />
             </RowContainer>
             <Subtitle>
-              Total Count: { totalCount }
+              Total Sales: { totalCount }
+            </Subtitle>
+            <Subtitle>
+              Total Income: ${ totalIncome/100 }
             </Subtitle>
             {dateRangeType.value !== 'all' &&
               <>

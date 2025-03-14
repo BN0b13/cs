@@ -11,7 +11,7 @@ import { sequelize } from '../db.js';
 class Configuration extends Model {
   
   static associate(models) {
-    
+    this.hasOne(Theme, { foreignKey: 'themeId' });
   }
 }
 Configuration.init({

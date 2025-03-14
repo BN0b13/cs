@@ -76,11 +76,11 @@ const OrdersPage = () => {
                         submitSearch={setLoadData}
                     />
                     <Select value={size} onChange={(e) => changeSize(e.target.value)} maxWidth={'100px'} marginBottom={'20px'}>
-                            <Option key={1} value={10}>10</Option>
-                            <Option key={2} value={25}>25</Option>
-                            <Option key={3} value={50}>50</Option>
-                            <Option key={4} value={100}>100</Option>
-                        </Select>
+                        <Option key={1} value={10}>10</Option>
+                        <Option key={2} value={25}>25</Option>
+                        <Option key={3} value={50}>50</Option>
+                        <Option key={4} value={100}>100</Option>
+                    </Select>
                     <OrdersTable 
                         orders={orders}
                         sortKey={sortKey}

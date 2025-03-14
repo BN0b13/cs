@@ -12,7 +12,7 @@ import TermsAndConditions from '../reusable/terms-and-conditions/terms-and-condi
 
 import { ToastContext } from '../../contexts/toast.context.jsx';
 
-import { tokenName } from '../../config';
+import { tokenName } from '../../config/tokens.js';
 
 import Client from '../../tools/client.js';
 import Tools from '../../tools/tools.js';

@@ -14,9 +14,8 @@ import { ToastContext } from '../../contexts/toast.context.jsx';
 
 import Client from '../../tools/client.js';
 import Tools from '../../tools/tools.js';
-import { tokenName } from '../../config';
-
-import logo from '../../assets/img/logo.png';
+import { tokenName } from '../../config/token.js';
+import { imageRouter } from '../../config/images.js';
 
 import {
     ActivateAccountInput,
@@ -139,12 +138,12 @@ const ActivateAccountPage = () => {
                     show={showModal}
                     setShow={setShowModal}
                     title={'Create Account'}
-                    message={`A Contributor account gives you the ability to upload data, links and images to the Cosmic Strains website. Any malicious data, links or images are grounds for account termination. Please treat all customers with respect as you are not only representing your company, but Cosmic Strains as well. Any giveaways featuring or promoting illegal items are strictly prohibited. Do you want to continue?`}
+                    message={`A Contributor account gives you the ability to upload data, links and images on our site. Any malicious data, links or images are grounds for account termination. Please treat all customers with respect as you are not only representing your company, but us as well. Any giveaways featuring or promoting illegal items are strictly prohibited. Do you want to continue?`}
                     action={() => activateAccount()} 
                     actionText={'Confirm'}
                 />
                 <TermsAndConditions show={showTermsAndConditions} setShow={setShowTermsAndConditions} />
-                <MainImage src={logo} alt='Company Logo' height='200px' width='200px' />
+                <MainImage src={imageRouter.logos.logo.path} alt='Logo' height='200px' width='200px' />
                 <MainTitle>Activate Account</MainTitle>
                 <MainText>Email: { account.email }</MainText>
 

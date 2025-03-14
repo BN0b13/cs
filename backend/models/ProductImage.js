@@ -9,7 +9,7 @@ import { sequelize } from '../db.js';
 class ProductImage extends Model {
   
   static associate(models) {
-    
+    this.belongsTo(Product, { foreignKey: 'productId' });
   }
 }
 ProductImage.init({

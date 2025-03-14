@@ -8,7 +8,7 @@ import Spinner from '../../components/reusable/spinner/spinner.component';
 import UpdateCategory from '../../components/category/update-category/update-category.component';
 
 import Client from '../../tools/client';
-import { url } from '../../config';
+import { url } from '../../config/router';
 
 import {
     BackLink,

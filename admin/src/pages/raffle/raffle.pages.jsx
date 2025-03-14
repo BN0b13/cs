@@ -6,7 +6,6 @@ import Raffle from '../../components/raffle/raffle.component';
 import Spinner from '../../components/reusable/spinner/spinner.component';
 import UpdateRaffle from '../../components/raffle/update-raffle/update-raffle.component';
 
-import { api } from '../../config';
 import Client from '../../tools/client';
 
 import {

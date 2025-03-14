@@ -4,30 +4,9 @@ class ConfigurationRepository {
 
     // READ
 
-    async getConfigurations() {
+    async getConfiguration() {
         try {
             const res = await Configuration.findAndCountAll({
-                include: [
-                    { 
-                        model: Theme,
-                        required: true
-                    }
-                ]
-            });
-
-            return res;
-        } catch (err) {
-            console.log('Get Configurations Error: ', err);
-            throw Error('There was an error getting configurations');
-        }
-    }
-
-    async getAdminConfiguration() {
-        try {
-            const res = await Configuration.findAndCountAll({
-                where: {
-                    name: 'admin'
-                },
                 include: [
                     { 
                         model: Theme,
@@ -62,13 +41,13 @@ class ConfigurationRepository {
             return data;
         } catch (err) {
             console.log('Get Public Configuration Error: ', err);
-            throw Error('There was an error getting categories');
+            throw Error('There was an error getting configuration');
         }
     }
 
     // UPDATE
 
-    async updateCategory(id, data) {
+    async updateConfiguration(id, data) {
         try {
             const res = await Configuration.update(
                 data,
@@ -80,8 +59,8 @@ class ConfigurationRepository {
             );
             return res;
         } catch (err) {
-            console.log('Update Category Error: ', err);
-            throw Error('There was an error updating the category');
+            console.log('Update Configuration Error: ', err);
+            throw Error('There was an error updating configuration');
         }
     }
 }

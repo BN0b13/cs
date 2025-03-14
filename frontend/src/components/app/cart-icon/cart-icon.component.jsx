@@ -1,13 +1,13 @@
 import { useContext, useEffect, useState } from 'react';
 
-import { ReactComponent as ShoppingIcon } from '../../../assets/img/shopping-bag.svg';
 
 import { getCartCount } from '../../../tools/cart';
 
 import { CartContext } from '../../../contexts/cart.context';
 import { ConfigurationContext } from '../../../contexts/configuration.context';
+import { ReactComponent as ShoppingIcon } from '../../../assets/img/shopping-bag.svg';
 
-import { tokenName, cartTokenName } from '../../../config';
+import { tokenName, cartTokenName } from '../../../config/tokens';
 
 import {
     CartIconContainer,

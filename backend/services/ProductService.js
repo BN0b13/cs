@@ -331,133 +331,87 @@ export default class ProductService {
         }
     }
 
-    deleteProduct = async (id) => {
-        console.log('DELETE Product id: ', id);
-        try {
-            const orderStatus = await sequelize.query(`select *
-            from ${process.env.PG_SCHEMA_NAME}."Orders"
-            where products @> '[{"productId": ${id}}]'::jsonb`);
+    // DELETE
 
-            if(orderStatus[0].length !== 0) {
+    deleteProduct = async (id) => {
+        console.log('DELETE Product id:', id);
+
+        try {
+            // Step 1: Check if Product is associated with any Orders
+            const orderStatus = await sequelize.query(
+                `SELECT * FROM ${process.env.PG_SCHEMA_NAME}."Orders" WHERE products @> '[{"productId": ${id}}]'::jsonb`
+            );
+
+            if (orderStatus[0].length !== 0) {
                 return {
                     status: 403,
                     message: 'Unable to delete Product. Product is associated with Order(s).'
-                }
+                };
             }
 
-            const getProduct = await Product.findOne(
-                {
-                    where: {
-                        id
-                    },
-                    include: [
-                        { 
-                            model: Inventory,
-                            required: true
-                        },
-                        { 
-                            model: ProductImage
-                        }
-                    ]
-                }
-            );
+            // Step 2: Find Product with its related Inventories and Images
+            const product = await Product.findOne({
+                where: { id },
+                include: [
+                    { model: Inventory },
+                    { model: ProductImage }
+                ]
+            });
 
-            const inventories = getProduct.dataValues.Inventories;
-            const productImages = getProduct.dataValues.ProductImages;
-
-            // Delete inventory
-
-            let deleteProductInventoryRes = [];
-
-            for(const inventory of inventories) {
-                const deleteInventoryRes = await Inventory.destroy(
-                    {
-                        where: {
-                                    id: inventory.id
-                                }
-                    }
-                );
-
-                deleteProductInventoryRes.push({
-                    id: inventory.id,
-                    deleteInventoryRes
-                });
+            if (!product) {
+                throw new Error('Product not found');
             }
 
-            let deleteProductImagesRes = [];
+            const inventories = product.Inventories;
+            const productImages = product.ProductImages;
 
-            
-            if(productImages.length > 0) {
-                for(let productImage of productImages) {
-
-                    // Delete Product Image(s) from db
-                    const deleteProductImageRes = await ProductImage.destroy(
-                        {
-                            where: {
-                                id: productImage.id
-                            }
-                        }
-                    );
-                    
-                    // Delete local image
-                    fs.stat(`./public${productImage.path}`, function (err) {
-                        if (err) {
-                            return console.error(err);
-                        }
-                    
-                        fs.unlink(`./public${productImage.path}`,function(err){
-                            if(err) return console.log(err);
-                            console.log('file deleted successfully');
-                        });
-                    });
-
-                    fs.stat(`./public${productImage.path}-mobile.webp`, function (err) {
-                        if (err) {
-                            return console.error(err);
-                        }
-                    
-                        fs.unlink(`./public${productImage.path}-mobile.webp`,function(err){
-                            if(err) return console.log(err);
-                            console.log('file deleted successfully');
-                        });
-                    });
-
-                    fs.stat(`./public${productImage.path}-desktop.webp`, function (err) {
-                        if (err) {
-                            return console.error(err);
-                        }
-                    
-                        fs.unlink(`./public${productImage.path}-desktop.webp`,function(err){
-                            if(err) return console.log(err);
-                            console.log('file deleted successfully');
-                        });
-                    });
-                    
-                    deleteProductImagesRes.push({
-                        productImageId: productImage.id,
-                        deleteProductImageRes
-                    })
-                }
+            // Step 3: Delete Inventories
+            if (inventories.length > 0) {
+                await Inventory.destroy({ where: { productId: id } });
+                console.log(`Deleted ${inventories.length} inventory records.`);
             }
 
-            const deleteProductRes = await Product.destroy(
-                {
-                    where: {
-                        id: id
+            // Step 4: Delete Product Images and Associated Files
+            if (productImages.length > 0) {
+                const imageIds = productImages.map(img => img.id);
+                const imagePaths = productImages.flatMap(img => [
+                    `./public${img.path}`,
+                    `./public${img.path}-mobile.webp`,
+                    `./public${img.path}-desktop.webp`
+                ]);
+
+                // Delete from DB
+                await ProductImage.destroy({ where: { productId: id } });
+                console.log(`Deleted ${productImages.length} product images from DB.`);
+
+                // Delete image files
+                for (const filePath of imagePaths) {
+                    try {
+                        await fs.unlink(filePath);
+                        console.log(`Deleted file: ${filePath}`);
+                    } catch (fileErr) {
+                        if (fileErr.code !== 'ENOENT') {
+                            console.error(`Error deleting file: ${filePath}`, fileErr);
+                        }
                     }
                 }
-            );
+            }
+
+            // Step 5: Delete Product
+            await Product.destroy({ where: { id } });
+            console.log(`Deleted Product ID: ${id}`);
 
             return {
-                deleteProductRes,
-                deleteProductInventoryRes,
-                deleteProductImagesRes
+                success: true,
+                message: 'Product and related data deleted successfully',
+                deletedProductId: id
             };
         } catch (err) {
-            console.log('DELETE Product Error: ', err);
-            throw Error('There was an error deleting the product');
+            console.error('DELETE Product Error:', err);
+            throw new Error('There was an error deleting the product');
         }
-    }
+    };
+
 
     deleteProductImageById = async (id) => {
         try {

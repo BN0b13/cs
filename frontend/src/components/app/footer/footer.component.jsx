@@ -1,17 +1,14 @@
-import { useContext } from 'react';
-
 import {
   FaDiscord,
   FaFacebook,
   FaInstagram,
   FaLinkedin,
   FaRedditSquare,
-  FaTwitter
+  FaTwitter,
+  FaYoutube
 } from 'react-icons/fa';
 
 import { setMobileView } from '../../../tools/mobileView';
-
-import { ConfigurationContext } from '../../../contexts/configuration.context';
 
 import {
   DisclaimerContainer,
@@ -22,43 +19,49 @@ import {
   MainContainer,
 } from './footer.styles';
 
-const Footer = () => {
-  const { colors } = useContext(ConfigurationContext);
-
-  // {giveaway.Company.socials?.discord &&
-  //   <FaDiscord onClick={() => window.open(giveaway.Company.socials.discord, '_blank')} />
-  // }
-  // {giveaway.Company.socials?.facebook &&
-  //     <FaFacebook onClick={() => window.open(giveaway.Company.socials.facebook, '_blank')} />
-  // }
-  // {giveaway.Company.socials?.instagram &&
-  //     <FaInstagram onClick={() => window.open(giveaway.Company.socials.instagram, '_blank')} />
-  // }
-  // {giveaway.Company.socials?.linkedIn &&
-  //     <FaLinkedin onClick={() => window.open(giveaway.Company.socials.linkedIn, '_blank')} />
-  // }
-  // {giveaway.Company.socials?.reddit &&
-  //     <FaRedditSquare onClick={() => window.open(giveaway.Company.socials.reddit, '_blank')} />
-  // }
-  // {giveaway.Company.socials?.twitter &&
-  //     <FaTwitter onClick={() => window.open(giveaway.Company.socials.twitter, '_blank')} />
-  // }
+const Footer = ({ colors, company }) => {
 
   return (
   <MainContainer theme={colors}>
     <FooterContainer>
-      <IconContainer onClick={() => window.open('https://discord.gg/fva4pKdeVg', '_blank')} >
-        <FaDiscord size={setMobileView() ? '18' : '28'} />
-      </IconContainer>
-      <IconContainer onClick={() => window.open('https://www.instagram.com/cosmicstrainsofficial', '_blank')} >
-        <FaInstagram size={setMobileView() ? '18' : '28'} />
-      </IconContainer>
-      <IconContainer onClick={() => window.open('https://www.reddit.com/r/cosmicstrains', '_blank')} >
-        <FaRedditSquare size={setMobileView() ? '18' : '28'} />
-      </IconContainer>
+      {company?.socials?.discord?.active &&
+        <IconContainer onClick={() => window.open(company?.socials?.discord?.url, '_blank')} >
+          <FaDiscord size={setMobileView() ? '18' : '28'} />
+        </IconContainer>
+      }
+      {company?.socials?.facebook?.active &&
+        <IconContainer onClick={() => window.open(company?.socials?.facebook?.url, '_blank')} >
+          <FaFacebook size={setMobileView() ? '18' : '28'} />
+        </IconContainer>
+      }
+      {company?.socials?.instagram?.active &&
+        <IconContainer onClick={() => window.open(company?.socials?.instagram?.url, '_blank')} >
+          <FaInstagram size={setMobileView() ? '18' : '28'} />
+        </IconContainer>
+      }
+      {company?.socials?.linkedin?.active &&
+        <IconContainer onClick={() => window.open(company?.socials?.linkedin?.url, '_blank')} >
+          <FaLinkedin size={setMobileView() ? '18' : '28'} />
+        </IconContainer>
+      }
+      {company?.socials?.reddit?.active &&
+        <IconContainer onClick={() => window.open(company?.socials?.reddit?.url, '_blank')} >
+          <FaRedditSquare size={setMobileView() ? '18' : '28'} />
+        </IconContainer>
+      }
+      {company?.socials?.twitter?.active &&
+        <IconContainer onClick={() => window.open(company?.socials?.twitter?.url, '_blank')} >
+          <FaTwitter size={setMobileView() ? '18' : '28'} />
+        </IconContainer>
+      }
+      {company?.socials?.youtube?.active &&
+        <IconContainer onClick={() => window.open(company?.socials?.youtube?.url, '_blank')} >
+          <FaYoutube size={setMobileView() ? '18' : '28'} />
+        </IconContainer>
+      }
     </FooterContainer>
     <FooterContainer>
-      <FooterText>Copyright ©2024 Cosmic Strains</FooterText>
+      <FooterText>Copyright ©{ new Date().getFullYear() } { company?.name }</FooterText>
     </FooterContainer>
     <DisclaimerContainer>
       <DisclaimerText>Ages 21+ USA only</DisclaimerText>

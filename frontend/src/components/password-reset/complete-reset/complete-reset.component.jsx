@@ -8,8 +8,7 @@ import { ToastContext } from '../../../contexts/toast.context.jsx';
 
 import Client from '../../../tools/client';
 import Tools from '../../../tools/tools.js';
-
-import logo from '../../../assets/img/logo.png';
+import { imageRouter } from '../../../config/images.js';
 
 import {
     ButtonContainer,
@@ -95,7 +94,7 @@ const CompleteReset = () => {
                 <>
                     <CompleteResetTitle>Password Updated</CompleteResetTitle>
                     <CompleteResetImageContainer>
-                        <CompleteResetImage src={logo} />
+                        <CompleteResetImage src={imageRouter.logos.logo.path} />
                     </CompleteResetImageContainer>
                     <CompleteResetText>Please Log In To Continue</CompleteResetText>
                     <ButtonContainer>
